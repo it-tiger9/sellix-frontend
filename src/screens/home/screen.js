@@ -4,10 +4,6 @@ import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
   Button,
-  Card,
-  CardHeader,
-  CardBody,
-  CardGroup,
   Col,
   Container,
   Row,
@@ -17,11 +13,7 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  NavLink,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
+  NavLink
 } from 'reactstrap'
 
 import './style.scss'
@@ -48,58 +40,66 @@ class Home extends React.Component {
   }
 
   render() {
-
     const { isOpen } = this.state
-
-
 
     return (
       <div className="home-screen">
         <div className="animated fadeIn">
-          <div className="section white" style={{paddingBottom: 100}}>
-            <Container className="home-container p-0" fluid>
-              <Navbar className="mb-5 pt-4 p-0" color="white" light expand="lg">
-                <NavbarBrand href="/">
-                  <img className="logo" src={logo}/>
-                </NavbarBrand>
-                <NavbarToggler onClick={this.toggle.bind(this)} />
-                <Collapse className="mr-5" isOpen={isOpen} navbar>
-                  <Nav className="ml-auto" navbar>
-                    <NavItem className="active">
-                      <NavLink href="/">Home</NavLink>
-                    </NavItem>
-                    <NavItem>
-                      <NavLink href="/">About Us</NavLink>
-                    </NavItem>
-                    <NavItem>
-                      <NavLink href="/">Features</NavLink>
-                    </NavItem>
-                    <NavItem>
-                      <NavLink href="/">Get Started</NavLink>
-                    </NavItem>
-                  </Nav>
-                </Collapse>
-                <div className="d-md-down-none">
-                  <Button className="mr-3" color="secondary" >Sign In</Button>
-                  <Button  color="primary">Sign Up</Button>
-                </div>
-              </Navbar>
+          <header>
+            <div className="section white" style={{paddingBottom: 100}}>
+              <Container className="home-container p-0" fluid>
+                <Navbar className="mb-5 pt-4 p-0" color="white" light expand="lg">
+                  <NavbarBrand href="/">
+                    <img className="logo" src={logo}/>
+                  </NavbarBrand>
+                  <NavbarToggler onClick={this.toggle.bind(this)} />
+                  <Collapse className="mr-5" isOpen={isOpen} navbar>
+                    <Nav className="ml-auto" navbar>
+                      <NavItem className="active">
+                        <NavLink href="/">Home</NavLink>
+                      </NavItem>
+                      <NavItem>
+                        <NavLink href="/">About Us</NavLink>
+                      </NavItem>
+                      <NavItem>
+                        <NavLink href="/">Features</NavLink>
+                      </NavItem>
+                      <NavItem>
+                        <NavLink href="/">Get Started</NavLink>
+                      </NavItem>
+                      <NavItem>
+                        <NavLink href="/"></NavLink>
+                      </NavItem>
+                      <NavItem className="d-xl-none">
+                        <NavLink href="/">Sign In</NavLink>
+                      </NavItem>
+                      <NavItem className="d-xl-none">
+                        <NavLink href="/">Sign Up</NavLink>
+                      </NavItem>
+                    </Nav>
+                  </Collapse>
+                  <div className="d-lg-down-none">
+                    <Button className="mr-3" color="secondary" >Sign In</Button>
+                    <Button  color="primary">Sign Up</Button>
+                  </div>
+                </Navbar>
 
-              <Row className="flex-row align-items-center">
-                <Col md={6} className="mb-5">
-                  <h1>Sell Digital Goods Online</h1>
-                  <p className="large">
-                    E-commerce is easy with Selly. Create your own customizable online store today.
-                  </p>
-                  <Button color="primary">Get Started for Free</Button>
-                </Col>
-                <Col md={6}>
-                  <img src={top1}/>
-                </Col>
-              </Row>
-            </Container>
-          </div>
-
+                <Row className="flex-row align-items-center">
+                  <Col md={6} className="mb-5">
+                    <h1>Sell Digital Goods Online</h1>
+                    <p className="large">
+                      E-commerce is easy with Selly. Create your own customizable online store today.
+                    </p>
+                    <Button color="primary">Get Started for Free</Button>
+                  </Col>
+                  <Col md={6}>
+                    <img src={top1}/>
+                  </Col>
+                </Row>
+              </Container>
+            </div>
+          </header>
+          
           <div className="section pt-5 pb-5 text-center">
             <Container className="home-container" fluid>
               <h3>E-commerce, Your Way!</h3>
@@ -171,7 +171,7 @@ class Home extends React.Component {
                   <img className="pc-img" src={undraw1}/>
                 </Col>
                 <Col md={5}>
-                  <div style={{width: '88%'}}>
+                  <div className="float-right" style={{maxWidth: 447}}>
                     <h1>Your business is 
                       unique. You need 
                       a platform that 
@@ -193,6 +193,80 @@ class Home extends React.Component {
             <p className="small">Create an account and get started</p>
             <Button color="secondary">Get Started for Free</Button>
           </div>
+
+          <footer>
+            <div className="section text-center" style={{paddingBottom: 100, paddingTop: 100}}>
+              <Container className="home-container p-0" fluid>
+                <div className="d-flex justify-content-between text-left flex-wrap">
+                  <div className="mb-3">
+                    <img className="logo mb-3" src={logo}/>
+                    <p className="mt-2">Copyright © 2020, Selly LLC</p>
+                  </div>
+                  <div className="mb-3" style={{maxWidth: 295}}>
+                    <h5 className="mb-3">About Us</h5>
+                    <p className="mt-4">Accept payments, sell digital products
+                      from your own store and more, all through
+                      one simple yet extensive platform</p>
+                  </div>
+                  <div className="mb-3">
+                    <h5 className="mb-3">Name</h5>
+                    <Nav vertical>
+                      <NavItem>
+                        <NavLink href="#">Dashboard</NavLink>
+                      </NavItem>
+                      <NavItem>
+                        <NavLink href="#">Register</NavLink>
+                      </NavItem>
+                      <NavItem>
+                        <NavLink href="#">Terms</NavLink>
+                      </NavItem>
+                      <NavItem>
+                        <NavLink href="#">Privacy Policy</NavLink>
+                      </NavItem>
+                      <NavItem>
+                        <NavLink href="#">Cookie Policy</NavLink>
+                      </NavItem>
+                      <NavItem>
+                        <NavLink href="#">Refund Policy</NavLink>
+                      </NavItem>
+                    </Nav>
+                  </div>
+                  <div className="mb-3">
+                    <h5 className="mb-3">Products</h5>
+                    <Nav vertical>
+                      <NavItem>
+                        <NavLink href="#">E-commerce</NavLink>
+                      </NavItem>
+                      <NavItem>
+                        <NavLink href="#">Payments</NavLink>
+                      </NavItem>
+                    </Nav>
+                  </div>
+                  <div className="mb-3">
+                    <h5 className="mb-3">Help</h5>
+                    <Nav vertical>
+                      <NavItem>
+                        <NavLink href="#">Help Center</NavLink>
+                      </NavItem>
+                      <NavItem>
+                        <NavLink href="#">Contact Us</NavLink>
+                      </NavItem>
+                      <NavItem>
+                        <NavLink href="#">Twitter</NavLink>
+                      </NavItem>
+                      <NavItem>
+                        <NavLink href="#">States</NavLink>
+                      </NavItem>
+                      <NavItem>
+                        <NavLink href="#">Report Abuse</NavLink>
+                      </NavItem>
+                    </Nav>
+                  </div>
+                </div>
+              </Container>
+            </div>
+          
+          </footer>
         </div>
       </div>
     )

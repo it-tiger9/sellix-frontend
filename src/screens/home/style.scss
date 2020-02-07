@@ -45,6 +45,13 @@
     font-weight: 600;
   }
 
+  h5 {
+    line-height: 1.4em;
+    color: #613BEA;
+    font-size: 18px;
+    font-weight: 600;
+  }
+
   p.large {
     font-size: 24px;
   }
@@ -95,6 +102,16 @@
     .nav-item a:hover,
     .nav-item.active a {
       color: #613BEA !important;
+    }
+  }
+
+  footer {
+    .nav-link {
+      margin: 0 !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+      font-size: 14px !important;
+      font-weight: normal !important;
     }
   }
 }
