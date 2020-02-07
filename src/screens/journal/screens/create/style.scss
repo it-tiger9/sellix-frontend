@@ -1,0 +1,17 @@
+.create-journal-screen {
+  .card-header {
+    color: #20a8d8;
+  }
+  .badge {
+    padding: 0.4em 0.6em;
+    font-size: 90%;
+  }
+  .journal-create-table {
+    td {
+      vertical-align: middle;
+    }
+  }
+  .total-item {
+    border-bottom: 1px solid #ccc;
+  }
+}

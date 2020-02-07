@@ -1,0 +1,23 @@
+.bank-transaction-screen {
+  .card-header {
+    color: #20a8d8;
+  }
+  .btn-group {
+    .btn {
+      color: #ffffff !important;
+    }
+  }
+  .badge {
+    padding: 0.4em 0.6em;
+    font-size: 90%;
+  }
+
+  .bank-transaction-table {
+    .my-link {
+      font-weight: bold;
+      color: #20a8d8;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  }
+}

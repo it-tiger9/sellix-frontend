@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120">
+  <g id="Group_88" data-name="Group 88" transform="translate(-0.1)">
+    <circle id="Ellipse_3" data-name="Ellipse 3" cx="60" cy="60" r="60" transform="translate(0.1)" fill="#e4d6ff"/>
+    <path id="laptop-solid" d="M48.75,32.5H29.808A2.463,2.463,0,0,1,27.25,35H22.5a2.653,2.653,0,0,1-2.56-2.5H1.25A1.254,1.254,0,0,0,0,33.75V35a5.015,5.015,0,0,0,5,5H45a5.015,5.015,0,0,0,5-5V33.75A1.254,1.254,0,0,0,48.75,32.5ZM45,3.75A3.761,3.761,0,0,0,41.25,0H8.75A3.761,3.761,0,0,0,5,3.75V30H45ZM40,25H10V5H40Z" transform="translate(35.1 40)" fill="#613bea"/>
+    <g id="Group_87" data-name="Group 87" transform="translate(60 25)">
+      <circle id="Ellipse_4" data-name="Ellipse 4" cx="15" cy="15" r="15" transform="translate(0.1)" fill="#fff"/>
+      <path id="cube-solid" d="M4.752,3.3.618,4.848A.955.955,0,0,0,0,5.743v4.474a.954.954,0,0,0,.527.853l4.134,2.067a.947.947,0,0,0,.853,0l4.134-2.067a.952.952,0,0,0,.527-.853V5.743a.953.953,0,0,0-.618-.892L5.422,3.3A.937.937,0,0,0,4.752,3.3Zm.336,1.234L8.9,5.963v.022L5.088,7.535,1.272,5.985V5.963Zm.636,7.075V8.648L8.9,7.357v2.661Z" transform="translate(10.1 6.763)" fill="#613bea"/>
+    </g>
+  </g>
+</svg>
