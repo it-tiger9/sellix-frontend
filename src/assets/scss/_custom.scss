@@ -9,9 +9,35 @@
     padding-left: 50px;
     padding-right: 50px;
     min-height: 50px;
-    min-width: 150px;
+    // min-width: 150px;
 }
 
+
+
+*, p, span {
+    font-family: "Poppins";
+}
+    html:not([dir="rtl"]) .sidebar {
+      margin-left: -250px
+    }
+  
+    html:not([dir="rtl"]) .sidebar-show .sidebar {
+      margin-left: 0
+    }
+
+  
+  
+  
+  .sidebar {
+    background: #F6F4FF;
+   
+    min-width: 230px !important;
+  
+    .sidebar-nav {
+      min-width: 230px !important;
+    }
+  }
+  
 
 .btn-secondary {
     background-color: white;
@@ -24,5 +50,171 @@
     padding-left: 50px;
     padding-right: 50px;
     min-height: 50px;
-    min-width: 150px;
+    // min-width: 150px;
+}
+
+.form-control {
+    height: 40px !important;
+    background-color: #F6F4FF !important;
+    padding: 0 25px;
+    border-radius: 10px !important;
+}
+
+.new-select {
+    position: relative;
+    
+    select {
+        appearance: none;
+        padding-right: 50px !important;
+    }
+
+    i {
+        position: absolute;
+        right: 20px;
+        top: 32%;
+        margin-top: 0 !important;
+    }
+}
+
+.react-bs-table-container .react-bs-table {
+    border-top: none !important;
+    padding: 30px 20px!important;
+    background-color: white !important;
+    border-radius: 10px !important;
+    border-bottom: none !important;
+    margin-bottom: 30px;
+}
+
+.react-bs-table-pagination {
+    padding: 0 20px;
+    background-color: transparent !important;
+    align-items: center;
+
+    a {
+        background-color: transparent;
+        border: none !important;
+    }
+
+    a:hover {
+        background-color: transparent;
+    }
+}
+
+
+.page-link {
+    color: black;
+}
+
+.react-bs-table-container .react-bs-table th{
+    font-size: 14px !important;
+    text-transform: initial !important;
+    color: #A7A5B4 !important;
+    font-weight: 600 !important;
+}
+
+.card {
+    background-color: transparent;
+    border-radius: 10px !important;
+    box-shadow: none !important;
+
+    .card-header {
+        background-color: transparent !important;
+        border-radius: 10px !important;
+        border: none !important;
+        padding: 20px 0 !important;
+
+        h1 {
+            font-size: 18px;
+            color: black;
+            font-weight: 600;
+            font-family: 'Poppins';
+        }
+
+        .header-search-input {
+            background-color: white !important;
+        }
+    }
+    
+    .card-body {
+        background-color: white;
+        border-radius: 10px !important;
+        padding: 30px 20px;
+    }
+}
+
+.card.grey {
+    .card-body {
+        background-color: #F6F4FF !important;
+
+        h1.report {
+            color: #613BEA;
+            font-size: 36px;
+            font-weight: 600;
+        }
+
+        p.report-title {
+            font-size: 18px;
+            color: black;
+            font-weight: 600;
+            margin-bottom: 0;
+        }
+    }
+}
+
+
+table {
+    border-top: none !important;
+
+    * {
+        font-family: 'Poppins';
+    }
+
+    thead {
+        th {
+            font-size: 14px !important;
+            text-transform: initial !important;
+            color: #A7A5B4 !important;
+            border: none !important;
+        }
+    }
+
+    tbody {
+        td{
+            vertical-align: middle !important;
+            padding-top: 20px !important;
+            padding-bottom: 20px !important;
+            border: none !important;
+            border-top: 1px solid #F5F5F5 !important;
+
+            p {
+                margin-bottom: 0 !important;
+                font-size: 14px !important;
+            }
+
+            p.caption {
+                color: #A7A5B4 !important;
+            }
+
+            .badge {
+                padding: 12px 20px;
+                background-color: #E4D6FF !important;
+                border-radius: 10px;
+                font-size: 14px !important;
+                color: #613BEA;
+                font-weight: normal;
+            }
+
+            .actions {
+                justify-content: flex-end;
+                a {
+                    color: #A7A5B4 !important;
+                    font-size: 18px !important;
+                    margin-left: 15px;
+                }
+                a:hover {
+                    color: #613BEA !important;
+                }
+            }
+        }
+    }
 }

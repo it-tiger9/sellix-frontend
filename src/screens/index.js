@@ -75,7 +75,12 @@ import DetailContact from './contact/screens/detail'
 import Employee from './employee'
 import CreateEmployee from './employee/screens/create'
 import DetailEmployee from './employee/screens/detail'
+
+
 import Product from './product'
+import Categories from './categories'
+
+
 import CreateProduct from './product/screens/create'
 import DetailProduct from './product/screens/detail'
 import Project from './project'
@@ -181,7 +186,11 @@ export {
   Employee,
   CreateEmployee,
   DetailEmployee,
+
   Product,
+  Categories,
+
+  
   CreateProduct,
   DetailProduct,
   Project,

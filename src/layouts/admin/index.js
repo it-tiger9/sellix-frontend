@@ -101,24 +101,19 @@ class AdminLayout extends React.Component {
     return (
       <div className="admin-container">
         <div className="app">
-          <AppHeader fixed>
+          <AppHeader>
             <Suspense fallback={Loading()}>
               <Header {...this.props} />
             </Suspense>
           </AppHeader>
           <div className="app-body">
-            <AppSidebar fixed display="lg">
-              <AppSidebarHeader />
-              <AppSidebarForm />
+            <AppSidebar style={{width: 230}} className="pt-4 mb-5 mr-4" display="lg">
               <Suspense>
                 <AppSidebarNav navConfig={navigation} {...this.props} />
               </Suspense>
-              <AppSidebarFooter />
-              <AppSidebarMinimizer />
             </AppSidebar>
-            <main className="main">
-              <AppBreadcrumb appRoutes={adminRoutes} />
-              <Container fluid>
+            <main className="main mt-5 mb-5">
+              <Container className="p-0" fluid>
                 <Suspense fallback={Loading()}>
                   <ToastContainer position="top-right" autoClose={5000} style={containerStyle} />
                   <Switch>
@@ -145,11 +140,6 @@ class AdminLayout extends React.Component {
               </Suspense>
             </AppAside>
           </div>
-          <AppFooter>
-            <Suspense fallback={Loading()}>
-              <Footer {...this.props} />
-            </Suspense>
-          </AppFooter>
         </div>
       </div>
     )

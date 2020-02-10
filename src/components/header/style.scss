@@ -1,7 +1,55 @@
 
-.header-component {
-  .header-dropdown-menu {
-    height: auto;
-    right: 0;
+
+.header-dropdown-menu {
+  height: auto;
+  right: 0;
+}
+
+.navbar-brand { 
+  width: 106px;
+  height: 25x;
+  margin-right: 10% !important;
+
+  @media (max-width: 991.98px) {
+    top: 20px !important;
+  }
+}
+
+.user-name {
+  font-size: 18px !important; 
+  color: black !important;
+  margin-right: 5px;
+}
+
+.nav-icon {
+  font-size: 22px;
+  color: #A7A5B4;
+}
+
+.searchbar {
+  position: relative;
+
+  .header-search-input {
+    height: 50px !important;
+    background-color: #F6F4FF !important;
+    border-radius: 10px !important;
+    border: none !important;
+    font-family: 'Poppins';
+    font-size: 18px !important;
+    padding-left: 45px;
+  }
+
+  .header-search-input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #A7A5B4;
+    opacity: 1; /* Firefox */
+  }
+
+  i {
+    position: absolute;
+    top: 18px;
+    left: 20px;
+    width: 15px;
+    height: 15px;
+    color: #A7A5B4;
   }
 }

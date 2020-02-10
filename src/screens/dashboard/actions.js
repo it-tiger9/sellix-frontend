@@ -20,8 +20,7 @@ export const getCashFlowGraphData = (daterange) => {
       url: '/rest/vat/getvat'
     }
 
-    return authApi(data).then(res => {
-      dispatch({
+    return dispatch({
         type: DASHBOARD.CASH_FLOW_GRAPH,
         payload: {
           labels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'].slice(0, daterange),
@@ -37,10 +36,7 @@ export const getCashFlowGraphData = (daterange) => {
           }
         }
       })
-    }).catch(err => {
-      throw err
-    })
-  }
+    }
 }
 
 

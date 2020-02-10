@@ -60,7 +60,13 @@ import {
   Employee,
   CreateEmployee,
   DetailEmployee,
+
+
+
   Product,
+  Categories,
+
+
   CreateProduct,
   DetailProduct,
   Project,
@@ -386,9 +392,14 @@ const adminRoutes = [
     component: DetailProduct.screen
   },
   {
-    path: '/admin/master/product',
+    path: '/admin/product/all',
     name: 'Product',
     component: Product.screen
+  },
+  {
+    path: '/admin/product/categories',
+    name: 'Categories',
+    component: Categories.screen
   },
   {
     path: '/admin/master/project/create',

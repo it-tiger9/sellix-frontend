@@ -71,16 +71,21 @@ class Home extends React.Component {
                         <NavLink href="/"></NavLink>
                       </NavItem>
                       <NavItem className="d-xl-none">
-                        <NavLink href="/">Sign In</NavLink>
+                        <NavLink href="/login">Sign In</NavLink>
                       </NavItem>
                       <NavItem className="d-xl-none">
-                        <NavLink href="/">Sign Up</NavLink>
+                        <NavLink href="/register">Sign Up</NavLink>
                       </NavItem>
                     </Nav>
                   </Collapse>
                   <div className="d-lg-down-none">
-                    <Button className="mr-3" color="secondary" >Sign In</Button>
-                    <Button  color="primary">Sign Up</Button>
+                    <Link to="/login">
+                      <Button className="mr-3" color="secondary" >Sign In</Button>
+                    </Link>
+                    <Link to="/register">
+                      <Button color="primary">Sign Up</Button>
+                    </Link>
+                    
                   </div>
                 </Navbar>
 
@@ -199,7 +204,9 @@ class Home extends React.Component {
               <Container className="home-container p-0" fluid>
                 <div className="d-flex justify-content-between text-left flex-wrap">
                   <div className="mb-3">
-                    <img className="logo mb-3" src={logo}/>
+                    <NavbarBrand className="p-0" href="/">
+                      <img className="logo mb-3" src={logo}/>
+                    </NavbarBrand>
                     <p className="mt-2">Copyright © 2020, Selly LLC</p>
                   </div>
                   <div className="mb-3" style={{maxWidth: 295}}>

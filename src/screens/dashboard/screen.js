@@ -1,7 +1,12 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
-import {CardColumns} from 'reactstrap'
+import {
+  Card,
+  CardBody,
+  Row,
+  Col
+} from 'reactstrap'
 
 import {
   Invoice,
@@ -54,14 +59,59 @@ class Dashboard extends React.Component {
     return (
       <div className="dashboard-screen">
         <div className="animated fadeIn">
-          <CashFlow {...this.props}/>
-          <CardColumns className="cols-2 mb-3">
-            <BankAccount {...this.props}/>
-            <RevenueAndExpense {...this.props}/>
-            <Invoice {...this.props}/>
-            <ProfitAndLoss {...this.props}/>
-          </CardColumns>
+          <Card>
+            <CardBody>
+              <div className="flex-wrapper align-items-center">
+                <h1 className="title">Dashboard</h1>
+                <div className="card-header-actions">
+                  <div className="new-select fill">
+                    <select className="form-control" ref={this.dateRangeSelect} onChange={(e) => this.handleChange(e)}>
+                      <option value="12">Last 12 Months</option>
+                      <option value="6">Last 6 Months</option>
+                      <option value="3">Last 3 Months</option>
+                    </select>
+                    <i className="fa fa-caret-down fa-lg mt-4"/>
+                  </div>
+                </div>
+              </div>
+              <Row className="mt-4">
+                <Col lg={3}>
+                  <Card className="grey">
+                    <CardBody>
+                      <h1 className="report">$4000.00</h1>
+                      <p className="report-title">Revenue</p>
+                    </CardBody>
+                  </Card>
+                </Col>
+                <Col lg={3}>
+                  <Card className="grey">
+                    <CardBody>
+                      <h1 className="report">253</h1>
+                      <p className="report-title">Orders</p>
+                    </CardBody>
+                  </Card>
+                </Col>
+                <Col lg={3}>
+                  <Card className="grey">
+                    <CardBody>
+                      <h1 className="report">397</h1>
+                      <p className="report-title">Views</p>
+                    </CardBody>
+                  </Card>
+                </Col>
+                <Col lg={3}>
+                  <Card className="grey">
+                    <CardBody>
+                      <h1 className="report">89%</h1>
+                      <p className="report-title">Conversion</p>
+                    </CardBody>
+                  </Card>
+                </Col>
+              </Row>
+            </CardBody>
+          </Card>
         </div>
+        
       </div>
     )
   }

@@ -1,11 +1,19 @@
 .admin-container {
+  padding: 2% 1%;
 
-  background-color: #f4f6f8;
+  .nav-link {
+    font-family: "Poppins";
+    font-weight: 600;
+    font-size: 18px;
+  }
+
+  background-color: #F6F4FF;
 
   .app-header {
     border-bottom: none;
-    box-shadow: 0px 1px 1px -1px rgba(0, 0, 0, 0.2), 0px 2px 3px 0px rgba(0, 0, 0, 0.14),
-      0px 1px 2px 0px rgba(0, 0, 0, 0.12);
+    border-radius: 10px;
+    padding: 20px 10px;
+    height: 100px;
     
     button:focus {
       outline: none;
@@ -24,6 +32,19 @@
       cursor: pointer;
       color: #73818f;
     }
+
+    @media (max-width: 991.98px) {
+      width: 98% !important;
+    }
+  }
+
+
+  .app-body {
+
+    @media (max-width: 991.98px) {
+      margin-top: 100px !important;
+    }
+    // margin-top: 0 !important;
   }
 
   .breadcrumb {
@@ -43,98 +64,131 @@
     box-shadow: 0 0 0 1px rgba(63,63,68,0.05), 0 1px 5px 0 rgba(63,63,68,0.15);
   }
 
-  .sidebar {
-    background: #ffffff;
-    box-shadow: 0 0 0 1px rgba(63,63,68,0.05), 0 1px 5px 0 rgba(63,63,68,0.15);
 
+  .sidebar .nav-dropdown.open > .nav-dropdown-toggle::before {
+    transform: rotate(90deg);
+  }
+
+
+
+  .sidebar {
+    background: #F6F4FF;
+    min-width: 230px !important;
+
+    .sidebar-nav {
+      min-width: 230px !important;
+    }
+  
     .ps-container {
       .nav-dropdown-items {
         .nav-item {
           .nav-link {
-            padding-left: 26px;
+            padding-left: 40px;
           }
         }
       }
     }
 
+    .nav-item {
+      padding: 1.5rem 0 !important;
+    }
     .nav-link {
-      color: #37474f;
+      padding: 0 1rem !important;
+      color: #A7A5B4;
+      display: flex;
+      align-items: center;
       .nav-icon {
-        color: #37474f;
+        color: #A7A5B4;
+        margin-right: 30px;
+        font-size: 25px;
       }
     }
+
+    .nav-link:hover,
     .nav-link.active {
-      background: #ffffff;
-      color: #20a8d8;
+      background: transparent;
+      color: #613BEA;
       .nav-icon {
-        color: #20a8d8;
+        color: #613BEA;
       }
     }
-    .nav-link.active:hover {
-      background: #20a8d8;
-      color: #ffffff;
-      .nav-icon {
-        color: #ffffff;
-      }
-    }
+
     .nav-dropdown {
-      background: #ffffff;
-      .nav-dropdown-items {
-        background: #ffffff !important;
-      }
       .nav-link {
-        color: #37474f;
+        color: #A7A5B4;
         .nav-icon {
-          color: #37474f;
+          color: #A7A5B4;
         }
       }
-      .nav-link:hover {
-        color: #ffffff;
-        .nav-icon {
-          color: #ffffff;
+
+
+      .nav-dropdown-items {
+        .nav-item {
+          padding: 0.51rem 0 !important;
+          .nav-link {
+            font-size: 14px !important;
+            font-weight: normal !important;
+          }
+
+          .nav-link:hover,
+          .nav-link.active {
+            font-weight: 600 !important;
+            color: #613BEA;
+            .nav-icon {
+              color: #613BEA;
+            }
+          }
+        }
+
+        .nav-item:first-child {
+          padding-top: 1.5rem !important;
         }
       }
+
+      .nav-dropdown-toggle:before {
+        content: '>';
+        background-image: none;
+        width: initial;
+        height: initial;
+        margin-top: 0px;
+        font-weight: 600;
+        font-family: monospace;
+        top: -1px;
+      }
+      .nav-link:hover,
       .nav-link.active {
-        background: #ffffff;
-        color: #20a8d8;
+        background-color: transparent;
+        color: #613BEA;
         .nav-icon {
-          color: #20a8d8;
-        }
-      }
-      .nav-link.active:hover {
-        background: #20a8d8;
-        color: #ffffff;
-        .nav-icon {
-          color: #ffffff;
+          color: #613BEA;
         }
       }
     }
     .nav-dropdown.open {
-      background: #ffffff;
+      background-color: transparent;
       .nav-link {
-        color: #37474f;
+        color: #A7A5B4;
         .nav-icon {
-          color: #37474f;
+          color: #A7A5B4;
         }
       }
-      .nav-link:hover {
-        color: #ffffff;
-        .nav-icon {
-          color: #ffffff;
-        }
-      }
+      .nav-link:hover,
       .nav-link.active {
-        background: #ffffff;
-        color: #20a8d8;
+        background-color: transparent;
+        color: #613BEA;
         .nav-icon {
-          color: #20a8d8;
+          color: #613BEA;
         }
+      }
+
+      .nav-link:hover.before,
+      .nav-link.active.before {
+        color: #613BEA;
       }
       .nav-link.active:hover {
-        background: #20a8d8;
-        color: #ffffff;
+        color: #613BEA;
         .nav-icon {
-          color: #ffffff;
+          color: #613BEA;
         }
       }
     }

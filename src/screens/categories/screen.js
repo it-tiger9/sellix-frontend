@@ -34,7 +34,7 @@ const mapDispatchToProps = (dispatch) => {
   })
 }
 
-class Product extends React.Component {
+class Categories extends React.Component {
   
   constructor(props) {
     super(props)
@@ -192,15 +192,12 @@ class Product extends React.Component {
             <CardHeader>
               <Row style={{alignItems: 'center'}}>
                 <Col md={4}>
-                  <h1>Products</h1>
+                  <h1>Categories</h1>
                 </Col>
                 <Col md={8}>
                   <div className="d-flex justify-content-end">
-                    <div className="searchbar white">
-                      <i className="fas fa-search"/>
-                      <Input placeholder="Search..." className="header-search-input"></Input>
-                    </div>
-                    <Button className="ml-3" color="primary">Add Product</Button>
+                    
+                    <Button className="ml-3" color="primary">Add Category</Button>
                   </div>
                 </Col>
               </Row>
@@ -229,15 +226,13 @@ class Product extends React.Component {
                         >
                           <TableHeaderColumn
                             isKey
-                            dataField="info"
-                            dataFormat={this.renderProductInfo}
+                            dataField="id"
                             dataSort
                           >
-                            Info
+                            ID
                           </TableHeaderColumn>
                           <TableHeaderColumn
                             dataField="type"
-                            dataFormat={this.renderProductType}
                             dataSort
                           >
                             Type
@@ -246,15 +241,7 @@ class Product extends React.Component {
                             dataField="stock"
                             dataSort
                           >
-                            Stock
-                          </TableHeaderColumn>
-                          <TableHeaderColumn
-                            dataField="revenue"
-                            dataAlign="right"
-                            dataFormat={this.renderProductRevenue}
-                            dataSort
-                          >
-                            Revenue
+                            Product Count
                           </TableHeaderColumn>
                           <TableHeaderColumn
                             dataField="id"
@@ -276,4 +263,4 @@ class Product extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Product)
+export default connect(mapStateToProps, mapDispatchToProps)(Categories)
