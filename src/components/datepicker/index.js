@@ -60,19 +60,23 @@ class DateRangePicker2 extends React.Component{
       nick_key = this.state.startDate.format('ll') + ' - ' + this.state.endDate.format('ll')
 
     return (
-      <DateRangePicker 
-        startDate={this.state.startDate} 
-        endDate={this.state.endDate}
-        opens={this.props.opens || 'right'}
-        ranges={this.props.ranges} 
-        getDate={this.props.getDate}
-        onEvent={(e, picker) => this.handleEvent(e, picker)}>
-        <ButtonDropdown className="date-select" toggle={()=>{}}>
-          <DropdownToggle caret>
-            {nick_key}
-          </DropdownToggle>
-        </ButtonDropdown>
-      </DateRangePicker>
+      <div className="datepicker2">
+        <i className="fas fa-calendar mr-2"/>
+        <DateRangePicker 
+          startDate={this.state.startDate} 
+          endDate={this.state.endDate}
+          opens={this.props.opens || 'right'}
+          ranges={this.props.ranges} 
+          getDate={this.props.getDate}
+          onEvent={(e, picker) => this.handleEvent(e, picker)}>
+          <ButtonDropdown className="date-select" toggle={()=>{}}>
+            <DropdownToggle caret>
+              {nick_key}
+            </DropdownToggle>
+          </ButtonDropdown>
+        </DateRangePicker>
+      </div>
+      
     );
   }
 }

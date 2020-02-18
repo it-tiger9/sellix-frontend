@@ -8,27 +8,31 @@ import {
   Button,
   Row,
   Col,
-  Form,
   FormGroup,
-  Input,
-  Label
+  Label,
+  Tooltip,
+  Input
 } from 'reactstrap'
 import Select from 'react-select'
-
-import { Formik } from 'formik';
-import * as Yup from "yup";
+import { Editor } from "react-draft-wysiwyg"
+import { EditorState } from "draft-js"
+import { AppSwitch } from '@coreui/react'
+import { Loader, ImageUpload, DataSlider } from 'components'
+import * as ProductActions from './actions'
 
 import './style.scss'
 
-import * as ProductActions from '../../actions'
-
-import {WareHouseModal} from '../../sections'
+import bitcoinIcon from 'assets/images/crypto/btc.svg'
+import ethereumIcon from 'assets/images/crypto/eth.svg'
+import stripeIcon from 'assets/images/crypto/stripe.svg'
+import bitcoinCashIcon from 'assets/images/crypto/bitcoincash.svg'
+import litecoinIcon from 'assets/images/crypto/ltc.svg'
+import skrillIcon from 'assets/images/crypto/skrill.svg'
+import perfectmoneyIcon from 'assets/images/crypto/perfectmoney.svg'
 
 const mapStateToProps = (state) => {
   return ({
-    vat_list: state.product.product_vat_list,
-    product_ware_house: state.product.product_ware_house,
-    product_parent: state.product.product_parent
+    product_list: state.product.product_list
   })
 }
 const mapDispatchToProps = (dispatch) => {
@@ -43,297 +47,444 @@ class CreateProduct extends React.Component {
     super(props)
     this.state = {
       loading: false,
-      openWarehouseModal:false,
-
-      selectedParentProduct: null,
-      selectedVatCategory: null,
-      selectedWareHouse: null,
-
-      initProductValue: {
-        productName: '', 
-        productDescription: '',
-        productCode:'',
-        vatIncluded : false,
-        unitPrice : 8,
-        parentProduct : 1,
-        vatCategory: '', 
-        productWarehouse: ''
-      },
+      unlistedTooltipOpen: false,
+      privateTooltipOpen: false,
+      blockTooltipOpen: false,
+      paypalTooltipOpen: false,
+      files: [],
+      editorState: EditorState.createEmpty()
     }
 
-    this.showWarehouseModal = this.showWarehouseModal.bind(this)
-    this.closeWarehouseModal = this.closeWarehouseModal.bind(this)
+    this.onEditorStateChange = this.onEditorStateChange.bind(this)
   }
 
-
-  componentDidMount(){
-    this.props.productActions.getProductVatCategoryList()
-    this.props.productActions.getParentProductList()
-    this.props.productActions.getProductWareHouseList()
+  componentWillUnmount() {
+    // Make sure to revoke the data uris to avoid memory leaks
+    this.state.files.forEach(file => URL.revokeObjectURL(file.preview));
   }
 
-
-  // Show Invite User Modal
-  showWarehouseModal() {
-    this.setState({ openWarehouseModal: true })
-  }
-  // Cloase Confirm Modal
-  closeWarehouseModal() {
-    this.setState({ openWarehouseModal: false })
-  }
-
-
-  // Create or Edit Product
-  productHandleSubmit(data) {
-    this.props.productActions.createAndSaveProduct(data).then(res => {
-      if (res.status === 200) {
-        // this.success()
-
-        if(this.state.readMore){
-          this.setState({
-            readMore: false
-          })
-        } else this.props.history.push('/admin/master/product')
-      }
+  onEditorStateChange(editorState) {
+    this.setState({
+      editorState,
     })
   }
 
+  unlistedTooltipToggle() {
+    this.setState({unlistedTooltipOpen: !this.state.unlistedTooltipOpen})
+  }
+
+  privateTooltipToggle() {
+    this.setState({privateTooltipOpen: !this.state.privateTooltipOpen})
+  }
+
+  blockTooltipToggle() {
+    this.setState({blockTooltipOpen: !this.state.blockTooltipOpen})
+  }
+
+  paypalTooltipToggle() {
+    this.setState({paypalTooltipOpen: !this.state.paypalTooltipOpen})
+  }
+
+  addFile = file => {
+    console.log(file);
+    this.setState({
+      files: file.map(file =>
+        Object.assign(file, {
+          preview: URL.createObjectURL(file)
+        })
+      )
+    });
+  };
+
   render() {
-
-    const  {vat_list, product_parent, product_ware_house } = this.props
-
-    console.log()
+    const { 
+      loading, 
+      unlistedTooltipOpen, 
+      privateTooltipOpen,
+      blockTooltipOpen,
+      paypalTooltipOpen,
+      files, 
+      editorState 
+    } = this.state
 
     return (
       <div className="create-product-screen">
         <div className="animated fadeIn">
-          <Row>
-            <Col lg={12} className="mx-auto">
-              <Card>
-                <CardHeader>
+          <Card>
+            <CardHeader>
+              <Row style={{alignItems: 'center'}}>
+                <Col md={12}>
+                  <h1>New Product</h1>
+                </Col>
+              </Row>
+            </CardHeader>
+            <CardBody className="p-4 mb-5">
+              {
+                loading ?
                   <Row>
                     <Col lg={12}>
-                      <div className="h4 mb-0 d-flex align-items-center">
-                        <i className="fas fa-object-group" />
-                        <span className="ml-2">Create Product</span>
-                      </div>
+                      <Loader />
                     </Col>
                   </Row>
-                </CardHeader>
-                <CardBody>
-                  <Row>
+                :
+                  <Row className="mt-4 mb-4">
                     <Col lg={12}>
-                      <Formik
-                        initialValues={this.state.initProductValue}
-                        onSubmit={(values, {resetForm}) => {
+                      <Row>
+                        <Col lg={12}>
+                          <h4 className="mb-4">General Information</h4>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col lg={8}>
+                          <FormGroup className="mb-3">
+                            <Label htmlFor="product_code">Title</Label>
+                            <Input
+                              type="text"
+                              id="product_code"
+                              name="product_code"
+                              placeholder="Title"
+                              required
+                            />
+                          </FormGroup>
+                        </Col>
+                        <Col lg={4}>
+                          <FormGroup className="mb-3">
+                            <Label htmlFor="product_code">Price</Label>
+                            <div className="d-flex">
+                              <Input
+                                className="price-select"
+                                type="text"
+                                id="product_code"
+                                name="product_code"
+                                placeholder="Price"
+                                required
+                              />
+                              <Select
+                                className="currency-select"
+                                id="parentProduct"
+                                name="parentProduct"
+                                placeholder="USD"
+                              />
+                            </div>
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col lg={12}>
+                          <FormGroup className="mb-3">
+                            <Label htmlFor="product_code">Description</Label>
+                            <Editor
+                              editorState={editorState}
+                              toolbarClassName="editor-toolbar"
+                              wrapperClassName="wrapperClassName"
+                              editorClassName="massage-editor"
+                              onEditorStateChange={this.onEditorStateChange}
+                            />
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col lg={12}>
+                          
+                          <FormGroup className="mb-3 mr-4">
+                            <Label htmlFor="product_code">Payment Methods</Label>
+                            <div className="d-flex flex-wrap">
+                              <div className="custom-checkbox custom-control payment-checkbox">
+                                <input 
+                                  className="custom-control-input"
+                                  type="checkbox"
+                                  id="paypal"
+                                  name="SMTP-auth"
+                                  />
+                                <label className="custom-control-label" htmlFor="paypal">
+                                  <i className="fa fa-paypal"></i>
+                                  PayPal
+                                </label>
+                              </div>
 
-                          this.productHandleSubmit(values)
-                          resetForm(this.state.initProductValue)
+                              <div className="custom-checkbox custom-control payment-checkbox">
+                                <input 
+                                  className="custom-control-input"
+                                  type="checkbox"
+                                  id="btc"
+                                  name="SMTP-auth"
+                                  />
+                                <label className="custom-control-label" htmlFor="btc">
+                                  <img src={bitcoinIcon} width="20" height="20"/>
+                                  Bitcoin
+                                </label>
+                              </div>
 
-                          this.setState({
-                            selectedWareHouse: null,
-                            selectedParentProduct: null,
-                            selectedVatCategory: null,
-                          })
-                        }}
-                        validationSchema={Yup.object().shape({
-                          productName: Yup.string()
-                            .required("Product Name is Required"),
-                          vatCategory: Yup.string()
-                            .required("Vat Category is Required"),
-                        })}>
-                          {props => (
-                            <Form onSubmit={props.handleSubmit}>
-                              <Row>
-                                <Col lg={4}>
-                                  <FormGroup className="mb-3">
-                                    <Label htmlFor="productName">
-                                      <span className="text-danger">*</span>Name
-                                    </Label>
-                                    <Input
-                                      type="text"
-                                      id="productName"
-                                      name="productName"
-                                      onChange={props.handleChange}
-                                      value={props.values.productName}
-                                      placeholder="Enter Product Name"
-                                      className={
-                                        props.errors.productName && props.touched.productName
-                                          ? "is-invalid"
-                                          : ""
-                                      }
-                                    />
-                                    {props.errors.productName && props.touched.productName && (
-                                      <div className="invalid-feedback">{props.errors.productName}</div>
-                                    )}
-                                  </FormGroup>
-                                </Col>
-                                
-                                <Col lg={4}>
-                                  <FormGroup className="mb-3">
-                                    <Label htmlFor="productCode">Product Code</Label>
-                                    <Input
-                                      type="text"
-                                      id="productCode"
-                                      name="productCode"
-                                      onChange={props.handleChange}
-                                      value={props.values.productCode}
-                                      placeholder="Enter Product Code"
-                                    />
-                                  </FormGroup>
-                                </Col>
+                              <div className="custom-checkbox custom-control payment-checkbox">
+                                <input 
+                                  className="custom-control-input"
+                                  type="checkbox"
+                                  id="eth"
+                                  name="SMTP-auth"
+                                  />
+                                <label className="custom-control-label" htmlFor="eth">
+                                  <img src={ethereumIcon} width="20" height="20"/>
+                                  Ethereum
+                                </label>
+                              </div>
 
-                                <Col lg={4}>
-                                  <FormGroup className="mb-3">
-                                    <Label htmlFor="parent_product">Parent Product</Label>
-                                    <Select
-                                      className="select-default-width"
-                                      options={product_parent}
-                                      id="parentProduct"
-                                      name="parentProduct"
-                                      value={this.state.selectedParentProduct}
-                                      onChange={(option) => {
-                                        this.setState({
-                                          selectedParentProduct: option.value
-                                        })
-                                        props.handleChange("parentProduct")(option.value);
-                                      }}
-                                    />
-                                  </FormGroup>
-                                </Col>
-                              </Row>
-                              <Row>
-                                
-                                <Col lg={4}>
-                                  <FormGroup className="mb-3">
-                                    <Label htmlFor="unitPrice">Product Price</Label>
-                                    <Input
-                                      type="text"
-                                      id="unitPrice"
-                                      name="unitPrice"
-                                      placeholder="Enter Product Price"
-                                      onChange={props.handleChange}
-                                      value={props.values.unitPrice}
-                                    />
-                                  </FormGroup>
-                                </Col>
-                                <Col lg={4}>
-                                  <FormGroup className="mb-3">
-                                    <Label htmlFor="vatCategory"><span className="text-danger">*</span>Vat Percentage</Label>
-                                    <Select
-                                      className="select-default-width"
-                                      options={vat_list}
-                                      id="vatCategory"
-                                      name="vatCategory"
-                                      value={this.state.selectedVatCategory}
-                                      onChange={(option) => {
-                                        this.setState({
-                                          selectedVatCategory: option.value
-                                        })
-                                        props.handleChange("vatCategory")(option.value);
-                                      }}
-                                      className={
-                                        props.errors.vatCategory && props.touched.vatCategory
-                                          ? "is-invalid"
-                                          : ""
-                                      }
-                                    />
-                                    {props.errors.vatCategory && props.touched.vatCategory && (
-                                      <div className="invalid-feedback">{props.errors.vatCategory}</div>
-                                    )}
-                                  </FormGroup>
-                                </Col>
-                              </Row>
-                              <Row>
-                                <Col lg={12}>
-                                  <FormGroup check inline className="mb-3">
-                                    <Input
-                                      className="form-check-input"
-                                      type="checkbox"
-                                      id="vatIncluded"
-                                      name="vatIncluded"
-                                      onChange={props.handleChange}
-                                      value={props.values.vatIncluded}
-                                    />
-                                    <Label className="form-check-label" check htmlFor="vatIncluded">Vat Include</Label>
-                                  </FormGroup>
-                                </Col>
-                              </Row>
-                  
-                              <Row>
-                                <Col lg={4}>
-                                  <FormGroup className="mb-3">
-                                    <Label htmlFor="warehourse">Warehourse</Label>
-                                    <Select
-                                      className="select-default-width"
-                                      options={product_ware_house}
-                                      id="productWarehouse"
-                                      name="productWarehouse"
-                                      value={this.state.selectedWareHouse}
-                                      onChange={(option) => {
-                                        this.setState({
-                                          selectedWareHouse: option.value
-                                        })
-                                        props.handleChange("productWarehouse")(option.value);
-                                      }}
-                                    />
-                                  </FormGroup>
-                                </Col>
-                              </Row>
-                              <Row>
-                                <Col lg={4}>
-                                  <FormGroup className="text-right">
-                                    <Button color="primary" type="button" className="btn-square" 
-                                        onClick={this.showWarehouseModal}>
-                                      <i className="fa fa-plus"></i> Add a Warehouse
-                                    </Button>
-                                  </FormGroup>
-                                </Col>
-                              </Row>
-                              <Row>
-                                <Col lg={8}>
-                                  <FormGroup className="">
-                                    <Label htmlFor="description">Description</Label>
-                                    <Input
-                                      type="textarea"
-                                      name="productDescription"
-                                      id="productDescription"
-                                      rows="6"
-                                      placeholder="Description..."
-                                      onChange={props.handleChange}
-                                      value={props.values.productDescription}
-                                    />
-                                  </FormGroup>
-                                </Col>
-                              </Row>
-                              <Row>
-                                <Col lg={12} className="mt-5">
-                                  <FormGroup className="text-right">
-                                    <Button type="submit" color="primary" className="btn-square mr-3">
-                                      <i className="fa fa-dot-circle-o"></i> Create
-                                    </Button>
-                                    <Button type="submit" color="primary" className="btn-square mr-3">
-                                      <i className="fa fa-repeat"></i> Create and More
-                                    </Button>
-                                    <Button color="secondary" className="btn-square" 
-                                      onClick={() => {this.props.history.push('/admin/master/product')}}>
-                                      <i className="fa fa-ban"></i> Cancel
-                                    </Button>
-                                  </FormGroup>
-                                </Col>
-                              </Row>
-                            </Form>
-                          )}
-                      </Formik>
+                              <div className="custom-checkbox custom-control payment-checkbox">
+                                <input 
+                                  className="custom-control-input"
+                                  type="checkbox"
+                                  id="ltc"
+                                  name="SMTP-auth"
+                                  />
+                                <label className="custom-control-label" htmlFor="ltc">
+                                  <img src={litecoinIcon} width="20" height="20"/>
+                                  Litecoin
+                                </label>
+                              </div>
+
+                              <div className="custom-checkbox custom-control payment-checkbox">
+                                <input 
+                                  className="custom-control-input"
+                                  type="checkbox"
+                                  id="sp"
+                                  name="SMTP-auth"
+                                  />
+                                <label className="custom-control-label" htmlFor="sp">
+                                  <img src={stripeIcon} width="20" height="20"/>
+                                  Stripe
+                                </label>
+                              </div>
+
+                              <div className="custom-checkbox custom-control payment-checkbox">
+                                <input 
+                                  className="custom-control-input"
+                                  type="checkbox"
+                                  id="pm"
+                                  name="SMTP-auth"
+                                  />
+                                <label className="custom-control-label" htmlFor="pm">
+                                  <img src={perfectmoneyIcon} width="20" height="20"/>
+                                  Perfect Money
+                                </label>
+                              </div>
+
+                              <div className="custom-checkbox custom-control payment-checkbox">
+                                <input 
+                                  className="custom-control-input"
+                                  type="checkbox"
+                                  id="btcc"
+                                  name="SMTP-auth"
+                                  />
+                                <label className="custom-control-label" htmlFor="btcc">
+                                  <img src={bitcoinCashIcon} width="20" height="20"/>
+                                  Bitcoin Cash
+                                </label>
+                              </div>
+
+                              <div className="custom-checkbox custom-control payment-checkbox">
+                                <input 
+                                  className="custom-control-input"
+                                  type="checkbox"
+                                  id="sk"
+                                  name="SMTP-auth"
+                                  />
+                                <label className="custom-control-label" htmlFor="sk">
+                                  <img src={skrillIcon} width="20" height="20"/>
+                                  Skrill
+                                </label>
+                              </div>
+                            </div>
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                      <hr className="mt-4"/>
+
+                      <Row>
+                        <Col lg={12}>
+                          <h4 className="mb-4 mt-4">Product Stock</h4>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col lg={12}>
+                          <FormGroup className="mb-3">
+                            <Label htmlFor="product_code">Type</Label>
+                            <Select placeholder="Type" className="mb-3"></Select>
+                            <ImageUpload  addFile={this.addFile} files={files}/>
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col lg={12}>
+                          <FormGroup row>
+                            <Col xs="12" md="7" className="d-flex align-items-center">
+                              <AppSwitch className="mx-1 file-switch mr-2"
+                                style={{width: 50}}
+                                variant={'pill'} 
+                                color={'primary'}
+                                size="sm"
+                                /><span>Set how many this file can be sold </span>
+                            </Col>
+                          </FormGroup>
+                        </Col>
+                      </Row>
+
+                      <hr className="mt-4"/>
+                      <Row>
+                        <Col lg={12}>
+                          <h4 className="mb-4 mt-4">Customization</h4>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col lg={8}>
+                          <FormGroup className="mb-3">
+                            <Label htmlFor="product_code">Layout</Label>
+                            <Select placeholder="Layout"></Select>
+                          </FormGroup>
+                          <FormGroup className="mb-3">
+                            <Label htmlFor="product_code">Note to Customer(optional)</Label>
+                            <Input
+                              type="text"
+                              id="product_code"
+                              name="product_code"
+                              placeholder="Note to Customer"
+                              required
+                            />
+                          </FormGroup>
+                        </Col>
+                        <Col lg={4}>
+                          <FormGroup className="mb-3">
+                            <Label htmlFor="product_code">Image(optional)</Label>
+                            <ImageUpload  addFile={this.addFile} files={files}/>
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col lg={3}>
+                          <FormGroup className="mb-3">
+                            <Label htmlFor="product_code">Custom Fields(optional)</Label>
+                            <Button color="default">Add Custom Field</Button>
+                          </FormGroup>
+                        </Col>
+                      </Row>
+
+                      <hr className="mt-4"/>
+                      <Row>
+                        <Col lg={12}>
+                          <h4 className="mb-4 mt-4">Miscellaneous</h4>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col lg={12}>
+                          <FormGroup className="mb-3">
+                            <Label htmlFor="product_code">Webhook URL (optional)</Label>
+                            <Input
+                              type="text"
+                              id="product_code"
+                              name="product_code"
+                              placeholder="Webhook URL"
+                              required
+                            />
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col lg={6}>
+                          <FormGroup className="mb-3">
+                            <Label htmlFor="product_code">Crypto Currency Confirmations</Label>
+                            <DataSlider domain={[0, 6]} value={[3]} ticks={[0, 1, 2, 3, 4, 5, 6]}/>
+                          </FormGroup>
+                        </Col>
+                        <Col lg={6}>
+                          <FormGroup className="mb-3">
+                            <Label htmlFor="product_code">Max Risk Level</Label>
+                            <DataSlider domain={[0, 100]} value={[50]} ticks={[1, 50, 100]}/>
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col lg={12} className="d-flex">
+                          <FormGroup check inline className="mb-3 mr-4">
+                            <div className="custom-checkbox custom-control">
+                              <input 
+                                className="custom-control-input"
+                                type="checkbox"
+                                id="unlisted"
+                                name="SMTP-auth"
+                                />
+                              <label className="custom-control-label" htmlFor="unlisted">
+                                Unlisted &nbsp;
+                                <span href="#" id="unlistedTooltip"><i className="fa fa-question-circle"></i></span>
+                                <Tooltip placement="right" isOpen={unlistedTooltipOpen} target="unlistedTooltip" 
+                                  toggle={this.unlistedTooltipToggle.bind(this)}>
+                                  Unlisted!
+                                </Tooltip>
+                              </label>
+                            </div>
+                          </FormGroup>
+                          <FormGroup check inline className="mb-3 mr-4">
+                            <div className="custom-checkbox custom-control">
+                              <input 
+                                className="custom-control-input"
+                                type="checkbox"
+                                id="private"
+                                name="SMTP-auth"
+                                />
+                              <label className="custom-control-label" htmlFor="private">
+                                Private &nbsp;
+                                <span href="#" id="privateTooltip"><i className="fa fa-question-circle"></i></span>
+                                <Tooltip placement="right" isOpen={privateTooltipOpen} target="privateTooltip" 
+                                  toggle={this.privateTooltipToggle.bind(this)}>
+                                  Private
+                                </Tooltip>
+                              </label>
+                            </div>
+                          </FormGroup>
+                          <FormGroup check inline className="mb-3 mr-4">
+                            <div className="custom-checkbox custom-control">
+                              <input 
+                                className="custom-control-input"
+                                type="checkbox"
+                                id="block"
+                                name="SMTP-auth"
+                                />
+                              <label className="custom-control-label" htmlFor="block">
+                                Block VPNs/Proxies &nbsp;
+                                <span href="#" id="blockTooltip"><i className="fa fa-question-circle"></i></span>
+                                <Tooltip placement="right" isOpen={blockTooltipOpen} target="blockTooltip" 
+                                  toggle={this.blockTooltipToggle.bind(this)}>
+                                  Block VPNs/Proxies
+                                </Tooltip>
+                              </label>
+                            </div>
+                          </FormGroup>
+                          <FormGroup check inline className="mb-3 mr-4">
+                            <div className="custom-checkbox custom-control">
+                              <input 
+                                className="custom-control-input"
+                                type="checkbox"
+                                id="paypal-email"
+                                name="SMTP-auth"
+                                />
+                              <label className="custom-control-label" htmlFor="paypal-email">
+                                PayPal Email Delivery &nbsp;
+                                <span href="#" id="paypalTooltip"><i className="fa fa-question-circle"></i></span>
+                                <Tooltip placement="right" isOpen={paypalTooltipOpen} target="paypalTooltip" 
+                                  toggle={this.paypalTooltipToggle.bind(this)}>
+                                  PayPal Email Delivery
+                                </Tooltip>
+                              </label>
+                            </div>
+                          </FormGroup>
+                        </Col>
+                      </Row>
                     </Col>
                   </Row>
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
+              }
+            </CardBody>
+            <Button color="primary" className="" style={{width: 200}}
+            >Save Product</Button>
+            
+          </Card>
         </div>
-
-        <WareHouseModal openModal={this.state.openWarehouseModal} closeWarehouseModal={this.closeWarehouseModal}/>
       </div>
     )
   }

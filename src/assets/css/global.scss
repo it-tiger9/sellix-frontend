@@ -1,9 +1,8 @@
-
-
 // global html styles
-body, span, label, h1, h2, h3, h4, p, em {
-  font-family: Montserrat, serif;
+*, p, span, label {
+  font-family: "Poppins";
 }
+
 .nav-link {
   border-radius: 0 !important;
 }
@@ -14,9 +13,6 @@ body, span, label, h1, h2, h3, h4, p, em {
   border-top: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
 }
-
-
-
 
 // form styles
 .form-control {
@@ -38,7 +34,6 @@ body, span, label, h1, h2, h3, h4, p, em {
   }
 }
 
-
 .is-invalid ~ .invalid-feedback {
   display: block;
 }
@@ -47,7 +42,6 @@ div.Select.is-invalid {
   .Select-control {
     border:1px solid #f86c6b !important;
   }
-  
 }
 
 

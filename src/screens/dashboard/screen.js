@@ -9,11 +9,7 @@ import {
 } from 'reactstrap'
 
 import {
-  Invoice,
-  BankAccount,
-  CashFlow,
-  RevenueAndExpense,
-  ProfitAndLoss
+  DashBoardChart
 } from './sections'
 
 import * as DashboardActions from './actions'
@@ -108,10 +104,12 @@ class Dashboard extends React.Component {
                   </Card>
                 </Col>
               </Row>
+              <div className="mt-3">
+                <DashBoardChart height="400px"/>
+              </div>
             </CardBody>
           </Card>
         </div>
-        
       </div>
     )
   }

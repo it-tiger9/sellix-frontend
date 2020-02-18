@@ -79,6 +79,11 @@ import DetailEmployee from './employee/screens/detail'
 
 import Product from './product'
 import Categories from './categories'
+import CreateCategories from './categories/screens/create'
+import Order from './order'
+import Analytics from './analytics'
+import Reports from './reports'
+import Coupons from './coupons'
 
 
 import CreateProduct from './product/screens/create'
@@ -189,6 +194,11 @@ export {
 
   Product,
   Categories,
+  CreateCategories,
+  Order,
+  Analytics,
+  Reports,
+  Coupons,
 
   
   CreateProduct,

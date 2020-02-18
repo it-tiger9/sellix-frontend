@@ -7,7 +7,7 @@ const initState = {
   product_parent: []
 }
 
-const ProductReducer = (state = initState, action) => {
+const CategoryReducer = (state = initState, action) => {
   const { type, payload} = action
   
   switch(type) {
@@ -50,4 +50,4 @@ const ProductReducer = (state = initState, action) => {
   }
 }
 
-export default ProductReducer
+export default CategoryReducer

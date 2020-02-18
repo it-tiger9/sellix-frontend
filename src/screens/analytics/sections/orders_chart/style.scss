@@ -1,0 +1,35 @@
+//Bank Card
+.bank-card {
+  .bank-type {
+    color: green !important;
+    font-size: 18px;
+  }
+
+  .data-item:not(:last-child),
+  .data-item {
+    padding: 0 20px !important;
+
+    p {
+      font-size: 12px !important;
+    }
+
+    h3 {
+      font-size: 18px !important;
+    }
+  }
+
+  canvas {
+    // height: 250px !important;
+    width: 100% !important;
+  }
+  
+  .bank-type-select {
+    border: none;
+    padding: 0 !important;
+    font-size: 16px !important;
+    color: green !important;
+    font-weight: 600;
+    box-shadow: none !important;
+    height: 23px !important;
+  }
+}

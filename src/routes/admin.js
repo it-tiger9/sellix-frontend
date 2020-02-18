@@ -65,6 +65,10 @@ import {
 
   Product,
   Categories,
+  CreateCategories,
+  Order,
+  Analytics,
+  Reports,
 
 
   CreateProduct,
@@ -99,6 +103,7 @@ import {
   Faq
   
 } from 'screens'
+import { Coupons } from '../screens'
 
 const adminRoutes = [
 
@@ -391,16 +396,57 @@ const adminRoutes = [
     name: 'Detail',
     component: DetailProduct.screen
   },
+
+
+  // Custom
+  {
+    path: '/admin/product/all/create',
+    name: 'Product',
+    component: CreateProduct.screen
+  },
   {
     path: '/admin/product/all',
     name: 'Product',
     component: Product.screen
+  },
+  
+  {
+    path: '/admin/product/categories/create',
+    name: 'Categories',
+    component: CreateCategories.screen
   },
   {
     path: '/admin/product/categories',
     name: 'Categories',
     component: Categories.screen
   },
+
+  {
+    path: '/admin/orders',
+    name: 'Order',
+    component: Order.screen
+  },
+
+  {
+    path: '/admin/analytics/all',
+    name: 'Product',
+    component: Analytics.screen
+  },
+  {
+    path: '/admin/analytics/reports',
+    name: 'Categories',
+    component: Reports.screen
+  },
+
+  {
+    path: '/admin/coupons',
+    name: 'Coupons',
+    component: Coupons.screen
+  },
+
+
+
+
   {
     path: '/admin/master/project/create',
     name: 'Create',

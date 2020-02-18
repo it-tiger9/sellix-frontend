@@ -196,8 +196,8 @@ class Categories extends React.Component {
                 </Col>
                 <Col md={8}>
                   <div className="d-flex justify-content-end">
-                    
-                    <Button className="ml-3" color="primary">Add Category</Button>
+                    <Button className="ml-3" color="primary" 
+                      onClick={() => this.props.history.push(`/admin/product/categories/create`)}>Add Category</Button>
                   </div>
                 </Col>
               </Row>

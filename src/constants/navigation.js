@@ -31,27 +31,27 @@ export default {
     },
     {
       name: 'Orders',
-      url: '/admin/banking',
+      url: '/admin/orders',
       icon: 'fas fa-credit-card',
     },
     {
       name: 'Analytics',
-      url: '/admin/revenue',
+      url: '/admin/analytics',
       icon: 'fas fa-area-chart',
       children: [
         {
-          name: 'Users',
-          url: '/admin/settings/user',
+          name: 'All Analytics',
+          url: '/admin/analytics/all',
         },
         {
-          name: 'Organization',
-          url: '/admin/settings/organization',
-        }
+          name: 'Reports',
+          url: '/admin/analytics/reports',
+        },
       ]
     },
     {
       name: 'Coupons',
-      url: '/admin/expense',
+      url: '/admin/coupons',
       icon: 'fa fa-tags',
     },
     {

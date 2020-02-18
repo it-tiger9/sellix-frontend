@@ -1,6 +1,6 @@
 import Temp from './temp'
 import Invoice from './invoice'
-import BankAccount from './bank_account'
+import DashBoardChart from './chart'
 import CashFlow from './cash_flow'
 import RevenueAndExpense from './revenue_expense'
 import ProfitAndLoss from './profit_loss'
@@ -8,7 +8,7 @@ import ProfitAndLoss from './profit_loss'
 export {
   Temp,
   Invoice,
-  BankAccount,
+  DashBoardChart,
   CashFlow,
   RevenueAndExpense,
   ProfitAndLoss

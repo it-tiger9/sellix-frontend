@@ -133,7 +133,7 @@ class Product extends React.Component {
       row.type
     ) {
       return (
-        <div className="badge">
+        <div className="badge badge-normal">
           {row.type}
         </div>
       )  
@@ -200,7 +200,8 @@ class Product extends React.Component {
                       <i className="fas fa-search"/>
                       <Input placeholder="Search..." className="header-search-input"></Input>
                     </div>
-                    <Button className="ml-3" color="primary">Add Product</Button>
+                    <Button className="ml-3" color="primary" onClick={() => this.props.history.push(`/admin/product/all/create`)}>
+                      Add Product</Button>
                   </div>
                 </Col>
               </Row>

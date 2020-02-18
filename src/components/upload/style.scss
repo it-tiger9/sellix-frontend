@@ -1,0 +1,23 @@
+.image-uploader {
+    .drag-drop-area {
+        background-color: #FCFCFE;
+        border: 1px solid #F5F5F5;
+        padding: 50px;
+        border-radius: 10px;
+        text-align: center;
+        cursor: pointer;
+    }
+
+    p.caption {
+        font-size: 18px;
+        color: #A7A5B4;
+        font-weight: 500;
+    }
+    p.warning {
+        color: red;
+    }
+    i {
+        font-size: 22px;
+        color: #A7A5B4;
+    }
+}
