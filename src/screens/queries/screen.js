@@ -5,22 +5,16 @@ import {
   Card,
   CardHeader,
   CardBody,
-  Button,
   Row,
   Col,
-  ButtonGroup,
-  Input
 } from 'reactstrap'
-import { ToastContainer, toast } from 'react-toastify'
-import { BootstrapTable, TableHeaderColumn, SearchField } from 'react-bootstrap-table'
+import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
 import { Loader } from 'components'
 import { tableOptions } from 'constants/tableoptions'
 
-import 'react-toastify/dist/ReactToastify.css'
-import 'react-bootstrap-table/dist/react-bootstrap-table-all.min.css'
-
 import * as ProductActions from './actions'
 import './style.scss'
+
 
 const mapStateToProps = (state) => {
   return ({
@@ -34,8 +28,7 @@ const mapDispatchToProps = (dispatch) => {
   })
 }
 
-class Product extends React.Component {
-  
+class Queries extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -55,18 +48,18 @@ class Product extends React.Component {
     //     this.setState({ loading: false })
     //   }
     // })
+
     this.props.productActions.getProductList()
     this.setState({ loading: false })
   }
 
-  renderProductInfo (cell, row) {
+  renderQueryStatus (cell, row) {
     if (
-      row.info && row.id
+      row.status
     ) {
       return (
-        <div>
-          <p>{row.info}</p>
-          <p className="caption">{row.id}</p>
+        <div className={`badge badge-${row.status.toLowerCase()}`}>
+          {row.status}
         </div>
       )  
     } else {
@@ -76,79 +69,31 @@ class Product extends React.Component {
     }
   }
 
-  renderProductType (cell, row) {
-    if (
-      row.type
-    ) {
-      return (
-        <div className="badge badge-normal">
-          {row.type}
-        </div>
-      )  
-    } else {
-      return (
-        <p className="caption">No specified</p>
-      )
-    }
-  }
-
-  renderProductRevenue(cell, row) {
-    if (
-      row.revenue
-    ) {
-      return (
-        <p>
-          ${row.revenue}
-        </p>
-      )  
-    } else {
-      return (
-        <p className="caption">No specified</p>
-      )
-    }
-  }
-
-  renderOptions(cell, row) {
-    return (
-      <div className="d-flex actions">
-        <a>
-          <i className="fas fa-pen"/>
-        </a>
-        <a>
-          <i className="fas fa-bar-chart"/>
-        </a>
-        <a>
-          <i className="fas fa-trash"/>
-        </a>
-      </div>
-    )
-  }
 
   render() {
     const { loading } = this.state
     const { product_list } = this.props
-    const containerStyle = {
-      zIndex: 1999
-    }
 
     return (
       <div className="product-screen">
         <div className="animated fadeIn">
-          <ToastContainer position="top-right" autoClose={5000} style={containerStyle} />
           <Card className="grey">
             <CardHeader>
               <Row style={{alignItems: 'center'}}>
                 <Col md={4}>
-                  <h1>Products</h1>
+                  <h1>Queries</h1>
                 </Col>
                 <Col md={8}>
                   <div className="d-flex justify-content-end">
-                    <div className="searchbar white">
-                      <i className="fas fa-search"/>
-                      <Input placeholder="Search..." className="header-search-input"></Input>
+                    <div className="white">
+                        <div className="new-select fill">
+                        <select className="form-control" ref={this.dateRangeSelect}>
+                          <option value="12">No Sorting</option>
+                          <option value="6">Latest</option>
+                        </select>
+                        <i className="fa fa-caret-down fa-lg mt-4"/>
+                      </div>
                     </div>
-                    <Button className="ml-3" color="primary" onClick={() => this.props.history.push(`/admin/product/all/create`)}>
-                      Add Product</Button>
                   </div>
                 </Col>
               </Row>
@@ -177,39 +122,32 @@ class Product extends React.Component {
                         >
                           <TableHeaderColumn
                             isKey
-                            dataField="info"
-                            dataFormat={this.renderProductInfo}
+                            dataField="title"
+                            width = '40%'
                             dataSort
                           >
-                            Info
+                            Title
                           </TableHeaderColumn>
                           <TableHeaderColumn
-                            dataField="type"
-                            dataFormat={this.renderProductType}
+                            dataField="email"
                             dataSort
+                            width = "30%"
                           >
-                            Type
+                            Email
                           </TableHeaderColumn>
                           <TableHeaderColumn
-                            dataField="stock"
+                            dataField="status"
                             dataSort
+                            dataFormat={this.renderQueryStatus}
                           >
-                            Stock
+                            Status
                           </TableHeaderColumn>
                           <TableHeaderColumn
-                            dataField="revenue"
+                            dataField="updatedAt"
                             dataAlign="right"
-                            dataFormat={this.renderProductRevenue}
                             dataSort
                           >
-                            Revenue
-                          </TableHeaderColumn>
-                          <TableHeaderColumn
-                            dataField="id"
-                            dataAlign="right"
-                            dataFormat={this.renderOptions}
-                          >
-                            Options
+                            Updated at
                           </TableHeaderColumn>
                         </BootstrapTable>
                       </div>
@@ -224,4 +162,4 @@ class Product extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Product)
+export default connect(mapStateToProps, mapDispatchToProps)(Queries)

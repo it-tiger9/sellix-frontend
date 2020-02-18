@@ -66,7 +66,7 @@ class DashBoardChart extends Component {
 
   render() {
     const line = {
-      labels:  ['19.Jan', '20.Jan', '21.Jan', '22.Jan', '23.Jan', '24.Jan'],
+      labels:  ['19.Jan', '20.Jan', '21.Jan', '22.Jan', '23.Jan', '24.Jan', '25.Jan', '26.Jan', '27.Jan', '28.Jan', '29.Jan', '30.Jan', '31.Jan'],
       datasets: [
         {
           label: [],
@@ -87,7 +87,7 @@ class DashBoardChart extends Component {
           pointHoverBorderWidth: 2,
           pointRadius: 4,
           pointHitRadius: 20,
-          data: [12, 19, 3, 5, 2, 3],
+          data: [12, 19, 3, 5, 2, 3, 0, 0, 0, 0, 0, 0, 0],
         }
       ]
     }

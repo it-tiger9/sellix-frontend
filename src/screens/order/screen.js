@@ -16,12 +16,12 @@ import { BootstrapTable, TableHeaderColumn, SearchField } from 'react-bootstrap-
 import moment from 'moment'
 
 import { Loader } from 'components'
+import { tableOptions } from 'constants/tableoptions'
 
 import 'react-toastify/dist/ReactToastify.css'
 import 'react-bootstrap-table/dist/react-bootstrap-table-all.min.css'
 
 import * as ProductActions from './actions'
-
 import './style.scss'
 
 const mapStateToProps = (state) => {
@@ -29,14 +29,15 @@ const mapStateToProps = (state) => {
     product_list: state.product.product_list
   })
 }
+
 const mapDispatchToProps = (dispatch) => {
   return ({
     productActions: bindActionCreators(ProductActions, dispatch)
   })
 }
 
-class Order extends React.Component {
-  
+
+class Order extends React.Component { 
   constructor(props) {
     super(props)
     this.state = {
@@ -44,44 +45,6 @@ class Order extends React.Component {
     }
 
     this.initializeData = this.initializeData.bind(this)
-    this.onRowSelect = this.onRowSelect.bind(this)
-    this.onSelectAll = this.onSelectAll.bind(this)
-    this.goToDetail = this.goToDetail.bind(this)
-
-    this.renderShowsTotal = (start, to, total) => {
-      return (
-        <p style={ { color: 'black' } }>
-          Showing { start } to { to } entries
-        </p>
-      );
-    }
-
-    this.options = {
-      onRowClick: this.goToDetail,
-      paginationPosition: 'bottom',
-      page: 1,
-      sizePerPage: 5,  // which size per page you want to locate as default
-      pageStartIndex: 1, // where to start counting the pages
-      paginationSize: 3,  // the pagination bar size.
-      prePage: '<Prev', // Previous page button text
-      nextPage: 'Next>', // Next page button text
-      firstPage: 'First', // First page button text
-      lastPage: 'Last', // Last page button text
-      paginationShowsTotal: this.renderShowsTotal,  // Accept bool or function
-      paginationPosition: 'bottom',  // default is bottom, top and both is all available
-      hideSizePerPage: true// > You can hide the dropdown for sizePerPage
-      // alwaysShowAllBtns: true // Always show next and previous button
-      // withFirstAndLast: false > Hide the going to First and Last page button
-    }
-
-    this.selectRowProp = {
-      mode: 'checkbox',
-      bgColor: 'rgba(0,0,0, 0.05)',
-      clickToSelect: false,
-      onSelect: this.onRowSelect,
-      onSelectAll: this.onSelectAll
-    }
-
   }
 
   componentDidMount () {
@@ -95,21 +58,8 @@ class Order extends React.Component {
     //   }
     // })
 
-
-
     this.props.productActions.getProductList()
     this.setState({ loading: false })
-  }
-
-  goToDetail (row) {
-    this.props.history.push('/admin/master/product/detail')
-  }
-
-  onRowSelect (row, isSelected, e) {
-    console.log('one row checked ++++++++', row)
-  }
-  onSelectAll (isSelected, rows) {
-    console.log('current page all row checked ++++++++', rows)
   }
 
   renderOrderInfo (cell, row) {
@@ -183,14 +133,10 @@ class Order extends React.Component {
 
     const { loading } = this.state
     const { product_list } = this.props
-    const containerStyle = {
-      zIndex: 1999
-    }
 
     return (
       <div className="order-screen">
         <div className="animated fadeIn">
-          <ToastContainer position="top-right" autoClose={5000} style={containerStyle} />
           <Card className="grey">
             <CardHeader>
               <Row style={{alignItems: 'center'}}>
@@ -220,7 +166,7 @@ class Order extends React.Component {
                     <Col lg={12}>
                       <div>
                         <BootstrapTable
-                          options={ this.options }
+                          options={ tableOptions() }
                           data={product_list}
                           version="4"
                           hover

@@ -56,7 +56,7 @@ export default {
     },
     {
       name: 'Queries',
-      url: '/admin/taxes',
+      url: '/admin/queries',
       icon: 'fas fa-question-circle',
     },
     {

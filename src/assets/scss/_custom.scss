@@ -148,6 +148,7 @@ select {
     }
 
     i {
+        color: black;
         position: absolute;
         right: 20px;
         top: 36%;
@@ -308,12 +309,14 @@ table {
                 color: #613BEA;
             }
             
-            .badge-completed {
+            .badge-completed,
+            .badge-open {
                 color: #2BB224;
                 background-color: #CBF4C9;
             }
 
-            .badge-pending {
+            .badge-pending,
+            .badge-closed {
                 color: #B22424;
                 background-color: #F4C9C9;
             }

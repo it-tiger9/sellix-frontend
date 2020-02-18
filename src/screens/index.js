@@ -84,6 +84,7 @@ import Order from './order'
 import Analytics from './analytics'
 import Reports from './reports'
 import Coupons from './coupons'
+import Queries from './queries'
 
 
 import CreateProduct from './product/screens/create'
@@ -199,6 +200,7 @@ export {
   Analytics,
   Reports,
   Coupons,
+  Queries,
 
   
   CreateProduct,

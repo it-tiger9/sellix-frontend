@@ -69,6 +69,8 @@ import {
   Order,
   Analytics,
   Reports,
+  Coupons,
+  Queries,
 
 
   CreateProduct,
@@ -103,7 +105,6 @@ import {
   Faq
   
 } from 'screens'
-import { Coupons } from '../screens'
 
 const adminRoutes = [
 
@@ -442,6 +443,13 @@ const adminRoutes = [
     path: '/admin/coupons',
     name: 'Coupons',
     component: Coupons.screen
+  },
+
+
+  {
+    path: '/admin/queries',
+    name: 'Queries',
+    component: Queries.screen
   },
 
 
