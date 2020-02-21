@@ -26,18 +26,24 @@
     color: #613BEA !important;
 }
 
+.btn-white {
+    background-color: white;
+    color: #A7A5B4 !important;
+}
+
 .daterangepicker {
-    right: 30px !important;
+    // right: 30px !important;
 
     button {
-        min-height: 35px;
+        min-height: 33px;
+        border-radius: 0 !important;
     }
 }
 
-.daterangepicker:before, .daterangepicker:after {
-    left: inherit !important;
-    right: 50px !important;
-}
+// .daterangepicker:before, .daterangepicker:after {
+//     left: inherit !important;
+//     right: 50px !important;
+// }
 
 .calendar-table {
     table td {
@@ -75,6 +81,7 @@
     color: #A7A5B4;
     padding: 0 30px 0 20px;
     border-radius: 10px;
+    height: 60px;
     background-color: #FCFCFE;
     border: 1px solid #F5F5F5;
 }
@@ -101,7 +108,7 @@ select {
 }
 
 .form-control {
-    height: 60px !important;
+    min-height: 60px !important;
     background-color: #FCFCFE !important;
     border: 1px solid #F5F5F5 !important;
     padding: 0 25px;
@@ -194,7 +201,7 @@ select {
         font-size: 18px;
         color: #A7A5B4;
         font-weight: 500;
-        font-family: 'Poppins';
+        font-family: 'Poppins-SemiBold';
     }
 }
 
@@ -252,9 +259,30 @@ select {
         p.report-title {
             font-size: 18px;
             color: black;
-            font-weight: 600;
+            font-family: 'Poppins-SemiBold' !important;
             margin-bottom: 0;
         }
+    }
+}
+
+.app-header .navbar-nav .dropdown-menu-right {
+    top: 35px !important;
+    right: 10px !important;
+    left: auto !important;
+    transform: none !important;
+}
+
+.price-select {
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+    padding-right: 10px !important;
+}
+
+.currency-select {
+    min-width: 100px !important;
+    .Select-control {
+        border-top-left-radius: 0 !important;
+        border-bottom-left-radius: 0 !important;
     }
 }
 
@@ -310,7 +338,8 @@ table {
             }
             
             .badge-completed,
-            .badge-open {
+            .badge-open,
+            .badge-live {
                 color: #2BB224;
                 background-color: #CBF4C9;
             }

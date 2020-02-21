@@ -1,4 +1,4 @@
-export default {
+export const mainNavigation =  {
   items: [
     {
       name: 'Dashboard',
@@ -61,7 +61,7 @@ export default {
     },
     {
       name: 'Feedback',
-      url: '/admin/report',
+      url: '/admin/feedback',
       icon: "fa fa-commenting",
     },
     {
@@ -71,23 +71,64 @@ export default {
     },
     {
       name: 'Developer',
-      url: '/admin/settings',
+      url: '/admin/developer',
       icon: 'fas fa-code',
       children: [
         {
-          name: 'Users',
-          url: '/admin/settings/user',
+          name: 'Webhooks',
+          url: '/admin/developer/webhooks',
         },
         {
-          name: 'Organization',
-          url: '/admin/settings/organization',
+          name: 'Webhook Logs',
+          url: '/admin/developer/webhook-logs',
         }
       ]
     },
     {
       name: 'Pages',
-      url: '/admin/settings',
+      url: '/admin/pages',
       icon: 'fa fa-file',
     }
   ]
 }
+
+
+export const accountSettingsNavigation =  {
+  items: [
+    {
+      name: 'General',
+      url: '/admin/settings',
+    },
+    {
+      name: 'Security',
+      url: '/admin/settings/security',
+    },
+    {
+      name: 'Notifications',
+      url: '/admin/settings/notifications',
+    }
+  ]
+}
+
+
+export const shopSettingsNavigation =  {
+  items: [
+    {
+      name: 'Members',
+      url: '/admin/settings/memebers',
+    },
+    {
+      name: 'Payments',
+      url: '/admin/settings/payments',
+    },
+    {
+      name: 'Billing',
+      url: '/admin/settings/billing',
+    },
+    {
+      name: 'Customization',
+      url: '/admin/settings/customizatoin',
+    }
+  ]
+}
+

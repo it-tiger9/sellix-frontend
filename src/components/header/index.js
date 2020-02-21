@@ -65,12 +65,15 @@ class Header extends Component {
           </NavItem>
           <UncontrolledDropdown nav direction="down" className="d-sm-down-none ml-3 mr-3">
             <DropdownToggle className="user-name" nav>
-            <i className="fa icon-question nav-icon" style={{fontSize: 22, fontWeight: 'bold'}}></i>
+              <i className="fa icon-question nav-icon" style={{fontSize: 22, fontWeight: 'bold', marginTop: 2}}></i>
             </DropdownToggle>
             
             <DropdownMenu right>
               <DropdownItem onClick={() => this.props.history.push('/admin/profile')}>
-                 Dashboard
+                 Your Shop
+              </DropdownItem>
+              <DropdownItem onClick={() => this.props.history.push('/admin/profile')}>
+                 Settings
               </DropdownItem>
               <DropdownItem onClick={() => this.props.history.push('/admin/settings/general')}>
                 Sign Out
@@ -84,8 +87,14 @@ class Header extends Component {
             </DropdownToggle>
             
             <DropdownMenu right>
-              <DropdownItem onClick={() => this.props.history.push('/admin/profile')}>
+              <DropdownItem onClick={() => this.props.history.push('/admin')}>
                  Dashboard
+              </DropdownItem>
+              <DropdownItem onClick={() => this.props.history.push('/admin/profile')}>
+                 Your Shop
+              </DropdownItem>
+              <DropdownItem onClick={() => this.props.history.push('/admin/profile')}>
+                 Settings
               </DropdownItem>
               <DropdownItem onClick={() => this.props.history.push('/admin/settings/general')}>
                 Sign Out
@@ -104,8 +113,14 @@ class Header extends Component {
             </DropdownToggle>
 
             <DropdownMenu right>
-              <DropdownItem onClick={() => this.props.history.push('/admin/profile')}>
+              <DropdownItem onClick={() => this.props.history.push('/admin')}>
                  Dashboard
+              </DropdownItem>
+              <DropdownItem onClick={() => this.props.history.push('/shop')}>
+                 Your Shop
+              </DropdownItem>
+              <DropdownItem onClick={() => this.props.history.push('/admin/profile')}>
+                 Settings
               </DropdownItem>
               <DropdownItem onClick={() => this.props.history.push('/admin/settings/general')}>
                 Sign Out

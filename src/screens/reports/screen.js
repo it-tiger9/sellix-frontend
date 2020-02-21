@@ -15,9 +15,7 @@ import { ToastContainer, toast } from 'react-toastify'
 import { BootstrapTable, TableHeaderColumn, SearchField } from 'react-bootstrap-table'
 import { Loader } from 'components'
 import { tableOptions } from 'constants/tableoptions'
-
-import 'react-toastify/dist/ReactToastify.css'
-import 'react-bootstrap-table/dist/react-bootstrap-table-all.min.css'
+import { NewReportModal } from './sections'
 
 import * as ProductActions from './actions'
 import './style.scss'
@@ -39,6 +37,7 @@ class Reports extends React.Component {
     super(props)
     this.state = {
       loading: true,
+      openModal: false
     }
 
     this.initializeData = this.initializeData.bind(this)
@@ -123,17 +122,24 @@ class Reports extends React.Component {
     )
   }
 
+
+  openNewReportModal() {
+    this.setState({openModal: true})
+  }
+
+  closeNewReportModal() {
+    this.setState({openModal: false})
+  }
+
   render() {
-    const { loading } = this.state
+    const { loading, openModal } = this.state
     const { product_list } = this.props
-    const containerStyle = {
-      zIndex: 1999
-    }
+
 
     return (
       <div className="product-screen">
         <div className="animated fadeIn">
-          <ToastContainer position="top-right" autoClose={5000} style={containerStyle} />
+          <NewReportModal openModal={openModal} closeModal={this.closeNewReportModal.bind(this)}/>
           <Card className="grey">
             <CardHeader>
               <Row style={{alignItems: 'center'}}>
@@ -146,7 +152,8 @@ class Reports extends React.Component {
                       <i className="fas fa-search"/>
                       <Input placeholder="Search..." className="header-search-input"></Input>
                     </div>
-                    <Button className="ml-3" color="primary">New Report</Button>
+                    <Button className="ml-3" color="primary" onClick={this.openNewReportModal.bind(this)}>
+                      New Report</Button>
                   </div>
                 </Col>
               </Row>

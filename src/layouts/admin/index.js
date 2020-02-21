@@ -7,13 +7,8 @@ import { Container } from 'reactstrap'
 import {
   AppAside,
   AppBreadcrumb,
-  AppFooter,
   AppHeader,
   AppSidebar,
-  AppSidebarFooter,
-  AppSidebarForm,
-  AppSidebarHeader,
-  AppSidebarMinimizer,
   AppSidebarNav,
 } from '@coreui/react'
 import { ToastContainer, toast } from 'react-toastify'
@@ -24,7 +19,7 @@ import {
   CommonActions
 } from 'services/global'
 
-import navigation from 'constants/navigation'
+import { mainNavigation, accountSettingsNavigation, shopSettingsNavigation } from 'constants/navigation'
 
 import {
   Aside,
@@ -34,8 +29,6 @@ import {
 } from 'components'
 
 import './style.scss'
-
-
 
 const mapStateToProps = (state) => {
   return ({
@@ -50,7 +43,6 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 class AdminLayout extends React.Component {
-
   constructor(props) {
     super(props)
     this.state = {
@@ -93,10 +85,11 @@ class AdminLayout extends React.Component {
   }
 
   render() {
-
     const containerStyle = {
       zIndex: 1999
     }
+
+    let isSettings = this.props.location.pathname.includes('/admin/settings')?true:false
 
     return (
       <div className="admin-container">
@@ -109,7 +102,7 @@ class AdminLayout extends React.Component {
           <div className="app-body">
             <AppSidebar style={{width: 230}} className="pt-4 mb-5 mr-4" display="lg">
               <Suspense>
-                <AppSidebarNav navConfig={navigation} {...this.props} />
+                <AppSidebarNav navConfig={mainNavigation} {...this.props} />
               </Suspense>
             </AppSidebar>
             <main className="main mt-5 mb-5">

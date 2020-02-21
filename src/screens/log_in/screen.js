@@ -15,7 +15,9 @@ import {
   InputGroup,
   InputGroupAddon,
   InputGroupText,
-  Row
+  Row,
+  FormGroup,
+  Label
 } from 'reactstrap'
 
 import {
@@ -85,8 +87,6 @@ class LogIn extends React.Component {
 
   render() {
 
-    const { version } = this.props
-
     return (
       <div className="log-in-screen">
         <div className="animated fadeIn">
@@ -98,89 +98,68 @@ class LogIn extends React.Component {
                 </Col>
               </Row>
               <Row className="justify-content-center">
-                <Col md="8">
+                <Col md="11">
                   <CardGroup>
-                    <Card className="p-4">
-                      <CardBody>
+                    <Card>
+                      <CardBody className="p-5 bg-gray-100">
                         <Form onSubmit={this.logInHandler}>
-                          <h1>Log In</h1>
-                          <p className="text-muted">Log In to your account</p>
-                          <InputGroup className="mb-3">
-                            <InputGroupAddon addonType="prepend">
-                              <InputGroupText>
-                                <i className="icon-user"></i>
-                              </InputGroupText>
-                            </InputGroupAddon>
+                          <h4 className="text-center mb-4">Log In</h4>
+                          <FormGroup className="mb-3">
+                            <Label htmlFor="product_code">Email</Label>
                             <Input
                               type="text"
-                              placeholder="Username"
-                              name="username"
-                              value={this.state.username}
-                              onChange={e => this.handleChange('username', e.target.value)}
-                              autoComplete="username"
+                              id="product_code"
+                              name="product_code"
+                              placeholder="Email"
                               required
                             />
-                          </InputGroup>
-                          <InputGroup className="mb-4">
-                            <InputGroupAddon addonType="prepend">
-                              <InputGroupText>
-                                <i className="icon-lock"></i>
-                              </InputGroupText>
-                            </InputGroupAddon>
+                          </FormGroup>
+                          <FormGroup className="mb-4">
+                            <Label htmlFor="product_code">Password</Label>
                             <Input
                               type="password"
+                              id="product_code"
+                              name="product_code"
                               placeholder="Password"
-                              name="password"
-                              value={this.state.password}
-                              onChange={e => this.handleChange('password', e.target.value)}
-                              autoComplete="current-password"
                               required
                             />
-                          </InputGroup>
+                          </FormGroup>
+                          
                           <Row>
-                            <Col xs="6">
+                            <Col lg={12} className="text-center mt-4">
                               <Button
                                 color="primary"
                                 type="submit"
-                                className="px-4 btn-square"
                               >
-                                <i className="fa fa-sign-in" /> Log In
+                                Sign In
                               </Button>
                             </Col>
-                            <Col xs="6" className="text-right">
-                              <Button color="link" className="px-0">Forgot password?</Button>
+                          </Row>
+                          <Row>
+                            <Col>
+                              <FormGroup className="mb-0 text-center mt-3">
+                                <Label className="fw-100 mb-0 mr-2" style={{fontWeight: 400}}>Don't have an account?</Label> 
+                                <Link to="/register">
+                                  <Label style={{cursor: 'pointer'}}><b>Sign Up</b></Label>
+                                </Link>
+                              </FormGroup>
                             </Col>
                           </Row>
                         </Form>
                       </CardBody>
                     </Card>
-                    <Card className="text-white bg-primary d-md-down-none">
-                      <CardHeader className="bg-primary">
-                        <div className="text-right">
-                          {
-                            version !== '' ?
-                              <label className="text-white mb-0">v. {version} </label>
-                            :
-                              ''
-                          }
-                        </div>
-                      </CardHeader>
-                      <CardBody className="text-center">
-                        <div>
-                          <h2>Sign up</h2>
-                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                            labore et dolore magna aliqua.</p>
+                    <Card className="second-card text-white bg-primary d-md-down-none">
+                      <CardBody className="text-center bg-primary flex align-items-center">
+                          <h2><b>Hello friend!</b></h2>
+                          <p style={{width: '70%'}}>Enter your personal info and star journey with us.</p>
                           <Link to="/register">
                             <Button
                               color="primary"
-                              className="mt-3 btn-square"
                               active
-                              tabIndex={-1}
                             >
-                              <i className="fa fa-user"/> Register Now!
+                              Sign Up
                             </Button>
                           </Link>
-                        </div>
                       </CardBody>
                     </Card>
                   </CardGroup>

@@ -61,7 +61,7 @@ class Dashboard extends React.Component {
                 <h1 className="title">Dashboard</h1>
                 <div className="card-header-actions">
                   <div className="new-select fill">
-                    <select className="form-control" ref={this.dateRangeSelect} onChange={(e) => this.handleChange(e)}>
+                    <select className="form-control" ref={this.dateRangeSelect}>
                       <option value="12">Last 12 Months</option>
                       <option value="6">Last 6 Months</option>
                       <option value="3">Last 3 Months</option>

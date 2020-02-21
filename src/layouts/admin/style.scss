@@ -1,5 +1,5 @@
 .admin-container {
-  padding: 2% 1%;
+  // padding: 0 10px;
 
   .nav-link {
     font-family: "Poppins";
@@ -14,7 +14,8 @@
     border-radius: 10px;
     padding: 20px 10px;
     height: 100px;
-    margin: 0 10px;
+    margin: 0 20px;
+    margin-top: 30px;
     
     button:focus {
       outline: none;
@@ -35,13 +36,15 @@
     }
 
     @media (max-width: 991.98px) {
-      width: 98% !important;
+      width: 100% !important;
+      padding:0 !important;
+      margin: 0 !important
     }
   }
 
 
   .app-body {
-    padding: 0 10px;
+    padding: 0 20px;
 
     @media (max-width: 991.98px) {
       margin-top: 100px !important;
@@ -96,6 +99,7 @@
     }
     .nav-link {
       padding: 0 1rem !important;
+      font-family: Poppins-SemiBold !important;
       color: #A7A5B4;
       display: flex;
       align-items: center;

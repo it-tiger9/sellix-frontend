@@ -75,7 +75,7 @@ class Analytics extends React.Component {
               <div className="flex-wrapper align-items-center">
                 <h1 className="title">Analytics</h1>
                 <div className="card-header-actions">
-                  <DateRangePicker2 ranges={ranges} getDate={() => {}}/>
+                  <DateRangePicker2 ranges={ranges} getDate={() => {}} opens={'left'}/>
                 </div>
               </div>
               <Row className="mt-4">

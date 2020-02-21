@@ -69,7 +69,7 @@ import FinancialReport from './financial_report'
 import ChartAccount from './chart_account'
 import CreateChartAccount from './chart_account/screens/create'
 import DetailChartAccount from './chart_account/screens/detail'
-import Contact from './contact'
+
 import CreateContact from './contact/screens/create'
 import DetailContact from './contact/screens/detail'
 import Employee from './employee'
@@ -85,6 +85,12 @@ import Analytics from './analytics'
 import Reports from './reports'
 import Coupons from './coupons'
 import Queries from './queries'
+import Feedbacks from './feedbacks'
+import Webhooks from './webhooks'
+import WebhookLogs from './webhook_logs'
+import Contact from './contact'
+import ShopFeedback from './feedbacks_shop'
+import ShopProducts from './product_shop'
 
 
 import CreateProduct from './product/screens/create'
@@ -201,6 +207,11 @@ export {
   Reports,
   Coupons,
   Queries,
+  Feedbacks,
+  Webhooks,
+  WebhookLogs,
+  ShopFeedback,
+  ShopProducts,
 
   
   CreateProduct,

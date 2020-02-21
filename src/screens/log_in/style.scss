@@ -1,5 +1,44 @@
 .log-in-screen {
+  background-color: white;
   .card-header {
     border-bottom: 0px;
+  }
+
+  .card {
+    border-radius: 0 !important;
+
+    .card-body {
+      border-radius: 0 !important;
+      border-top-left-radius: 10px !important;
+      border-bottom-left-radius: 10px !important;
+    }
+  }
+
+  .second-card {
+    max-width: 397px;
+    border-top-right-radius: 10px !important;
+    border-bottom-right-radius: 10px !important;
+
+    .card-body {
+      border-top-right-radius: 10px !important;
+      border-bottom-right-radius: 10px !important;
+      display: flex;
+      flex-direction: column;
+      align-items: center !important;
+      justify-content: center;
+
+      h2 {
+        font-size: 36px;
+      }
+
+      p {
+        font-size: 18px;
+      }
+
+      button {
+        border: 2px solid #F6F4FF !important;
+      }
+    }
+    
   }
 }

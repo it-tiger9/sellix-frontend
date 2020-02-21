@@ -1,7 +1,5 @@
-import Temp from './temp'
-import WareHouseModal from './warehouse_modal'
+import NewReportModal from './newreport_modal'
 
 export {
-  Temp,
-  WareHouseModal
+  NewReportModal
 }
