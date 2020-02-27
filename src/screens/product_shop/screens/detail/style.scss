@@ -2,4 +2,53 @@
   .card-header {
     color: #20a8d8;
   }
+  .paypal-instant {
+    background-color: #FCFCFE;
+    border: 1px solid #F5F5F5;
+    border-radius: 10px;
+    width: 230px;
+    margin: 0 auto;
+    font-size: 14px;
+    color: #A7A5B4;
+    h4 {
+      font-size: 15px;
+      flex: 1;
+    }
+    i {
+      color: #27346A;
+      font-size: 18px;
+      margin-right: 10px;
+    }
+
+    button {
+      padding: 0;
+      flex: 1;
+      height: 25px;
+      min-height: 25px;
+      border: none !important;
+      border-radius: 5px !important;
+      background: #D6E6FF;
+      color: #27346A !important;
+      font-size: 10px !important;
+      font-family: 'Poppins-semiBold' !important;
+    }
+  }
+
+  .stock-info {
+    background-color: #E4D6FF;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+
+    .bold {
+      font-family: 'Poppins-SemiBold';
+    }
+  }
+
+  .detail {
+    p {
+      color: #A7A5B4;
+      font-size: 18px;
+      line-height: 3em;
+    }
+  }
 }

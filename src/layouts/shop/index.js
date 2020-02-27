@@ -19,7 +19,9 @@ import {
   AuthActions,
   CommonActions
 } from 'services/global'
-
+import { ThemeProvider, createGlobalStyle  } from 'styled-components';
+import { darkTheme, lightTheme } from 'layouts/theme/theme'
+import { GlobalStyles } from 'layouts/theme/global'
 import { mainNavigation, accountSettingsNavigation, shopSettingsNavigation } from 'constants/navigation'
 
 import {
@@ -49,6 +51,7 @@ class ShopLayout extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      theme: 'light'
     }
   }
 
@@ -87,74 +90,85 @@ class ShopLayout extends React.Component {
     // }
   }
 
+  changeTheme() {
+    this.setState({
+      theme: this.state.theme == 'light'? 'dark': 'light'
+    })
+  }
+
   render() {
     const containerStyle = {
       zIndex: 1999
     }
 
+    const {theme} = this.state
+
     let isSettings = this.props.location.pathname.includes('/admin/settings')?true:false
 
     return (
-      <div className="admin-container">
-        <div className="app">
-          <AppHeader>
-            <Suspense fallback={Loading()}>
-              <Header {...this.props} />
-            </Suspense>
-          </AppHeader>
-          <div className="app-body flex-column">
-            <section className="mt-4 pt-5 pb-4">
-                <div className="br-2 bg-primary logo-background"></div>
-                <div className="text-center align-items-center logo-content">
-                    <h4 className="text-white mb-3">PixelStore</h4>
-                    <Card className="bg-white mb-0 ml-auto mr-auto pt-1 pb-1 pl-3 pr-3 flex-row" style={{width: 'fit-content'}}>
-                        <span className="text-green mr-2">20</span>
-                        <span className="">|</span>
-                        <span className="text-grey pl-2 pr-2">2</span>
-                        <span className="">|</span>
-                        <span className="text-red ml-2">20</span>
-                    </Card>
-                    <img src={shopIcon} width="150" height="150"/>
-                </div>
-                <div>
-                    <Nav className="d-flex flex-row justify-content-center" navbar>
-                        <NavItem className="px-3">
-                            <NavLink to="/shop/products" className="nav-link" >Products</NavLink>
-                        </NavItem>
-                        <NavItem className="px-3">
-                            <NavLink to="/shop/contact" className="nav-link">Contact</NavLink>
-                        </NavItem>
-                        <NavItem className="px-3">
-                            <NavLink to="/shop/feedbacks" className="nav-link">Feedback</NavLink>
-                        </NavItem>
-                    </Nav>
-                </div>
-            </section>
-            <main className="main mt-3 mb-5">
-              <Container className="p-0" fluid>
+      <ThemeProvider theme={theme=='light'?lightTheme:darkTheme}>
+        <GlobalStyles />
+          <div className="admin-container">
+            <div className="app">
+              <AppHeader>
                 <Suspense fallback={Loading()}>
-                  <ToastContainer position="top-right" autoClose={5000} style={containerStyle} />
-                  <Switch>
-                    {
-                      shopRoutes.map((prop, key) => {
-                        if (prop.redirect)
-                          return <Redirect from={prop.path} to={prop.pathTo} key={key} />
-                        return (
-                          <Route
-                            path={prop.path}
-                            component={prop.component}
-                            key={key}
-                          />
-                        )
-                      })
-                    }
-                  </Switch>
+                  <Header {...this.props} theme={theme} changeTheme={this.changeTheme.bind(this)}  />
                 </Suspense>
-              </Container>
-            </main>
+              </AppHeader>
+              <div className="app-body flex-column">
+                <section className="mt-4 pt-5 pb-4">
+                    <div className="br-2 bg-primary logo-background"></div>
+                    <div className="text-center align-items-center logo-content">
+                        <h4 className="text-white mb-3">PixelStore</h4>
+                        <Card className="bg-white mb-0 ml-auto mr-auto pt-1 pb-1 pl-3 pr-3 flex-row" style={{width: 'fit-content'}}>
+                            <span className="text-green mr-2">20</span>
+                            <span className="">|</span>
+                            <span className="text-grey pl-2 pr-2">2</span>
+                            <span className="">|</span>
+                            <span className="text-red ml-2">20</span>
+                        </Card>
+                        <img src={shopIcon} width="150" height="150"/>
+                    </div>
+                    <div>
+                        <Nav className="d-flex flex-row justify-content-center" navbar>
+                            <NavItem className="px-3">
+                                <NavLink to="/shop/products" className="nav-link" >Products</NavLink>
+                            </NavItem>
+                            <NavItem className="px-3">
+                                <NavLink to="/shop/contact" className="nav-link">Contact</NavLink>
+                            </NavItem>
+                            <NavItem className="px-3">
+                                <NavLink to="/shop/feedbacks" className="nav-link">Feedback</NavLink>
+                            </NavItem>
+                        </Nav>
+                    </div>
+                </section>
+                <main className="main mt-3 mb-5">
+                  <Container className="p-0" fluid>
+                    <Suspense fallback={Loading()}>
+                      <ToastContainer position="top-right" autoClose={5000} style={containerStyle} />
+                      <Switch>
+                        {
+                          shopRoutes.map((prop, key) => {
+                            if (prop.redirect)
+                              return <Redirect from={prop.path} to={prop.pathTo} key={key} />
+                            return (
+                              <Route
+                                path={prop.path}
+                                component={prop.component}
+                                key={key}
+                              />
+                            )
+                          })
+                        }
+                      </Switch>
+                    </Suspense>
+                  </Container>
+                </main>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        </ThemeProvider>
     )
   }
 }

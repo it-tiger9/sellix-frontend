@@ -1,0 +1,16 @@
+.create-pages-screen {
+  .code-addon {
+    background-color: #E4D6FF !important;
+    padding-left: 3% !important;
+    padding-right: 3% !important;
+    color: #613BEA !important;
+    z-index: 2;
+    margin-right: -15px;
+  }
+
+  .ace_editor {
+    * {
+      font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace !important;
+    }
+  }
+}

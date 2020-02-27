@@ -13,6 +13,10 @@ import {
 } from '@coreui/react'
 import { ToastContainer, toast } from 'react-toastify'
 
+import { ThemeProvider, createGlobalStyle  } from 'styled-components';
+import { darkTheme, lightTheme } from 'layouts/theme/theme'
+import { GlobalStyles } from 'layouts/theme/global'
+
 import { adminRoutes } from 'routes'
 import {
   AuthActions,
@@ -46,6 +50,7 @@ class AdminLayout extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      theme: 'light'
     }
   }
 
@@ -84,57 +89,68 @@ class AdminLayout extends React.Component {
     // }
   }
 
+  changeTheme() {
+    this.setState({
+      theme: this.state.theme == 'light'? 'dark': 'light'
+    })
+  }
+
   render() {
     const containerStyle = {
       zIndex: 1999
     }
 
+    const {theme} = this.state
+
     let isSettings = this.props.location.pathname.includes('/admin/settings')?true:false
 
     return (
-      <div className="admin-container">
-        <div className="app">
-          <AppHeader>
-            <Suspense fallback={Loading()}>
-              <Header {...this.props} />
-            </Suspense>
-          </AppHeader>
-          <div className="app-body">
-            <AppSidebar style={{width: 230}} className="pt-4 mb-5 mr-4" display="lg">
-              <Suspense>
-                <AppSidebarNav navConfig={mainNavigation} {...this.props} />
-              </Suspense>
-            </AppSidebar>
-            <main className="main mt-5 mb-5">
-              <Container className="p-0" fluid>
-                <Suspense fallback={Loading()}>
-                  <ToastContainer position="top-right" autoClose={5000} style={containerStyle} />
-                  <Switch>
-                    {
-                      adminRoutes.map((prop, key) => {
-                        if (prop.redirect)
-                          return <Redirect from={prop.path} to={prop.pathTo} key={key} />
-                        return (
-                          <Route
-                            path={prop.path}
-                            component={prop.component}
-                            key={key}
-                          />
-                        )
-                      })
-                    }
-                  </Switch>
-                </Suspense>
-              </Container>
-            </main>
-            <AppAside>
+      <ThemeProvider theme={theme=='light'?lightTheme:darkTheme}>
+        <GlobalStyles />
+        <div className="admin-container">
+          <div className="app">
+            <AppHeader>
               <Suspense fallback={Loading()}>
-                <Aside />
+                <Header {...this.props} theme={theme} changeTheme={this.changeTheme.bind(this)}/>
               </Suspense>
-            </AppAside>
+            </AppHeader>
+            <div className="app-body">
+              <AppSidebar  className="pt-4 mb-5" display="lg">
+                <Suspense>
+                  <AppSidebarNav navConfig={mainNavigation} {...this.props} />
+                </Suspense>
+              </AppSidebar>
+              <main className="main mt-5 mb-5">
+                <Container className="p-0" fluid>
+                  <Suspense fallback={Loading()}>
+                    <ToastContainer position="top-right" autoClose={5000} style={containerStyle} />
+                    <Switch>
+                      {
+                        adminRoutes.map((prop, key) => {
+                          if (prop.redirect)
+                            return <Redirect from={prop.path} to={prop.pathTo} key={key} />
+                          return (
+                            <Route
+                              path={prop.path}
+                              component={prop.component}
+                              key={key}
+                            />
+                          )
+                        })
+                      }
+                    </Switch>
+                  </Suspense>
+                </Container>
+              </main>
+              <AppAside>
+                <Suspense fallback={Loading()}>
+                  <Aside />
+                </Suspense>
+              </AppAside>
+            </div>
           </div>
         </div>
-      </div>
+      </ThemeProvider>
     )
   }
 }

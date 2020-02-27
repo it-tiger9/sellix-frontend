@@ -16,8 +16,7 @@ import { BootstrapTable, TableHeaderColumn, SearchField } from 'react-bootstrap-
 import { Loader } from 'components'
 import { tableOptions } from 'constants/tableoptions'
 
-import 'react-toastify/dist/ReactToastify.css'
-import 'react-bootstrap-table/dist/react-bootstrap-table-all.min.css'
+import shop_brand from 'assets/images/brand/shop_brand.png'
 
 import * as ProductActions from './actions'
 import './style.scss'
@@ -41,11 +40,13 @@ class ShopProducts extends React.Component {
     this.state = {
       loading: true,
       filter: new URLSearchParams(this.props.location.search).get('filter') || 'all',
-      search: new URLSearchParams(this.props.location.search).get('search') || ''
+      search: new URLSearchParams(this.props.location.search).get('search') || '',
+      
     }
 
     this.initializeData = this.initializeData.bind(this)
     this.filterProduct = this.filterProduct.bind(this)
+    this.gotoDetail = this.gotoDetail.bind(this)
   }
 
   componentDidMount () {
@@ -138,6 +139,14 @@ class ShopProducts extends React.Component {
     })
   }
 
+
+  gotoDetail(e, id) {
+    this.props.history.push({
+      pathname: '/shop/products/detail',
+      search: `?id=${id}`
+    })
+  }
+
   render() {
     const { loading, filter, search } = this.state
     const { product_list } = this.props
@@ -180,57 +189,22 @@ class ShopProducts extends React.Component {
                   </Row>
                 :
                   <Row>
-                    <Col lg={12}>
-                      <div>
-                        <BootstrapTable
-                          options={ tableOptions() }
-                          data={product_list}
-                          version="4"
-                          hover
-                          pagination
-                          totalSize={product_list ? product_list.length : 0}
-                          className="product-table"
-                          trClassName="cursor-pointer"
-                        >
-                          <TableHeaderColumn
-                            isKey
-                            dataField="info"
-                            dataFormat={this.renderProductInfo}
-                            dataSort
-                          >
-                            Info
-                          </TableHeaderColumn>
-                          <TableHeaderColumn
-                            dataField="type"
-                            dataFormat={this.renderProductType}
-                            dataSort
-                          >
-                            Type
-                          </TableHeaderColumn>
-                          <TableHeaderColumn
-                            dataField="stock"
-                            dataSort
-                          >
-                            Stock
-                          </TableHeaderColumn>
-                          <TableHeaderColumn
-                            dataField="revenue"
-                            dataAlign="right"
-                            dataFormat={this.renderProductRevenue}
-                            dataSort
-                          >
-                            Revenue
-                          </TableHeaderColumn>
-                          <TableHeaderColumn
-                            dataField="id"
-                            dataAlign="right"
-                            dataFormat={this.renderOptions}
-                          >
-                            Options
-                          </TableHeaderColumn>
-                        </BootstrapTable>
-                      </div>
-                    </Col>
+                    {
+                      product_list.map((pro, index) => 
+                        <Col lg={3} key={index}>
+                          <Card className="bg-white p-0 product-card" onClick={(e) => this.gotoDetail(e, pro.id)}>
+                            <img src={shop_brand} width="100%"/>
+                            <div className="p-3">
+                              <h5 className="mt-3 mb-3">[FA] Renegade Raider</h5>
+                              <div className="d-flex justify-content-between mt-3 mb-2">
+                                <span className="price">$10.00</span>
+                                <span className="stock">Stock: <span className="stock-size">10</span></span>
+                              </div>
+                            </div> 
+                          </Card>
+                        </Col>
+                      )
+                    }
                   </Row>
               }
             </CardBody>

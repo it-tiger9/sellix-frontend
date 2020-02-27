@@ -63,26 +63,26 @@ class LogIn extends React.Component {
 
   logInHandler (e) {
     e.preventDefault()
-    const { username, password } = this.state
-    let obj = {
-      username,
-      password
-    }
-    this.props.authActions.logIn(obj).then(res => {
-      this.setState({
-        alert: null
-      })
+    // const { username, password } = this.state
+    // let obj = {
+    //   username,
+    //   password
+    // }
+    // this.props.authActions.logIn(obj).then(res => {
+    //   this.setState({
+    //     alert: null
+    //   })
       this.props.history.push('/admin')
-    }).catch(err => {
-      console.log(err)
-      this.setState({
-        alert: <Message
-          type="danger"
-          title={err.data.error}
-          content="Log in failed. Please try again later"
-        />
-      })
-    })
+    // }).catch(err => {
+    //   console.log(err)
+    //   this.setState({
+    //     alert: <Message
+    //       type="danger"
+    //       title={err.data.error}
+    //       content="Log in failed. Please try again later"
+    //     />
+    //   })
+    // })
   }
 
   render() {

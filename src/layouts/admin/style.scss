@@ -4,7 +4,7 @@
   .nav-link {
     font-family: "Poppins";
     font-weight: 600;
-    font-size: 18px;
+    font-size: 15px !important;
   }
 
   background-color: #F6F4FF;
@@ -27,7 +27,7 @@
       color: #73818f;
     }
     .header-icon {
-      font-size: 20px;
+      font-size: 18px;
       color: #73818f;
     }
     .my-link {
@@ -74,14 +74,16 @@
     transform: rotate(90deg);
   }
 
-
-
   .sidebar {
     background: #F6F4FF;
     min-width: 230px !important;
 
     .sidebar-nav {
       min-width: 230px !important;
+    }
+
+    .nav-link:hover.nav-dropdown-toggle::before {
+      background-image: none !important;
     }
   
     .ps-container {
@@ -105,8 +107,8 @@
       align-items: center;
       .nav-icon {
         color: #A7A5B4;
-        margin-right: 30px;
-        font-size: 25px;
+        margin-right: 25px !important;
+        font-size: 20px !important;
       }
     }
 
@@ -149,6 +151,10 @@
         .nav-item:first-child {
           padding-top: 1.5rem !important;
         }
+      }
+
+      .nav-dropdown-toggle:hover:before {
+        content: '>';
       }
 
       .nav-dropdown-toggle:before {

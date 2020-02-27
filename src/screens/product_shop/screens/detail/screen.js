@@ -15,6 +15,7 @@ import {
 } from 'reactstrap'
 import Select from 'react-select'
 
+import shop_brand from 'assets/images/brand/shop_brand.png'
 
 import './style.scss'
 
@@ -27,7 +28,7 @@ const mapDispatchToProps = (dispatch) => {
   })
 }
 
-class DetailProduct extends React.Component {
+class ShopProductDetail extends React.Component {
   
   constructor(props) {
     super(props)
@@ -37,174 +38,55 @@ class DetailProduct extends React.Component {
 
   }
 
+  gotoPaypal(e, id) {
+    this.props.history.push({
+      pathname: '/payment/paypal',
+      search: `?id=${id}`
+    })
+  }
+
   render() {
 
     return (
       <div className="detail-product-screen">
         <div className="animated fadeIn">
           <Row>
-            <Col lg={12} className="mx-auto">
-              <Card>
-                <CardHeader>
-                  <Row>
-                    <Col lg={12}>
-                      <div className="h4 mb-0 d-flex align-items-center">
-                        <i className="fas fa-object-group" />
-                        <span className="ml-2">Update Product</span>
-                      </div>
-                    </Col>
-                  </Row>
-                </CardHeader>
-                <CardBody>
-                  <Row>
-                    <Col lg={12}>
-                      <Form>
-                        <Row>
-                          <Col lg={4}>
-                            <FormGroup className="mb-3">
-                              <Label htmlFor="name">Name</Label>
-                              <Input
-                                type="text"
-                                id="name"
-                                name="name"
-                                placeholder="Enter Product Name"
-                                required
-                              />
-                            </FormGroup>
-                          </Col>
-                          <Col lg={4}>
-                            <FormGroup className="mb-3">
-                              <Label htmlFor="account_code">Account Code</Label>
-                              <Input
-                                type="text"
-                                id="account_code"
-                                name="account_code"
-                                placeholder="Enter Account Code"
-                                required
-                              />
-                            </FormGroup>
-                          </Col>
-                          <Col lg={4}>
-                            <FormGroup className="mb-3">
-                              <Label htmlFor="product_code">Product Code</Label>
-                              <Input
-                                type="text"
-                                id="product_code"
-                                name="product_code"
-                                placeholder="Enter Product Code"
-                                required
-                              />
-                            </FormGroup>
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Col lg={4}>
-                            <FormGroup className="mb-3">
-                              <Label htmlFor="parent_product">Parent Product</Label>
-                              <Select
-                                className="select-default-width"
-                                options={[]}
-                                id="parent_product"
-                                name="parent_product"
-                              />
-                            </FormGroup>
-                          </Col>
-                          <Col lg={4}>
-                            <FormGroup className="mb-3">
-                              <Label htmlFor="product_price">Product Price</Label>
-                              <Input
-                                type="text"
-                                id="product_price"
-                                name="product_price"
-                                placeholder="Enter Product Price"
-                                required
-                              />
-                            </FormGroup>
-                          </Col>
-                          <Col lg={4}>
-                            <FormGroup className="mb-3">
-                              <Label htmlFor="vat_percentage">Vat Percentage</Label>
-                              <Select
-                                className="select-default-width"
-                                options={[]}
-                                id="vat_percentage"
-                                name="vat_percentage"
-                              />
-                            </FormGroup>
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Col lg={12}>
-                            <FormGroup check inline>
-                              <Input
-                                className="form-check-input"
-                                type="checkbox"
-                                id="vat_include"
-                                name="vat_include"
-                              />
-                              <Label className="form-check-label" check htmlFor="vat_include">Vat Include</Label>
-                            </FormGroup>
-                          </Col>
-                        </Row>
-                        <hr/>
-                        <Row>
-                          <Col lg={4}>
-                            <FormGroup className="mb-3">
-                              <Label htmlFor="warehourse">Warehourse</Label>
-                              <Select
-                                className="select-default-width"
-                                options={[]}
-                                id="warehourse"
-                                name="warehourse"
-                              />
-                            </FormGroup>
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Col lg={4}>
-                            <FormGroup className="">
-                              <Button color="primary" className="btn-square">
-                                <i className="fa fa-plus"></i> Add a Warehouse
-                              </Button>
-                            </FormGroup>
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Col lg={8}>
-                            <FormGroup className="">
-                              <Label htmlFor="description">Description</Label>
-                              <Input
-                                type="textarea"
-                                name="description"
-                                id="description"
-                                rows="6"
-                                placeholder="Description..."
-                              />
-                            </FormGroup>
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Col lg={12} className="mt-5 d-flex align-items-center justify-content-between flex-wrap">
-                            <FormGroup>
-                              <Button color="danger" className="btn-square">
-                                <i className="fa fa-trash"></i> Delete
-                              </Button>
-                            </FormGroup>
-                            <FormGroup className="text-right">
-                              <Button type="submit" color="primary" className="btn-square mr-3">
-                                <i className="fa fa-dot-circle-o"></i> Update
-                              </Button>
-                              <Button color="secondary" className="btn-square" 
-                                onClick={() => {this.props.history.push('/admin/master/product')}}>
-                                <i className="fa fa-ban"></i> Cancel
-                              </Button>
-                            </FormGroup>
-                          </Col>
-                        </Row>
-                      </Form>
-                    </Col>
-                  </Row>
-                </CardBody>
+            <Col lg={3}>
+              <Card className="bg-white">
+                <img src={shop_brand} width="100%"/>
+                <h1 className="p-3 text-center mt-2">$15.00</h1>
+                <div className="paypal-instant p-3 pt-2 pb-2 d-flex mb-5">
+                  <h4><i className="fa fa-paypal"></i>Paypal</h4>
+                  <Button onClick={(e) => this.gotoPaypal(e, '')}>INSTANT</Button>
+                </div>
+                <div className="bg-primary p-2"><i className="fas fa-chevron-left icons-font-2xl"></i></div>
+                <div className="stock-info p-2">
+                  <div className="d-flex justify-content-between p-2">
+                    <span className="text-primary">Seller</span>
+                    <span className="text-primary bold">PixelStore</span>
+                  </div>
+                  <div className="d-flex justify-content-between p-2">
+                    <span className="text-primary">Stock</span>
+                    <span className="text-primary bold">2</span>
+                  </div>
+                  <div className="d-flex justify-content-between p-2">
+                    <span className="text-primary">Feedback</span>
+                    <span className="text-primary bold">20</span>
+                  </div>
+                </div>
+              </Card>
+            </Col>
+            <Col lg={9}>
+              <Card className="bg-white p-5 detail">
+                <h1 className="text-primary mb-5">[FA] Ikonik</h1>
+                <p>
+                  Account: <br/>
+                  -Full Access Account <br/>
+                  -Login and Password <br/>
+                  -Account For PC,PS4,XBOX <br/>
+                  • Have More Skins<br/>
+                  •Warranty 24hours
+                </p>
               </Card>
             </Col>
           </Row>
@@ -214,4 +96,4 @@ class DetailProduct extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DetailProduct)
+export default connect(mapStateToProps, mapDispatchToProps)(ShopProductDetail)

@@ -21,6 +21,7 @@ import {
 import './style.scss'
 
 import logo from 'assets/images/home/logo.png'
+import sellix_logo from 'assets/images/Sellix_logo.svg'
 import avatar from 'assets/images/avatars/6.jpg'
 import chevron from 'assets/images/chevron-down-solid.png'
 
@@ -35,7 +36,6 @@ class Header extends Component {
   constructor(props) {
     super(props)
     this.state = {
-
     }
 
     this.signOut = this.signOut.bind(this)
@@ -46,15 +46,20 @@ class Header extends Component {
     this.props.history.push('/login')
   }
 
+  setTheme(){
+    this.props.changeTheme()
+  }
+
   render() {
-    const { children, ...attributes } = this.props
+    const { children, theme, ...attributes } = this.props
 
     return (
       <React.Fragment>
         <AppSidebarToggler className="d-lg-none" display="md" mobile />
         <AppNavbarBrand
           className="p-2"
-          full={{ src: logo, width: 106, height: 25, alt: 'CoreUI Logo' }}
+          href="/"
+          full={{ src: sellix_logo, width: 106, height: 25, alt: 'CoreUI Logo' }}
         />
         <Nav className="ml-auto" navbar style={{flex:1, justifyContent: 'flex-end'}}>
           <NavItem className="d-md-down-none mr-5" style={{flex: 3}}>
@@ -69,11 +74,17 @@ class Header extends Component {
             </DropdownToggle>
             
             <DropdownMenu right>
-              <DropdownItem onClick={() => this.props.history.push('/admin/profile')}>
+              <DropdownItem onClick={() => this.props.history.push('/admin')}>
+                 Dashboard
+              </DropdownItem>
+              <DropdownItem onClick={() => this.props.history.push('/shop')}>
                  Your Shop
               </DropdownItem>
-              <DropdownItem onClick={() => this.props.history.push('/admin/profile')}>
+              <DropdownItem onClick={() => this.props.history.push('/settings')}>
                  Settings
+              </DropdownItem>
+              <DropdownItem onClick={this.setTheme.bind(this)}>
+                {(theme || 'light') == 'light'?'Dark Mode':'Light Mode'}
               </DropdownItem>
               <DropdownItem onClick={() => this.props.history.push('/admin/settings/general')}>
                 Sign Out
@@ -90,11 +101,14 @@ class Header extends Component {
               <DropdownItem onClick={() => this.props.history.push('/admin')}>
                  Dashboard
               </DropdownItem>
-              <DropdownItem onClick={() => this.props.history.push('/admin/profile')}>
+              <DropdownItem onClick={() => this.props.history.push('/shop')}>
                  Your Shop
               </DropdownItem>
-              <DropdownItem onClick={() => this.props.history.push('/admin/profile')}>
+              <DropdownItem onClick={() => this.props.history.push('/settings')}>
                  Settings
+              </DropdownItem>
+              <DropdownItem onClick={this.setTheme.bind(this)}>
+                {(theme || 'light') == 'light'?'Dark Mode':'Light Mode'}
               </DropdownItem>
               <DropdownItem onClick={() => this.props.history.push('/admin/settings/general')}>
                 Sign Out
@@ -119,8 +133,11 @@ class Header extends Component {
               <DropdownItem onClick={() => this.props.history.push('/shop')}>
                  Your Shop
               </DropdownItem>
-              <DropdownItem onClick={() => this.props.history.push('/admin/profile')}>
+              <DropdownItem onClick={() => this.props.history.push('/settings')}>
                  Settings
+              </DropdownItem>
+              <DropdownItem onClick={this.setTheme.bind(this)}>
+                 {(theme || 'light') == 'light'?'Dark Mode':'Light Mode'}
               </DropdownItem>
               <DropdownItem onClick={() => this.props.history.push('/admin/settings/general')}>
                 Sign Out

@@ -25,6 +25,7 @@ import service2 from 'assets/images/home/service2.svg'
 import service3 from 'assets/images/home/service3.svg'
 import undraw from 'assets/images/home/undraw.svg'
 import undraw1 from 'assets/images/home/undraw2.svg'
+import sellix_logo from 'assets/images/Sellix_logo.svg'
 
 class Home extends React.Component {
   
@@ -50,7 +51,7 @@ class Home extends React.Component {
               <Container className="home-container p-0" fluid>
                 <Navbar className="mb-5 pt-4 p-0" color="white" light expand="lg">
                   <NavbarBrand href="/">
-                    <img className="logo" src={logo}/>
+                    <img className="logo" src={sellix_logo}/>
                   </NavbarBrand>
                   <NavbarToggler onClick={this.toggle.bind(this)} />
                   <Collapse className="mr-5" isOpen={isOpen} navbar>

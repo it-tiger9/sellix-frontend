@@ -45,6 +45,8 @@ class Order extends React.Component {
     }
 
     this.initializeData = this.initializeData.bind(this)
+    this.gotoDetail = this.gotoDetail.bind(this)
+    this.renderOrderInfo = this.renderOrderInfo.bind(this)
   }
 
   componentDidMount () {
@@ -62,13 +64,23 @@ class Order extends React.Component {
     this.setState({ loading: false })
   }
 
+  gotoDetail(e, id) {
+    this.props.history.push({
+      pathname: '/admin/orders/detail',
+      search: `?id=${id}`
+    })
+  }
+
   renderOrderInfo (cell, row) {
+    console.log(this)
     if (
       row.mail && row.id
     ) {
       return (
         <div>
-          <p><i className="flag-icon flag-icon-be"></i>&nbsp;&nbsp;&nbsp;{`${row.unit}-${row.mail}`}</p>
+          <p><a href="#" onClick={(e) => this.gotoDetail(e, row.id)}>
+            <i className="flag-icon flag-icon-be"></i>&nbsp;&nbsp;&nbsp;{`${row.unit}-${row.mail}`}</a>
+          </p>
           <p className="caption">{row.id}</p>
         </div>
       )  

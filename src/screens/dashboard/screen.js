@@ -74,7 +74,7 @@ class Dashboard extends React.Component {
                 <Col lg={3}>
                   <Card className="grey">
                     <CardBody>
-                      <h1 className="report">$4000.00</h1>
+                      <h2 className="text-primary">$4000.00</h2>
                       <p className="report-title">Revenue</p>
                     </CardBody>
                   </Card>
@@ -82,7 +82,7 @@ class Dashboard extends React.Component {
                 <Col lg={3}>
                   <Card className="grey">
                     <CardBody>
-                      <h1 className="report">253</h1>
+                    <h2 className="text-primary">253</h2>
                       <p className="report-title">Orders</p>
                     </CardBody>
                   </Card>
@@ -90,7 +90,7 @@ class Dashboard extends React.Component {
                 <Col lg={3}>
                   <Card className="grey">
                     <CardBody>
-                      <h1 className="report">397</h1>
+                    <h2 className="text-primary">397</h2>
                       <p className="report-title">Views</p>
                     </CardBody>
                   </Card>
@@ -98,7 +98,7 @@ class Dashboard extends React.Component {
                 <Col lg={3}>
                   <Card className="grey">
                     <CardBody>
-                      <h1 className="report">89%</h1>
+                    <h2 className="text-primary">89%</h2>
                       <p className="report-title">Conversion</p>
                     </CardBody>
                   </Card>

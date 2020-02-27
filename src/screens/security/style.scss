@@ -1,0 +1,41 @@
+.contact-screen {
+    .card-header {
+      color: #20a8d8;
+    }
+    .btn-group {
+      .btn {
+        color: #ffffff !important;
+      }
+    }
+    .badge {
+      padding: 0.4em 0.6em;
+      font-size: 90%;
+    }
+    .product-table {
+      .my-link {
+        text-decoration: none;
+        cursor: pointer;
+      }
+    }
+
+    .contact-info {
+        border: 1px solid #c3c1c1;
+        border-left: 2px solid #4dbd74;
+
+        .contact-name {
+            text-align: center;
+            line-height: 78px;
+            width: 80px;
+            height: 80px;
+            color: white;
+            font-size: 32px;
+            background: #73818f;
+        }
+
+        .info {
+            p {
+                margin-bottom: 5px !important;
+            }
+        }
+    }
+  }

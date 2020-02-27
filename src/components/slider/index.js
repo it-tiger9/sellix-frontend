@@ -66,7 +66,7 @@ class DataSlider extends React.Component{
             )
         }
 
-        const Tick = ({ tick, count }) => {
+        const Tick = ({ tick, count, symbol }) => {
             return(
                 <div>
                     <div
@@ -83,13 +83,13 @@ class DataSlider extends React.Component{
                             paddingRight: 10
                         }}
                     >
-                        {tick.value}
+                        {tick.value + symbol}
                     </div>
                 </div>
             )
         }
 
-        const {domain, value, ticks, step} = this.props
+        const {domain, value, ticks, step, suffix} = this.props
 
         return(
             <div className="hor-slider pl-2 pr-2">
@@ -136,7 +136,7 @@ class DataSlider extends React.Component{
                         {({ ticks }) => (
                             <div className="slider-ticks" >
                                 {ticks.map(tick => (
-                                    <Tick key={tick.id} tick={tick} count={ticks.length} />
+                                    <Tick key={tick.id} tick={tick} count={ticks.length} symbol={suffix || ''}/>
                                 ))}
                             </div>
                         )}

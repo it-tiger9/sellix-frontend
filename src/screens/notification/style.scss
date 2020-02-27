@@ -4,11 +4,29 @@
       color: #20a8d8;
     }
 
-	.switch-label {
-		width: 65px !important;
+	.file-switch {
+		width: 60px;
+		height: 29px;
+	  }
+	
+	.switch-slider::before {
+		width: 24px !important;
+		height: 24px !important;
+		top: 2px !important;
 	}
 
-	.switch-label.switch-lg .switch-input:checked ~ .switch-slider::before {
-		transform: translateX(40px)
+	.file-switch .switch-input:checked ~ .switch-slider::before {
+		transform: translateX(31px)
+	}
+	
+	.file-switch .switch-slider {
+		background-color:#E1E1E1;
+		border: none;
+	}
+
+	p {
+		font-size: 14px;
+		color: #A7A5B4;
+		margin: 0;
 	}
 }

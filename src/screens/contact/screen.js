@@ -17,18 +17,17 @@ import {
 import Select from 'react-select'
 
 import { Loader } from 'components'
-import * as ContactActions from './actions'
 
 import './style.scss'
 
 const mapStateToProps = (state) => {
   return ({
-    contact_list: state.contact.contact_list
+    
   })
 }
 const mapDispatchToProps = (dispatch) => {
   return ({
-    ContactActions: bindActionCreators(ContactActions, dispatch)
+   
   })
 }
 
@@ -38,20 +37,8 @@ class Contact extends React.Component {
     super(props)
     this.state = {
       loading: false,
-      clickedRow: {}
     }
-
-    this.initializeData = this.initializeData.bind(this)
   }
-
-  componentDidMount () {
-    this.initializeData()
-  }
-
-  initializeData () {
-    this.props.ContactActions.getContactList()
-  }
-
 
   render() {
 

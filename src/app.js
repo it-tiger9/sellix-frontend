@@ -13,6 +13,7 @@ import 'app.scss'
 const hist = createBrowserHistory()
 const store = configureStore()
 
+
 export default class App extends React.Component {
 
   render () {

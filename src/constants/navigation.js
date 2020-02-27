@@ -25,7 +25,7 @@ export const mainNavigation =  {
         },
         {
           name: 'Sort Categories',
-          url: '/admin/product/sort-category',
+          url: '/admin/product/category-sort',
         }
       ]
     },
@@ -66,7 +66,7 @@ export const mainNavigation =  {
     },
     {
       name: 'Blacklist',
-      url: '/admin/master',
+      url: '/admin/blacklist',
       icon: 'fas fa-ban',
     },
     {
@@ -97,15 +97,15 @@ export const accountSettingsNavigation =  {
   items: [
     {
       name: 'General',
-      url: '/admin/settings',
+      url: '/settings/general',
     },
     {
       name: 'Security',
-      url: '/admin/settings/security',
+      url: '/settings/security',
     },
     {
       name: 'Notifications',
-      url: '/admin/settings/notifications',
+      url: '/settings/notifications',
     }
   ]
 }
@@ -115,19 +115,19 @@ export const shopSettingsNavigation =  {
   items: [
     {
       name: 'Members',
-      url: '/admin/settings/memebers',
+      url: '/settings/memebers',
     },
     {
       name: 'Payments',
-      url: '/admin/settings/payments',
+      url: '/settings/payments',
     },
     {
       name: 'Billing',
-      url: '/admin/settings/billing',
+      url: '/settings/billing',
     },
     {
       name: 'Customization',
-      url: '/admin/settings/customizatoin',
+      url: '/settings/customization',
     }
   ]
 }

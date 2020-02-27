@@ -1,17 +1,12 @@
 import {
-    Dashboard,
     Contact,
     ShopProducts,
-    ShopFeedback
+    ShopFeedback,
+    ShopProductDetail
   } from 'screens'
   
   const shopRoutes = [
-    {
-      path: '/shop/products',
-      name: 'Products',
-      component: ShopProducts.screen
-    },
-  
+
     {
       path: '/shop/contact',
       name: 'Contact',
@@ -22,6 +17,20 @@ import {
       name: 'Feedback',
       component: ShopFeedback.screen
     },
+
+    {
+      path: '/shop/products/detail',
+      name: 'ShopProductDetail',
+      component: ShopProductDetail.screen
+    },
+
+    {
+      path: '/shop/products',
+      name: 'Products',
+      component: ShopProducts.screen
+    },
+  
+
     {
       redirect: true,
       path: '/shop',

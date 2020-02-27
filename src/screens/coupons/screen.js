@@ -177,14 +177,10 @@ class Product extends React.Component {
 
     const { loading } = this.state
     const { product_list } = this.props
-    const containerStyle = {
-      zIndex: 1999
-    }
 
     return (
       <div className="product-screen">
         <div className="animated fadeIn">
-          <ToastContainer position="top-right" autoClose={5000} style={containerStyle} />
           <Card className="grey">
             <CardHeader>
               <Row style={{alignItems: 'center'}}>
@@ -197,7 +193,8 @@ class Product extends React.Component {
                       <i className="fas fa-search"/>
                       <Input placeholder="Search..." className="header-search-input"></Input>
                     </div>
-                    <Button className="ml-3" color="primary">Add Coupon</Button>
+                    <Button className="ml-3" color="primary" 
+                      onClick={() => this.props.history.push(`/admin/coupons/create`)}>Add Coupon</Button>
                   </div>
                 </Col>
               </Row>

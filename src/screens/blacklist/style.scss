@@ -1,0 +1,24 @@
+.blacklist-screen {
+  h1 {
+    font-size: 18px;
+  }
+  h5 {
+    font-size: 14px !important;
+  }
+  .new-select {
+    padding-right: 2px;
+    
+    select {
+      min-height: 0 !important;
+      height: 40px !important;
+      padding: 0 10px;
+      font-size: 14px !important;
+    }
+  }
+
+  p.title {
+    font-family: 'Poppins-SemiBold';
+    color: #A7A5B4;
+    font-size: 15px;
+  }
+}

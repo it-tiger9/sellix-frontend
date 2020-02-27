@@ -1,5 +1,52 @@
-.detail-product-screen {
+.order-detail-screen {
   .card-header {
     color: #20a8d8;
+  }
+
+  p {
+    color: #A7A5B4;
+  }
+
+  p.title {
+    max-width: 150px;
+    width: 100%;
+    margin-right: 20px;
+  }
+
+  label {
+    color: #A7A5B4;
+  }
+
+  span {
+    font-size: 10px;
+  }
+
+  .risk-level {
+    color: #2BB224 !important;
+    background-color: #CBF4C9;
+    padding: 3px 10px;
+    border-radius: 10px;
+  }
+
+  .proxy-label {
+    color: #B22424 !important;
+    background-color: #F4C9C9;
+    padding: 3px 10px;
+    border-radius: 10px;
+    font-size: 12px;
+    margin-left: 5px;
+  }
+
+  .avatar {
+    padding: 7px;
+    font-size: 25px;
+    color: white;
+    background-color: #A7A5B4;
+    border-radius: 50%;
+  }
+
+  .email {
+    font-size: 16px;
+    margin-bottom: 0;
   }
 }

@@ -1,113 +1,25 @@
 import {
   Dashboard,
-
-
-  Journal,
-  CreateJournal,
-  DetailJournal,
-  BeginingBalance,
-
-
-
-  BankAccount,
-  CreateBankAccount,
-  DetailBankAccount,
-  BankTransactions,
-  CreateBankTransaction,
-  DetailBankTransaction,
-  ImportBankStatement,
-
-
-
-
-  CustomerInvoice,
-  CreateCustomerInvoice,
-  DetailCustomerInvoice,
-  Receipt,
-  CreateReceipt,
-  DetailReceipt,
-
-
-
-  SupplierInvoice,
-  CreateSupplierInvoice,
-  DetailSupplierInvoice,
-  Expense,
-  CreateExpense,
-  DetailExpense,
-  Payment,
-  CreatePayment,
-  DetailPayment,
-
-
-
-  VatTransactions,
-  ReportsFiling,
-
-
-
-  TransactionsReport,
-  FinancialReport,
-
-
-
-  ChartAccount,
-  CreateChartAccount,
-  DetailChartAccount,
-  Contact,
-  CreateContact,
-  DetailContact,
-  Employee,
-  CreateEmployee,
-  DetailEmployee,
-
-
-
   Product,
+  ProductSort,
+  CateogrySort,
   Categories,
   CreateCategories,
   Order,
   Analytics,
   Reports,
   Coupons,
+  CreateCoupon,
   Queries,
   Feedbacks,
   Webhooks,
   WebhookLogs,
-
-
+  CreatePage,
+  Pages,
   CreateProduct,
-  DetailProduct,
-  Project,
-  CreateProject,
-  DetailProject,
-  VatCode,
-  CreateVatCode,
-  DetailVatCode,
-  Currency,
-  CreateCurrency,
-  DetailCurrency,
-
-
-
-  User,
-  CreateUser,
-  DetailUser,
-  Organization,
-
-
-  Profile,
-  GeneralSettings,
-  TransactionCategory,
-  CreateTransactionCategory,
-  DetailTransactionCategory,
-  UsersRoles,
-  Notification,
-  DataBackup,
-  Help,
-  Faq
-  
+  OrderDetail
 } from 'screens'
+import { BlackList, CreateBlacklist } from '../screens'
 
 const adminRoutes = [
   {
@@ -138,6 +50,24 @@ const adminRoutes = [
   },
 
   {
+    path: '/admin/product/product-sort',
+    name: 'ProductSort',
+    component: ProductSort.screen
+  },
+
+  {
+    path: '/admin/product/category-sort',
+    name: 'CateogrySort',
+    component: CateogrySort.screen
+  },
+
+  {
+    path: '/admin/orders/detail',
+    name: 'OrderDetail',
+    component: OrderDetail.screen
+  },
+
+  {
     path: '/admin/orders',
     name: 'Order',
     component: Order.screen
@@ -155,9 +85,27 @@ const adminRoutes = [
   },
 
   {
+    path: '/admin/coupons/create',
+    name: 'Coupons',
+    component: CreateCoupon.screen
+  },
+
+  {
     path: '/admin/coupons',
     name: 'Coupons',
     component: Coupons.screen
+  },
+
+  {
+    path: '/admin/blacklist/create',
+    name: 'CreateBlacklist',
+    component: CreateBlacklist.screen
+  },
+
+  {
+    path: '/admin/blacklist',
+    name: 'Blacklist',
+    component: BlackList.screen
   },
 
 
@@ -173,6 +121,18 @@ const adminRoutes = [
   },
 
   {
+    path: '/admin/pages/create',
+    name: 'Pages',
+    component: CreatePage.screen
+  },
+
+  {
+    path: '/admin/pages',
+    name: 'Pages',
+    component: Pages.screen
+  },
+
+  {
     path: '/admin/developer/webhooks',
     name: 'Weebhooks',
     component: Webhooks.screen
@@ -184,105 +144,6 @@ const adminRoutes = [
     name: 'WeebhookLogs',
     component: WebhookLogs.screen
   },
-
-
-  {
-    path: '/admin/developer/user',
-    name: 'User',
-    component: User.screen
-  },
-
-
-  {
-    path: '/admin/settings/user/create',
-    name: 'Create',
-    component: CreateUser.screen
-  },
-  {
-    path: '/admin/settings/user/detail',
-    name: 'Detail',
-    component: DetailUser.screen
-  },
-  {
-    path: '/admin/settings/user',
-    name: 'User',
-    component: User.screen
-  },
-  {
-    path: '/admin/settings/organization',
-    name: 'Organization',
-    component: Organization.screen
-  },
-
-
-
-
-  {
-    path: '/admin/settings/general',
-    name: 'General Settings',
-    component: GeneralSettings.screen
-  },
-  {
-    path: '/admin/settings/transaction-category/create',
-    name: 'Create',
-    component: CreateTransactionCategory.screen
-  },
-  {
-    path: '/admin/settings/transaction-category/detail',
-    name: 'Detail',
-    component: DetailTransactionCategory.screen
-  },
-  {
-    path: '/admin/settings/transaction-category',
-    name: 'Transaction Category',
-    component: TransactionCategory.screen
-  },
-  {
-    path: '/admin/settings/user-role',
-    name: 'Users & Roles',
-    component: UsersRoles.screen
-  },
-  {
-    path: '/admin/settings/notification',
-    name: 'Notifications',
-    component: Notification.screen
-  },
-  {
-    path: '/admin/settings/data-backup',
-    name: 'Data Backup',
-    component: DataBackup.screen
-  },
-  {
-    path: '/admin/settings/help/Faq',
-    name: 'Faq',
-    component: Faq.screen
-  },
-  {
-    path: '/admin/settings/help',
-    name: 'Help',
-    component: Help.screen
-  },
-  {
-    redirect: true,
-    path: '/admin/settings',
-    pathTo: '/admin/settings/user',
-    name: 'Settings'
-  },
-
-
-
-
-
-  
-
-
-  {
-    path: '/admin/profile',
-    name: 'Profile',
-    component: Profile.screen
-  },
-
-
 
   {
     redirect: true,

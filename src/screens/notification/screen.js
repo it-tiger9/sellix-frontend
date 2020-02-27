@@ -44,64 +44,81 @@ class Notification extends React.Component {
 
   render() {
     const { loading } = this.state;
-    const containerStyle = {
-      zIndex: 1999
-    };
 
     return (
       <div className="notification-screen">
         <div className="animated fadeIn">
-          <ToastContainer
-            position="top-right"
-            autoClose={5000}
-            style={containerStyle}
-          />
-
           <Card>
-            <CardHeader>
-              <div className="h4 mb-0 d-flex align-items-center">
-                <i className="nav-icon fas fa-bell" />
-                <span className="ml-2">Notifications</span>
-              </div>
-            </CardHeader>
             <CardBody>
             {
               loading ?
                 <Loader></Loader>: 
                 <Row>
-                  <Col lg='10' className="mx-auto">
-                    <Form name="simpleForm" className="mt-3">
+                  <Col lg={12}>
+                    <FormGroup>
+                      <Label>Notifications</Label>
+                    </FormGroup>
+                  </Col>
+                  <Col lg={12}>
+                    <Form className="mt-3">
                       <Row>
                         <Col>
                           <FormGroup row>
-                            <Col md="4">
-                              <Label htmlFor="name" style={{marginTop: 3}}>Email Notifications</Label>
-                            </Col>
-                            <Col xs="12" md="8">
-                              <AppSwitch className={'mx-1'} 
-                                style={{width: 65}}
-                                variant={'3d'} 
-                                outline={'alt'} 
+                            <Col className="d-flex align-items-center">
+                              <AppSwitch className="mx-1 file-switch mr-2"
+                                style={{width: 50}}
+                                variant={'pill'} 
                                 color={'primary'}
-                                size="lg"
-                                defaultChecked 
-                                label />
+                                size="sm"
+                                />
+                              <div className="ml-2">
+                                <Label>Successful Order</Label>
+                                <p>Receive an email notification when a order is successfully processed</p>
+                              </div>
                             </Col>
                           </FormGroup>
                         </Col>
+                      </Row>
+                    </Form>
+                  </Col>
+                  <Col lg={12}>
+                    <Form className="mt-3">
+                      <Row>
                         <Col>
-                        <FormGroup row>
-                            <Col md="5">
-                              <Label htmlFor="name" style={{marginTop: 3}}>Reminder Notifications</Label>
-                            </Col>
-                            <Col xs="12" md="7">
-                              <AppSwitch className={'mx-1'} 
-                                variant={'3d'} 
-                                outline={'alt'} 
+                          <FormGroup row>
+                            <Col className="d-flex align-items-center">
+                              <AppSwitch className="mx-1 file-switch mr-2"
+                                style={{width: 50}}
+                                variant={'pill'} 
                                 color={'primary'}
-                                size="lg"
-                                defaultChecked 
-                                label  />
+                                size="sm"
+                                />
+                              <div className="ml-2">
+                                <Label>Successful Order</Label>
+                                <p>Receive an email notification when a order is successfully processed</p>
+                              </div>
+                            </Col>
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                    </Form>
+                  </Col>
+                  <Col lg={12}>
+                    <Form className="mt-3">
+                      <Row>
+                        <Col>
+                          <FormGroup row>
+                            <Col className="d-flex align-items-center">
+                              <AppSwitch className="mx-1 file-switch mr-2"
+                                style={{width: 50}}
+                                variant={'pill'} 
+                                color={'primary'}
+                                size="sm"
+                                />
+                              <div className="ml-2">
+                                <Label>Successful Order</Label>
+                                <p>Receive an email notification when a order is successfully processed</p>
+                              </div>
                             </Col>
                           </FormGroup>
                         </Col>
@@ -111,6 +128,8 @@ class Notification extends React.Component {
                 </Row>
             }
             </CardBody>
+            <Button color="primary" className="mt-5" style={{width: 200}}
+            >Save Settings</Button>
           </Card>
         </div>
       </div>

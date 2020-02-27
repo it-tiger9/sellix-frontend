@@ -1,0 +1,16 @@
+.paypal-paying-screen {
+  .paypal-brand {
+    max-width: 300px;
+    width: 100%;
+  }
+  .paypal-button {
+    background-color: #009CDE !important;
+    border: none !important;
+    width: 85%;
+
+    img {
+      max-width: 124px;
+      width: 100%;
+    }
+  }
+}

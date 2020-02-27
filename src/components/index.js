@@ -7,6 +7,8 @@ import Message from './message'
 import DateRangePicker2 from './datepicker'
 import ConfirmDeleteModal from './confirm_delete_modal'
 import ImageUpload from './upload/imageUploader'
+import AvatarUploader from './upload/avatarUploader'
+import FaviconUploader from './upload/faviconUploader'
 import DataSlider from './slider'
 
 export {
@@ -19,5 +21,7 @@ export {
   DateRangePicker2,
   ConfirmDeleteModal,
   ImageUpload,
-  DataSlider
+  DataSlider,
+  AvatarUploader,
+  FaviconUploader
 }
