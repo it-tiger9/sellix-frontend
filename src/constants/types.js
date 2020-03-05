@@ -98,6 +98,12 @@ export const VAT = {
   VAT_ROW: 'VAT_ROW'
 }
 
+
+export const CATEGORY = {
+  ALL_CATEGORY: 'ALL_CATEGORY',
+  CURRENT_CATEGORY: 'CURRENT_CATEGORY'
+}
+
 export const CURRENCY = {
 
 }

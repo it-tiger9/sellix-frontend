@@ -7,6 +7,7 @@ import ProductSort from './product_sort'
 import CateogrySort from './category_sort'
 import Categories from './categories'
 import CreateCategories from './categories/screens/create'
+import EditCategory from './categories/screens/detail'
 import Order from './order'
 import OrderDetail from './order/screens/detail'
 import Analytics from './analytics'
@@ -41,6 +42,7 @@ import "react-bootstrap-table/dist/react-bootstrap-table-all.min.css"
 import "react-toastify/dist/ReactToastify.css"
 import 'react-select/dist/react-select.css'
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 export {
   Home,
@@ -53,6 +55,7 @@ export {
   Contact,
   Categories,
   CreateCategories,
+  EditCategory,
   Order,
   Analytics,
   Reports,

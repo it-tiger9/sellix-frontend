@@ -107,7 +107,21 @@ html:not([dir="rtl"]) .sidebar-show .sidebar {
         min-width: 230px !important;
     }
 }
-  
+
+.react-confirm-alert-overlay {
+    background: rgba(0, 0, 0, 0.3) !important;
+}
+.react-confirm-alert-body {
+    text-align: center;
+    h1 {
+        font-size: 25px !important;
+        color: #613BEA !important;
+    }
+}
+
+.react-confirm-alert-button-group {
+    justify-content: center !important;
+}
 select {
     margin: 0 2px;
 }
@@ -129,18 +143,30 @@ select {
 
     .Select-input,
     .Select-placeholder {
-        padding-left: 25px;
         line-height: 3em;
-        width: 100% !important;
+       
         font-size: 16px !important;
+        margin-left: 0 !important;
     }
 
-    input {
-        padding-top: 0px !important;
-        line-height: 3em !important;
-        width: 100% !important;
-        font-size: 16px;
+    .Select-placeholder,
+    .Select-multi-value-wrapper {
+        padding-left: 20px;
     }
+
+    .Select-value{
+        margin-top: 12px;
+        span {
+            
+        }
+    }
+
+    // input {
+    //     padding-top: 0px !important;
+    //     line-height: 3em !important;
+    //     width: 100% !important;
+    //     font-size: 16px;
+    // }
 }
 
 .Select-control:hover {

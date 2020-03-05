@@ -1,5 +1,6 @@
 import Loading from './loading'
 import Loader from './loader'
+import Spin from './spin'
 import Aside from './aside'
 import Header from './header'
 import Footer from './footer'
@@ -14,6 +15,7 @@ import DataSlider from './slider'
 export {
   Loading,
   Loader,
+  Spin,
   Aside,
   Header,
   Footer,

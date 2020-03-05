@@ -7,42 +7,44 @@ import {
   CardBody,
   Button,
   Row,
-  Col,
-  ButtonGroup,
-  Input
+  Col
 } from 'reactstrap'
-import { ToastContainer, toast } from 'react-toastify'
 import { BootstrapTable, TableHeaderColumn, SearchField } from 'react-bootstrap-table'
+import { confirmAlert } from 'react-confirm-alert'; 
 import { Loader } from 'components'
 import { tableOptions } from 'constants/tableoptions'
+import {
+  CommonActions
+} from 'services/global'
 
-import 'react-toastify/dist/ReactToastify.css'
-import 'react-bootstrap-table/dist/react-bootstrap-table-all.min.css'
 
-import * as ProductActions from './actions'
+import * as Actions from './actions'
 import './style.scss'
 
 const mapStateToProps = (state) => {
   return ({
-    product_list: state.product.product_list
+    all_categories: state.category.all_categories
   })
 }
 
 const mapDispatchToProps = (dispatch) => {
   return ({
-    productActions: bindActionCreators(ProductActions, dispatch)
+    commonActions: bindActionCreators(CommonActions, dispatch),
+    actions: bindActionCreators(Actions, dispatch)
   })
 }
 
 class Categories extends React.Component {
-  
   constructor(props) {
     super(props)
     this.state = {
-      loading: true,
+      loading: false
     }
 
     this.initializeData = this.initializeData.bind(this)
+    this.gotoEditPage = this.gotoEditPage.bind(this)
+    this.deleteCateogry = this.deleteCateogry.bind(this)
+    this.renderOptions = this.renderOptions.bind(this)
   }
 
   componentDidMount () {
@@ -50,75 +52,66 @@ class Categories extends React.Component {
   }
 
   initializeData () {
-    // this.props.productActions.getProductList().then(res => {
-    //   if (res.status === 200) {
-    //     this.setState({ loading: false })
-    //   }
-    // })
-
-    this.props.productActions.getProductList()
-    this.setState({ loading: false })
+    this.setState({ loading: true })
+    this.props.actions.getCategoryList().catch(err => {
+      this.props.commonActions.tostifyAlert('error', err.error || 'Seomthing went wrong!')
+    }).finally(() => {
+      this.setState({ loading: false })
+    })
   }
 
-  renderProductInfo (cell, row) {
-    if (
-      row.info && row.id
-    ) {
-      return (
-        <div>
-          <p>{row.info}</p>
-          <p className="caption">{row.id}</p>
-        </div>
-      )  
-    } else {
-      return (
-        <p className="caption">No specified</p>
-      )
-    }
+  // Open Confirm Modal
+  showConfirmModal() {
+    this.setState({ openDeleteModal: true })
+  }
+  // Close Confirm Modal
+  closeConfirmModal() {
+    this.setState({ openDeleteModal: false })
   }
 
-  renderProductType (cell, row) {
-    if (
-      row.type
-    ) {
-      return (
-        <div className="badge">
-          {row.type}
-        </div>
-      )  
-    } else {
-      return (
-        <p className="caption">No specified</p>
-      )
-    }
+  gotoEditPage(e, id) {
+    this.props.history.push({
+      pathname: '/admin/product/categories/edit',
+      search: `?id=${id}`
+    })
   }
 
-  renderProductRevenue(cell, row) {
-    if (
-      row.revenue
-    ) {
-      return (
-        <p>
-          ${row.revenue}
-        </p>
-      )  
-    } else {
-      return (
-        <p className="caption">No specified</p>
-      )
-    }
+  deleteCateogry(e, id) {
+    confirmAlert({
+      title: 'Are you sure?',
+      message: 'You want to delete this category?',
+      buttons: [
+        {
+          label: 'Yes, Delete it!',
+          onClick: () => {
+            this.setState({ loading: true })
+            this.props.actions.deleteCategory({
+              uniqid: id
+            }).then(res => {
+              this.props.actions.getCategoryList()
+              this.props.commonActions.tostifyAlert('success', res.message)
+            }).catch(err => {
+              this.props.commonActions.tostifyAlert('error', err.error || 'Seomthing went wrong!')
+            }).finally(() => {
+              this.setState({ loading: false })
+            })
+          }
+        },
+        {
+          label: 'No',
+          onClick: () => {return true}
+        }
+      ]
+    });
   }
 
   renderOptions(cell, row) {
     return (
       <div className="d-flex actions">
-        <a>
+        <a onClick={(e) => this.gotoEditPage(e, row.uniqid)}>
           <i className="fas fa-pen"/>
         </a>
-        <a>
-          <i className="fas fa-bar-chart"/>
-        </a>
-        <a>
+        <a onClick={(e) => this.deleteCateogry(e, row.uniqid)}>
           <i className="fas fa-trash"/>
         </a>
       </div>
@@ -126,9 +119,8 @@ class Categories extends React.Component {
   }
 
   render() {
-
     const { loading } = this.state
-    const { product_list } = this.props
+    const { all_categories } = this.props
 
     return (
       <div className="product-screen">
@@ -151,7 +143,7 @@ class Categories extends React.Component {
               {
                 loading ?
                   <Row>
-                    <Col lg={12}>
+                    <Col lg={12} className="mt-5">
                       <Loader />
                     </Col>
                   </Row>
@@ -161,11 +153,11 @@ class Categories extends React.Component {
                       <div>
                         <BootstrapTable
                           options={ tableOptions() }
-                          data={product_list}
+                          data={all_categories}
                           version="4"
                           hover
                           pagination
-                          totalSize={product_list ? product_list.length : 0}
+                          totalSize={all_categories ? all_categories.length : 0}
                           className="product-table"
                           trClassName="cursor-pointer"
                         >
@@ -177,14 +169,15 @@ class Categories extends React.Component {
                             ID
                           </TableHeaderColumn>
                           <TableHeaderColumn
-                            dataField="type"
+                            dataField="title"
                             dataSort
                           >
-                            Type
+                            Title
                           </TableHeaderColumn>
                           <TableHeaderColumn
                             dataField="stock"
                             dataSort
+                            dataFormat = {(cell, row) => (row.products || []).length}
                           >
                             Product Count
                           </TableHeaderColumn>

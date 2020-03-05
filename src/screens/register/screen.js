@@ -5,27 +5,26 @@ import { bindActionCreators } from 'redux'
 import {
   Button,
   Card,
-  CardHeader,
   CardBody,
   CardGroup,
   Col,
   Container,
   Form,
   Input,
-  InputGroup,
-  InputGroupAddon,
-  InputGroupText,
   Row,
   FormGroup,
   Label
 } from 'reactstrap'
+import { Formik } from 'formik';
+import * as Yup from "yup";
 
 import {
   Message
 } from 'components'
 
 import {
-  AuthActions
+  AuthActions,
+  CommonActions
 } from 'services/global'
 
 import './style.scss'
@@ -37,6 +36,7 @@ const mapStateToProps = (state) => {
 }
 const mapDispatchToProps = (dispatch) => {
   return ({
+    commonActions: bindActionCreators(CommonActions, dispatch),
     authActions: bindActionCreators(AuthActions, dispatch)
   })
 }
@@ -46,46 +46,35 @@ class Register extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      username: 'admin123@gmail.com',
-      password: 'admin',
+      initState: {
+        email: '',
+        username: '',
+        password: '',
+        confirm_password: ''
+      },
       alert: null
     }
-
-    this.handleChange = this.handleChange.bind(this)
-    this.logInHandler = this.logInHandler.bind(this)
   }
 
-  handleChange (key, val) {
-    this.setState({
-      [key]: val
-    })
-  }
-
-  logInHandler (e) {
-    e.preventDefault()
-    const { username, password } = this.state
-    let obj = {
-      username,
-      password
-    }
-    this.props.authActions.logIn(obj).then(res => {
-      this.setState({
-        alert: null
-      })
+  handleSubmit(data) {
+    let obj = Object.assign({}, data)
+    delete obj['confirm_password']
+    // delete data['confirm_password']
+    this.props.authActions.register(obj).then(res => {
+      this.props.commonActions.tostifyAlert('success', 'You are successfully registered, Please login!')
       this.props.history.push('/admin')
     }).catch(err => {
-      console.log(err)
       this.setState({
         alert: <Message
           type="danger"
-          title={err.data.error}
-          content="Log in failed. Please try again later"
+          content={err.error}
         />
       })
     })
   }
 
   render() {
+    const { initState } = this.state
 
     return (
       <div className="register-screen">
@@ -116,60 +105,123 @@ class Register extends React.Component {
                     </Card>
                     <Card>
                       <CardBody className="p-5 bg-gray-100">
-                        <Form onSubmit={this.logInHandler}>
-                          <h4 className="text-center mb-4">Create Account </h4>
-                          <FormGroup className="mb-3">
-                            <Label htmlFor="product_code">Email</Label>
-                            <Input
-                              type="text"
-                              id="product_code"
-                              name="product_code"
-                              placeholder="Email"
-                              required
-                            />
-                          </FormGroup>
-                          <FormGroup className="mb-3">
-                            <Label htmlFor="product_code">Username</Label>
-                            <Input
-                              type="text"
-                              id="product_code"
-                              name="product_code"
-                              placeholder="Username"
-                              required
-                            />
-                          </FormGroup>
-                          <FormGroup className="mb-4">
-                            <Label htmlFor="product_code">Password</Label>
-                            <Input
-                              type="password"
-                              id="product_code"
-                              name="product_code"
-                              placeholder="Password"
-                              required
-                            />
-                          </FormGroup>
-                          <FormGroup className="mb-4">
-                            <Label htmlFor="product_code">Password Confirmation</Label>
-                            <Input
-                              type="password"
-                              id="product_code"
-                              name="product_code"
-                              placeholder="Password Confirmation"
-                              required
-                            />
-                          </FormGroup>
-                          <Row>
-                            <Col lg={12} className="text-center mt-4">
-                              <Button
-                                color="primary"
-                                type="submit"
-                              >
-                                Sign Up
-                              </Button>
-                            </Col>
-                          </Row>
-                          
-                        </Form>
+                        <Formik
+                          initialValues={initState}
+                          onSubmit={(values) => {
+                            this.handleSubmit(values)
+                          }}
+                          validationSchema={Yup.object().shape({
+                            email: Yup.string()
+                              .email('Please enter the valid email')
+                              .required('Email is required'),
+                            username: Yup.string()
+                              .min(3, 'Username must be at least 3 characters long')
+                              .max(20, 'Too Long!')
+                              .required('Username is required'),
+                            password: Yup.string()
+                              .min(8, 'Password must be at least 8 characters long')
+                              .max(20, 'Too Long!')
+                              .required("Password is required"),
+                            confirm_password: Yup.string()
+                              .when("password", {
+                                is: val => (val && val.length > 0 ? true : false),
+                                then: Yup.string().oneOf(
+                                  [Yup.ref("password")],
+                                  "Both password need to be the same"
+                              )})
+                          })}>
+                            {props => (
+                              <Form onSubmit={props.handleSubmit}>
+                                <h4 className="text-center mb-4">Create Account </h4>
+                                <FormGroup className="mb-3">
+                                  <Label htmlFor="email">Email</Label>
+                                  <Input
+                                    type="text"
+                                    id="email"
+                                    name="email"
+                                    placeholder="Email"
+                                    onChange={props.handleChange}
+                                    value={props.values.email}
+                                    className={
+                                      props.errors.email && props.touched.email
+                                        ? "is-invalid"
+                                        : ""
+                                    }
+                                  />
+                                  {props.errors.email && props.touched.email && (
+                                    <div className="invalid-feedback">{props.errors.email}</div>
+                                  )}
+                                </FormGroup>
+                                <FormGroup className="mb-3">
+                                  <Label htmlFor="username">Username</Label>
+                                  <Input
+                                    type="text"
+                                    id="username"
+                                    name="username"
+                                    placeholder="Username"
+                                    onChange={props.handleChange}
+                                    value={props.values.username}
+                                    className={
+                                      props.errors.username && props.touched.username
+                                        ? "is-invalid"
+                                        : ""
+                                    }
+                                  />
+                                  {props.errors.username && props.touched.username && (
+                                    <div className="invalid-feedback">{props.errors.username}</div>
+                                  )}
+                                </FormGroup>
+                                <FormGroup className="mb-4">
+                                  <Label htmlFor="password">Password</Label>
+                                  <Input
+                                    type="password"
+                                    id="password"
+                                    name="password"
+                                    placeholder="Password"
+                                    onChange={props.handleChange}
+                                    value={props.values.password}
+                                    className={
+                                      props.errors.password && props.touched.password
+                                        ? "is-invalid"
+                                        : ""
+                                    }
+                                  />
+                                  {props.errors.password && props.touched.password && (
+                                    <div className="invalid-feedback">{props.errors.password}</div>
+                                  )}
+                                </FormGroup>
+                                <FormGroup className="mb-4">
+                                  <Label htmlFor="confirm_password">Password Confirmation</Label>
+                                  <Input
+                                    type="password"
+                                    id="confirm_password"
+                                    name="confirm_password"
+                                    placeholder="Password Confirmation"
+                                    onChange={props.handleChange}
+                                    value={props.values.confirm_password}
+                                    className={
+                                      props.errors.confirm_password && props.touched.confirm_password
+                                        ? "is-invalid"
+                                        : ""
+                                    }
+                                  />
+                                  {props.errors.confirm_password && props.touched.confirm_password && (
+                                    <div className="invalid-feedback">{props.errors.confirm_password}</div>
+                                  )}
+                                </FormGroup>
+                                <Row>
+                                  <Col lg={12} className="text-center mt-4">
+                                    <Button
+                                      color="primary"
+                                      type="submit"
+                                    >
+                                      Sign Up
+                                    </Button>
+                                  </Col>
+                                </Row>
+                                
+                              </Form>)}
+                          </Formik>
                       </CardBody>
                     </Card>
                     

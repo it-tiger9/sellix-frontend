@@ -86,7 +86,7 @@ class Header extends Component {
               <DropdownItem onClick={this.setTheme.bind(this)}>
                 {(theme || 'light') == 'light'?'Dark Mode':'Light Mode'}
               </DropdownItem>
-              <DropdownItem onClick={() => this.props.history.push('/admin/settings/general')}>
+              <DropdownItem onClick={() => this.signOut()}>
                 Sign Out
               </DropdownItem>
             </DropdownMenu>
@@ -110,7 +110,7 @@ class Header extends Component {
               <DropdownItem onClick={this.setTheme.bind(this)}>
                 {(theme || 'light') == 'light'?'Dark Mode':'Light Mode'}
               </DropdownItem>
-              <DropdownItem onClick={() => this.props.history.push('/admin/settings/general')}>
+              <DropdownItem onClick={() => this.signOut()}>
                 Sign Out
               </DropdownItem>
             </DropdownMenu>
@@ -139,7 +139,7 @@ class Header extends Component {
               <DropdownItem onClick={this.setTheme.bind(this)}>
                  {(theme || 'light') == 'light'?'Dark Mode':'Light Mode'}
               </DropdownItem>
-              <DropdownItem onClick={() => this.props.history.push('/admin/settings/general')}>
+              <DropdownItem onClick={() => this.signOut()}>
                 Sign Out
               </DropdownItem>
             </DropdownMenu>

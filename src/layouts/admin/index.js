@@ -58,34 +58,34 @@ class AdminLayout extends React.Component {
     // if (!window.localStorage.getItem('accessToken')) {
     //   this.props.history.push('/login')
     // } else {
-    //   this.props.authActions.checkAuthStatus().catch(err => {
-    //     this.props.authActions.logOut()
-    //     this.props.history.push('/login')
-    //   })
-    //   this.props.commonActions.getSimpleVATVersion()
-    //   const toastifyAlert = (status, message) => {
-    //     if (!message) {
-    //       message = 'Unexpected Error'
-    //     }
-    //     if (status === 'success') {
-    //       toast.success(message, {
-    //         position: toast.POSITION.TOP_RIGHT
-    //       })
-    //     } else if (status === 'error') {
-    //       toast.error(message, {
-    //         position: toast.POSITION.TOP_RIGHT
-    //       })
-    //     } else if (status === 'warn') {
-    //       toast.warn(message, {
-    //         position: toast.POSITION.TOP_RIGHT
-    //       })
-    //     } else if (status === 'info') {
-    //       toast.info(message, {
-    //         position: toast.POSITION.TOP_RIGHT
-    //       })
-    //     }
-    //   }
-    //   this.props.commonActions.setTostifyAlertFunc(toastifyAlert)
+      // this.props.authActions.checkAuthStatus().catch(err => {
+      //   this.props.authActions.logOut()
+      //   this.props.history.push('/login')
+      // })
+      this.props.commonActions.getSimpleVATVersion()
+      const toastifyAlert = (status, message) => {
+        if (!message) {
+          message = 'Unexpected Error'
+        }
+        if (status === 'success') {
+          toast.success(message, {
+            position: toast.POSITION.TOP_RIGHT
+          })
+        } else if (status === 'error') {
+          toast.error(message, {
+            position: toast.POSITION.TOP_RIGHT
+          })
+        } else if (status === 'warn') {
+          toast.warn(message, {
+            position: toast.POSITION.TOP_RIGHT
+          })
+        } else if (status === 'info') {
+          toast.info(message, {
+            position: toast.POSITION.TOP_RIGHT
+          })
+        }
+      }
+      this.props.commonActions.setTostifyAlertFunc(toastifyAlert)
     // }
   }
 
@@ -123,7 +123,7 @@ class AdminLayout extends React.Component {
               <main className="main mt-5 mb-5">
                 <Container className="p-0" fluid>
                   <Suspense fallback={Loading()}>
-                    <ToastContainer position="top-right" autoClose={5000} style={containerStyle} />
+                    <ToastContainer position="top-right" autoClose={5000} style={containerStyle} hideProgressBar={true}/>
                     <Switch>
                       {
                         adminRoutes.map((prop, key) => {

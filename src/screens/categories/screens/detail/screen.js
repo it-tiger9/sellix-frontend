@@ -7,211 +7,271 @@ import {
   CardBody,
   Button,
   Row,
-  Col,
   Form,
+  Col,
   FormGroup,
-  Input,
-  Label
+  Label,
+  Tooltip,
+  Input
 } from 'reactstrap'
 import Select from 'react-select'
+import { Formik } from 'formik';
+import * as Yup from "yup";
+import _ from "lodash"
+import { Spin, ImageUpload, Loader } from 'components'
 
+import {
+  CommonActions
+} from 'services/global'
+
+
+import * as Actions from '../../actions'
 
 import './style.scss'
 
 const mapStateToProps = (state) => {
   return ({
+    current_category: state.category.current_category
   })
 }
 const mapDispatchToProps = (dispatch) => {
   return ({
+    commonActions: bindActionCreators(CommonActions, dispatch),
+    actions: bindActionCreators(Actions, dispatch)
   })
 }
 
-class DetailProduct extends React.Component {
-  
+class EditCategory extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       loading: false,
+      saving: false,
+      tooltipOpen: false,
+      initialData: {
+      },
+      files: [],
+      multiValue: []
     }
 
+    this.handleMultiChange = this.handleMultiChange.bind(this);
+    this.id = new URLSearchParams(props.location.search).get('id')
+  }
+
+  // componentWillUnmount() {
+  //   // Make sure to revoke the data uris to avoid memory leaks
+  //   this.state.files.forEach(file => URL.revokeObjectURL(file.preview));
+  // }
+
+  unlistedTooltipToggle() {
+    this.setState({tooltipOpen: !this.state.tooltipOpen})
+  }
+
+  addFile = file => {
+    console.log(file);
+    this.setState({
+      files: file.map(file =>
+        Object.assign(file, {
+          preview: URL.createObjectURL(file)
+        })
+      )
+    });
+  };
+
+
+  handleSubmit(values) {
+    this.setState({saving: true})
+    this.props.actions.editCategory(values).then(res => {
+      this.props.commonActions.tostifyAlert('success', res.message)
+    }).catch(err => {
+      this.props.commonActions.tostifyAlert('error', err.message)
+    }).finally(() => {
+      this.setState({saving: false})
+    })
+  }
+
+  handleMultiChange(option) {
+    this.setState(state => {
+      return {
+        multiValue: option
+      };
+    });
+  }
+
+  componentDidMount() {
+    if (this.id) {
+      this.setState({ loading: true });
+      this.props.actions.getCategoryByID(this.id).then(res => {
+        console.log(res.data.category)
+        this.setState({
+          initialData: res.data.category,
+          loading: false
+        })
+      }).finally(() => {
+        
+      })
+    }
   }
 
   render() {
+    const { loading, tooltipOpen, files, initialData, saving } = this.state
+
+    const products = [
+      { value: 'one', label: 'One' },
+      { value: 'two', label: 'Two' }
+    ]
 
     return (
-      <div className="detail-product-screen">
+      <div className="product-screen">
         <div className="animated fadeIn">
-          <Row>
-            <Col lg={12} className="mx-auto">
-              <Card>
-                <CardHeader>
-                  <Row>
-                    <Col lg={12}>
-                      <div className="h4 mb-0 d-flex align-items-center">
-                        <i className="fas fa-object-group" />
-                        <span className="ml-2">Update Product</span>
-                      </div>
-                    </Col>
-                  </Row>
-                </CardHeader>
-                <CardBody>
-                  <Row>
-                    <Col lg={12}>
-                      <Form>
-                        <Row>
-                          <Col lg={4}>
-                            <FormGroup className="mb-3">
-                              <Label htmlFor="name">Name</Label>
-                              <Input
-                                type="text"
-                                id="name"
-                                name="name"
-                                placeholder="Enter Product Name"
-                                required
-                              />
-                            </FormGroup>
-                          </Col>
-                          <Col lg={4}>
-                            <FormGroup className="mb-3">
-                              <Label htmlFor="account_code">Account Code</Label>
-                              <Input
-                                type="text"
-                                id="account_code"
-                                name="account_code"
-                                placeholder="Enter Account Code"
-                                required
-                              />
-                            </FormGroup>
-                          </Col>
-                          <Col lg={4}>
-                            <FormGroup className="mb-3">
-                              <Label htmlFor="product_code">Product Code</Label>
-                              <Input
-                                type="text"
-                                id="product_code"
-                                name="product_code"
-                                placeholder="Enter Product Code"
-                                required
-                              />
-                            </FormGroup>
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Col lg={4}>
-                            <FormGroup className="mb-3">
-                              <Label htmlFor="parent_product">Parent Product</Label>
-                              <Select
-                                className="select-default-width"
-                                options={[]}
-                                id="parent_product"
-                                name="parent_product"
-                              />
-                            </FormGroup>
-                          </Col>
-                          <Col lg={4}>
-                            <FormGroup className="mb-3">
-                              <Label htmlFor="product_price">Product Price</Label>
-                              <Input
-                                type="text"
-                                id="product_price"
-                                name="product_price"
-                                placeholder="Enter Product Price"
-                                required
-                              />
-                            </FormGroup>
-                          </Col>
-                          <Col lg={4}>
-                            <FormGroup className="mb-3">
-                              <Label htmlFor="vat_percentage">Vat Percentage</Label>
-                              <Select
-                                className="select-default-width"
-                                options={[]}
-                                id="vat_percentage"
-                                name="vat_percentage"
-                              />
-                            </FormGroup>
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Col lg={12}>
-                            <FormGroup check inline>
-                              <Input
-                                className="form-check-input"
-                                type="checkbox"
-                                id="vat_include"
-                                name="vat_include"
-                              />
-                              <Label className="form-check-label" check htmlFor="vat_include">Vat Include</Label>
-                            </FormGroup>
-                          </Col>
-                        </Row>
-                        <hr/>
-                        <Row>
-                          <Col lg={4}>
-                            <FormGroup className="mb-3">
-                              <Label htmlFor="warehourse">Warehourse</Label>
-                              <Select
-                                className="select-default-width"
-                                options={[]}
-                                id="warehourse"
-                                name="warehourse"
-                              />
-                            </FormGroup>
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Col lg={4}>
-                            <FormGroup className="">
-                              <Button color="primary" className="btn-square">
-                                <i className="fa fa-plus"></i> Add a Warehouse
-                              </Button>
-                            </FormGroup>
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Col lg={8}>
-                            <FormGroup className="">
-                              <Label htmlFor="description">Description</Label>
-                              <Input
-                                type="textarea"
-                                name="description"
-                                id="description"
-                                rows="6"
-                                placeholder="Description..."
-                              />
-                            </FormGroup>
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Col lg={12} className="mt-5 d-flex align-items-center justify-content-between flex-wrap">
-                            <FormGroup>
-                              <Button color="danger" className="btn-square">
-                                <i className="fa fa-trash"></i> Delete
-                              </Button>
-                            </FormGroup>
-                            <FormGroup className="text-right">
-                              <Button type="submit" color="primary" className="btn-square mr-3">
-                                <i className="fa fa-dot-circle-o"></i> Update
-                              </Button>
-                              <Button color="secondary" className="btn-square" 
-                                onClick={() => {this.props.history.push('/admin/master/product')}}>
-                                <i className="fa fa-ban"></i> Cancel
-                              </Button>
-                            </FormGroup>
-                          </Col>
-                        </Row>
-                      </Form>
-                    </Col>
-                  </Row>
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
-        </div>
+          <Formik
+            initialValues={initialData}
+            enableReinitialize={true}
+            onSubmit={(values) => {
+              this.handleSubmit(values)
+            }}
+            validationSchema={Yup.object().shape({
+              title: Yup.string()
+                .required('Title is required'),
+              products_bound: Yup.string()
+                .required('Products is required'),
+              sort_priority: Yup.number()
+                .required("Sort Priority is required"),
+              unlisted: Yup.number()
+            })}>
+              {props => (
+                <Form onSubmit={props.handleSubmit}>
+                  <Card>
+                    <CardHeader>
+                      <Row style={{alignItems: 'center'}}>
+                        <Col md={12}>
+                          <h1>Edit Category</h1>
+                        </Col>
+                      </Row>
+                    </CardHeader>
+                    <CardBody className="p-4 mb-5">
+                      {loading ? (
+                          <Loader></Loader>
+                        ) : (
+                          <Row className="mt-4 mb-4">
+                            <Col lg={12}>
+                              <Row>
+                                <Col lg={12}>
+                                  <FormGroup className="mb-3">
+                                    <Label htmlFor="title">Title</Label>
+                                    <Input
+                                      type="text"
+                                      id="title"
+                                      name="title"
+                                      placeholder="Enter Category Title"
+                                      onChange={props.handleChange}
+                                      value={props.values.title}
+                                      className={
+                                        props.errors.title && props.touched.title
+                                          ? "is-invalid"
+                                          : ""
+                                      }
+                                    />
+                                    {props.errors.title && props.touched.title && (
+                                      <div className="invalid-feedback">{props.errors.title}</div>
+                                    )}
+                                  </FormGroup>
+                                </Col>
+                              </Row>
+                              <Row>
+                                <Col lg={12}>
+                                  <FormGroup className="mb-3">
+                                    <Label htmlFor="product_bounds">Products</Label>
+                                    <Select
+                                      className="select-default-width"
+                                      id="product_bounds"
+                                      name="product_bounds"
+                                      multi
+                                      options={products}
+                                      placeholder="Select Products"
+                                      value={this.state.multiValue}
+                                      onChange={(option) => {
+                                        this.setState({
+                                          multiValue: option
+                                        })
+
+                                        props.handleChange("products_bound")(option.map(o => o.value).toString());
+                                      }}
+                                      className={
+                                        props.errors.products_bound && props.touched.products_bound
+                                          ? "is-invalid"
+                                          : ""
+                                      }
+                                    />
+                                    {props.errors.products_bound && props.touched.products_bound && (
+                                      <div className="invalid-feedback">{props.errors.products_bound}</div>
+                                    )}
+                                  </FormGroup>
+                                </Col>
+                              </Row>
+                              <Row>
+                                <Col lg={4}>
+                                  <FormGroup className="mb-3">
+                                    <Label htmlFor="product_code">Image</Label>
+                                    <ImageUpload addFile={this.addFile} files={files}/>
+                                  </FormGroup>
+                                </Col>
+                              </Row>
+                              <Row>
+                                <Col lg={2}>
+                                  <FormGroup className="mb-3">
+                                    <Label htmlFor="sort_priority">Priority</Label>
+                                    <Input
+                                      type="number"
+                                      id="sort_priority"
+                                      name="sort_priority"
+                                      placeholder="Sort Priority"
+                                      onChange={props.handleChange}
+                                      value={props.values.sort_priority}
+                                    />
+                                  </FormGroup>
+                                </Col>
+                              </Row>
+                              <Row>
+                                <Col lg={2}>
+                                  <FormGroup check inline className="mb-3">
+                                      <div className="custom-checkbox custom-control">
+                                        <input 
+                                          className="custom-control-input"
+                                          type="checkbox"
+                                          id="inline-radio1"
+                                          name="SMTP-auth"
+                                          onChange={(e) => {
+                                            props.handleChange('unlisted')(e.target.checked?1:0)
+
+                                            console.log(props.values)
+                                          }}
+                                          checked={props.values.unlisted === 1?true:false}
+                                        />
+                                        <label className="custom-control-label" htmlFor="inline-radio1">
+                                          Unlisted &nbsp;<span href="#" id="unlistedTooltip"><i className="fa fa-question-circle"></i></span>
+                                          <Tooltip placement="right" isOpen={tooltipOpen} target="unlistedTooltip" 
+                                            toggle={this.unlistedTooltipToggle.bind(this)}>
+                                            This product won't show on your user profile page
+                                          </Tooltip>
+                                        </label>
+                                      </div>
+                                    </FormGroup>
+                                </Col>
+                              </Row>
+                            </Col>
+                          </Row>
+                        )}
+                    </CardBody>
+                    <Button color="primary" type="submit" className="" style={{width: 200}} disabled={loading || saving}
+                    >{saving ?<Spin/>:'Save Category' }</Button>                   
+                  </Card>
+                </Form> )}
+              </Formik>
+            </div>  
       </div>
     )
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DetailProduct)
+export default connect(mapStateToProps, mapDispatchToProps)(EditCategory)

@@ -2,7 +2,7 @@ import axios from 'axios'
 import config from 'constants/config'
 
 const authApi = axios.create({
-  baseURL: config.API_ROOT_URL,
+  baseURL: 'https://cors-anywhere.herokuapp.com/' + config.API_ROOT_URL,
   headers: {
     'Content-Type': 'application/json'
   }
@@ -20,7 +20,7 @@ authApi.interceptors.request.use(
 
 authApi.interceptors.response.use(
   response => {
-    return response
+    return response.data
   },
   error => {
     return Promise.reject(error.response)

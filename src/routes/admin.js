@@ -5,6 +5,7 @@ import {
   CateogrySort,
   Categories,
   CreateCategories,
+  EditCategory,
   Order,
   Analytics,
   Reports,
@@ -37,6 +38,11 @@ const adminRoutes = [
     path: '/admin/product/all',
     name: 'Product',
     component: Product.screen
+  },
+  {
+    path: '/admin/product/categories/edit',
+    name: 'Categories',
+    component: EditCategory.screen
   },
   {
     path: '/admin/product/categories/create',

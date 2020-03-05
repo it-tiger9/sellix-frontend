@@ -14,7 +14,7 @@ import {
   Project,
   Help,
   Notification,
-
+  Categories,
 } from 'screens'
 
 
@@ -24,6 +24,7 @@ const reducer = combineReducers({
 
   dashboard: Dashboard.reducer,
   product: Product.reducer,
+  category: Categories.reducer
 })
 
 export default reducer
