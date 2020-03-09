@@ -55,14 +55,13 @@ class AdminLayout extends React.Component {
   }
 
   componentDidMount () {
-    // if (!window.localStorage.getItem('accessToken')) {
-    //   this.props.history.push('/login')
-    // } else {
-      // this.props.authActions.checkAuthStatus().catch(err => {
-      //   this.props.authActions.logOut()
-      //   this.props.history.push('/login')
-      // })
-      this.props.commonActions.getSimpleVATVersion()
+    if (!window.localStorage.getItem('accessToken')) {
+      this.props.history.push('/login')
+    } else {
+      this.props.authActions.checkAuthStatus().catch(err => {
+        this.props.authActions.logOut()
+        this.props.history.push('/login')
+      })
       const toastifyAlert = (status, message) => {
         if (!message) {
           message = 'Unexpected Error'
@@ -86,7 +85,7 @@ class AdminLayout extends React.Component {
         }
       }
       this.props.commonActions.setTostifyAlertFunc(toastifyAlert)
-    // }
+    }
   }
 
   changeTheme() {

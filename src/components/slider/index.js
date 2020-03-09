@@ -48,6 +48,7 @@ class DataSlider extends React.Component{
         }
 
         const Track = ({ source, target, getTrackProps }) => {
+
             return(
                 <div
                     style={{
@@ -89,7 +90,7 @@ class DataSlider extends React.Component{
             )
         }
 
-        const {domain, value, ticks, step, suffix} = this.props
+        const {domain, value, ticks, step, suffix, receiveValue} = this.props
 
         return(
             <div className="hor-slider pl-2 pr-2">
@@ -99,6 +100,9 @@ class DataSlider extends React.Component{
                     step={step || 1}
                     mode={1}
                     values={value}
+                    onChange={(value) => {
+                        receiveValue(value[0])
+                    }}
                 >
                     <Rail>
                     {({ getRailProps }) => (

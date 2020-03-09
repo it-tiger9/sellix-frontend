@@ -1,11 +1,17 @@
 import {
   Dashboard,
-  Product,
+
   ProductSort,
   CateogrySort,
+
+  Product,
+  CreateProduct,
+  EditProduct,
+
   Categories,
   CreateCategories,
   EditCategory,
+
   Order,
   Analytics,
   Reports,
@@ -17,7 +23,6 @@ import {
   WebhookLogs,
   CreatePage,
   Pages,
-  CreateProduct,
   OrderDetail
 } from 'screens'
 import { BlackList, CreateBlacklist } from '../screens'
@@ -33,6 +38,11 @@ const adminRoutes = [
     path: '/admin/product/all/create',
     name: 'Product',
     component: CreateProduct.screen
+  },
+  {
+    path: '/admin/product/all/edit',
+    name: 'Product',
+    component: EditProduct.screen
   },
   {
     path: '/admin/product/all',

@@ -28,18 +28,24 @@ class ImageUpload extends React.Component {
     }
   };
 
+  removeImage() {
+    this.props.addFile([])
+  }
+
   render() {
     const { files } = this.props;
     const thumbsContainer = {
-      width: "150px",
+      width: "100%",
       height: "150px",
-      borderRadius: "50%",
       objectFit: "cover",
       objectPosition: "center"
     };
 
     const thumbs = files.map((file, index) => (
-      <img style={thumbsContainer} key={index} src={file.preview} alt="profile" />
+      <div className="drag-drop-area">
+        <img style={thumbsContainer} key={index} src={file.preview} alt="profile" /><br/>
+        <a className="text-primary" onClick={(e) => this.removeImage()}>Remove Image</a>
+      </div>
     ));
 
     return (

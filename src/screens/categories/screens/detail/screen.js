@@ -19,25 +19,29 @@ import { Formik } from 'formik';
 import * as Yup from "yup";
 import _ from "lodash"
 import { Spin, ImageUpload, Loader } from 'components'
+import config from 'constants/config'
+import { Product } from 'screens'
 
 import {
   CommonActions
 } from 'services/global'
 
 
-import * as Actions from '../../actions'
+import * as CategoryActions from '../../actions'
 
 import './style.scss'
 
 const mapStateToProps = (state) => {
   return ({
-    current_category: state.category.current_category
+    all_products: state.product.all_products
   })
 }
+
 const mapDispatchToProps = (dispatch) => {
   return ({
     commonActions: bindActionCreators(CommonActions, dispatch),
-    actions: bindActionCreators(Actions, dispatch)
+    productActions: bindActionCreators(Product.actions, dispatch),
+    actions: bindActionCreators(CategoryActions, dispatch)
   })
 }
 
@@ -51,7 +55,7 @@ class EditCategory extends React.Component {
       initialData: {
       },
       files: [],
-      multiValue: []
+      selected_products: []
     }
 
     this.handleMultiChange = this.handleMultiChange.bind(this);
@@ -62,6 +66,7 @@ class EditCategory extends React.Component {
   //   // Make sure to revoke the data uris to avoid memory leaks
   //   this.state.files.forEach(file => URL.revokeObjectURL(file.preview));
   // }
+  
 
   unlistedTooltipToggle() {
     this.setState({tooltipOpen: !this.state.tooltipOpen})
@@ -81,6 +86,9 @@ class EditCategory extends React.Component {
 
   handleSubmit(values) {
     this.setState({saving: true})
+    const { selected_products } = this.state
+
+    values.products_bound = selected_products.map(o => o.value).toString()
     this.props.actions.editCategory(values).then(res => {
       this.props.commonActions.tostifyAlert('success', res.message)
     }).catch(err => {
@@ -93,7 +101,7 @@ class EditCategory extends React.Component {
   handleMultiChange(option) {
     this.setState(state => {
       return {
-        multiValue: option
+        selected_products: option
       };
     });
   }
@@ -102,13 +110,21 @@ class EditCategory extends React.Component {
     if (this.id) {
       this.setState({ loading: true });
       this.props.actions.getCategoryByID(this.id).then(res => {
-        console.log(res.data.category)
         this.setState({
           initialData: res.data.category,
-          loading: false
+          files: res.data.category.image_attachment === ''?[]:
+            [{preview: config.API_ROOT_URL+'/attachments/image/'+res.data.category.image_attachment}],
         })
       }).finally(() => {
-        
+        this.props.productActions.getProductList().then(res => {
+          this.setState({
+            selected_products: this.state.initialData.products_bound.map(pro => {return {value: pro.uniqid, label:pro.title}})
+          })
+        }).catch(err => {
+          console.log(err)
+        }).finally(() => {
+          this.setState({loading: false})
+        })
       })
     }
   }
@@ -116,10 +132,8 @@ class EditCategory extends React.Component {
   render() {
     const { loading, tooltipOpen, files, initialData, saving } = this.state
 
-    const products = [
-      { value: 'one', label: 'One' },
-      { value: 'two', label: 'Two' }
-    ]
+    const { all_products } = this.props
+    const product_options = all_products.map(pro => {return {value: pro.uniqid, label: pro.title}})
 
     return (
       <div className="product-screen">
@@ -187,12 +201,12 @@ class EditCategory extends React.Component {
                                       id="product_bounds"
                                       name="product_bounds"
                                       multi
-                                      options={products}
+                                      options={product_options}
                                       placeholder="Select Products"
-                                      value={this.state.multiValue}
+                                      value={this.state.selected_products}
                                       onChange={(option) => {
                                         this.setState({
-                                          multiValue: option
+                                          selected_products: option
                                         })
 
                                         props.handleChange("products_bound")(option.map(o => o.value).toString());
@@ -213,7 +227,10 @@ class EditCategory extends React.Component {
                                 <Col lg={4}>
                                   <FormGroup className="mb-3">
                                     <Label htmlFor="product_code">Image</Label>
-                                    <ImageUpload addFile={this.addFile} files={files}/>
+                                    <ImageUpload addFile={(file) => {
+                                      
+                                      props.handleChange('image')(file.length>0?file[0]:null); 
+                                      this.addFile(file)}} files={files} files={files}/>
                                   </FormGroup>
                                 </Col>
                               </Row>
@@ -246,7 +263,7 @@ class EditCategory extends React.Component {
 
                                             console.log(props.values)
                                           }}
-                                          checked={props.values.unlisted === 1?true:false}
+                                          checked={(props.values.unlisted === '1' || props.values.unlisted === 1)?true:false}
                                         />
                                         <label className="custom-control-label" htmlFor="inline-radio1">
                                           Unlisted &nbsp;<span href="#" id="unlistedTooltip"><i className="fa fa-question-circle"></i></span>

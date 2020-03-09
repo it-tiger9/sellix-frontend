@@ -2,12 +2,18 @@ import Home from './home'
 import LogIn from './log_in'
 import Register from './register'
 import Dashboard from './dashboard'
+
 import Product from './product'
+import CreateProduct from './product/screens/create'
+import EditProduct from './product/screens/detail'
+
 import ProductSort from './product_sort'
 import CateogrySort from './category_sort'
+
 import Categories from './categories'
 import CreateCategories from './categories/screens/create'
 import EditCategory from './categories/screens/detail'
+
 import Order from './order'
 import OrderDetail from './order/screens/detail'
 import Analytics from './analytics'
@@ -33,7 +39,7 @@ import Notification from './notification'
 import Payments from './payments'
 import MemberPage from './memebers'
 import Billings from './billings'
-import CreateProduct from './product/screens/create'
+
 import GeneralSettings from './general_settings'
 import Customization from './customization'
 
@@ -49,13 +55,19 @@ export {
   LogIn,
   Register,
   Dashboard,
+
   Product,
+  CreateProduct,
+  EditProduct,
+
   CateogrySort,
   ProductSort,
-  Contact,
+
   Categories,
   CreateCategories,
   EditCategory,
+  
+  Contact,
   Order,
   Analytics,
   Reports,
@@ -65,7 +77,7 @@ export {
   Feedbacks,
   Webhooks,
   Pages,
-  CreateProduct,
+
   CreatePage,
   WebhookLogs,
   ShopFeedback,

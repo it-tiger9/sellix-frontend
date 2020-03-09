@@ -18,6 +18,7 @@ import Select from 'react-select'
 import { Formik } from 'formik';
 import * as Yup from "yup";
 import { Spin, ImageUpload } from 'components'
+import { Product } from 'screens'
 
 import {
   CommonActions
@@ -30,12 +31,14 @@ import './style.scss'
 
 const mapStateToProps = (state) => {
   return ({
-    product_list: state.product.product_list
+    all_products: state.product.all_products
   })
 }
+
 const mapDispatchToProps = (dispatch) => {
   return ({
     commonActions: bindActionCreators(CommonActions, dispatch),
+    productActions: bindActionCreators(Product.actions, dispatch),
     actions: bindActionCreators(Actions, dispatch)
   })
 }
@@ -65,21 +68,25 @@ class CreateCategories extends React.Component {
     this.state.files.forEach(file => URL.revokeObjectURL(file.preview));
   }
 
+  componentDidMount() {
+    this.props.productActions.getProductList().catch(err => {
+      console.log(err)
+    })
+  }
+
   unlistedTooltipToggle() {
     this.setState({tooltipOpen: !this.state.tooltipOpen})
   }
 
   addFile = file => {
-    console.log(file);
     this.setState({
-      files: file.map(file =>
+      files: file===null?file:file.map(file =>
         Object.assign(file, {
           preview: URL.createObjectURL(file)
         })
       )
     });
   };
-
 
   handleSubmit(values) {
     this.setState({loading: true})
@@ -105,11 +112,9 @@ class CreateCategories extends React.Component {
 
   render() {
     const { loading, tooltipOpen, files, initialValues } = this.state
+    const { all_products } = this.props
 
-    const products = [
-      { value: 'one', label: 'One' },
-      { value: 'two', label: 'Two' }
-    ]
+    const product_options = all_products.map(pro => {return {value: pro.uniqid, label: pro.title}})
 
     return (
       <div className="product-screen">
@@ -173,7 +178,7 @@ class CreateCategories extends React.Component {
                                   id="product_bounds"
                                   name="product_bounds"
                                   multi
-                                  options={products}
+                                  options={product_options}
                                   placeholder="Select Products"
                                   value={this.state.multiValue}
                                   onChange={(option) => {
@@ -199,7 +204,9 @@ class CreateCategories extends React.Component {
                             <Col lg={4}>
                               <FormGroup className="mb-3">
                                 <Label htmlFor="product_code">Image</Label>
-                                <ImageUpload addFile={this.addFile} files={files}/>
+                                <ImageUpload addFile={(file) => {
+                                  props.handleChange('image')(file[0]); 
+                                  this.addFile(file)}} files={files}/>
                               </FormGroup>
                             </Col>
                           </Row>
