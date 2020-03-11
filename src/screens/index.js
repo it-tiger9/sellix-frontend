@@ -26,6 +26,7 @@ import ShopProducts from './product_shop'
 import ShopProductDetail from './product_shop/screens/detail'
 import BlackList from './blacklist'
 import CreateBlacklist from './blacklist/screens/create'
+import EditBlacklist from './blacklist/screens/create'
 
 import PaypalPaying from './paypal_paying'
 import SecurityPage from './security'
@@ -81,5 +82,6 @@ export {
   Billings,
   GeneralSettings,
   Notification,
-  Customization
+  Customization,
+  EditBlacklist
 }

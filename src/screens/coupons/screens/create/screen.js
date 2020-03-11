@@ -14,6 +14,7 @@ import {
   Input
 } from 'reactstrap'
 import Select from 'react-select'
+import { Formik } from 'formik'
 import { Loader, ImageUpload, DataSlider } from 'components'
 
 
@@ -39,7 +40,7 @@ class CreateCoupon extends React.Component {
     this.state = {
       loading: false,
       tooltipOpen: false,
-      files: []
+      files: [],
     }
   }
 
@@ -72,7 +73,10 @@ class CreateCoupon extends React.Component {
     return (
       <div className="product-screen">
         <div className="animated fadeIn">
-          <Card>
+          <Formik initialValues={{
+            discount: []
+          }}>{props => (
+            <Card>
             <CardHeader>
               <Row style={{alignItems: 'center'}}>
                 <Col md={12}>
@@ -96,7 +100,13 @@ class CreateCoupon extends React.Component {
                           <FormGroup className="mb-3">
                             <Label htmlFor="product_code">Code</Label>
                             <div className="d-flex">
-                              <Input type="number" placeholder="Coupon code"></Input>
+                              <Input 
+                                type="number" 
+                                name="CouponCode"
+                                placeholder="Coupon code"
+                                onChange={props.handleChange}
+                                value={props.values.CouponCode}
+                              />
                               <Button color="primary">Generate</Button>
                             </div>
                           </FormGroup>
@@ -106,7 +116,15 @@ class CreateCoupon extends React.Component {
                         <Col lg={12}>
                           <FormGroup className="mb-3">
                             <Label htmlFor="product_code">Discount</Label>
-                            <DataSlider domain={[0, 100]} value={[50]} ticks={[1, 50, 100]} suffix="%"/>
+                            <DataSlider 
+                              domain={[0, 100]}  
+                              value={[50]} 
+                              ticks={[1, 50, 100]} 
+                              suffix="%"
+                              name="discount"
+                              onChange={props.handleChange}
+                              value={props.values.discount}
+                            />
                           </FormGroup>
                         </Col>
                       </Row>
@@ -119,6 +137,8 @@ class CreateCoupon extends React.Component {
                               id="parentProduct"
                               name="parentProduct"
                               placeholder="Select Products"
+                              onChange={props.handleChange}
+                              value={props.values.parentProduct}
                             />
                           </FormGroup>
                         </Col>
@@ -127,7 +147,13 @@ class CreateCoupon extends React.Component {
                         <Col lg={12}>
                           <FormGroup className="mb-3">
                             <Label htmlFor="product_code">Max Number of Uses</Label>
-                            <Input type="number" placeholder="Leave blank for unlimited"></Input>
+                            <Input 
+                              type="number" 
+                              name="maxNumbersOfUses"
+                              placeholder="Leave blank for unlimited" 
+                              onChange={props.handleChange}
+                              value={props.values.maxNumbersOfUses}
+                            />
                           </FormGroup>
                         </Col>
                       </Row>
@@ -139,6 +165,8 @@ class CreateCoupon extends React.Component {
             >Save Coupon</Button>
             
           </Card>
+          )}
+          </Formik>
         </div>
       </div>
     )

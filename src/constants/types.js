@@ -16,6 +16,10 @@ export const TEMP = {
 
 }
 
+export const BLACKLIST = {
+  BLACKLIST_LIST: 'BLACKLIST'
+}
+
 export const DASHBOARD = {
   BANK_ACCOUNT_TYPE: 'BANK_ACCOUNT_TYPE',
   BANK_ACCOUNT_GRAPH: 'BANK_ACCOUNT_GRAPH',
