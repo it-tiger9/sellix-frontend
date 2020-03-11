@@ -51,7 +51,7 @@ class Header extends Component {
   }
 
   render() {
-    const { children, theme, ...attributes } = this.props
+    const { user, children, theme, ...attributes } = this.props
 
     return (
       <React.Fragment>
@@ -119,7 +119,7 @@ class Header extends Component {
           <UncontrolledDropdown nav direction="down">
             <DropdownToggle className="user-name" nav>
               <div className="d-md-down-none">
-                WickedChoco <i className="fas fa-chevron-down"/>
+                {(user || {}).username} <i className="fas fa-chevron-down ml-2"/>
               </div>
               <div className="d-lg-none">
                 <img src={avatar} width="35" height="35" className="img-avatar" alt="admin@bootstrapmaster.com" />

@@ -21,8 +21,11 @@ export const GlobalStyles = createGlobalStyle`
         background: ${({ theme }) => theme.body};
     }
 
+    .admin-container .breadcrumb {
+        background: ${({ theme }) => theme.cardBody};
+    }
+
     .searchbar .header-search-input,
-    .card .card-header .header-search-input,
     table tbody td .badge-normal,
     .Select-control,
     .create-product-screen .payment-checkbox,
@@ -36,6 +39,8 @@ export const GlobalStyles = createGlobalStyle`
         border: 1px solid ${({ theme }) => theme.widgetBorder} !important;
     }
 
+    
+
     .react-bootstrap-daterangepicker-container button {
         background-color: ${({ theme }) => theme.widget} !important;
     }
@@ -43,6 +48,12 @@ export const GlobalStyles = createGlobalStyle`
     select,
     .form-control {
         background-color: ${({ theme }) => theme.widget} !important;
+        border: 1px solid ${({ theme }) => theme.widgetBorder} !important;
+    }
+
+    .card .card-header .header-search-input,
+    .query-sorting {
+        background-color: ${({ theme }) => theme.cardBody} !important;
         border: 1px solid ${({ theme }) => theme.widgetBorder} !important;
     }
 
@@ -54,7 +65,7 @@ export const GlobalStyles = createGlobalStyle`
     .blacklist-screen .card.grey .card-body,
     .analytics-screen .card.grey .card-body{
         background-color: ${({ theme }) => theme.widget} !important;
-        border: 1px solid ${({ theme }) => theme.widgetBorder} !important;
+        // border: 1px solid ${({ theme }) => theme.cardBody} !important;
     }
 
     .dashboard-screen .card.grey .card-body h2 {

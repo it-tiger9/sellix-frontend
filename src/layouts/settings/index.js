@@ -108,27 +108,28 @@ class SettingsLayout extends React.Component {
         <GlobalStyles />
           <div className="admin-container">
             <div className="app">
-              <AppHeader>
+              <AppHeader fixed>
                 <Suspense fallback={Loading()}>
                   <Header {...this.props} theme={theme} changeTheme={this.changeTheme.bind(this)}  />
                 </Suspense>
               </AppHeader>
               <div className="app-body">
-                <AppSidebar style={{width: 230}} className="pt-4 mb-5 mr-5" display="lg">
+                <AppSidebar fixed className="pt-4 mb-5" display="lg">
                   <Suspense>
                     <AppSidebarNav navConfig={mainNavigation} {...this.props} />
                   </Suspense>
                 </AppSidebar>
-                <div style={{width: 160}} className="pt-5 mb-5 mr-3 settings-sidebar" display="lg">
-                  <Suspense>
-                    <h4 style={{color: 'black', fontSize: '18px'}}>Settings</h4>
-                    <h4 className="settings-title mt-5">Account</h4>
-                    <AppSidebarNav navConfig={accountSettingsNavigation} {...this.props} />
-                    <h4 className="settings-title mt-5">Shop</h4>
-                    <AppSidebarNav navConfig={shopSettingsNavigation} {...this.props} />
-                  </Suspense>
-                </div>
-                <main className="main mt-5 mb-5">
+                
+                <main className="main mt-5 mb-5 settings-main">
+                  <div className="pt-3 mb-5 mr-3 settings-sidebar" display="lg">
+                    <Suspense>
+                      <h4 style={{color: 'black', fontSize: '16px'}}>Settings</h4>
+                      <h4 className="settings-title mt-5">Account</h4>
+                      <AppSidebarNav navConfig={accountSettingsNavigation} {...this.props} />
+                      <h4 className="settings-title mt-5">Shop</h4>
+                      <AppSidebarNav navConfig={shopSettingsNavigation} {...this.props} />
+                    </Suspense>
+                  </div>
                   <Container className="p-0" fluid>
                     <Suspense fallback={Loading()}>
                       <ToastContainer position="top-right" autoClose={5000} style={containerStyle} />
