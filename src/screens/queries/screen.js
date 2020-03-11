@@ -87,7 +87,7 @@ class Queries extends React.Component {
                   <div className="d-flex justify-content-end">
                     <div className="white">
                         <div className="new-select fill">
-                        <select className="form-control" ref={this.dateRangeSelect}>
+                        <select className="form-control query-sorting" ref={this.dateRangeSelect}>
                           <option value="12">No Sorting</option>
                           <option value="6">Latest</option>
                         </select>

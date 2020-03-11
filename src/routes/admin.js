@@ -1,11 +1,17 @@
 import {
   Dashboard,
-  Product,
+
   ProductSort,
   CateogrySort,
+
+  Product,
+  CreateProduct,
+  EditProduct,
+
   Categories,
   CreateCategories,
   EditCategory,
+
   Order,
   Analytics,
   Reports,
@@ -31,22 +37,27 @@ const adminRoutes = [
 
   {
     path: '/admin/product/all/create',
-    name: 'Product',
+    name: 'New',
     component: CreateProduct.screen
   },
   {
+    path: '/admin/product/all/edit',
+    name: 'Edit',
+    component: EditProduct.screen
+  },
+  {
     path: '/admin/product/all',
-    name: 'Product',
+    name: 'Products',
     component: Product.screen
   },
   {
     path: '/admin/product/categories/edit',
-    name: 'Categories',
+    name: 'Edit',
     component: EditCategory.screen
   },
   {
     path: '/admin/product/categories/create',
-    name: 'Categories',
+    name: 'New',
     component: CreateCategories.screen
   },
   {
@@ -57,42 +68,42 @@ const adminRoutes = [
 
   {
     path: '/admin/product/product-sort',
-    name: 'ProductSort',
+    name: 'Product Sort',
     component: ProductSort.screen
   },
 
   {
     path: '/admin/product/category-sort',
-    name: 'CateogrySort',
+    name: 'Cateogry Sort',
     component: CateogrySort.screen
   },
 
   {
     path: '/admin/orders/detail',
-    name: 'OrderDetail',
+    name: 'Detail',
     component: OrderDetail.screen
   },
 
   {
     path: '/admin/orders',
-    name: 'Order',
+    name: 'Orders',
     component: Order.screen
   },
 
   {
     path: '/admin/analytics/all',
-    name: 'Product',
+    name: 'Analytics',
     component: Analytics.screen
   },
   {
     path: '/admin/analytics/reports',
-    name: 'Categories',
+    name: 'Reports',
     component: Reports.screen
   },
 
   {
     path: '/admin/coupons/create',
-    name: 'Coupons',
+    name: 'New',
     component: CreateCoupon.screen
   },
 
@@ -104,7 +115,7 @@ const adminRoutes = [
 
   {
     path: '/admin/blacklist/create',
-    name: 'CreateBlacklist',
+    name: 'New',
     component: CreateBlacklist.screen
   },
   {
@@ -126,13 +137,13 @@ const adminRoutes = [
   },
   {
     path: '/admin/feedback',
-    name: 'Feedbacks',
+    name: 'Feedback',
     component: Feedbacks.screen
   },
 
   {
     path: '/admin/pages/create',
-    name: 'Pages',
+    name: 'New',
     component: CreatePage.screen
   },
 
@@ -150,7 +161,7 @@ const adminRoutes = [
 
   {
     path: '/admin/developer/webhook-logs',
-    name: 'WeebhookLogs',
+    name: 'Weebhook Logs',
     component: WebhookLogs.screen
   },
 
@@ -158,8 +169,8 @@ const adminRoutes = [
     redirect: true,
     path: '/admin',
     pathTo: '/admin/dashboard',
-    name: 'Admin'
-  }
+  },
+  { path: '/', exact: true, name: 'Home' },
 ]
 
 export default adminRoutes

@@ -11,11 +11,14 @@
 
   .app-header {
     border-bottom: none;
-    border-radius: 10px;
-    padding: 20px 10px;
-    height: 100px;
-    margin: 0 20px;
-    margin-top: 30px;
+    // border-radius: 10px;
+    height: 80px;
+    box-shadow: 0 0 9px 1px rgba(0, 0, 0, 0.2);
+    
+    padding: 0 10px;
+    // height: 100px;
+    // margin: 0 20px;
+    // margin-top: 30px;
     
     button:focus {
       outline: none;
@@ -34,26 +37,20 @@
       cursor: pointer;
       color: #73818f;
     }
-
-    @media (max-width: 991.98px) {
-      width: 100% !important;
-      padding:0 !important;
-      margin: 0 !important
-    }
   }
 
 
   .app-body {
-    padding: 0 20px;
+    // padding: 0 20px;
 
-    @media (max-width: 991.98px) {
-      margin-top: 100px !important;
+    main {
+      padding: 0 20px;
     }
-    // margin-top: 0 !important;
   }
 
   .breadcrumb {
     border-bottom: none;
+    border-radius: 5px;
   }
 
   .app-footer {
@@ -76,10 +73,10 @@
 
   .sidebar {
     background: #F6F4FF;
-    min-width: 230px !important;
 
     .sidebar-nav {
-      min-width: 230px !important;
+      padding-top: 15px !important;
+      padding-left: 10px !important;
     }
 
     .nav-link:hover.nav-dropdown-toggle::before {
@@ -97,7 +94,7 @@
     }
 
     .nav-item {
-      padding: 1.5rem 0 !important;
+      padding: 1.3rem 0 !important;
     }
     .nav-link {
       padding: 0 1rem !important;

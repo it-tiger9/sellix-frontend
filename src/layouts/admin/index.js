@@ -1,5 +1,6 @@
 import React, { Suspense } from 'react'
 import { Route, Switch, Redirect } from 'react-router-dom'
+import * as router from 'react-router-dom';
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 
@@ -36,7 +37,8 @@ import './style.scss'
 
 const mapStateToProps = (state) => {
   return ({
-    version: state.common.version
+    version: state.common.version,
+    user: state.auth.profile
   })
 }
 const mapDispatchToProps = (dispatch) => {
@@ -55,14 +57,13 @@ class AdminLayout extends React.Component {
   }
 
   componentDidMount () {
-    // if (!window.localStorage.getItem('accessToken')) {
-    //   this.props.history.push('/login')
-    // } else {
-      // this.props.authActions.checkAuthStatus().catch(err => {
-      //   this.props.authActions.logOut()
-      //   this.props.history.push('/login')
-      // })
-      this.props.commonActions.getSimpleVATVersion()
+    if (!window.localStorage.getItem('accessToken')) {
+      this.props.history.push('/login')
+    } else {
+      this.props.authActions.checkAuthStatus().catch(err => {
+        this.props.authActions.logOut()
+        this.props.history.push('/login')
+      })
       const toastifyAlert = (status, message) => {
         if (!message) {
           message = 'Unexpected Error'
@@ -86,13 +87,14 @@ class AdminLayout extends React.Component {
         }
       }
       this.props.commonActions.setTostifyAlertFunc(toastifyAlert)
-    // }
+    }
   }
 
   changeTheme() {
-    this.setState({
-      theme: this.state.theme == 'light'? 'dark': 'light'
-    })
+    const theme = window.localStorage.getItem('theme') || 'light'
+    window.localStorage.setItem('theme', theme == 'light'? 'dark': 'light')
+
+    this.setState({theme: theme == 'light'? 'dark': 'light'})
   }
 
   render() {
@@ -100,27 +102,28 @@ class AdminLayout extends React.Component {
       zIndex: 1999
     }
 
-    const {theme} = this.state
+    // const {theme} = this.state
 
-    let isSettings = this.props.location.pathname.includes('/admin/settings')?true:false
+    const theme = window.localStorage.getItem('theme') || this.state || 'light'
 
     return (
       <ThemeProvider theme={theme=='light'?lightTheme:darkTheme}>
         <GlobalStyles />
         <div className="admin-container">
           <div className="app">
-            <AppHeader>
+            <AppHeader fixed>
               <Suspense fallback={Loading()}>
                 <Header {...this.props} theme={theme} changeTheme={this.changeTheme.bind(this)}/>
               </Suspense>
             </AppHeader>
             <div className="app-body">
-              <AppSidebar  className="pt-4 mb-5" display="lg">
+              <AppSidebar  className="pt-4 mb-5" fixed display="lg">
                 <Suspense>
                   <AppSidebarNav navConfig={mainNavigation} {...this.props} />
                 </Suspense>
               </AppSidebar>
               <main className="main mt-5 mb-5">
+                <AppBreadcrumb appRoutes={adminRoutes} router={router}/>
                 <Container className="p-0" fluid>
                   <Suspense fallback={Loading()}>
                     <ToastContainer position="top-right" autoClose={5000} style={containerStyle} hideProgressBar={true}/>

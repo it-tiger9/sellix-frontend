@@ -4,13 +4,12 @@ import {
   formData
 } from 'utils'
 
-
 // Get Category List
 export const getCategoryList = () => {
   return (dispatch) => {
     let data = {
       method: 'GET',
-      url: '/categories/user/testuser'
+      url: '/self/categories'
     }
 
     return authApi(data).then(res => {

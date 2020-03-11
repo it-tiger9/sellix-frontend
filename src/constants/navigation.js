@@ -7,7 +7,7 @@ export const mainNavigation =  {
     },
     {
       name: 'Products',
-      url: '/admin/product',
+      url: '/product',
       icon: 'fas fa-boxes',
       children: [
         {

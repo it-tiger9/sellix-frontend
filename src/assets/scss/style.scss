@@ -7,7 +7,7 @@
 
 // Import styles with dark layout
 // If you want to use dark layout uncomment next line
-@import "~@coreui/coreui-pro/scss/themes/dark/coreui-dark.scss";
+// @import "~@coreui/coreui-pro/scss/themes/dark/coreui-dark.scss";
 
 // Temp fix for reactstrap
 @import "~@coreui/coreui-pro/scss/_dropdown-menu-right.scss";
@@ -23,4 +23,4 @@
 
 // Spinkit
 $spinkit-spinner-color: $body-color;
-@import '~spinkit/scss/spinkit.scss';
+@import 'node_modules/spinkit/scss/spinkit.scss';

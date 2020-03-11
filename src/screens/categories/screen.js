@@ -14,15 +14,15 @@ import { confirmAlert } from 'react-confirm-alert';
 import { Loader } from 'components'
 import { tableOptions } from 'constants/tableoptions'
 import {
-  CommonActions
+  CommonActions,
 } from 'services/global'
-
 
 import * as Actions from './actions'
 import './style.scss'
 
 const mapStateToProps = (state) => {
   return ({
+    user: state.auth,
     all_categories: state.category.all_categories
   })
 }
@@ -175,9 +175,9 @@ class Categories extends React.Component {
                             Title
                           </TableHeaderColumn>
                           <TableHeaderColumn
-                            dataField="stock"
+                            dataField="products_count"
                             dataSort
-                            dataFormat = {(cell, row) => (row.products || []).length}
+                            
                           >
                             Product Count
                           </TableHeaderColumn>

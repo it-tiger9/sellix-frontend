@@ -1,7 +1,7 @@
 import { withTheme } from "styled-components"
 
 export const lightTheme = {
-    widgetBorder: '#F5F5F5'
+    widgetBorder: '#F5F5F5',
 }
   
 export const darkTheme = {
@@ -10,7 +10,7 @@ export const darkTheme = {
     header: '#1D183D',
 
     widget: '#221D3E',
-    widgetBorder: '#130735',
+    widgetBorder: '#1D183D',
 
     text: '#B4AEBC',
     toggleBorder: '#6B8096',

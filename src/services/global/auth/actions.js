@@ -9,17 +9,17 @@ export const checkAuthStatus = () => {
   return (dispatch) => {
     let data = {
       method: 'get',
-      url: '/rest/user/current'
+      url: `/check/${window.localStorage.getItem('accessToken')}`
     }
     return authApi(data).then(res => {
-      if (res.status == 200) {
+      if (!res.error) {
         dispatch({
           type: AUTH.SIGNED_IN
         })
         dispatch({
           type: AUTH.USER_PROFILE,
           payload: {
-            data: res.data
+            data: res
           }
         })
       } else {
