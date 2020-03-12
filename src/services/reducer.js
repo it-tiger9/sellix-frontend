@@ -15,13 +15,14 @@ import {
   Help,
   Notification,
   Categories,
+  BlackList
 } from 'screens'
 
 
 const reducer = combineReducers({
   common: CommonReducer,
   auth: AuthReducer,
-
+  blacklist: BlackList.reducer,
   dashboard: Dashboard.reducer,
   product: Product.reducer,
   category: Categories.reducer

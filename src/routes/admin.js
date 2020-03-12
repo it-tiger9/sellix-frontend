@@ -23,9 +23,10 @@ import {
   WebhookLogs,
   CreatePage,
   Pages,
-  OrderDetail
+  CreateProduct,
+  OrderDetail,
 } from 'screens'
-import { BlackList, CreateBlacklist } from '../screens'
+import { BlackList, CreateBlacklist, EditBlacklist } from '../screens'
 
 const adminRoutes = [
   {
@@ -117,13 +118,17 @@ const adminRoutes = [
     name: 'New',
     component: CreateBlacklist.screen
   },
-
+  {
+    path: '/admin/blacklist/edit/:id',
+    name: 'EditBlacklist',
+    component: EditBlacklist.screen
+  },
   {
     path: '/admin/blacklist',
     name: 'Blacklist',
     component: BlackList.screen
   },
-
+  
 
   {
     path: '/admin/queries',
@@ -153,7 +158,6 @@ const adminRoutes = [
     name: 'Weebhooks',
     component: Webhooks.screen
   },
-
 
   {
     path: '/admin/developer/webhook-logs',
