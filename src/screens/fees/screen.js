@@ -1,7 +1,5 @@
 import React, { Suspense } from 'react'
 import { Link } from 'react-router-dom'
-import {connect} from 'react-redux'
-import { bindActionCreators } from 'redux'
 import {
   Button,
   Col,
@@ -15,26 +13,21 @@ import {
   NavItem,
   NavLink
 } from 'reactstrap'
-import {
-  AppHeader
-} from '@coreui/react'
 
 import './style.scss'
 
-import {
-  Loading
-} from 'components'
 
 import logo from 'assets/images/home/logo.png'
 import top1 from 'assets/images/home/top1.svg'
-import service1 from 'assets/images/home/service1.svg'
-import service2 from 'assets/images/home/service2.svg'
-import service3 from 'assets/images/home/service3.svg'
+import service1 from 'assets/images/crypto/b_paypal.jpg'
+import service2 from 'assets/images/crypto/b_btc.jpg'
+import service3 from 'assets/images/crypto/b_ltc.jpg'
+import service4 from 'assets/images/crypto/b_skrill.jpg'
 import undraw from 'assets/images/home/undraw.svg'
 import undraw1 from 'assets/images/home/undraw2.svg'
 import sellix_logo from 'assets/images/Sellix_logo.svg'
 
-class Home extends React.Component {
+class Fees extends React.Component {
   
   constructor(props) {
     super(props)
@@ -51,9 +44,9 @@ class Home extends React.Component {
     const { isOpen } = this.state
 
     return (
-      <div className="home-screen">
+      <div className="fees-screen">
         <div className="animated fadeIn">
-          <header className="mb-5 pt-2 pb-2 ">
+          <header className="mb-3 pt-2 pb-2">
           <Navbar  color="white" light expand="lg">
               <NavbarBrand href="/">
                 <img className="logo" src={sellix_logo}/>
@@ -95,115 +88,95 @@ class Home extends React.Component {
               </div>
             </Navbar>
           </header>
-          <div className="section white" style={{paddingTop: 150, paddingBottom: 100}}>
-              <Container className="home-container p-0" fluid>
-                <Row className="flex-row align-items-center">
-                  <Col md={6} className="mb-5">
-                    <h1>Sell Digital Goods Online</h1>
-                    <p className="large">
-                      E-commerce is easy with Selly. Create your own customizable online store today.
-                    </p>
-                    <Button color="primary">Get Started for Free</Button>
-                  </Col>
-                  <Col md={6}>
-                    <img src={top1}/>
-                  </Col>
+
+          <div className="section text-center " style={{paddingTop: 150, paddingBottom: 50}}>
+            <Container className="home-container" fluid>
+              <h3>Fees</h3>
+              <p className="large">
+                How much we charge over orders
+              </p>
+            </Container>
+          </div>
+          <div className="section text-center bg-white" style={{paddingBottom:50}}>
+              <Container className="home-container">
+                <Row className="service-row ">
+                    <Col md={3}>
+                        <div className="payment-card">
+                            <div className="method">
+                                <h4 className="mt-4">Paypal</h4>
+                                <img className="service-img" src={service1}/>
+                            </div>
+                            <div className="content">
+                                <p className="small text-primary">
+                                HexPay does not take any
+                                additional fee to process
+                                PayPal invoices.
+                                </p>
+                            </div>
+                        </div>
+                    </Col>
+                    <Col md={3}>
+                        <div className="payment-card">
+                            <div className="method">
+                                <h4 className="mt-4">Bitcoin</h4>
+                                <img className="service-img" src={service2}/>
+                            </div>
+                            <div className="content">
+                                <p className="small1 text-primary">
+                                    Transaction Fees: <b>$0.040</b>
+                                </p>
+                                <p className="small1 text-primary">Hexpay Fees: <img src={service2} width="25" height="25"/>
+                                    <b>0.0000060 ($0.03659)</b>
+                                </p>
+                                <p className="small1 text-primary">
+                                if the order is less than $1.83, else 2.00% over the total.
+                                </p>
+                            </div>
+                        </div>
+                    </Col>
+                    <Col md={3}>
+                        <div className="payment-card">
+                            <div className="method">
+                                <h4 className="mt-4">Litecoin</h4>
+                                <img className="service-img" src={service3}/>
+                            </div>
+                            <div className="content">
+                                <p className="small1 text-primary">
+                                    Transaction Fees: <b>$0.005</b>
+                                </p>
+                                <p className="small1 text-primary">Hexpay Fees: <img src={service3} width="25" height="25"/>
+                                    <b>0.0006540 ($0.02942)</b>
+                                </p>
+                                <p className="small1 text-primary">
+                                if the order is less than $1.47, else 2.00% over the total.
+                                </p>
+                            </div>
+                        </div>
+                    </Col>
+                    <Col md={3}>
+                        <div className="payment-card">
+                            <div className="method">
+                                <h4 className="mt-4">Ethereum</h4>
+                                <img className="service-img" src={service4}/>
+                            </div>
+                            <div className="content">
+                                <p className="small1 text-primary">
+                                    Transaction Fees: <b>0.0000630 ($0.00915)</b>
+                                </p>
+                                <p className="small1 text-primary">Hexpay Fees: <img src={service4} width="25" height="25"/>
+                                    <b>2.00% over the total</b>
+                                </p>
+                                
+                            </div>
+                        </div>
+                    </Col>
                 </Row>
               </Container>
-            </div>
-          <div className="section pt-5 pb-5 text-center">
-            <Container className="home-container" fluid>
-              <h3>E-commerce, Your Way!</h3>
-              <p className="large">
-                Put the ability to create a full customizable online storefront right at your fingertips
-              </p>
-              <Row className="service-row">
-                <Col md={4}>
-                  <img className="service-img" src={service1}/>
-                  <h4 className="mt-4">Customizable Storefront</h4>
-                  <p className="small">
-                    Other platforms stifle brand creativity – we
-                    encourage I Our team takes care of the
-                    infrastructure of your stor but what you do
-                    with it is entirely up to you.
-                  </p>
-                </Col>
-                <Col md={4}>
-                  <img className="service-img" src={service2}/>
-                  <h4 className="mt-4">Payment Flexibility</h4>
-                  <p className="small">
-                    Looking for a specific type of payment
-                    option? No problem. Our platform integrates
-                    with a variety of payment gateways,
-                    including cryptocurrencies.
-                  </p>
-                </Col>
-                <Col md={4}>
-                  <img className="service-img" src={service3}/>
-                  <h4 className="mt-4">All-in-One Platform</h4>
-                  <p className="small">
-                    Think flexibility has to come with a cost?
-                    Think again. In addition to flexibility,
-                    we offer leading order fulfillment
-                    options and management.
-                  </p>
-                </Col>
-              </Row>
-            </Container>
-          </div>
-
-          <div className="section white pt-5 pb-5" style={{paddingBottom: 100}}>
-            <Container className="home-container p-0" fluid>
-              <Row className="flex-row align-items-center">
-                <Col md={6} className="mb-3">
-                  <div style={{width: '75%'}}>
-                    <h1>Built for this
-                      generation, and
-                      the next</h1>
-                    <p className="small">
-                      With Selly, you get access to cryptocurrency
-                        support, cutting edge e-commerce tools, and our
-                        forward-thinking, proactive support team.
-                    </p>
-                  </div>
-                  
-                </Col>
-                <Col md={6} className="text-right">
-                  <img className="undraw-img" src={undraw}/>
-                </Col>
-              </Row>
-            </Container>
-          </div>
-
-          <div className="section white pt-5 pb-5" style={{paddingBottom: 100}}>
-            <Container className="home-container p-0" fluid>
-              <Row className="flex-row align-items-center">
-                <Col md={7} className="mb-5">
-                  <img className="pc-img" src={undraw1}/>
-                </Col>
-                <Col md={5}>
-                  <div className="float-right" style={{maxWidth: 447}}>
-                    <h1>Cheap Payment Fees</h1>
-                    <p className="small">
-                      We provide very low fees for each transaction. With our unique payment processing method, 
-                      we keep transaction fees at the lowest amount. Find out more about our fees.
-                    </p>
-                    <NavLink className="p-0" href="/fees"><Button color="primary">Our  Fees</Button></NavLink>
-                  </div>
-                </Col>
-              </Row>
-            </Container>
-          </div>
-
-          <div className="section purple text-center" style={{paddingBottom: 100, paddingTop: 100}}>
-            <h1>Ready to start selling?</h1>
-            <p className="small">Create an account and get started</p>
-            <Button color="secondary">Get Started for Free</Button>
           </div>
 
           <footer>
             <div className="section text-center" style={{paddingBottom: 100, paddingTop: 100}}>
-              <Container className="home-container p-0" fluid>
+              <Container className="home-container" fluid>
                 <div className="d-flex justify-content-between text-left flex-wrap">
                   <div className="mb-3">
                     <NavbarBrand className="p-0" href="/">
@@ -249,9 +222,6 @@ class Home extends React.Component {
                       <NavItem>
                         <NavLink href="#">Payments</NavLink>
                       </NavItem>
-                      <NavItem>
-                        <NavLink href="/fees">Fees</NavLink>
-                      </NavItem>
                     </Nav>
                   </div>
                   <div className="mb-3">
@@ -285,4 +255,4 @@ class Home extends React.Component {
   }
 }
 
-export default Home
+export default Fees

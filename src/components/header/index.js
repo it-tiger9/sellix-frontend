@@ -118,10 +118,7 @@ class Header extends Component {
  
           <UncontrolledDropdown nav direction="down">
             <DropdownToggle className="user-name" nav>
-              <div className="d-md-down-none">
-                {(user || {}).username} <i className="fas fa-chevron-down ml-2"/>
-              </div>
-              <div className="d-lg-none">
+              <div>
                 <img src={avatar} width="35" height="35" className="img-avatar" alt="admin@bootstrapmaster.com" />
               </div>
             </DropdownToggle>
@@ -144,9 +141,7 @@ class Header extends Component {
               </DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>
-          <NavItem className="d-md-down-none">
-            <img src={avatar} width="35" height="35" className="img-avatar" alt="admin@bootstrapmaster.com" />
-          </NavItem>
+          
         </Nav>
       </React.Fragment>
     );

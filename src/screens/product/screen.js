@@ -105,7 +105,7 @@ class Product extends React.Component {
     ) {
       return (
         <div>
-          <p>{row.title}</p>
+          <p><a href="#">{row.title}</a></p>
           <p className="caption">{row.uniqid}</p>
         </div>
       )  
@@ -225,8 +225,6 @@ class Product extends React.Component {
                           options={ tableOptions() }
                           data={all_products}
                           version="4"
-                          hover
-                          
                           pagination
                           totalSize={all_products ? all_products.length : 0}
                           className="product-table"

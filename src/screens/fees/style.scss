@@ -1,0 +1,167 @@
+.fees-screen {
+    * {
+      font-family: 'Poppins';
+    }
+
+    .payment-card {
+        border-radius: 10px;
+        background-color: white;
+        box-shadow: 0 4px 30px #969ad680;
+        margin-bottom: 100px;
+        transition: transform 0.3s;
+        margin-top: -60px;
+        height: 90%;
+        
+        .method {
+            background-color: #E4D6FF;
+            height: 240px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            padding: 10px 10px 20px 10px;
+
+            img {
+                margin-top: 20px;
+                border-radius: 50%;
+            }
+        }
+
+        .content {
+            padding: 20px 10px 20px 10px;
+            // text-align: left;
+        }
+    }
+
+    .payment-card:hover {
+        transform: scale(1.1);
+        z-index: 2;
+    }
+  
+    background-color: #f8f8f8;
+    header {
+      position: fixed;
+      width: 100%;
+      z-index: 9999;
+      top: 0;
+      background-color: white;
+      // border-bottom: 1px solid grey;
+    }
+    .navbar {
+      
+      max-width: 1252px;
+      margin: 0 auto;
+  
+      .logo {
+        width: 106px;
+        height: 25px;
+      }
+  
+      .nav-item a{
+        margin: 0 15px;
+        color: #A7A5B4 !important;
+        font-weight: 600;
+        font-size: 16px;
+      }
+  
+      .nav-item a:hover,
+      .nav-item.active a {
+        color: #613BEA !important;
+      }
+    }
+  
+    .section {
+    }
+    
+    .white {
+      background-color: white;
+    }
+  
+    .purple {
+      background-color: #613BEA;
+  
+      h1, p {
+        color: white !important;
+      }
+    }
+  
+    p {
+      color: #A7A5B4;
+      line-height: 2em;
+    }
+  
+    h1 {
+      color: #613BEA;
+      font-size: 36px;
+      font-weight: 600;
+    }
+  
+    h3 {
+      color: #613BEA;
+      font-size: 30px;
+      font-weight: 600;
+    }
+  
+    h4 {
+      color: #613BEA;
+      font-size: 24px;
+      font-weight: 600;
+    }
+  
+    h5 {
+      line-height: 1.4em;
+      color: #613BEA;
+      font-size: 15px;
+      font-weight: 600;
+    }
+  
+    p.large {
+      font-size: 18px;
+      font-family: 'Poppins-SemiBold';
+    }
+  
+    p.small {
+      font-size: 16px;
+    
+    }
+
+    p.small1{
+      font-size: 13px;
+      margin-bottom: 0;
+      text-align: left;
+    }  
+    .service-img {
+      max-width: 120px;
+      max-height: 120px;
+    }
+  
+    .undraw-img {
+      max-width: 659px;
+      max-height: 520px;
+    }
+  
+    .pc-img  {
+      max-width: 691px;
+      max-height: 397px;
+    }
+  
+    .home-container {
+      max-width: 1252px;
+  
+      
+  
+      .service-row {
+        margin-top: 50px;
+      }
+  
+      
+    }
+  
+    footer {
+      .nav-link {
+        margin: 0 !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        font-size: 14px !important;
+        font-weight: normal !important;
+      }
+    }
+  }

@@ -110,12 +110,12 @@ class ShopLayout extends React.Component {
         <GlobalStyles />
           <div className="admin-container">
             <div className="app">
-              <AppHeader>
+              <AppHeader fixed>
                 <Suspense fallback={Loading()}>
                   <Header {...this.props} theme={theme} changeTheme={this.changeTheme.bind(this)}  />
                 </Suspense>
               </AppHeader>
-              <div className="app-body flex-column">
+              <div className="app-body flex-column pt-4">
                 <section className="mt-4 pt-5 pb-4">
                     <div className="br-2 bg-primary logo-background"></div>
                     <div className="text-center align-items-center logo-content">
@@ -143,7 +143,7 @@ class ShopLayout extends React.Component {
                         </Nav>
                     </div>
                 </section>
-                <main className="main mt-3 mb-5">
+                <div className="mt-3 mb-5 p-3">
                   <Container className="p-0" fluid>
                     <Suspense fallback={Loading()}>
                       <ToastContainer position="top-right" autoClose={5000} style={containerStyle} />
@@ -164,7 +164,7 @@ class ShopLayout extends React.Component {
                       </Switch>
                     </Suspense>
                   </Container>
-                </main>
+                </div>
               </div>
             </div>
           </div>

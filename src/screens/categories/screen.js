@@ -155,7 +155,6 @@ class Categories extends React.Component {
                           options={ tableOptions() }
                           data={all_categories}
                           version="4"
-                          hover
                           pagination
                           totalSize={all_categories ? all_categories.length : 0}
                           className="product-table"

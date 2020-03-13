@@ -5,7 +5,6 @@ import {
   CateogrySort,
 
   Product,
-  CreateProduct,
   EditProduct,
 
   Categories,

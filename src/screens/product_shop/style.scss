@@ -10,10 +10,14 @@
 
   .product-card {
     cursor: pointer;
+    
+    transition: transform 0.3s;
   }
 
   .product-card:hover {
-    box-shadow: 0 0px 30px rgba(0,0,0,0.4) !important;
+    transform: scale(1.07);
+    z-index: 2;
+    box-shadow: 0 4px 30px #969ad680 !important;
   }
 
   button {

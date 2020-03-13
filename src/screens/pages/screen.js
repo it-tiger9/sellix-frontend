@@ -141,7 +141,6 @@ class Pages extends React.Component {
                           options={ this.options }
                           data={product_list}
                           version="4"
-                          hover
                           pagination
                           totalSize={product_list ? product_list.length : 0}
                           className="product-table"

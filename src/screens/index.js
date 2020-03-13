@@ -1,4 +1,5 @@
 import Home from './home'
+import Fees from './fees'
 import LogIn from './log_in'
 import Register from './register'
 import Dashboard from './dashboard'
@@ -53,6 +54,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 
 export {
   Home,
+  Fees,
   LogIn,
   Register,
   Dashboard,
