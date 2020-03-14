@@ -15,22 +15,26 @@ import { ToastContainer, toast } from 'react-toastify'
 import { BootstrapTable, TableHeaderColumn, SearchField } from 'react-bootstrap-table'
 
 import { Loader } from 'components'
-
+import { confirmAlert } from 'react-confirm-alert';
 import 'react-toastify/dist/ReactToastify.css'
 import 'react-bootstrap-table/dist/react-bootstrap-table-all.min.css'
-
-import * as ProductActions from './actions'
+import {
+  CommonActions
+} from 'services/global'
+import { getCoupons, deleteCoupon } from './actions'
 
 import './style.scss'
 
 const mapStateToProps = (state) => {
   return ({
-    product_list: state.product.product_list
+    coupons: state.coupons.coupons
   })
 }
 const mapDispatchToProps = (dispatch) => {
   return ({
-    productActions: bindActionCreators(ProductActions, dispatch)
+    actions: bindActionCreators({getCoupons}, dispatch),
+    deleteCoupon: bindActionCreators({deleteCoupon}, dispatch),
+    commonActions: bindActionCreators(CommonActions, dispatch)
   })
 }
 
@@ -39,13 +43,13 @@ class Product extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      loading: true,
+      loading: false,
     }
 
-    this.initializeData = this.initializeData.bind(this)
     this.onRowSelect = this.onRowSelect.bind(this)
     this.onSelectAll = this.onSelectAll.bind(this)
     this.goToDetail = this.goToDetail.bind(this)
+    this.deleteCoupon = this.deleteCoupon.bind(this)
 
     this.renderShowsTotal = (start, to, total) => {
       return (
@@ -84,24 +88,25 @@ class Product extends React.Component {
   }
 
   componentDidMount () {
-    this.initializeData()
+    // this.initializeData()
+    this.props.actions.getCoupons()
   }
 
-  initializeData () {
-    // this.props.productActions.getProductList().then(res => {
-    //   if (res.status === 200) {
-    //     this.setState({ loading: false })
-    //   }
-    // })
+  // initializeData () {
+  //   // this.props.productActions.getProductList().then(res => {
+  //   //   if (res.status === 200) {
+  //   //     this.setState({ loading: false })
+  //   //   }
+  //   // })
 
 
 
-    this.props.productActions.getProductList()
-    this.setState({ loading: false })
-  }
+  //   this.props.productActions.getProductList()
+  //   this.setState({ loading: false })
+  // }
 
   goToDetail (row) {
-    this.props.history.push('/admin/master/product/detail')
+    
   }
 
   onRowSelect (row, isSelected, e) {
@@ -160,24 +165,102 @@ class Product extends React.Component {
     }
   }
 
-  renderOptions(cell, row) {
+  deleteCoupon = (e, id) => {
+    confirmAlert({
+      title: 'Are you sure?',
+      message: 'You want to delete this coupon?',
+      buttons: [
+        {
+          label: 'Yes, Delete it!',
+          onClick: () => {
+            this.setState({ loading: true })
+            this.props.deleteCoupon.deleteCoupon({
+              uniqid: id
+            }).then(res => {
+              this.props.actions.getCoupons()
+              this.props.commonActions.tostifyAlert('success', res.message)
+            }).catch(err => {
+              this.props.commonActions.tostifyAlert('error', err.error || 'Seomthing went wrong!')
+            }).finally(() => {
+              console.log("11111")
+              this.setState({ loading: false })
+            })
+          }
+        },
+        {
+          label: 'No',
+          onClick: () => {return true}
+        }
+      ]
+    });
+  }
+
+  renderOptions = (cell, row) => {
     return (
       <div className="d-flex actions">
-        <a>
-          <i className="fas fa-pen"/>
+        <a onClick={(e) => this.gotoEditPage(e, row.uniqid)}>
+          <i className="fas fa-pen" />
         </a>
-        <a>
-          <i className="fas fa-trash"/>
+        <a onClick={(e) => this.deleteCoupon(e, row.uniqid)}>
+          <i className="fas fa-trash" />
         </a>
       </div>
     )
+  }
+
+  renderCouponCode = (cell, row) => {
+    if (
+      row.code
+    ) {
+      return (
+        <div>
+          {row.code}
+        </div>
+      )  
+    } else {
+      return (
+        <p className="caption">No specified</p>
+      )
+    }
+  }
+
+  renderCouponDiscount = (cell, row) => {
+    if (
+      row.discount
+    ) {
+      return (
+        <div>
+          {row.discount}%
+        </div>
+      )  
+    } else {
+      return (
+        <p className="caption">No specified</p>
+      )
+    }
+  }
+
+  renderProductsCount = (cell, row) => {
+    if (
+      row.products_count
+    ) {
+      return (
+        <div>
+          {row.products_count}
+        </div>
+      )  
+    } else {
+      return (
+        <p className="caption">No specified</p>
+      )
+    }
   }
 
   render() {
 
     const { loading } = this.state
     const { product_list } = this.props
-
+    console.log({coupon: this.props.coupons})
     return (
       <div className="product-screen">
         <div className="animated fadeIn">
@@ -200,6 +283,7 @@ class Product extends React.Component {
               </Row>
             </CardHeader>
             <CardBody className="p-0">
+              
               {
                 loading ?
                   <Row>
@@ -213,25 +297,25 @@ class Product extends React.Component {
                       <div>
                         <BootstrapTable
                           options={ this.options }
-                          data={product_list}
+                          data={this.props.coupons}
                           version="4"
                           hover
                           pagination
-                          totalSize={product_list ? product_list.length : 0}
+                          // totalSize={product_list ? product_list.length : 0}
                           className="product-table"
                           trClassName="cursor-pointer"
                         >
                           <TableHeaderColumn
                             isKey
                             dataField="type"
-                            dataFormat={this.renderProductInfo}
+                            dataFormat={this.renderCouponCode}
                             dataSort
                           >
                             Code
                           </TableHeaderColumn>
                           <TableHeaderColumn
                             dataField="type"
-                            dataFormat={this.renderProductType}
+                            dataFormat={this.renderCouponDiscount}
                             dataSort
                           >
                             Discount
@@ -239,16 +323,9 @@ class Product extends React.Component {
                           <TableHeaderColumn
                             dataField="stock"
                             dataSort
+                            dataFormat={this.renderProductsCount}
                           >
                             Product Count
-                          </TableHeaderColumn>
-                          <TableHeaderColumn
-                            dataField="revenue"
-                            dataAlign="right"
-                            dataFormat={this.renderProductRevenue}
-                            dataSort
-                          >
-                            Users
                           </TableHeaderColumn>
                           <TableHeaderColumn
                             dataField="id"

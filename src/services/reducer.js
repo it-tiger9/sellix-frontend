@@ -15,7 +15,8 @@ import {
   Help,
   Notification,
   Categories,
-  BlackList
+  BlackList,
+  Coupons
 } from 'screens'
 
 
@@ -23,6 +24,7 @@ const reducer = combineReducers({
   common: CommonReducer,
   auth: AuthReducer,
   blacklist: BlackList.reducer,
+  coupons: Coupons.reducer,
   dashboard: Dashboard.reducer,
   product: Product.reducer,
   category: Categories.reducer
