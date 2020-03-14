@@ -1,5 +1,5 @@
 import React from 'react'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
   Card,
@@ -8,11 +8,9 @@ import {
   Button,
   Row,
   Col,
-  ButtonGroup,
   Input
 } from 'reactstrap'
-import { ToastContainer, toast } from 'react-toastify'
-import { BootstrapTable, TableHeaderColumn, SearchField } from 'react-bootstrap-table'
+import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
 
 import { Loader } from 'components'
 import { confirmAlert } from 'react-confirm-alert';
@@ -32,32 +30,20 @@ const mapStateToProps = (state) => {
 }
 const mapDispatchToProps = (dispatch) => {
   return ({
-    actions: bindActionCreators({getCoupons}, dispatch),
-    deleteCoupon: bindActionCreators({deleteCoupon}, dispatch),
+    actions: bindActionCreators({ getCoupons }, dispatch),
+    deleteCoupon: bindActionCreators({ deleteCoupon }, dispatch),
     commonActions: bindActionCreators(CommonActions, dispatch)
   })
 }
 
 class Product extends React.Component {
-  
+
   constructor(props) {
     super(props)
     this.state = {
       loading: false,
     }
-
-    this.onRowSelect = this.onRowSelect.bind(this)
-    this.onSelectAll = this.onSelectAll.bind(this)
-    this.goToDetail = this.goToDetail.bind(this)
     this.deleteCoupon = this.deleteCoupon.bind(this)
-
-    this.renderShowsTotal = (start, to, total) => {
-      return (
-        <p style={ { color: 'black' } }>
-          Showing { start } to { to } entries
-        </p>
-      );
-    }
 
     this.options = {
       onRowClick: this.goToDetail,
@@ -84,39 +70,13 @@ class Product extends React.Component {
       onSelect: this.onRowSelect,
       onSelectAll: this.onSelectAll
     }
-
   }
 
-  componentDidMount () {
-    // this.initializeData()
+  componentDidMount() {
     this.props.actions.getCoupons()
   }
 
-  // initializeData () {
-  //   // this.props.productActions.getProductList().then(res => {
-  //   //   if (res.status === 200) {
-  //   //     this.setState({ loading: false })
-  //   //   }
-  //   // })
-
-
-
-  //   this.props.productActions.getProductList()
-  //   this.setState({ loading: false })
-  // }
-
-  goToDetail (row) {
-    
-  }
-
-  onRowSelect (row, isSelected, e) {
-    console.log('one row checked ++++++++', row)
-  }
-  onSelectAll (isSelected, rows) {
-    console.log('current page all row checked ++++++++', rows)
-  }
-
-  renderProductInfo (cell, row) {
+  renderProductInfo(cell, row) {
     if (
       row.info && row.id
     ) {
@@ -125,7 +85,7 @@ class Product extends React.Component {
           <p>{row.info}</p>
           <p className="caption">{row.id}</p>
         </div>
-      )  
+      )
     } else {
       return (
         <p className="caption">No specified</p>
@@ -133,7 +93,7 @@ class Product extends React.Component {
     }
   }
 
-  renderProductType (cell, row) {
+  renderProductType(cell, row) {
     if (
       row.type
     ) {
@@ -141,7 +101,7 @@ class Product extends React.Component {
         <div className="badge badge-normal">
           {row.type}
         </div>
-      )  
+      )
     } else {
       return (
         <p className="caption">No specified</p>
@@ -157,7 +117,7 @@ class Product extends React.Component {
         <p>
           ${row.revenue}
         </p>
-      )  
+      )
     } else {
       return (
         <p className="caption">No specified</p>
@@ -182,14 +142,13 @@ class Product extends React.Component {
             }).catch(err => {
               this.props.commonActions.tostifyAlert('error', err.error || 'Seomthing went wrong!')
             }).finally(() => {
-              console.log("11111")
               this.setState({ loading: false })
             })
           }
         },
         {
           label: 'No',
-          onClick: () => {return true}
+          onClick: () => { return true }
         }
       ]
     });
@@ -216,7 +175,7 @@ class Product extends React.Component {
         <div>
           {row.code}
         </div>
-      )  
+      )
     } else {
       return (
         <p className="caption">No specified</p>
@@ -232,7 +191,7 @@ class Product extends React.Component {
         <div>
           {row.discount}%
         </div>
-      )  
+      )
     } else {
       return (
         <p className="caption">No specified</p>
@@ -248,7 +207,7 @@ class Product extends React.Component {
         <div>
           {row.products_count}
         </div>
-      )  
+      )
     } else {
       return (
         <p className="caption">No specified</p>
@@ -259,31 +218,28 @@ class Product extends React.Component {
   render() {
 
     const { loading } = this.state
-    const { product_list } = this.props
-    console.log({coupon: this.props.coupons})
     return (
       <div className="product-screen">
         <div className="animated fadeIn">
           <Card className="grey">
             <CardHeader>
-              <Row style={{alignItems: 'center'}}>
+              <Row style={{ alignItems: 'center' }}>
                 <Col md={4}>
                   <h1>Coupons</h1>
                 </Col>
                 <Col md={8}>
                   <div className="d-flex justify-content-end">
                     <div className="searchbar white">
-                      <i className="fas fa-search"/>
+                      <i className="fas fa-search" />
                       <Input placeholder="Search..." className="header-search-input"></Input>
                     </div>
-                    <Button className="ml-3" color="primary" 
+                    <Button className="ml-3" color="primary"
                       onClick={() => this.props.history.push(`/admin/coupons/create`)}>Add Coupon</Button>
                   </div>
                 </Col>
               </Row>
             </CardHeader>
             <CardBody className="p-0">
-              
               {
                 loading ?
                   <Row>
@@ -291,17 +247,17 @@ class Product extends React.Component {
                       <Loader />
                     </Col>
                   </Row>
-                :
+                  :
                   <Row>
                     <Col lg={12}>
                       <div>
                         <BootstrapTable
-                          options={ this.options }
+                          options={this.options}
                           data={this.props.coupons}
                           version="4"
                           hover
                           pagination
-                          // totalSize={product_list ? product_list.length : 0}
+                          totalSize={this.props.coupons ? this.props.coupons.length : 0}
                           className="product-table"
                           trClassName="cursor-pointer"
                         >
