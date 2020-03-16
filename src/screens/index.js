@@ -33,6 +33,7 @@ import ShopProductDetail from './product_shop/screens/detail'
 import BlackList from './blacklist'
 import CreateBlacklist from './blacklist/screens/create'
 import EditBlacklist from './blacklist/screens/create'
+import EditCoupon from './coupons/screens/create'
 
 import PaypalPaying from './paypal_paying'
 import SecurityPage from './security'
@@ -56,7 +57,7 @@ export {
   LogIn,
   Register,
   Dashboard,
-
+  EditCoupon,
   Product,
   CreateProduct,
   EditProduct,

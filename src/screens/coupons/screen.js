@@ -154,6 +154,12 @@ class Product extends React.Component {
     });
   }
 
+  gotoEditPage(e, id) {
+    this.props.history.push({
+      pathname: `/admin/coupon/edit/${id}`
+    })
+  }
+
   renderOptions = (cell, row) => {
     return (
       <div className="d-flex actions">

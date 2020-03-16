@@ -1,16 +1,12 @@
 import {
   Dashboard,
-
   ProductSort,
   CateogrySort,
-
   Product,
   EditProduct,
-
   Categories,
   CreateCategories,
   EditCategory,
-
   Order,
   Analytics,
   Reports,
@@ -25,7 +21,7 @@ import {
   CreateProduct,
   OrderDetail,
 } from 'screens'
-import { BlackList, CreateBlacklist, EditBlacklist } from '../screens'
+import { BlackList, CreateBlacklist, EditBlacklist, EditCoupon } from '../screens'
 
 const adminRoutes = [
   {
@@ -105,7 +101,11 @@ const adminRoutes = [
     name: 'New',
     component: CreateCoupon.screen
   },
-
+  {
+    path: '/admin/coupon/edit/:id',
+    name: 'EditCoupon',
+    component: EditCoupon.screen
+  },
   {
     path: '/admin/coupons',
     name: 'Coupons',

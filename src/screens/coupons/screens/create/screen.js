@@ -11,15 +11,15 @@ import {
   Col,
   FormGroup,
   Label,
-  Tooltip,
   Input,
   Form,
 } from 'reactstrap'
 import Select from 'react-select'
 import { Formik } from 'formik'
 import { Loader, DataSlider } from 'components'
-import * as ProductActions from './actions'
 import { createCoupon } from './actions'
+import { getCoupons } from '../../actions'
+import { editCoupon } from '../detail/actions'
 import {
   CommonActions
 } from 'services/global'
@@ -28,12 +28,17 @@ import './style.scss'
 
 const mapStateToProps = (state) => {
   return ({
-    product_list: state.product.product_list
+    coupons: _.map(state.coupons.coupons, coupon => ({
+      ...coupon,
+      discount_value: [+coupon.discount]
+    }))
   })
 }
+
 const mapDispatchToProps = (dispatch) => {
   return ({
-    productActions: bindActionCreators(ProductActions, dispatch),
+    actions: bindActionCreators({ getCoupons }, dispatch),
+    editCoupon: bindActionCreators(editCoupon, dispatch),
     createCoupon: bindActionCreators(createCoupon, dispatch),
     commonActions: bindActionCreators(CommonActions, dispatch),
   })
@@ -56,6 +61,14 @@ class CreateCoupon extends React.Component {
     }
   }
 
+  componentDidMount() {
+    this.props.actions.getCoupons()
+  }
+
+  isEdit = () => {
+    return this.props.match.params.id
+  }
+
   componentWillUnmount() {
     // Make sure to revoke the data uris to avoid memory leaks
     this.state.files.forEach(file => URL.revokeObjectURL(file.preview));
@@ -72,10 +85,10 @@ class CreateCoupon extends React.Component {
       products_bound: _.map(values.products_bound, item => item.value).join(','),
       max_uses: values.max_uses ? values.max_uses : -1
     }
-    // const createOrEditPromise = this.isEdit()
-    //   ? this.props.editBlacklist({ ...values, uniqid: this.props.match.params.id })
-    //   : this.props.createBlacklist(values)
-    this.props.createCoupon(newValues).then(res => {
+    const createOrEditPromise = this.isEdit()
+      ? this.props.editCoupon({ ...values, uniqid: this.props.match.params.id })
+      : this.props.createCoupon(newValues)
+    createOrEditPromise.then(res => {
       this.props.commonActions.tostifyAlert('success', res.message)
       this.props.history.push({
         pathname: '/admin/coupons'
@@ -89,13 +102,19 @@ class CreateCoupon extends React.Component {
 
   render() {
     const { loading } = this.state
+    let initialValues = this.isEdit()
+      ? _.find(this.props.coupons, item => item.uniqid === this.props.match.params.id) || {
+        discount_value: [50]
+      }
+      : {
+        discount_value: [50]
+      }
     return (
       <div className="product-screen">
         <div className="animated fadeIn">
           <Formik
-            initialValues={{
-              discount_value: [50],
-            }}
+            initialValues={initialValues}
+            enableReinitialize={true}
             onSubmit={(values) => {
               this.handleSubmit(values)
             }}>{props => (
