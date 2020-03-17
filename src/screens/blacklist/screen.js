@@ -53,8 +53,7 @@ class Blacklist extends React.Component {
 
   gotoEditPage(e, id) {
     this.props.history.push({
-      pathname: `/admin/blacklist/edit/${id}` ,
-      // search: `?id=${id}`
+      pathname: `/admin/blacklist/edit/${id}`
     })
   }
 

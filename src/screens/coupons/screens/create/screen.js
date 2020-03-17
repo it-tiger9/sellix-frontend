@@ -1,6 +1,7 @@
 import React from 'react'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import * as _ from 'lodash'
 import {
   Card,
   CardHeader,
@@ -10,31 +11,47 @@ import {
   Col,
   FormGroup,
   Label,
-  Tooltip,
-  Input
+  Input,
+  Form,
 } from 'reactstrap'
 import Select from 'react-select'
 import { Formik } from 'formik'
-import { Loader, ImageUpload, DataSlider } from 'components'
-
-
-import * as ProductActions from './actions'
+import { Loader, DataSlider } from 'components'
+import { createCoupon } from './actions'
+import { getCoupons } from '../../actions'
+import { editCoupon } from '../detail/actions'
+import {
+  CommonActions
+} from 'services/global'
 
 import './style.scss'
 
 const mapStateToProps = (state) => {
   return ({
-    product_list: state.product.product_list
-  })
-}
-const mapDispatchToProps = (dispatch) => {
-  return ({
-    productActions: bindActionCreators(ProductActions, dispatch)
+    coupons: _.map(state.coupons.coupons, coupon => ({
+      ...coupon,
+      discount_value: [+coupon.discount]
+    }))
   })
 }
 
+const mapDispatchToProps = (dispatch) => {
+  return ({
+    actions: bindActionCreators({ getCoupons }, dispatch),
+    editCoupon: bindActionCreators(editCoupon, dispatch),
+    createCoupon: bindActionCreators(createCoupon, dispatch),
+    commonActions: bindActionCreators(CommonActions, dispatch),
+  })
+}
+
+const MockProducts = [
+  { label: 'id1', value: '1' },
+  { label: 'id2', value: '2' },
+  { label: 'id3', value: '3' }
+]
+
 class CreateCoupon extends React.Component {
-  
+
   constructor(props) {
     super(props)
     this.state = {
@@ -44,6 +61,13 @@ class CreateCoupon extends React.Component {
     }
   }
 
+  componentDidMount() {
+    this.props.actions.getCoupons()
+  }
+
+  isEdit = () => {
+    return this.props.match.params.id
+  }
 
   componentWillUnmount() {
     // Make sure to revoke the data uris to avoid memory leaks
@@ -51,121 +75,146 @@ class CreateCoupon extends React.Component {
   }
 
   unlistedTooltipToggle() {
-    this.setState({tooltipOpen: !this.state.tooltipOpen})
+    this.setState({ tooltipOpen: !this.state.tooltipOpen })
   }
 
-  addFile = file => {
-    console.log(file);
-    this.setState({
-      files: file.map(file =>
-        Object.assign(file, {
-          preview: URL.createObjectURL(file)
-        })
-      )
-    });
-  };
+  handleSubmit(values) {
+    this.setState({ loading: true })
+    const newValues = {
+      ...values,
+      products_bound: _.map(values.products_bound, item => item.value).join(','),
+      max_uses: values.max_uses ? values.max_uses : -1
+    }
+    const createOrEditPromise = this.isEdit()
+      ? this.props.editCoupon({ ...values, uniqid: this.props.match.params.id })
+      : this.props.createCoupon(newValues)
+    createOrEditPromise.then(res => {
+      this.props.commonActions.tostifyAlert('success', res.message)
+      this.props.history.push({
+        pathname: '/admin/coupons'
+      })
+    }).catch(err => {
+      this.props.commonActions.tostifyAlert('error', err.message)
+    }).finally(() => {
+      this.setState({ loading: false })
+    })
+  }
 
   render() {
-    const { loading, tooltipOpen, files } = this.state
-
-    console.log(files)
-
+    const { loading } = this.state
+    let initialValues = this.isEdit()
+      ? _.find(this.props.coupons, item => item.uniqid === this.props.match.params.id) || {
+        discount_value: [50]
+      }
+      : {
+        discount_value: [50]
+      }
     return (
       <div className="product-screen">
         <div className="animated fadeIn">
-          <Formik initialValues={{
-            discount: []
-          }}>{props => (
-            <Card>
-            <CardHeader>
-              <Row style={{alignItems: 'center'}}>
-                <Col md={12}>
-                  <h1>New Coupon</h1>
-                </Col>
-              </Row>
-            </CardHeader>
-            <CardBody className="p-4 mb-5">
-              {
-                loading ?
-                  <Row>
-                    <Col lg={12}>
-                      <Loader />
-                    </Col>
-                  </Row>
-                :
-                  <Row className="mt-4 mb-4">
-                    <Col lg={12}>
-                      <Row>
-                        <Col lg={12}>
-                          <FormGroup className="mb-3">
-                            <Label htmlFor="product_code">Code</Label>
-                            <div className="d-flex">
-                              <Input 
-                                type="number" 
-                                name="CouponCode"
-                                placeholder="Coupon code"
-                                onChange={props.handleChange}
-                                value={props.values.CouponCode}
-                              />
-                              <Button color="primary">Generate</Button>
-                            </div>
-                          </FormGroup>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col lg={12}>
-                          <FormGroup className="mb-3">
-                            <Label htmlFor="product_code">Discount</Label>
-                            <DataSlider 
-                              domain={[0, 100]}  
-                              value={[50]} 
-                              ticks={[1, 50, 100]} 
-                              suffix="%"
-                              name="discount"
-                              onChange={props.handleChange}
-                              value={props.values.discount}
-                            />
-                          </FormGroup>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col lg={12}>
-                          <FormGroup className="mb-4">
-                            <Label htmlFor="product_code">Products</Label>
-                            <Select
-                              className="select-default-width"
-                              id="parentProduct"
-                              name="parentProduct"
-                              placeholder="Select Products"
-                              onChange={props.handleChange}
-                              value={props.values.parentProduct}
-                            />
-                          </FormGroup>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col lg={12}>
-                          <FormGroup className="mb-3">
-                            <Label htmlFor="product_code">Max Number of Uses</Label>
-                            <Input 
-                              type="number" 
-                              name="maxNumbersOfUses"
-                              placeholder="Leave blank for unlimited" 
-                              onChange={props.handleChange}
-                              value={props.values.maxNumbersOfUses}
-                            />
-                          </FormGroup>
-                        </Col>
-                      </Row>
-                    </Col>
-                  </Row>
-              }
-            </CardBody>
-            <Button color="primary" className="" style={{width: 200}}
-            >Save Coupon</Button>
-            
-          </Card>
-          )}
+          <Formik
+            initialValues={initialValues}
+            enableReinitialize={true}
+            onSubmit={(values) => {
+              this.handleSubmit(values)
+            }}>{props => (
+              <Form onSubmit={props.handleSubmit}>
+                <Card>
+                  <CardHeader>
+                    <Row style={{ alignItems: 'center' }}>
+                      <Col md={12}>
+                        <h1>New Coupon</h1>
+                      </Col>
+                    </Row>
+                  </CardHeader>
+                  <CardBody className="p-4 mb-5">
+                    {
+                      loading ?
+                        <Row>
+                          <Col lg={12}>
+                            <Loader />
+                          </Col>
+                        </Row>
+                        :
+                        <Row className="mt-4 mb-4">
+                          <Col lg={12}>
+                            <Row>
+                              <Col lg={12}>
+                                <FormGroup className="mb-3">
+                                  <Label htmlFor="product_code">Code</Label>
+                                  <div className="d-flex">
+                                    <Input
+                                      // type="number" 
+                                      name="code"
+                                      placeholder="Coupon code"
+                                      onChange={props.handleChange}
+                                      value={props.values.code}
+                                    />
+                                    <Button color="primary">Generate</Button>
+                                  </div>
+                                </FormGroup>
+                              </Col>
+                            </Row>
+                            <Row>
+                              <Col lg={12}>
+                                <FormGroup className="mb-3">
+                                  <Label htmlFor="product_code">Discount</Label>
+                                  <DataSlider
+                                    domain={[0, 100]}
+                                    ticks={[1, 50, 100]}
+                                    suffix="%"
+                                    name="discount_value"
+                                    receiveValue={(value) => {
+                                      props.setFieldValue('discount_value', [value])
+                                    }}
+                                    value={props.values.discount_value}
+                                  />
+                                </FormGroup>
+                              </Col>
+                            </Row>
+                            <Row>
+                              <Col lg={12}>
+                                <FormGroup className="mb-4">
+                                  <Label htmlFor="product_code">Products</Label>
+                                  <Select
+                                    className="select-default-width"
+                                    id="products_bound"
+                                    multi
+                                    options={MockProducts}
+                                    name="products_bound"
+                                    placeholder="Select Products"
+                                    onChange={(options) => {
+                                      props.setFieldValue('products_bound', options)
+                                    }}
+                                    value={props.values.products_bound}
+                                  />
+                                </FormGroup>
+                              </Col>
+                            </Row>
+                            <Row>
+                              <Col lg={12}>
+                                <FormGroup className="mb-3">
+                                  <Label htmlFor="product_code">Max Number of Uses</Label>
+                                  <Input
+                                    type="number"
+                                    name="max_uses"
+                                    placeholder="Leave blank for unlimited"
+                                    onChange={props.handleChange}
+                                    value={props.values.max_uses}
+                                  />
+                                </FormGroup>
+                              </Col>
+                            </Row>
+                          </Col>
+                        </Row>
+                    }
+                  </CardBody>
+                  <Button color="primary" className="" style={{ width: 200 }}
+                  >Save Coupon</Button>
+
+                </Card>
+              </Form>
+            )}
           </Formik>
         </div>
       </div>
