@@ -103,14 +103,13 @@ class DefaultLayout extends React.Component {
     return (
       <div className="admin-container">
         <div className="app">
-          <AppHeader>
+          <AppHeader fixed>
             <Suspense fallback={Loading()}>
               <Header {...this.props} theme={theme} changeTheme={this.changeTheme.bind(this)} />
             </Suspense>
           </AppHeader>
-          <div className="app-body">
-            <main className="main mt-5 mb-5">
-              <Container className="p-0" fluid>
+          <div className="app-body mt-5 mb-5 pt-5">
+              <Container className="p-0 pt-3" fluid>
                 <Suspense fallback={Loading()}>
                   <ToastContainer position="top-right" autoClose={5000} style={containerStyle} />
                   <Switch>
@@ -130,13 +129,12 @@ class DefaultLayout extends React.Component {
                   </Switch>
                 </Suspense>
               </Container>
-            </main>
+            </div>
             <AppAside>
               <Suspense fallback={Loading()}>
                 <Aside />
               </Suspense>
             </AppAside>
-          </div>
         </div>
       </div>
     )

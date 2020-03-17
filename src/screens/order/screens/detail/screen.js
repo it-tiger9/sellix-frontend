@@ -127,6 +127,10 @@ class OrderDetail extends React.Component {
                             <p>PayPal</p>
                           </div>
                           <div className="d-flex">
+                            <p className="title">Payment Details</p>
+                            <p>BTC</p>
+                          </div>
+                          <div className="d-flex">
                             <p className="title">Fee</p>
                             <p>$0.00 USD</p>
                           </div>
@@ -195,39 +199,6 @@ class OrderDetail extends React.Component {
                     <Row className="mt-3">
                       <Col lg={12}>
                         <FormGroup className="mb-4">
-                          <Label className="title">BTC Details</Label>
-                        </FormGroup>
-                      </Col>
-                      <Col lg={12}>
-                        <Row flex jusity-content-between>
-                          <Col lg={8}>
-                            <label></label>
-                          </Col>
-                          
-                        </Row>
-                      </Col>
-                    </Row>
-                  }
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
-
-          <Row>
-            <Col lg={6}>
-              <Card>
-                <CardBody className="">
-                  {
-                    loading ?
-                      <Row>
-                        <Col lg={12}>
-                          <Loader />
-                        </Col>
-                      </Row>
-                    :
-                    <Row className="mt-3">
-                      <Col lg={12}>
-                        <FormGroup className="mb-4">
                           <Label className="title">Delivered Webhooks</Label>
                         </FormGroup>
                       </Col>
@@ -244,6 +215,9 @@ class OrderDetail extends React.Component {
                 </CardBody>
               </Card>
             </Col>
+          </Row>
+
+          <Row>
             <Col lg={6}>
               <Card>
                 <CardBody className="">

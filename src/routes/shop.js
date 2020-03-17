@@ -19,12 +19,6 @@ import {
     },
 
     {
-      path: '/shop/products/detail',
-      name: 'ShopProductDetail',
-      component: ShopProductDetail.screen
-    },
-
-    {
       path: '/shop/products',
       name: 'Products',
       component: ShopProducts.screen

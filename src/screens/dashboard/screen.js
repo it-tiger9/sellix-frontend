@@ -73,39 +73,39 @@ class Dashboard extends React.Component {
               <Row className="mt-4">
                 <Col lg={3}>
                   <Card className="grey">
-                    <CardBody>
-                      <h2 className="text-primary">$4000.00</h2>
+                    <CardBody className="p-4">
+                      <h3 className="text-primary">$4000.00</h3>
                       <p className="report-title">Revenue</p>
                     </CardBody>
                   </Card>
                 </Col>
                 <Col lg={3}>
                   <Card className="grey">
-                    <CardBody>
-                    <h2 className="text-primary">253</h2>
+                    <CardBody className="p-4">
+                      <h3 className="text-primary">253</h3>
                       <p className="report-title">Orders</p>
                     </CardBody>
                   </Card>
                 </Col>
                 <Col lg={3}>
                   <Card className="grey">
-                    <CardBody>
-                    <h2 className="text-primary">397</h2>
+                    <CardBody className="p-4">
+                      <h3 className="text-primary">397</h3>
                       <p className="report-title">Views</p>
                     </CardBody>
                   </Card>
                 </Col>
                 <Col lg={3}>
                   <Card className="grey">
-                    <CardBody>
-                    <h2 className="text-primary">89%</h2>
+                    <CardBody className="p-4">
+                    <h3 className="text-primary">89%</h3>
                       <p className="report-title">Conversion</p>
                     </CardBody>
                   </Card>
                 </Col>
               </Row>
               <div className="mt-3">
-                <DashBoardChart height="400px"/>
+                <DashBoardChart height="350px"/>
               </div>
             </CardBody>
           </Card>

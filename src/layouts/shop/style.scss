@@ -1,4 +1,9 @@
 .admin-container {
+    .shop-content {
+        width: 100% !important;
+        max-width: 1250px;
+        margin: 0 auto;
+    }
     section {
         position: relative;
         border-bottom: 1px solid #DCDCDC;

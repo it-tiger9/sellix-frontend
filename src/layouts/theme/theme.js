@@ -2,6 +2,7 @@ import { withTheme } from "styled-components"
 
 export const lightTheme = {
     widgetBorder: '#F5F5F5',
+    tdBorder: '#F5F5F5'
 }
   
 export const darkTheme = {
@@ -11,6 +12,7 @@ export const darkTheme = {
 
     widget: '#221D3E',
     widgetBorder: '#1D183D',
+    tdBorder: '#2c2557',
 
     text: '#B4AEBC',
     toggleBorder: '#6B8096',

@@ -3,7 +3,8 @@ import {
   Register,
   Home,
   PaypalPaying,
-  Fees
+  Fees,
+  ShopProductDetail
 } from 'screens'
 
 const initialRoutes = [
@@ -21,6 +22,11 @@ const initialRoutes = [
     path: '/paypal-pay',
     name: 'Register',
     component: PaypalPaying.screen
+  },
+  {
+    path: '/checkout',
+    name: 'ShopProductDetail',
+    component: ShopProductDetail.screen
   },
   
   {

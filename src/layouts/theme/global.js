@@ -39,7 +39,9 @@ export const GlobalStyles = createGlobalStyle`
         border: 1px solid ${({ theme }) => theme.widgetBorder} !important;
     }
 
-    
+    table tbody td {
+        border-top: 1px solid ${({ theme }) => theme.tdBorder} !important;
+    }
 
     .react-bootstrap-daterangepicker-container button {
         background-color: ${({ theme }) => theme.widget} !important;

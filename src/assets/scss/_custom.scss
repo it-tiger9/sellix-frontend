@@ -13,7 +13,7 @@
     font-weight: 600 !important;
     padding-left: 50px;
     padding-right: 50px;
-    min-height: 50px;
+    min-height: 45px;
     white-space: nowrap;
 }
 
@@ -57,6 +57,19 @@
 //     right: 50px !important;
 // }
 
+.breadcrumb li,
+.breadcrumb li a {
+    font-size: 13px;
+}
+
+.react-bs-table-container .react-bs-table-pagination {
+    font-size: 12px;
+}
+
+.react-bs-table-container .react-bs-table td {
+    font-size: 13px;
+}
+
 .calendar-table {
     table td {
         padding-top: 0 !important;
@@ -93,7 +106,7 @@
     color: #A7A5B4;
     padding: 0 30px 0 20px;
     border-radius: 10px;
-    height: 50px;
+    height: 45px;
     background-color: #FCFCFE;
     border: 1px solid #F5F5F5;
 }
@@ -134,12 +147,12 @@ select {
 }
 
 .form-control {
-    min-height: 50px !important;
+    min-height: 45px !important;
     background-color: #FCFCFE;
     border: 1px solid #F5F5F5 !important;
     padding: 0 25px;
     border-radius: 10px !important;
-    font-size: 16px !important;
+    font-size: 14px !important;
 }
 
 .ql-editor {
@@ -165,11 +178,13 @@ select {
     .Select-value
      {
         padding-left: 22px !important;
-        line-height: 48px;
+        line-height: 43px;
+        font-size: 14px;
     }
 
     .Select-value-label {
-        line-height: 48px;
+        line-height: 43px;
+        font-size: 14px;
     }
 }
 
@@ -177,7 +192,8 @@ select {
     .Select-placeholder
     {
         padding-left: 22px !important;
-        line-height: 48px;
+        line-height: 43px;
+        font-size: 14px;
     }
     .Select-value {
         margin-top: 10px;
@@ -189,7 +205,7 @@ select {
 }
 
 .Select-control {
-    height: 50px !important;
+    height: 45px !important;
     background-color: #FCFCFE !important;
     border: 1px solid #F5F5F5 !important;
     border-radius: 10px !important;
@@ -226,8 +242,17 @@ select {
         margin-left: 12px !important;
         line-height: 3em !important;
         width: 100% !important;
-        font-size: 16px;
+        font-size: 14px;
     }
+}
+
+textarea {
+    padding-top: 10px !important;
+}
+
+
+.react-confirm-alert-overlay {
+    z-index: 9999 !important;
 }
 
 .Select-control:hover {
@@ -236,6 +261,7 @@ select {
 
 .form-control::placeholder {
     color: #A7A5B4;
+    font-size: 14px;
 }
 
 .new-select {
@@ -290,7 +316,7 @@ select {
 
 .form-group {
     label {
-        font-size: 16px;
+        font-size: 14px;
         color: #A7A5B4;
         font-weight: 500;
         font-family: 'Poppins-SemiBold';
@@ -302,6 +328,14 @@ select {
     text-transform: initial !important;
     color: #A7A5B4 !important;
     font-weight: 600 !important;
+}
+
+table td a {
+    color: #A7A5B4;
+}
+
+table td a:hover {
+    text-decoration: none;
 }
 
 .card {
@@ -320,7 +354,7 @@ select {
         padding: 20px 0 !important;
 
         h1 {
-            font-size: 18px;
+            font-size: 16px;
             color: black;
             font-weight: 600;
             font-family: 'Poppins';
@@ -349,7 +383,7 @@ select {
         }
 
         p.report-title {
-            font-size: 18px;
+            font-size: 16px;
             color: black;
             font-family: 'Poppins-SemiBold' !important;
             margin-bottom: 0;
@@ -405,7 +439,7 @@ table {
 
             p {
                 margin-bottom: 0 !important;
-                font-size: 14px !important;
+                font-size: 13px !important;
             }
 
             p.caption {
@@ -415,7 +449,7 @@ table {
             .badge {
                 text-align: center;
                 border-radius: 10px;
-                font-size: 14px !important;
+                font-size: 13px !important;
                 font-weight: normal;
                 width: 110px;
                 height: 30px;

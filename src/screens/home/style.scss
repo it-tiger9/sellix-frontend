@@ -26,7 +26,7 @@
       margin: 0 15px;
       color: #A7A5B4 !important;
       font-weight: 600;
-      font-size: 16px;
+      font-size: 15px;
     }
 
     .nav-item a:hover,
@@ -59,19 +59,19 @@
 
   h1 {
     color: #613BEA;
-    font-size: 36px;
+    font-size: 30px;
     font-weight: 600;
   }
 
   h3 {
     color: #613BEA;
-    font-size: 30px;
+    font-size: 26px;
     font-weight: 600;
   }
 
   h4 {
     color: #613BEA;
-    font-size: 24px;
+    font-size: 22px;
     font-weight: 600;
   }
 
@@ -101,13 +101,17 @@
   }
 
   .undraw-img {
-    max-width: 659px;
-    max-height: 520px;
+    max-width: 600px;
+    max-height: 440px;
   }
 
   .pc-img  {
-    max-width: 691px;
-    max-height: 397px;
+    max-width: 680px;
+    max-height: 380px;
+  }
+
+  .digital-img {
+    max-width: 570px;
   }
 
   .home-container {

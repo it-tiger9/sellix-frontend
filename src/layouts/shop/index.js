@@ -115,20 +115,22 @@ class ShopLayout extends React.Component {
                   <Header {...this.props} theme={theme} changeTheme={this.changeTheme.bind(this)}  />
                 </Suspense>
               </AppHeader>
-              <div className="app-body flex-column pt-4">
+              <div className="app-body shop-content flex-column pt-5 p-5">
                 <section className="mt-4 pt-5 pb-4">
                     <div className="br-2 bg-primary logo-background"></div>
                     <div className="text-center align-items-center logo-content">
-                        <h4 className="text-white mb-3">PixelStore</h4>
-                        <Card className="bg-white mb-0 ml-auto mr-auto pt-1 pb-1 pl-3 pr-3 flex-row" style={{width: 'fit-content'}}>
-                            <span className="text-green mr-2">20</span>
-                            <span className="">|</span>
-                            <span className="text-grey pl-2 pr-2">2</span>
-                            <span className="">|</span>
-                            <span className="text-red ml-2">20</span>
-                        </Card>
+                        <h4 className="text-white mb-0 mt-3">PixelStore</h4>
+                        
                         <img src={shopIcon} width="150" height="150"/>
                     </div>
+                    <Card className="mb-2 ml-auto mr-auto pt-1 pb-1 pl-3 pr-3 flex-row" 
+                      style={{width: 'fit-content'}}>
+                        <span className="text-green mr-2">20</span>
+                        <span className="">|</span>
+                        <span className="text-grey pl-2 pr-2">2</span>
+                        <span className="">|</span>
+                        <span className="text-red ml-2">20</span>
+                    </Card>
                     <div>
                         <Nav className="d-flex flex-row justify-content-center" navbar>
                             <NavItem className="px-3">

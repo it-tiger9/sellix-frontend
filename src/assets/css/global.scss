@@ -68,7 +68,9 @@ div.Select.is-invalid {
 
 
 
-
+table tbody td p {
+  font-size: 12px !important;
+}
 
 
 
@@ -223,7 +225,7 @@ th {
       border-top: none !important;
       border-radius: 0 !important;
       button {
-        height: 50px !important;
+        height: 45px !important;
       }
     }
   }

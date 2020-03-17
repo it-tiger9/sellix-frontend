@@ -142,7 +142,7 @@ class ShopProducts extends React.Component {
 
   gotoDetail(e, id) {
     this.props.history.push({
-      pathname: '/shop/products/detail',
+      pathname: '/payment/checkout',
       search: `?id=${id}`
     })
   }
@@ -191,7 +191,7 @@ class ShopProducts extends React.Component {
                   <Row>
                     {
                       product_list.map((pro, index) => 
-                        <Col lg={3} key={index}>
+                        <Col lg={4} key={index}>
                           <Card className="bg-white p-0 product-card" onClick={(e) => this.gotoDetail(e, pro.id)}>
                             <img src={shop_brand} width="100%"/>
                             <div className="p-3">

@@ -31,7 +31,7 @@ import service1 from 'assets/images/home/service1.svg'
 import service2 from 'assets/images/home/service2.svg'
 import service3 from 'assets/images/home/service3.svg'
 import undraw from 'assets/images/home/undraw.svg'
-import undraw1 from 'assets/images/home/undraw2.svg'
+import undraw1 from 'assets/images/home/undraw_wallet_aym5.svg'
 import sellix_logo from 'assets/images/Sellix_logo.svg'
 
 class Home extends React.Component {
@@ -106,7 +106,7 @@ class Home extends React.Component {
                     <Button color="primary">Get Started for Free</Button>
                   </Col>
                   <Col md={6}>
-                    <img src={top1}/>
+                    <img src={top1} className="digital-img"/>
                   </Col>
                 </Row>
               </Container>
