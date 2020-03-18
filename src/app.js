@@ -24,7 +24,7 @@ export default class App extends React.Component {
             <Switch>
               {
                 mainRoutes.map((prop, key) => {
-                  return <Route path={prop.path} key={key} component={prop.component} />
+                  return <Route path={prop.path} exact={prop.exact || false} key={key} component={prop.component} />
                 })
               }
             </Switch>

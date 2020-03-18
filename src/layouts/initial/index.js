@@ -31,8 +31,11 @@ class InitialLayout extends React.Component {
   }
 
   componentDidMount () {
+    const preUrl = `/sellix/${window.localStorage.getItem('userId')}`
+      
+
     if (window.localStorage.getItem('accessToken')) {
-      this.props.history.push('/admin')
+      this.props.history.push(preUrl)
     }
 
     const toastifyAlert = (status, message) => {

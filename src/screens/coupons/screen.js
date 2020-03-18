@@ -23,6 +23,8 @@ import { getCoupons, deleteCoupon } from './actions'
 
 import './style.scss'
 
+const user = window.localStorage.getItem('userId')
+
 const mapStateToProps = (state) => {
   return ({
     coupons: state.coupons.coupons
@@ -156,7 +158,7 @@ class Product extends React.Component {
 
   gotoEditPage(e, id) {
     this.props.history.push({
-      pathname: `/admin/coupon/edit/${id}`
+      pathname: `/sellix/${user}/coupons/edit/${id}`,
     })
   }
 
@@ -240,7 +242,7 @@ class Product extends React.Component {
                       <Input placeholder="Search..." className="header-search-input"></Input>
                     </div>
                     <Button className="ml-3" color="primary"
-                      onClick={() => this.props.history.push(`/admin/coupons/create`)}>Add Coupon</Button>
+                      onClick={() => this.props.history.push(`/sellix/${user}/coupons/new`)}>Add Coupon</Button>
                   </div>
                 </Col>
               </Row>

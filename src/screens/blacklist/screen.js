@@ -23,6 +23,8 @@ import {
 
 import './style.scss'
 
+const user = window.localStorage.getItem('userId')
+
 const mapStateToProps = (state) => {
   return ({
     blacklist_list: state.blacklist.blacklist_list
@@ -53,7 +55,7 @@ class Blacklist extends React.Component {
 
   gotoEditPage(e, id) {
     this.props.history.push({
-      pathname: `/admin/blacklist/edit/${id}`
+      pathname: `/sellix/${user}/blacklist/edit/${id}`,
     })
   }
 
@@ -138,7 +140,7 @@ class Blacklist extends React.Component {
           <div className='blacklist-header'>
             <div className='blacklist-title'>Blacklist</div>
             <Button className="ml-3" color="primary"
-            onClick={() => this.props.history.push(`/admin/blacklist/create`)}>Create blacklist</Button>
+            onClick={() => this.props.history.push(`/sellix/${user}/blacklist/new`)}>Create blacklist</Button>
           </div>
           <BootstrapTable
             options={this.options}

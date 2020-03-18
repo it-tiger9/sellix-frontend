@@ -222,6 +222,9 @@ class Fees extends React.Component {
                       <NavItem>
                         <NavLink href="#">Payments</NavLink>
                       </NavItem>
+                      <NavItem>
+                        <NavLink href="/fees">Fees</NavLink>
+                      </NavItem>
                     </Nav>
                   </div>
                   <div className="mb-3">

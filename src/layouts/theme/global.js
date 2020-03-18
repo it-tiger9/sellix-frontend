@@ -9,6 +9,14 @@ export const GlobalStyles = createGlobalStyle`
         color: ${({ theme }) => theme.text};
     }
 
+    .text-green {
+        color: #2BB224 !important;
+    }
+
+    .text-red {
+        color: #B22424 !important;
+    }
+
     .admin-container .app-header {
         background: ${({ theme }) => theme.cardBody} !important;
     }
@@ -23,6 +31,24 @@ export const GlobalStyles = createGlobalStyle`
 
     .admin-container .breadcrumb {
         background: ${({ theme }) => theme.cardBody};
+        
+    }
+
+    .detail-product-screen .stock-info {
+        background-color: ${({ theme }) => theme.stockInfoBg};
+    }
+
+    .new-select i {
+        color: ${({ theme }) => theme.text} !important;
+    }
+
+    .detail-product-screen .pay-button {
+        background-color: ${({ theme }) => theme.payButton} !important;
+        border: 1px solid ${({ theme }) => theme.payButtonBorder} !important;
+    }
+
+    .detail-product-screen .stock-info {
+        // background: ${({ theme }) => theme.cardBody};
     }
 
     .searchbar .header-search-input,
@@ -70,12 +96,21 @@ export const GlobalStyles = createGlobalStyle`
         // border: 1px solid ${({ theme }) => theme.cardBody} !important;
     }
 
-    .dashboard-screen .card.grey .card-body h2 {
+    .dashboard-screen .card.grey .card-body h3,
+    .analytics-screen .card.grey .card-body h3 {
         color: ${({ theme }) => theme.text} !important;
     }
 
     .card.grey .card-body {
         background: ${({ theme }) => theme.cardBody} !important;
+    }
+
+    .admin-container .app-header .dropdown-item {
+        background: ${({ theme }) => theme.dropdownColor} !important;
+    }
+
+    .app-header .navbar-nav .dropdown-menu:after {
+        border-bottom: 10px solid ${({ theme }) => theme.dropdownColor} !important;
     }
 
     .card-body {

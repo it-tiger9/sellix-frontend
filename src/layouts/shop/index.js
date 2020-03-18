@@ -91,9 +91,10 @@ class ShopLayout extends React.Component {
   }
 
   changeTheme() {
-    this.setState({
-      theme: this.state.theme == 'light'? 'dark': 'light'
-    })
+    const theme = window.localStorage.getItem('theme') || 'light'
+    window.localStorage.setItem('theme', theme == 'light'? 'dark': 'light')
+
+    this.setState({theme: theme == 'light'? 'dark': 'light'})
   }
 
   render() {
@@ -101,7 +102,7 @@ class ShopLayout extends React.Component {
       zIndex: 1999
     }
 
-    const {theme} = this.state
+    const theme = window.localStorage.getItem('theme') || this.state || 'light'
 
     let isSettings = this.props.location.pathname.includes('/admin/settings')?true:false
 

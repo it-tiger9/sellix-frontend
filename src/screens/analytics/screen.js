@@ -106,7 +106,7 @@ class Analytics extends React.Component {
                 <Col lg={3}>
                   <Card className="grey">
                     <CardBody className="p-4">
-                    <h2 className="text-primary">89%</h2>
+                    <h3 className="text-primary">89%</h3>
                       <p className="report-title">Conversion</p>
                     </CardBody>
                   </Card>

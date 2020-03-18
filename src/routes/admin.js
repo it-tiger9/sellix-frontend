@@ -23,153 +23,166 @@ import {
 } from 'screens'
 import { BlackList, CreateBlacklist, EditBlacklist, EditCoupon } from '../screens'
 
+
+const user = window.localStorage.getItem('userId')
+
 const adminRoutes = [
   {
-    path: '/admin/dashboard',
+    path: `/sellix/${user}/dashboard`,
     name: 'Dashboard',
     component: Dashboard.screen
   },
 
   {
-    path: '/admin/product/all/create',
+    path: `/sellix/${user}/products/all/new`,
     name: 'New',
     component: CreateProduct.screen
   },
   {
-    path: '/admin/product/all/edit',
+    path: `/sellix/${user}/products/all/edit`,
     name: 'Edit',
     component: EditProduct.screen
   },
+
   {
-    path: '/admin/product/all',
-    name: 'Products',
-    component: Product.screen
+    path: `/sellix/${user}/products/sort-products`,
+    name: 'Product Sort',
+    component: ProductSort.screen
   },
+
+
+
   {
-    path: '/admin/product/categories/edit',
+    path: `/sellix/${user}/products/sort-categories`,
+    name: 'Cateogry Sort',
+    exact: true,
+    component: CateogrySort.screen
+  },
+
+
+  {
+    path: `/sellix/${user}/products/categories/edit`,
     name: 'Edit',
     component: EditCategory.screen
   },
   {
-    path: '/admin/product/categories/create',
+    path: `/sellix/${user}/products/categories/new`,
     name: 'New',
     component: CreateCategories.screen
   },
+
   {
-    path: '/admin/product/categories',
+    path: `/sellix/${user}/products/categories`,
     name: 'Categories',
     component: Categories.screen
   },
 
   {
-    path: '/admin/product/product-sort',
-    name: 'Product Sort',
-    component: ProductSort.screen
+    path: `/sellix/${user}/products/all`,
+    name: 'Products',
+    exact: true,
+    component: Product.screen
   },
+ 
 
   {
-    path: '/admin/product/category-sort',
-    name: 'Cateogry Sort',
-    component: CateogrySort.screen
-  },
-
-  {
-    path: '/admin/orders/detail',
+    path: `/sellix/${user}/orders/detail`,
     name: 'Detail',
     component: OrderDetail.screen
   },
 
   {
-    path: '/admin/orders',
+    path: `/sellix/${user}/orders`,
     name: 'Orders',
     component: Order.screen
   },
 
+
   {
-    path: '/admin/analytics/all',
-    name: 'Analytics',
-    component: Analytics.screen
-  },
-  {
-    path: '/admin/analytics/reports',
+    path: `/sellix/${user}/analytics/reports`,
     name: 'Reports',
     component: Reports.screen
   },
+  {
+    path: `/sellix/${user}/analytics/all`,
+    name: 'Analytics',
+    component: Analytics.screen
+  },
+
 
   {
-    path: '/admin/coupons/create',
+    path: `/sellix/${user}/coupons/new`,
     name: 'New',
     component: CreateCoupon.screen
   },
   {
-    path: '/admin/coupon/edit/:id',
+    path: `/sellix/${user}/coupons/edit/:id`,
     name: 'EditCoupon',
     component: EditCoupon.screen
   },
   {
-    path: '/admin/coupons',
+    path: `/sellix/${user}/coupons`,
     name: 'Coupons',
     component: Coupons.screen
   },
 
   {
-    path: '/admin/blacklist/create',
+    path: `/sellix/${user}/blacklist/new`,
     name: 'New',
     component: CreateBlacklist.screen
   },
   {
-    path: '/admin/blacklist/edit/:id',
+    path: `/sellix/${user}/blacklist/edit`,
     name: 'EditBlacklist',
     component: EditBlacklist.screen
   },
   {
-    path: '/admin/blacklist',
+    path: `/sellix/${user}/blacklist`,
     name: 'Blacklist',
     component: BlackList.screen
   },
   
 
   {
-    path: '/admin/queries',
+    path: `/sellix/${user}/queries`,
     name: 'Queries',
     component: Queries.screen
   },
   {
-    path: '/admin/feedback',
+    path: `/sellix/${user}/feedback`,
     name: 'Feedback',
     component: Feedbacks.screen
   },
 
   {
-    path: '/admin/pages/create',
+    path: `/sellix/${user}/pages/new`,
     name: 'New',
     component: CreatePage.screen
   },
 
   {
-    path: '/admin/pages',
+    path: `/sellix/${user}/pages`,
     name: 'Pages',
     component: Pages.screen
   },
 
   {
-    path: '/admin/developer/webhooks',
+    path: `/sellix/${user}/developer/webhooks`,
     name: 'Weebhooks',
     component: Webhooks.screen
   },
 
   {
-    path: '/admin/developer/webhook-logs',
+    path: `/sellix/${user}/developer/webhook-logos`,
     name: 'Weebhook Logs',
     component: WebhookLogs.screen
   },
 
   {
     redirect: true,
-    path: '/admin',
-    pathTo: '/admin/dashboard',
+    path: `/sellix/${user}`,
+    pathTo: `/sellix/${user}/dashboard`,
   },
-  { path: '/', exact: true, name: 'Home' },
 ]
 
 export default adminRoutes

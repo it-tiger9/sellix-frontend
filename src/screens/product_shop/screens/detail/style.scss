@@ -3,6 +3,25 @@
     color: #20a8d8;
   }
 
+  .pay-button {
+    i {
+      color: #27346A !important;
+      font-size: 18px;
+    }
+    color: #A7A5B4 !important;
+    background-color: #FCFCFE !important;
+    border: 1px solid #F5F5F5 !important; 
+  }
+
+  .stock-count {
+    span {
+      font-size: 16px;
+      font-weight: bold;
+      display: block;
+      cursor: pointer;
+    }
+  }
+
   .grey {
     color: #A7A5B4;
   }
@@ -10,7 +29,7 @@
     background-color: #FCFCFE;
     border: 1px solid #F5F5F5;
     border-radius: 10px;
-    width: 230px;
+    // width: 230px;
     margin: 0 auto;
     font-size: 14px;
     color: #A7A5B4;

@@ -7,49 +7,51 @@ import {
     GeneralSettings,
     Customization
   } from 'screens'
+
+  const user = window.localStorage.getItem('userId')
   
   const settingsRoute = [
     {
-      path: '/settings/general',
+      path: `/sellix/${user}/settings/general`,
       name: 'GeneralSettings',
       component: GeneralSettings.screen
     },
     {
-      path: '/settings/security',
+      path: `/sellix/${user}/settings/security`,
       name: 'Security',
       component: SecurityPage.screen
     },
     {
-        path: '/settings/notifications',
+        path: `/sellix/${user}/settings/notifications`,
         name: 'Notifications',
         component: Notification.screen
     },
 
     {
-        path: '/settings/payments',
+        path: `/sellix/${user}/settings/payments`,
         name: 'Payments',
         component: Payments.screen
     },
 
     {
-        path: '/settings/memebers',
+        path: `/sellix/${user}/settings/memebers`,
         name: 'Memebers',
         component: MemberPage.screen
     },
     {
-      path: '/settings/billing',
+      path: `/sellix/${user}/settings/billing`,
       name: 'Billings',
       component: Billings.screen
     },
     {
-      path: '/settings/customization',
+      path: `/sellix/${user}/settings/customization`,
       name: 'Customization',
       component: Customization.screen
     },
     {
       redirect: true,
-      pathTo: '/settings/general',
-      path: '/settings',
+      pathTo: `/sellix/${user}/settings/general`,
+      path: `/sellix/${user}/settings`,
       name: 'GeneralSettings',
     },
   ]

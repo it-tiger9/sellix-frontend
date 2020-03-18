@@ -40,11 +40,21 @@ export const logIn = (obj) => {
     }
     return api(data).then(res => {
       if(res && res.status == 200) {
-        dispatch({
-          type: AUTH.SIGNED_IN
+        
+        let data1 = {
+          method: 'get',
+          url: `/check/${res.data.token}`
+        }
+
+        return authApi(data1).then(user => {
+          dispatch({
+            type: AUTH.SIGNED_IN
+          })
+  
+          window.localStorage.setItem('accessToken', res.data.token)
+          window.localStorage.setItem('userId', user.username)
         })
         
-        window.localStorage.setItem('accessToken', res.data.token)
         return res
       } else throw res
     }).catch(err => {
@@ -78,6 +88,7 @@ export const register = (obj) => {
 export const logOut = () => {
   return (dispatch) => {
     window.localStorage.removeItem('accessToken')
+    window.localStorage.removeItem('userId')
     dispatch({
       type: AUTH.SIGNED_OUT
     })

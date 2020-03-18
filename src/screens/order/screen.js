@@ -24,6 +24,8 @@ import 'react-bootstrap-table/dist/react-bootstrap-table-all.min.css'
 import * as ProductActions from './actions'
 import './style.scss'
 
+const user = window.localStorage.getItem('userId')
+
 const mapStateToProps = (state) => {
   return ({
     product_list: state.product.product_list
@@ -66,7 +68,7 @@ class Order extends React.Component {
 
   gotoDetail(e, id) {
     this.props.history.push({
-      pathname: '/admin/orders/detail',
+      pathname: `/sellix/${user}/orders/detail`,
       search: `?id=${id}`
     })
   }

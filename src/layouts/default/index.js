@@ -14,6 +14,7 @@ import {
 import { ToastContainer, toast } from 'react-toastify'
 import { ThemeProvider, createGlobalStyle  } from 'styled-components';
 import { darkTheme, lightTheme } from 'layouts/theme/theme'
+import { GlobalStyles } from 'layouts/theme/global'
 
 import { paymentRoutes } from 'routes'
 import {
@@ -52,44 +53,45 @@ class DefaultLayout extends React.Component {
   }
 
   componentDidMount () {
-    // if (!window.localStorage.getItem('accessToken')) {
-    //   this.props.history.push('/login')
-    // } else {
-    //   this.props.authActions.checkAuthStatus().catch(err => {
-    //     this.props.authActions.logOut()
-    //     this.props.history.push('/login')
-    //   })
-    //   this.props.commonActions.getSimpleVATVersion()
-    //   const toastifyAlert = (status, message) => {
-    //     if (!message) {
-    //       message = 'Unexpected Error'
-    //     }
-    //     if (status === 'success') {
-    //       toast.success(message, {
-    //         position: toast.POSITION.TOP_RIGHT
-    //       })
-    //     } else if (status === 'error') {
-    //       toast.error(message, {
-    //         position: toast.POSITION.TOP_RIGHT
-    //       })
-    //     } else if (status === 'warn') {
-    //       toast.warn(message, {
-    //         position: toast.POSITION.TOP_RIGHT
-    //       })
-    //     } else if (status === 'info') {
-    //       toast.info(message, {
-    //         position: toast.POSITION.TOP_RIGHT
-    //       })
-    //     }
-    //   }
-    //   this.props.commonActions.setTostifyAlertFunc(toastifyAlert)
-    // }
+    if (!window.localStorage.getItem('accessToken')) {
+      this.props.history.push('/login')
+    } else {
+      this.props.authActions.checkAuthStatus().catch(err => {
+        this.props.authActions.logOut()
+        this.props.history.push('/login')
+      })
+      this.props.commonActions.getSimpleVATVersion()
+      const toastifyAlert = (status, message) => {
+        if (!message) {
+          message = 'Unexpected Error'
+        }
+        if (status === 'success') {
+          toast.success(message, {
+            position: toast.POSITION.TOP_RIGHT
+          })
+        } else if (status === 'error') {
+          toast.error(message, {
+            position: toast.POSITION.TOP_RIGHT
+          })
+        } else if (status === 'warn') {
+          toast.warn(message, {
+            position: toast.POSITION.TOP_RIGHT
+          })
+        } else if (status === 'info') {
+          toast.info(message, {
+            position: toast.POSITION.TOP_RIGHT
+          })
+        }
+      }
+      this.props.commonActions.setTostifyAlertFunc(toastifyAlert)
+    }
   }
 
   changeTheme() {
-    this.setState({
-      theme: this.state.theme == 'light'? 'dark': 'light'
-    })
+    const theme = window.localStorage.getItem('theme') || 'light'
+    window.localStorage.setItem('theme', theme == 'light'? 'dark': 'light')
+
+    this.setState({theme: theme == 'light'? 'dark': 'light'})
   }
 
   render() {
@@ -97,46 +99,49 @@ class DefaultLayout extends React.Component {
       zIndex: 1999
     }
 
-    const {theme} = this.state
+    const theme = window.localStorage.getItem('theme') || this.state || 'light'
     let isSettings = this.props.location.pathname.includes('/admin/settings')?true:false
 
     return (
-      <div className="admin-container">
-        <div className="app">
-          <AppHeader fixed>
-            <Suspense fallback={Loading()}>
-              <Header {...this.props} theme={theme} changeTheme={this.changeTheme.bind(this)} />
-            </Suspense>
-          </AppHeader>
-          <div className="app-body mt-5 mb-5 pt-5">
-              <Container className="p-0 pt-3" fluid>
+      <ThemeProvider theme={theme=='light'?lightTheme:darkTheme}>
+        <GlobalStyles />
+          <div className="admin-container">
+            <div className="app">
+              <AppHeader fixed>
                 <Suspense fallback={Loading()}>
-                  <ToastContainer position="top-right" autoClose={5000} style={containerStyle} />
-                  <Switch>
-                    {
-                      paymentRoutes.map((prop, key) => {
-                        if (prop.redirect)
-                          return <Redirect from={prop.path} to={prop.pathTo} key={key} />
-                        return (
-                          <Route
-                            path={prop.path}
-                            component={prop.component}
-                            key={key}
-                          />
-                        )
-                      })
-                    }
-                  </Switch>
+                  <Header {...this.props} theme={theme} changeTheme={this.changeTheme.bind(this)} />
                 </Suspense>
-              </Container>
+              </AppHeader>
+              <div className="app-body mt-5 mb-5 pt-5">
+                  <Container className="p-0 pt-3" fluid>
+                    <Suspense fallback={Loading()}>
+                      <ToastContainer position="top-right" autoClose={5000} style={containerStyle} />
+                      <Switch>
+                        {
+                          paymentRoutes.map((prop, key) => {
+                            if (prop.redirect)
+                              return <Redirect from={prop.path} to={prop.pathTo} key={key} />
+                            return (
+                              <Route
+                                path={prop.path}
+                                component={prop.component}
+                                key={key}
+                              />
+                            )
+                          })
+                        }
+                      </Switch>
+                    </Suspense>
+                  </Container>
+                </div>
+                <AppAside>
+                  <Suspense fallback={Loading()}>
+                    <Aside />
+                  </Suspense>
+                </AppAside>
             </div>
-            <AppAside>
-              <Suspense fallback={Loading()}>
-                <Aside />
-              </Suspense>
-            </AppAside>
-        </div>
-      </div>
+          </div>
+      </ThemeProvider>
     )
   }
 }

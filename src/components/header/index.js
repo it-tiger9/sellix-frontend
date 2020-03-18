@@ -20,6 +20,8 @@ import {
 
 import './style.scss'
 
+
+
 import logo from 'assets/images/home/logo.png'
 import sellix_logo from 'assets/images/Sellix_logo.svg'
 import avatar from 'assets/images/avatars/6.jpg'
@@ -30,6 +32,8 @@ const propTypes = {
 }
 
 const defaultProps = {}
+
+const userId = window.localStorage.getItem('userId')
 
 class Header extends Component {
 
@@ -73,21 +77,15 @@ class Header extends Component {
               <i className="fa icon-question nav-icon" style={{fontSize: 22, fontWeight: 'bold', marginTop: 2}}></i>
             </DropdownToggle>
             
-            <DropdownMenu right>
+            <DropdownMenu right className="mt-2">
               <DropdownItem onClick={() => this.props.history.push('/admin')}>
-                 Dashboard
+                 Help Center
               </DropdownItem>
               <DropdownItem onClick={() => this.props.history.push('/shop')}>
-                 Your Shop
+                 Tickets
               </DropdownItem>
-              <DropdownItem onClick={() => this.props.history.push('/settings')}>
-                 Settings
-              </DropdownItem>
-              <DropdownItem onClick={this.setTheme.bind(this)}>
-                {(theme || 'light') == 'light'?'Dark Mode':'Light Mode'}
-              </DropdownItem>
-              <DropdownItem onClick={() => this.signOut()}>
-                Sign Out
+              <DropdownItem onClick={() => this.props.history.push('/shop/contact')}>
+                 Contact Us
               </DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>
@@ -97,22 +95,17 @@ class Header extends Component {
               <i className="fas fa-bell nav-icon"></i>
             </DropdownToggle>
             
-            <DropdownMenu right>
-              <DropdownItem onClick={() => this.props.history.push('/admin')}>
-                 Dashboard
+            <DropdownMenu right className="mt-2" style={{width: 300}}>
+              <DropdownItem>
+                <div className="d-flex justify-content-between">
+                  <span className="text-primary d-flex">Notification</span>
+                  <span className="d-flex text-grey">Mark as Read</span>
+                </div>
               </DropdownItem>
-              <DropdownItem onClick={() => this.props.history.push('/shop')}>
-                 Your Shop
+              <DropdownItem >
+                 <p className="text-grey text-center pt-3">You have no notification.</p>
               </DropdownItem>
-              <DropdownItem onClick={() => this.props.history.push('/settings')}>
-                 Settings
-              </DropdownItem>
-              <DropdownItem onClick={this.setTheme.bind(this)}>
-                {(theme || 'light') == 'light'?'Dark Mode':'Light Mode'}
-              </DropdownItem>
-              <DropdownItem onClick={() => this.signOut()}>
-                Sign Out
-              </DropdownItem>
+              
             </DropdownMenu>
           </UncontrolledDropdown>
  
@@ -123,14 +116,14 @@ class Header extends Component {
               </div>
             </DropdownToggle>
 
-            <DropdownMenu right>
-              <DropdownItem onClick={() => this.props.history.push('/admin')}>
+            <DropdownMenu right className="mt-2">
+              <DropdownItem onClick={() => this.props.history.push(`/sellix/${userId}`)}>
                  Dashboard
               </DropdownItem>
               <DropdownItem onClick={() => this.props.history.push('/shop')}>
                  Your Shop
               </DropdownItem>
-              <DropdownItem onClick={() => this.props.history.push('/settings')}>
+              <DropdownItem onClick={() => this.props.history.push(`/sellix/${userId}/settings`)}>
                  Settings
               </DropdownItem>
               <DropdownItem onClick={this.setTheme.bind(this)}>

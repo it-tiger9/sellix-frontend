@@ -23,6 +23,8 @@ import * as ProductActions from './actions'
 
 import './style.scss'
 
+const user = window.localStorage.getItem('userId')
+
 const mapStateToProps = (state) => {
   return ({
     product_list: state.product.product_list
@@ -120,7 +122,7 @@ class Pages extends React.Component {
                       <Input placeholder="Search..." className="header-search-input"></Input>
                     </div>
                     <Button className="ml-3" color="primary" 
-                      onClick={() => this.props.history.push(`/admin/pages/create`)}>Add Page</Button>
+                      onClick={() => this.props.history.push(`/sellix/${user}/pages/new`)}>Add Page</Button>
                   </div>
                 </Col>
               </Row>

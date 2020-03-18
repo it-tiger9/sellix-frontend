@@ -23,12 +23,7 @@ const initialRoutes = [
     name: 'Register',
     component: PaypalPaying.screen
   },
-  {
-    path: '/checkout',
-    name: 'ShopProductDetail',
-    component: ShopProductDetail.screen
-  },
-  
+
   {
     path: '/fees',
     component: Fees.screen,

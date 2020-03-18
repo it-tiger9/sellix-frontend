@@ -240,10 +240,9 @@ class OrderDetail extends React.Component {
                           options={ tableOptions() }
                           data={product_list}
                           version="4"
-                          hover
                           pagination
                           totalSize={product_list ? product_list.length : 0}
-                          className="product-table"
+                          className="product-table p-0"
                           trClassName="cursor-pointer"
                         >
                           <TableHeaderColumn

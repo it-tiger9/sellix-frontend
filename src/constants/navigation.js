@@ -1,92 +1,93 @@
-export const mainNavigation =  {
+const user = window.localStorage.getItem('userId')
+
+export let mainNavigation =  {
   items: [
     {
       name: 'Dashboard',
-      url: '/admin/dashboard',
+      url: `/sellix/${user}/dashboard`,
       icon: 'fas fa-home fa-lg'
     },
     {
       name: 'Products',
-      url: '/product',
+      url: `/sellix/${user}/products`,
       icon: 'fas fa-boxes',
       children: [
         {
           name: 'All Products',
-          url: '/admin/product/all',
-          isOpen: true
+          url: `/sellix/${user}/products/all`
         },
         {
           name: 'Categories',
-          url: '/admin/product/categories',
+          url: `/sellix/${user}/products/categories`,
         },
         {
           name: 'Sort Products',
-          url: '/admin/product/product-sort',
+          url: `/sellix/${user}/products/sort-products`,
         },
         {
           name: 'Sort Categories',
-          url: '/admin/product/category-sort',
+          url: `/sellix/${user}/products/sort-categories`,
         }
       ]
     },
     {
       name: 'Orders',
-      url: '/admin/orders',
+      url: `/sellix/${user}/orders`,
       icon: 'fas fa-credit-card',
     },
     {
       name: 'Analytics',
-      url: '/admin/analytics',
+      url: `/sellix/${user}/analytics`,
       icon: 'fas fa-area-chart',
       children: [
         {
           name: 'All Analytics',
-          url: '/admin/analytics/all',
+          url: `/sellix/${user}/analytics/all`,
         },
         {
           name: 'Reports',
-          url: '/admin/analytics/reports',
+          url: `/sellix/${user}/analytics/reports`,
         },
       ]
     },
     {
       name: 'Coupons',
-      url: '/admin/coupons',
+      url: `/sellix/${user}/coupons`,
       icon: 'fa fa-tags',
     },
     {
       name: 'Queries',
-      url: '/admin/queries',
+      url: `/sellix/${user}/queries`,
       icon: 'fas fa-question-circle',
     },
     {
       name: 'Feedback',
-      url: '/admin/feedback',
+      url: `/sellix/${user}/feedback`,
       icon: "fa fa-commenting",
     },
     {
       name: 'Blacklist',
-      url: '/admin/blacklist',
+      url: `/sellix/${user}/blacklist`,
       icon: 'fas fa-ban',
     },
     {
       name: 'Developer',
-      url: '/admin/developer',
+      url: `/sellix/${user}/developer`,
       icon: 'fas fa-code',
       children: [
         {
           name: 'Webhooks',
-          url: '/admin/developer/webhooks',
+          url: `/sellix/${user}/developer/webhooks`,
         },
         {
           name: 'Webhook Logs',
-          url: '/admin/developer/webhook-logs',
+          url: `/sellix/${user}/developer/webhook-logos`,
         }
       ]
     },
     {
       name: 'Pages',
-      url: '/admin/pages',
+      url: `/sellix/${user}/pages`,
       icon: 'fa fa-file',
     }
   ]
@@ -97,15 +98,15 @@ export const accountSettingsNavigation =  {
   items: [
     {
       name: 'General',
-      url: '/settings/general',
+      url: `/sellix/${user}/settings/general`
     },
     {
       name: 'Security',
-      url: '/settings/security',
+      url: `/sellix/${user}/settings/security`
     },
     {
       name: 'Notifications',
-      url: '/settings/notifications',
+      url: `/sellix/${user}/settings/notifications`
     }
   ]
 }
@@ -115,19 +116,19 @@ export const shopSettingsNavigation =  {
   items: [
     {
       name: 'Members',
-      url: '/settings/memebers',
+      url: `/sellix/${user}/settings/memebers`
     },
     {
       name: 'Payments',
-      url: '/settings/payments',
+      url: `/sellix/${user}/settings/payments`
     },
     {
       name: 'Billing',
-      url: '/settings/billing',
+      url: `/sellix/${user}/settings/billing`
     },
     {
       name: 'Customization',
-      url: '/settings/customization',
+      url: `/sellix/${user}/settings/customization`
     }
   ]
 }

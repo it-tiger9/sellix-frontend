@@ -21,6 +21,8 @@ import {
 import * as ProductActions from './actions'
 import './style.scss'
 
+const user = window.localStorage.getItem('userId')
+
 const mapStateToProps = (state) => {
   return ({
     all_products: state.product.all_products
@@ -65,7 +67,7 @@ class Product extends React.Component {
 
   gotoEditPage(e, id){
     this.props.history.push({
-      pathname: '/admin/product/all/edit',
+      pathname: `/sellix/${user}/products/all/edit`,
       search: `?id=${id}`
     })
   }
@@ -202,7 +204,7 @@ class Product extends React.Component {
                         }}
                       ></Input>
                     </div>
-                    <Button className="ml-3" color="primary" onClick={() => this.props.history.push(`/admin/product/all/create`)}>
+                    <Button className="ml-3" color="primary" onClick={() => this.props.history.push(`/sellix/${user}/products/all/new`)}>
                       Add Product</Button>
                   </div>
                 </Col>

@@ -108,7 +108,7 @@ class ShopFeedback extends React.Component {
                 {
                   product_list.map(pro => 
                     <Col lg={3}>
-                      <Card className="bg-white">
+                      <Card className="">
                         <CardBody className="p-3 bg-white d-flex flex-column align-items-center justify-content-between">
                           <StarRatings
                             rating={pro.rating}

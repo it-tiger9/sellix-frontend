@@ -3,6 +3,42 @@
 .header-dropdown-menu {
   height: auto;
   right: 0;
+
+  .dropdown-item:hover {
+    
+  }
+}
+
+.app-header .navbar-nav .dropdown-menu:before {
+  box-shadow: 0px 1px 8px 0px rgba(0, 0, 0, 0.2), 0px 3px 4px 0px rgba(0, 0, 0, 0.14), 0px 3px 3px -2px rgba(0, 0, 0, 0.12) !important;
+  border: none !important;
+  position: absolute;
+  display: inline-block;
+  content: '';
+  right: 9px;
+  top: -10px;
+}
+
+.app-header .navbar-nav .dropdown-menu:after {
+  position: absolute;
+  display: inline-block;
+  content: '';
+  right: 10px;
+  top: -10px;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid #fff;
+  border-left: 10px solid transparent;
+}
+
+.admin-container .app-header .dropdown-item {
+  border-bottom: none;
+}
+
+.admin-container .app-header .dropdown-item:hover,
+.admin-container .app-header .dropdown-item:focus,
+.admin-container .app-header .dropdown-item:active {
+  color: #613BEA !important;
+  background-color: white;
 }
 
 .navbar-brand { 
