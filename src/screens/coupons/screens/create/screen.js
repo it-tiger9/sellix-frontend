@@ -45,6 +45,7 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 const MockProducts = [
+  { label: 'Select all products', value: ''},
   { label: 'id1', value: '1' },
   { label: 'id2', value: '2' },
   { label: 'id3', value: '3' }
@@ -184,7 +185,24 @@ class CreateCoupon extends React.Component {
                                     name="products_bound"
                                     placeholder="Select Products"
                                     onChange={(options) => {
-                                      props.setFieldValue('products_bound', options)
+                                      let newOptions = []
+                                      const oldHaveAll = _.some(props.values.products_bound, option => option.value === '')
+                                      const newHaveAll = _.some(options, option => option.value === '')
+                                      const newHaveSome = _.some(options, option => option.value != '')
+                                      if (oldHaveAll) {
+                                        if (newHaveSome) {
+                                          newOptions = _.remove(options, option => option.value != '')
+                                        } else {
+                                          newOptions = options
+                                        }
+                                      } else {
+                                        if (newHaveAll) {
+                                          newOptions = _.remove(options, option => option.value === '')
+                                        } else {
+                                          newOptions = options
+                                        }
+                                      }
+                                      props.setFieldValue('products_bound', newOptions  )
                                     }}
                                     value={props.values.products_bound}
                                   />
