@@ -1,5 +1,6 @@
 import React from 'react'
 import { Slider, Handles, Tracks, Ticks, Rail } from 'react-compound-slider'
+import './style.scss'
 
 
 const sliderStyle = {  // Give the slider some width
@@ -26,6 +27,7 @@ class DataSlider extends React.Component{
         const Handle = ({handle: { id, value, percent }, getHandleProps}) => {
             return (
                 <div
+                    className='Handle'
                     style={{
                         left: `${percent}%`,
                         position: 'absolute',
@@ -43,6 +45,12 @@ class DataSlider extends React.Component{
                     }}
                     {...getHandleProps(id)}
                     >
+                        <div style={{
+                            position: 'absolute',
+                            top: -25,
+                            color: '#a7a5b4',
+                            left: -6
+                        }}>{value}%</div>
                 </div>
             )
         }
@@ -90,7 +98,7 @@ class DataSlider extends React.Component{
             )
         }
 
-        const {domain, value, ticks, step, suffix, receiveValue} = this.props
+        const {domain, value, ticks, step, suffix, receiveValue, currentValue} = this.props
 
         return(
             <div className="hor-slider pl-2 pr-2">
