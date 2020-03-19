@@ -51,7 +51,7 @@ class LogIn extends React.Component {
         alert: null
       })
 
-      const preUrl = `/sellix/${window.localStorage.getItem('userId')}`
+      const preUrl = `/sellix/${window.localStorage.getItem('userId')}/dashboard`
       this.props.history.push(preUrl)
     }).catch(err => {
       this.setState({
