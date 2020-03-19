@@ -132,7 +132,7 @@ const adminRoutes = [
     component: CreateBlacklist.screen
   },
   {
-    path: `/sellix/${user}/blacklist/edit`,
+    path: `/sellix/${user}/blacklist/edit/:id`,
     name: 'EditBlacklist',
     component: EditBlacklist.screen
   },

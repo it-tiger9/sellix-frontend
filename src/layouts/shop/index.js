@@ -107,7 +107,7 @@ class ShopLayout extends React.Component {
     let isSettings = this.props.location.pathname.includes('/admin/settings')?true:false
 
     return (
-      <ThemeProvider theme={theme=='light'?lightTheme:darkTheme}>
+      <ThemeProvider theme={lightTheme}>
         <GlobalStyles />
           <div className="admin-container">
             <div className="app">

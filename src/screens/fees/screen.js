@@ -108,7 +108,7 @@ class Fees extends React.Component {
                             </div>
                             <div className="content">
                                 <p className="small text-primary">
-                                HexPay does not take any
+                                Sellix does not take any
                                 additional fee to process
                                 PayPal invoices.
                                 </p>
@@ -125,7 +125,7 @@ class Fees extends React.Component {
                                 <p className="small1 text-primary">
                                     Transaction Fees: <b>$0.040</b>
                                 </p>
-                                <p className="small1 text-primary">Hexpay Fees: <img src={service2} width="25" height="25"/>
+                                <p className="small1 text-primary">Sellix Fees: <img src={service2} width="25" height="25"/>
                                     <b>0.0000060 ($0.03659)</b>
                                 </p>
                                 <p className="small1 text-primary">
@@ -144,7 +144,7 @@ class Fees extends React.Component {
                                 <p className="small1 text-primary">
                                     Transaction Fees: <b>$0.005</b>
                                 </p>
-                                <p className="small1 text-primary">Hexpay Fees: <img src={service3} width="25" height="25"/>
+                                <p className="small1 text-primary">Sellix Fees: <img src={service3} width="25" height="25"/>
                                     <b>0.0006540 ($0.02942)</b>
                                 </p>
                                 <p className="small1 text-primary">
@@ -163,7 +163,7 @@ class Fees extends React.Component {
                                 <p className="small1 text-primary">
                                     Transaction Fees: <b>0.0000630 ($0.00915)</b>
                                 </p>
-                                <p className="small1 text-primary">Hexpay Fees: <img src={service4} width="25" height="25"/>
+                                <p className="small1 text-primary">Sellix Fees: <img src={service4} width="25" height="25"/>
                                     <b>2.00% over the total</b>
                                 </p>
                                 
@@ -180,15 +180,14 @@ class Fees extends React.Component {
                 <div className="d-flex justify-content-between text-left flex-wrap">
                   <div className="mb-3">
                     <NavbarBrand className="p-0" href="/">
-                      <img className="logo mb-3" src={logo}/>
+                      <img src={sellix_logo} style={{width: 88, height: 25}}/>
                     </NavbarBrand>
-                    <p className="mt-2">Copyright © 2020, Selly LLC</p>
+                    <p className="mt-2">Copyright (C) 2020, Sellix.io.</p>
                   </div>
                   <div className="mb-3" style={{maxWidth: 295}}>
                     <h5 className="mb-3">About Us</h5>
-                    <p className="mt-4">Accept payments, sell digital products
-                      from your own store and more, all through
-                      one simple yet extensive platform</p>
+                    <p className="mt-4">Sellix is an online e-commerce payment processing 
+                    website that lets your create your own store with a couple of clicks.</p>
                   </div>
                   <div className="mb-3">
                     <h5 className="mb-3">Name</h5>

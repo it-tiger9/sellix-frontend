@@ -100,8 +100,8 @@ class Home extends React.Component {
                 <Row className="flex-row align-items-center">
                   <Col md={6} className="mb-5">
                     <h1>Sell Digital Goods Online</h1>
-                    <p className="large">
-                      E-commerce is easy with Selly. Create your own customizable online store today.
+                    <p className="large pr-3">
+                      E-commerce is easy with Sellix. Create your own online store with a couple of clicks.
                     </p>
                     <Button color="primary">Get Started for Free</Button>
                   </Col>
@@ -120,32 +120,28 @@ class Home extends React.Component {
               <Row className="service-row">
                 <Col md={4}>
                   <img className="service-img" src={service1}/>
-                  <h4 className="mt-4">Customizable Storefront</h4>
+                  <h4 className="mt-4">Customizable Shop</h4>
                   <p className="small">
-                    Other platforms stifle brand creativity – we
-                    encourage I Our team takes care of the
-                    infrastructure of your stor but what you do
-                    with it is entirely up to you.
+                  Our platforms offers coupons, blacklist, tickets, 
+                  automated delivery, webhooks and many more features 
+                  that you can fully customize for your needs.
                   </p>
                 </Col>
                 <Col md={4}>
                   <img className="service-img" src={service2}/>
                   <h4 className="mt-4">Payment Flexibility</h4>
                   <p className="small">
-                    Looking for a specific type of payment
-                    option? No problem. Our platform integrates
-                    with a variety of payment gateways,
-                    including cryptocurrencies.
+                  Looking for a specific type of payment option? Don't look further. 
+                  We provide PayPal, Stripe, PerfectMoney and every popular cryptocurrencie for your store.
                   </p>
                 </Col>
                 <Col md={4}>
                   <img className="service-img" src={service3}/>
                   <h4 className="mt-4">All-in-One Platform</h4>
                   <p className="small">
-                    Think flexibility has to come with a cost?
-                    Think again. In addition to flexibility,
-                    we offer leading order fulfillment
-                    options and management.
+                  With Sellix you got everything in one platform. 
+                  Various statistics about your online store and features are making sure you know everything 
+                  about your orders and success.
                   </p>
                 </Col>
               </Row>
@@ -157,13 +153,10 @@ class Home extends React.Component {
               <Row className="flex-row align-items-center">
                 <Col md={6} className="mb-3">
                   <div style={{width: '75%'}}>
-                    <h1>Built for this
-                      generation, and
-                      the next</h1>
+                    <h1>Reliable Payment Processing</h1>
                     <p className="small">
-                      With Selly, you get access to cryptocurrency
-                        support, cutting edge e-commerce tools, and our
-                        forward-thinking, proactive support team.
+                    Sellix uses the newest payment processing technologies to ensure your
+                     payment gets processed with the lowest cost of transaction fees at any time.
                     </p>
                   </div>
                   
@@ -207,15 +200,14 @@ class Home extends React.Component {
                 <div className="d-flex justify-content-between text-left flex-wrap">
                   <div className="mb-3">
                     <NavbarBrand className="p-0" href="/">
-                      <img className="logo mb-3" src={logo}/>
+                      <img src={sellix_logo} style={{width: 88, height: 25}}/>
                     </NavbarBrand>
-                    <p className="mt-2">Copyright © 2020, Selly LLC</p>
+                    <p className="mt-2">Copyright (C) 2020, Sellix.io.</p>
                   </div>
                   <div className="mb-3" style={{maxWidth: 295}}>
                     <h5 className="mb-3">About Us</h5>
-                    <p className="mt-4">Accept payments, sell digital products
-                      from your own store and more, all through
-                      one simple yet extensive platform</p>
+                    <p className="mt-4">Sellix is an online e-commerce payment processing 
+                    website that lets your create your own store with a couple of clicks.</p>
                   </div>
                   <div className="mb-3">
                     <h5 className="mb-3">Name</h5>

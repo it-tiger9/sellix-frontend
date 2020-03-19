@@ -18,11 +18,6 @@ const initialRoutes = [
     name: 'Register',
     component: Register.screen
   },
-  {
-    path: '/paypal-pay',
-    name: 'Register',
-    component: PaypalPaying.screen
-  },
 
   {
     path: '/fees',

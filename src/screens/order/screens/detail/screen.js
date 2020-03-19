@@ -242,7 +242,7 @@ class OrderDetail extends React.Component {
                           version="4"
                           pagination
                           totalSize={product_list ? product_list.length : 0}
-                          className="product-table p-0"
+                          className="product-table"
                           trClassName="cursor-pointer"
                         >
                           <TableHeaderColumn

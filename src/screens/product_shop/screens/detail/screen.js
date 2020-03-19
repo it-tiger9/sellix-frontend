@@ -16,6 +16,7 @@ import {
 import Select from 'react-select'
 
 import shop_brand from 'assets/images/brand/shop_brand.png'
+import bitcoinIcon from 'assets/images/crypto/btc.svg'
 
 import './style.scss'
 
@@ -41,9 +42,9 @@ class ShopProductDetail extends React.Component {
 
   }
 
-  gotoPaypal(e, id) {
+  gotoPaymentWindow(e, id) {
     this.props.history.push({
-      pathname: '/payment/paypal',
+      pathname: `/payment/${this.state.paymentOpt.toLowerCase()}`,
       search: `?id=${id}`
     })
   }
@@ -88,13 +89,15 @@ class ShopProductDetail extends React.Component {
                     {
                       paymentOpt?
                         <div className="p-3 pt-2 pb-2 mb-2">
-                          <h4 className="mt-2 mb-5 grey">Checkout with PayPal</h4>
+                          <h4 className="mt-2 mb-5 grey">Checkout with {paymentOpt}</h4>
+                          <form>
                           <FormGroup className="mb-5">
                             <Label htmlFor="email">Email</Label>
                             <Input
                               type="text"
                               id="email"
                               name="email"
+                              required
                               placeholder="Email to have the product sent to"
                             />
                           </FormGroup>
@@ -102,9 +105,9 @@ class ShopProductDetail extends React.Component {
                             <p className="text-center grey" style={{fontSize: 12}}>
                               By continuing, you agree to our Terms of Service</p>
                             <Button color="primary" className="mr-auto ml-auto mt-2" 
-                              onClick={(e) => this.gotoPaypal()}>Purchase</Button>
+                              onClick={(e) => this.gotoPaymentWindow()}>Purchase</Button>
                           </div>
-                        
+                          </form>
                         </div>:
                         <div className="p-3 pt-2 pb-2 mb-2">
                           <h4 className="mt-2 mb-5 grey">Purchase</h4>
@@ -114,12 +117,24 @@ class ShopProductDetail extends React.Component {
                               onClick={this.showPaymentOptions.bind(this)} style={{width: 170}}>Purchase</Button>
 
                             {showPaymentOptions && <Button className="pay-button mt-3 pl-3 pr-3" 
-                                onClick={(e) => this.setPaymentOptions(e, 'paypal')}
+                                onClick={(e) => this.setPaymentOptions(e, 'Paypal')}
                                 style={{width: 170}}>
                                 <div className="d-flex justify-content-between align-items-center">
                                   <div>
                                     <i className="fa fa-paypal mr-2"/>
                                     PayPal
+                                  </div>
+                                  <div>></div>
+                                </div>
+                                
+                              </Button>}
+                            {showPaymentOptions && <Button className="pay-button mt-3 pl-3 pr-3" 
+                                onClick={(e) => this.setPaymentOptions(e, 'Bitcoin')}
+                                style={{width: 170}}>
+                                <div className="d-flex justify-content-between align-items-center">
+                                  <div>
+                                    <img src={bitcoinIcon} className="mr-2" width="20" height="20"/>
+                                    Bitcoin
                                   </div>
                                   <div>></div>
                                 </div>
