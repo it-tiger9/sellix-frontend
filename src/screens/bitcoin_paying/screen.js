@@ -18,6 +18,7 @@ import Select from 'react-select'
 import shop_brand from 'assets/images/brand/paypal-logo.svg'
 import paypal_white from 'assets/images/brand/paypal-white.svg'
 import sellix_logo from 'assets/images/Sellix_logo.svg'
+import backIcon from 'assets/images/x.png'
 
 import './style.scss'
 
@@ -58,6 +59,12 @@ class PaypalPaying extends React.Component {
               <div className="float-logo"><img src={sellix_logo} width="153"/></div>
               
               <Card className="bg-white p-0 detail pt-3">
+                <div className="text-right pr-3">
+                <img src={backIcon} width="15" height="15"  
+                    onClick={() => {this.props.history.goBack()}}
+                    style={{cursor: "pointer"}}/>
+                </div>
+                
                 <div className="top p-4 pt-5">
                   <div className="d-flex justify-content-between align-items-center ">
                     <h4 className="text-grey">BITCOIN</h4>

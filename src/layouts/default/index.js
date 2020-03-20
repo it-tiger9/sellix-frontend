@@ -136,11 +136,9 @@ class DefaultLayout extends React.Component {
                     </Suspense>
                   </Container>
                 </div>
-                <AppAside>
-                  <Suspense fallback={Loading()}>
-                    <Aside />
-                  </Suspense>
-                </AppAside>
+                <p className="text-center text-grey footer-report pb-4">
+                  Copyright by Sellix.io - <a href="mailto:abuse@sellix.io">Report Abuse</a>
+                </p>
             </div>
           </div>
       </ThemeProvider>

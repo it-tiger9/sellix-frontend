@@ -17,6 +17,7 @@ import Select from 'react-select'
 
 import shop_brand from 'assets/images/brand/paypal-logo.svg'
 import paypal_white from 'assets/images/brand/paypal-white.svg'
+import backIcon from 'assets/images/x.png'
 
 import './style.scss'
 
@@ -54,7 +55,13 @@ class PaypalPaying extends React.Component {
           <Row>
             <Col lg={9} className="ml-auto mr-auto">
               <Card className="bg-white p-5 detail">
-                <h2 className="text-primary mb-5">[FA] Ikonik</h2>
+                <div className="d-flex justify-content-between  mb-5">
+                  <h2 className="text-primary">[FA] Ikonik</h2>
+                  <img src={backIcon} width="15" height="15"  
+                    onClick={() => {this.props.history.goBack()}}
+                    style={{cursor: "pointer"}}/>
+                </div>
+                
                 <div className="text-center">
                   <img src={shop_brand} className="paypal-brand"></img>
                   <p className="mt-3 mb-5 text-black">You are paying with PayPal<br/>

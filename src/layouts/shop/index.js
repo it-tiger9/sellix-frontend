@@ -168,9 +168,14 @@ class ShopLayout extends React.Component {
                         }
                       </Switch>
                     </Suspense>
+                    
                   </Container>
                 </div>
+                
               </div>
+              <p className="text-center text-grey footer-report pb-4">
+                  Copyright by Sellix.io - <a href="mailto:abuse@sellix.io">Report Abuse</a>
+                </p>
             </div>
           </div>
         </ThemeProvider>

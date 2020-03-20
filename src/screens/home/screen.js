@@ -202,7 +202,7 @@ class Home extends React.Component {
                     <NavbarBrand className="p-0" href="/">
                       <img src={sellix_logo} style={{width: 88, height: 25}}/>
                     </NavbarBrand>
-                    <p className="mt-2">Copyright (C) 2020, Sellix.io.</p>
+                    <p className="mt-2">Copyright © 2020, Sellix.io.</p>
                   </div>
                   <div className="mb-3" style={{maxWidth: 295}}>
                     <h5 className="mb-3">About Us</h5>
