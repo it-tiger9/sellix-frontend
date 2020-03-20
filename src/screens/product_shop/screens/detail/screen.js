@@ -139,7 +139,7 @@ class ShopProductDetail extends React.Component {
                             <Button color="primary" className="mr-auto ml-auto mt-2 d-block" 
                               onClick={this.showPaymentOptions.bind(this)} style={{width: 170}}>Purchase</Button>
 
-                            {showPaymentOptions && <Button className="pay-button mt-3 pl-3 pr-3 d-block" 
+                            {showPaymentOptions && <Button className="pay-button mt-3 pl-3 mr-auto ml-auto pr-3 d-block" 
                                 onClick={(e) => this.setPaymentOptions(e, 'Paypal')}
                                 style={{width: 170}}>
                                 <div className="d-flex justify-content-between align-items-center">
@@ -151,7 +151,7 @@ class ShopProductDetail extends React.Component {
                                 </div>
                                 
                               </Button>}
-                            {showPaymentOptions && <Button className="pay-button mt-3 pl-3 pr-3 d-block" 
+                            {showPaymentOptions && <Button className="pay-button mt-3 mr-auto ml-auto pl-3 pr-3 d-block" 
                                 onClick={(e) => this.setPaymentOptions(e, 'Bitcoin')}
                                 style={{width: 170}}>
                                 <div className="d-flex justify-content-between align-items-center">
