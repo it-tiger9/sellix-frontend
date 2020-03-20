@@ -20,6 +20,11 @@ import {
       name: 'ShopProductDetail',
       component: ShopProductDetail.screen
     },
+
+    {
+      path: '/payment',
+      name: 'Checkout'
+    }
     
   ]
   

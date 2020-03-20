@@ -17,6 +17,7 @@ import Select from 'react-select'
 
 import shop_brand from 'assets/images/brand/shop_brand.png'
 import bitcoinIcon from 'assets/images/crypto/btc.svg'
+import backIcon from 'assets/images/x.png'
 
 import './style.scss'
 
@@ -75,6 +76,21 @@ class ShopProductDetail extends React.Component {
     }
   }
 
+  init(){
+    this.setState({
+      loading: false,
+      paymentOpt: null,
+      showPaymentOptions: false,
+      stockCount: 1
+    })
+  }
+
+  backToProducts(){
+    this.props.history.push({
+      pathname: '/shop/products'
+    })
+  }
+
   render() {
     const  {paymentOpt, showPaymentOptions, stockCount} = this.state
 
@@ -89,7 +105,11 @@ class ShopProductDetail extends React.Component {
                     {
                       paymentOpt?
                         <div className="p-3 pt-2 pb-2 mb-2">
-                          <h4 className="mt-2 mb-5 grey">Checkout with {paymentOpt}</h4>
+                          <div className="d-flex justify-content-between align-items-center mb-5">
+                            <h4 className="mt-2  grey">Checkout with {paymentOpt}</h4>
+                            <img src={backIcon} width="15" onClick={this.init.bind(this)} style={{cursor: "pointer"}}/>
+                          </div>
+                          
                           <form>
                           <FormGroup className="mb-5">
                             <Label htmlFor="email">Email</Label>
@@ -110,7 +130,10 @@ class ShopProductDetail extends React.Component {
                           </form>
                         </div>:
                         <div className="p-3 pt-2 pb-2 mb-2">
-                          <h4 className="mt-2 mb-5 grey">Purchase</h4>
+                          <div className="d-flex justify-content-between align-items-center mb-4">
+                            <h4 className="mt-2 grey">Purchase</h4>
+                            <img src={backIcon} width="15" onClick={this.backToProducts.bind(this)} style={{cursor: "pointer"}}/>
+                          </div>
                           <div className="text-center">
                             <h3>$15.00</h3>
                             <Button color="primary" className="mr-auto ml-auto mt-2" 

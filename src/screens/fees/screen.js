@@ -46,7 +46,7 @@ class Fees extends React.Component {
     return (
       <div className="fees-screen">
         <div className="animated fadeIn">
-          <header className="mb-3 pt-2 pb-2">
+          <header className="pt-2 pb-2">
           <Navbar  color="white" light expand="lg">
               <NavbarBrand href="/">
                 <img className="logo" src={sellix_logo}/>
@@ -89,7 +89,7 @@ class Fees extends React.Component {
             </Navbar>
           </header>
 
-          <div className="section text-center " style={{paddingTop: 150, paddingBottom: 50}}>
+          <div className="section text-center " style={{paddingTop: 100, paddingBottom: 50}}>
             <Container className="home-container" fluid>
               <h3>Fees</h3>
               <p className="large">

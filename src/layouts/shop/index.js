@@ -1,5 +1,6 @@
 import React, { Suspense } from 'react'
 import { Route, Switch, Redirect } from 'react-router-dom'
+import * as router from 'react-router-dom';
 import {connect} from 'react-redux'
 import { Link, NavLink } from 'react-router-dom';
 import { bindActionCreators } from 'redux'
@@ -116,6 +117,7 @@ class ShopLayout extends React.Component {
                   <Header {...this.props} theme={theme} changeTheme={this.changeTheme.bind(this)}  />
                 </Suspense>
               </AppHeader>
+              
               <div className="app-body shop-content flex-column pt-5 p-5">
                 <section className="mt-4 pt-5 pb-4">
                     <div className="br-2 bg-primary logo-background"></div>

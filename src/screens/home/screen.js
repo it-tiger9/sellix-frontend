@@ -53,7 +53,7 @@ class Home extends React.Component {
     return (
       <div className="home-screen">
         <div className="animated fadeIn">
-          <header className="mb-5 pt-2 pb-2 ">
+          <header className="pt-2 pb-2 ">
           <Navbar  color="white" light expand="lg">
               <NavbarBrand href="/">
                 <img className="logo" src={sellix_logo}/>
@@ -95,7 +95,7 @@ class Home extends React.Component {
               </div>
             </Navbar>
           </header>
-          <div className="section white" style={{paddingTop: 150, paddingBottom: 100}}>
+          <div className="section white" style={{paddingTop: 50, paddingBottom: 100}}>
               <Container className="home-container p-0" fluid>
                 <Row className="flex-row align-items-center">
                   <Col md={6} className="mb-5">

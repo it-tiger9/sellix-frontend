@@ -54,7 +54,7 @@ class PaypalPaying extends React.Component {
           <Row>
             <Col lg={9} className="ml-auto mr-auto">
               <Card className="bg-white p-5 detail">
-                <h1 className="text-primary mb-5">[FA] Ikonik</h1>
+                <h2 className="text-primary mb-5">[FA] Ikonik</h2>
                 <div className="text-center">
                   <img src={shop_brand} className="paypal-brand"></img>
                   <p className="mt-3 mb-5 text-black">You are paying with PayPal<br/>
