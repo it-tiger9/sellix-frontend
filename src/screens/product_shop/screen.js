@@ -207,6 +207,7 @@ class ShopProducts extends React.Component {
                     }
                   </Row>
               }
+              
             </CardBody>
           </Card>
         </div>
