@@ -35,7 +35,7 @@ import Header from './header'
 
 import './style.scss'
 
-import shopIcon from 'assets/images/brand/shop.svg'
+import shopIcon from 'assets/images/brand/shop-brand.png'
 
 const mapStateToProps = (state) => {
   return ({
@@ -123,15 +123,15 @@ class ShopLayout extends React.Component {
               
                 <section className="pb-4">
                     <div className="text-center align-items-center logo-content">
-                        <h4 className="mb-0 mt-3">PixelStore</h4>
-                        <img src={shopIcon} width="150" height="150"/>
+                        <h4 className="mb-0 mt-3 mb-3">PixelStore</h4>
+                        <img src={shopIcon} width="130" height="130"/>
                     </div>
-                    <Card className="mb-2 ml-auto mr-auto pt-1 pb-1 pl-3 pr-3 flex-row" 
+                    <Card className="mb-2 mt-3 ml-auto mr-auto pt-1 pb-1 pl-3 pr-3 flex-row" 
                       style={{width: 'fit-content'}}>
                         <span className="text-green mr-2">20</span>
-                        <span className="">|</span>
+                        <span className=""></span>
                         <span className="text-grey pl-2 pr-2">2</span>
-                        <span className="">|</span>
+                        <span className=""></span>
                         <span className="text-red ml-2">20</span>
                     </Card>
                     <div>
