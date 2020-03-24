@@ -27,6 +27,8 @@ import { editBlacklist } from '../detail/actions'
 
 import './style.scss'
 
+const user = window.localStorage.getItem('userId')
+
 const mapStateToProps = (state) => {
   return ({
     blacklist_list: state.blacklist.blacklist_list
@@ -87,7 +89,7 @@ class CreatePage extends React.Component {
     createOrEditPromise.then(res => {
       this.props.commonActions.tostifyAlert('success', res.message)
       this.props.history.push({
-        pathname: '/admin/blacklist'
+        pathname: `/${user}/blacklist`
       })
     }).catch(err => {
       this.props.commonActions.tostifyAlert('error', err.message)

@@ -24,7 +24,10 @@ import {
   CommonActions
 } from 'services/global'
 
+
 import './style.scss'
+
+const user = window.localStorage.getItem('userId')
 
 const mapStateToProps = (state) => {
   return ({
@@ -92,7 +95,7 @@ class CreateCoupon extends React.Component {
     createOrEditPromise.then(res => {
       this.props.commonActions.tostifyAlert('success', res.message)
       this.props.history.push({
-        pathname: '/admin/coupons'
+        pathname: `/${user}/coupons/`
       })
     }).catch(err => {
       this.props.commonActions.tostifyAlert('error', err.message)

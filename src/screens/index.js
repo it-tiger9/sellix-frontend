@@ -23,6 +23,7 @@ import Coupons from './coupons'
 import CreateCoupon from './coupons/screens/create'
 import Queries from './queries'
 import Feedbacks from './feedbacks'
+import ReplyToFeedback from './feedbacks/screens/reply'
 import Webhooks from './webhooks'
 import WebhookLogs from './webhook_logs'
 import Pages from './pages'
@@ -81,6 +82,7 @@ export {
   CreateCoupon,
   Queries,
   Feedbacks,
+  ReplyToFeedback,
   Webhooks,
   Pages,
 

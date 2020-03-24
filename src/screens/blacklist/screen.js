@@ -55,7 +55,7 @@ class Blacklist extends React.Component {
 
   gotoEditPage(e, id) {
     this.props.history.push({
-      pathname: `/sellix/${user}/blacklist/edit/${id}`,
+      pathname: `/${user}/blacklist/edit/${id}`,
     })
   }
 
@@ -140,13 +140,12 @@ class Blacklist extends React.Component {
           <div className='blacklist-header'>
             <div className='blacklist-title'>Blacklist</div>
             <Button className="ml-3" color="primary"
-            onClick={() => this.props.history.push(`/sellix/${user}/blacklist/new`)}>Create blacklist</Button>
+            onClick={() => this.props.history.push(`/${user}/blacklist/new`)}>Create blacklist</Button>
           </div>
           <BootstrapTable
             options={this.options}
             data={this.props.blacklist_list}
             version="4"
-            hover
             totalSize={this.props.blacklist_list ? this.props.blacklist_list.length : 0}
             className="product-table"
             trClassName="cursor-pointer"
