@@ -173,7 +173,7 @@ class ShopProducts extends React.Component {
                   <div className="d-flex justify-content-start">
                     <div className="searchbar white w-100">
                       <i className="fas fa-search"/>
-                      <Input placeholder="Search..." className="header-search-input"></Input>
+                      <Input placeholder="Search for a product..." className="header-search-input"></Input>
                     </div>
                   </div>
                 </Col>
@@ -191,7 +191,7 @@ class ShopProducts extends React.Component {
                   <Row>
                     {
                       product_list.map((pro, index) => 
-                        <Col lg={4} key={index}>
+                        <Col lg={3} key={index}>
                           <Card className="bg-white p-0 product-card" onClick={(e) => this.gotoDetail(e, pro.id)}>
                             <img src={shop_brand} width="100%"/>
                             <div className="p-3">
