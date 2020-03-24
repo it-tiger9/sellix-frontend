@@ -1,0 +1,23 @@
+.leave-feedback-modal {
+    width: 600px;
+    max-width: 600px !important;
+
+    .modal-header{
+        background-color: #613BEA !important;
+
+        h4 {
+            font-size: 89px !important;
+            color: white;
+            text-align: center;
+            width: 100%;
+        }
+    }
+
+    .modal-body {
+        p {
+            font-size: 18px;
+            color: #A7A5B4;
+            line-height: 2em;
+        }
+    }
+}

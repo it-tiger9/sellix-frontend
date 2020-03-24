@@ -67,7 +67,7 @@ class Product extends React.Component {
 
   gotoEditPage(e, id){
     this.props.history.push({
-      pathname: `/sellix/${user}/products/all/edit`,
+      pathname: `/${user}/products/all/edit`,
       search: `?id=${id}`
     })
   }
@@ -204,7 +204,7 @@ class Product extends React.Component {
                         }}
                       ></Input>
                     </div>
-                    <Button className="ml-3" color="primary" onClick={() => this.props.history.push(`/sellix/${user}/products/all/new`)}>
+                    <Button className="ml-3" color="primary" onClick={() => this.props.history.push(`/${user}/products/all/new`)}>
                       Add Product</Button>
                   </div>
                 </Col>

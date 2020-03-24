@@ -14,6 +14,7 @@ import {
   Label
 } from 'reactstrap'
 import Select from 'react-select'
+import { LeaveFeedbackModal } from 'components'
 
 import shop_brand from 'assets/images/brand/paypal-logo.svg'
 import paypal_white from 'assets/images/brand/paypal-white.svg'
@@ -36,8 +37,22 @@ class PaypalPaying extends React.Component {
     super(props)
     this.state = {
       loading: false,
+      openModal: false
     }
 
+  }
+
+
+  openFeedBackModal() {
+    this.setState({openModal: true})
+  }
+
+  okHandler() {
+    this.setState({openModal: false})
+
+    this.props.history.push({
+      pathname: '/shop/feedback/id'
+    })
   }
 
   gotoPaypal(e, id) {
@@ -48,10 +63,17 @@ class PaypalPaying extends React.Component {
   }
 
   render() {
+    const {openModal} = this.state
 
     return (
       <div className="paypal-paying-screen">
         <div className="animated fadeIn">
+          <LeaveFeedbackModal 
+            isOpen={openModal} 
+            okHandler={this.okHandler.bind(this)} 
+            product="Cracked Premium"
+            date="March 08, 2020"
+          />
           <Row>
             <Col lg={9} className="ml-auto mr-auto">
               <Card className="bg-white p-5 detail">
@@ -66,7 +88,7 @@ class PaypalPaying extends React.Component {
                   <img src={shop_brand} className="paypal-brand"></img>
                   <p className="mt-3 mb-5 text-black">You are paying with PayPal<br/>
                       Order ID: a73703a4-38ed-43b3-b5f4-583670e61a19</p>
-                  <Button className="paypal-button"><img src={paypal_white}></img></Button>
+                  <Button className="paypal-button" onClick={this.openFeedBackModal.bind(this)}><img src={paypal_white}></img></Button>
                 </div>  
               </Card>
             </Col>

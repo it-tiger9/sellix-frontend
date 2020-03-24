@@ -9,8 +9,8 @@ import {
 const user = window.localStorage.getItem('userId')
 
 const mainRoutes = [
-  { path: `/sellix/${user}/settings`,  name: 'SettingsLayout', component: SettingsLayout },
-  { path: `/sellix/${user}`, name: 'AdminLayout', component: AdminLayout },
+  { path: `/${user}/settings`,  name: 'SettingsLayout', component: SettingsLayout },
+  { path: `/${user}`, name: 'AdminLayout', component: AdminLayout },
   { path: '/shop', name: 'ShopLayout', component: ShopLayout },
   { path: '/payment', name: 'PaymentLayout', component: DefaultLayout },
   { path: '/', name: 'InitialLayout', component: InitialLayout }

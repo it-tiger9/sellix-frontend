@@ -62,7 +62,8 @@ class Register extends React.Component {
     // delete data['confirm_password']
     this.props.authActions.register(obj).then(res => {
       this.props.commonActions.tostifyAlert('success', 'You are successfully registered, Please login!')
-      this.props.history.push('/admin')
+      const preUrl = `/${window.localStorage.getItem('userId')}/dashboard`
+      window.location.href= preUrl
     }).catch(err => {
       this.setState({
         alert: <Message

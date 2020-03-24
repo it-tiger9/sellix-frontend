@@ -158,7 +158,7 @@ class Product extends React.Component {
 
   gotoEditPage(e, id) {
     this.props.history.push({
-      pathname: `/sellix/${user}/coupons/edit/${id}`,
+      pathname: `/${user}/coupons/edit/${id}`,
     })
   }
 
@@ -242,7 +242,7 @@ class Product extends React.Component {
                       <Input placeholder="Search..." className="header-search-input"></Input>
                     </div>
                     <Button className="ml-3" color="primary"
-                      onClick={() => this.props.history.push(`/sellix/${user}/coupons/new`)}>Add Coupon</Button>
+                      onClick={() => this.props.history.push(`/${user}/coupons/new`)}>Add Coupon</Button>
                   </div>
                 </Col>
               </Row>

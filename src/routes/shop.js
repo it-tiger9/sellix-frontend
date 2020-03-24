@@ -2,6 +2,7 @@ import {
     Contact,
     ShopProducts,
     ShopFeedback,
+    LeaveFeedback,
     ShopProductDetail
   } from 'screens'
   
@@ -13,7 +14,13 @@ import {
       component: Contact.screen
     },
     {
-      path: '/shop/feedbacks',
+      path: '/shop/feedback/:id',
+      name: 'Leave Feedback',
+      component: LeaveFeedback.screen
+    },
+
+    {
+      path: '/shop/feedback',
       name: 'Feedback',
       component: ShopFeedback.screen
     },

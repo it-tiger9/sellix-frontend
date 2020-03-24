@@ -29,6 +29,7 @@ import Pages from './pages'
 import CreatePage from './pages/screens/create'
 import Contact from './contact'
 import ShopFeedback from './feedbacks_shop'
+import LeaveFeedback from './feedbacks_shop/screens/create'
 import ShopProducts from './product_shop'
 import ShopProductDetail from './product_shop/screens/detail'
 import BlackList from './blacklist'
@@ -86,6 +87,7 @@ export {
   CreatePage,
   WebhookLogs,
   ShopFeedback,
+  LeaveFeedback,
   ShopProducts,
   ShopProductDetail,
   PaypalPaying,

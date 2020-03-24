@@ -27,10 +27,11 @@ import { mainNavigation, accountSettingsNavigation, shopSettingsNavigation } fro
 
 import {
   Aside,
-  Header,
   Footer,
   Loading
 } from 'components'
+
+import Header from './header'
 
 import './style.scss'
 
@@ -110,20 +111,19 @@ class ShopLayout extends React.Component {
     return (
       <ThemeProvider theme={lightTheme}>
         <GlobalStyles />
-          <div className="admin-container">
+          <div className="shop-container bg-white">
             <div className="app">
-              <AppHeader fixed>
-                <Suspense fallback={Loading()}>
-                  <Header {...this.props} theme={theme} changeTheme={this.changeTheme.bind(this)}  />
-                </Suspense>
-              </AppHeader>
               
-              <div className="app-body shop-content flex-column pt-5 p-5">
-                <section className="mt-4 pt-5 pb-4">
-                    <div className="br-2 bg-primary logo-background"></div>
+              <div className="shop-content flex-column">
+                <AppHeader>
+                  <Suspense fallback={Loading()}>
+                    <Header {...this.props}/>
+                  </Suspense>
+                </AppHeader>
+              
+                <section className="pb-4">
                     <div className="text-center align-items-center logo-content">
-                        <h4 className="text-white mb-0 mt-3">PixelStore</h4>
-                        
+                        <h4 className="mb-0 mt-3">PixelStore</h4>
                         <img src={shopIcon} width="150" height="150"/>
                     </div>
                     <Card className="mb-2 ml-auto mr-auto pt-1 pb-1 pl-3 pr-3 flex-row" 
@@ -143,39 +143,41 @@ class ShopLayout extends React.Component {
                                 <NavLink to="/shop/contact" className="nav-link">Contact</NavLink>
                             </NavItem>
                             <NavItem className="px-3">
-                                <NavLink to="/shop/feedbacks" className="nav-link">Feedback</NavLink>
+                                <NavLink to="/shop/feedback" className="nav-link">Feedback</NavLink>
                             </NavItem>
                         </Nav>
                     </div>
                 </section>
-                <div className="mt-3 mb-5 p-3">
-                  <Container className="p-0" fluid>
-                    <Suspense fallback={Loading()}>
-                      <ToastContainer position="top-right" autoClose={5000} style={containerStyle} />
-                      <Switch>
-                        {
-                          shopRoutes.map((prop, key) => {
-                            if (prop.redirect)
-                              return <Redirect from={prop.path} to={prop.pathTo} key={key} />
-                            return (
-                              <Route
-                                path={prop.path}
-                                component={prop.component}
-                                key={key}
-                              />
-                            )
-                          })
-                        }
-                      </Switch>
-                    </Suspense>
-                    
-                  </Container>
-                </div>
-                
               </div>
-              <p className="text-center text-grey footer-report pb-4">
+              <div style={{backgroundColor: '#F5F5FE'}}>
+                <div className=" shop-content mt-3 mb-5 p-3">
+                    <Container className="p-0" fluid>
+                      <Suspense fallback={Loading()}>
+                        <ToastContainer position="top-right" autoClose={5000} style={containerStyle} />
+                        <Switch>
+                          {
+                            shopRoutes.map((prop, key) => {
+                              if (prop.redirect)
+                                return <Redirect from={prop.path} to={prop.pathTo} key={key} />
+                              return (
+                                <Route
+                                  path={prop.path}
+                                  component={prop.component}
+                                  key={key}
+                                />
+                              )
+                            })
+                          }
+                        </Switch>
+                      </Suspense>
+                      
+                    </Container>
+                  </div>
+                  <p className="text-center text-grey footer-report pb-4">
                   Copyright by Sellix.io - <a href="mailto:abuse@sellix.io">Report Abuse</a>
                 </p>
+              </div>
+              
             </div>
           </div>
         </ThemeProvider>

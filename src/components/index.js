@@ -11,6 +11,7 @@ import ImageUpload from './upload/imageUploader'
 import AvatarUploader from './upload/avatarUploader'
 import FaviconUploader from './upload/faviconUploader'
 import DataSlider from './slider'
+import LeaveFeedbackModal from './feedback_leave_modal'
 
 export {
   Loading,
@@ -25,5 +26,6 @@ export {
   ImageUpload,
   DataSlider,
   AvatarUploader,
-  FaviconUploader
+  FaviconUploader,
+  LeaveFeedbackModal
 }

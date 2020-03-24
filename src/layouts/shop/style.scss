@@ -4,9 +4,8 @@
         max-width: 1250px;
         margin: 0 auto;
     }
-    section {
-        position: relative;
-        border-bottom: 1px solid #DCDCDC;
+    .shop-header {
+        box-shadow: none !important;
     }
     .nav-link.active {
         color: #613BEA !important;
@@ -35,5 +34,75 @@
     }
     .text-red {
         color: #B22424;
+    }
+}
+
+.shop-container {
+    .app-header {
+        border-bottom: none;
+        // border-radius: 10px;
+        box-shadow: 0 0 9px 1px rgba(0, 0, 0, 0.2);
+        
+        padding: 0 10px;
+        // height: 100px;
+        // margin: 0 20px;
+        // margin-top: 30px;
+        
+        button:focus {
+          outline: none;
+        }
+        .dropdown-item {
+          border-radius: 0;
+          border-bottom: none;
+        }
+        .header-sidebar-icon {
+          color: #73818f;
+        }
+        .header-icon {
+          font-size: 18px;
+          color: #73818f;
+        }
+        .my-link {
+          cursor: pointer;
+          color: #73818f;
+        }
+      }
+    header {
+        box-shadow: none !important;
+        max-width: 1250px;
+        border-bottom: 0 !important;
+        width: 100%;
+        position:  relative !important;
+    }
+
+    .footer-report a,
+    .footer-report a:hover {
+        text-decoration: none !important;
+    }
+    .footer-report,
+    .footer-report a {
+        color: #A7A5B4;
+    }
+
+    .footer-report a:hover {
+        color: #613BEA !important;
+    }
+
+    .header-fixed .app-header {
+        position:  relative !important;
+    }
+
+    .nav-link.active {
+        color: #613BEA !important;
+    }
+
+    .shop-content {
+        max-width: 1250px;
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    span {
+        font-size: 15px;
     }
 }
