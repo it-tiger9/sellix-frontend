@@ -44,6 +44,8 @@ class ReplyToFeedback extends React.Component {
   render() {
     const {rate} = this.state
 
+    const flag = rate?(rate>4?'positive':'negative'):'neutral'
+
     return (
       <div className="reply-screen">
         <div className="animated fadeIn">
@@ -59,26 +61,18 @@ class ReplyToFeedback extends React.Component {
                 <Row>
                     <Col lg={8}>
                         <FormGroup>
-                            <Label htmlFor="warehouseName">Feedback</Label>
+                            <Label htmlFor="warehouseName">Feedback <span className={`badge badge-${flag}`}>Positive</span></Label>
                             <div>
-                                <StarRatings
-                                    rating={5}
-                                    starRatedColor={rate>3?'#2BB224':'#B22424'}
-                                    numberOfStars={5}
-                                    starDimension="20px"
-                                    starSpacing="2px"
-                                    name='rating'
-                                />
                                 <p className="text-grey mt-3 mb-4">This product is perfect!!!</p>
                             </div>
                         </FormGroup>
                     </Col>
                 </Row>
                 <Row>
-                  <Col lg={8}>
+                  <Col lg={12}>
                     <FormGroup>
                       <Label htmlFor="warehouseName">Reply</Label>
-                        <Input type="textarea" className="pt-3 pb-3 " rows={5} placeholder="Reply to feedback"/>
+                        <Input type="textarea" className="pt-3 pb-3 " rows={7} placeholder="Reply to feedback"/>
                     </FormGroup>
                   </Col>
                 </Row>
