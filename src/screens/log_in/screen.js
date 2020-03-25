@@ -78,7 +78,7 @@ class LogIn extends React.Component {
                 <Col md="11">
                   <CardGroup>
                     <Card>
-                      <CardBody className="p-5 bg-gray-100">
+                      <CardBody className="p-4 bg-gray-100">
                         <Formik
                           initialValues={{email: '', password: ''}}
                           onSubmit={(values) => {
@@ -134,16 +134,15 @@ class LogIn extends React.Component {
                                     <div className="invalid-feedback">{props.errors.password}</div>
                                   )}
                                 </FormGroup>
-                                <div className="ml-auto mr-auto" style={{width: 'fit-content'}}>
-                                <ReCaptcha
-                                  
-                                  siteKey="6LdwUeAUAAAAAEe0KlqQT1YaH3Gu18qCm1HFF0Fe"
-                                  theme="light"
-                                  size="normal"
-                                  onSuccess={(captcha) => console.log(`Successful, result is ${captcha}`)}
-                                  onExpire={() => console.log("Verification has expired, re-verify.")}
-                                  onError={() => console.log("Something went wrong, check your conenction")}
-                                />
+                                <div className="ml-auto mr-auto recptcah" style={{width: 'fit-content'}}>
+                                  <ReCaptcha
+                                    siteKey="6LdwUeAUAAAAAEe0KlqQT1YaH3Gu18qCm1HFF0Fe"
+                                    theme="light"
+                                    size="normal"
+                                    onSuccess={(captcha) => console.log(`Successful, result is ${captcha}`)}
+                                    onExpire={() => console.log("Verification has expired, re-verify.")}
+                                    onError={() => console.log("Something went wrong, check your conenction")}
+                                  />
                                 </div>
                                 
                                 <Row>

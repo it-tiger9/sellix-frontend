@@ -18,6 +18,43 @@
     }
   }
 
+
+
+  @media (max-width: 375px)
+  { .g-recaptcha 
+      {     
+          margin: 0 auto;
+          transform:scale(0.98); 
+          -webkit-transform:scale(0.98); 
+          transform-origin:0 0; 
+          -webkit-transform-origin:0 0; 
+      }
+  }
+
+  @media (max-width: 360px)
+  { .g-recaptcha 
+      {     
+          margin: 0 auto;
+          transform:scale(0.92); 
+          -webkit-transform:scale(0.92); 
+          transform-origin:0 0; 
+          -webkit-transform-origin:0 0; 
+      }
+  }
+
+  @media (max-width: 320px)
+  { .g-recaptcha 
+      {     
+          margin: 0 auto;
+          transform:scale(0.8); 
+          -webkit-transform:scale(0.8); 
+          transform-origin:0 0; 
+          -webkit-transform-origin:0 0; 
+      }
+  }
+
+  
+
 body {
     line-height: 1.0;
     padding-bottom: 0;
@@ -386,6 +423,7 @@ table td a {
 table td a:hover {
     text-decoration: none;
 }
+
 
 .card {
     background-color: transparent;
