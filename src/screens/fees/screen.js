@@ -17,7 +17,6 @@ import {
 import './style.scss'
 
 
-import logo from 'assets/images/home/logo.png'
 import top1 from 'assets/images/home/top1.svg'
 import service1 from 'assets/images/crypto/b_paypal.jpg'
 import service2 from 'assets/images/crypto/b_btc.jpg'

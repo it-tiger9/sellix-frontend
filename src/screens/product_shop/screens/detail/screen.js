@@ -86,9 +86,7 @@ class ShopProductDetail extends React.Component {
   }
 
   backToProducts(){
-    this.props.history.push({
-      pathname: '/shop/products'
-    })
+    this.props.history.goBack()
   }
 
   render() {
@@ -136,7 +134,7 @@ class ShopProductDetail extends React.Component {
                           </div>
                           <div className="text-center">
                             <h3>$15.00</h3>
-                            <Button color="primary" className="mr-auto ml-auto mt-2 d-block" 
+                            <Button color="primary" className="mr-auto ml-auto mt-3 d-block" 
                               onClick={this.showPaymentOptions.bind(this)} style={{width: 170}}>Purchase</Button>
 
                             {showPaymentOptions && <Button className="pay-button mt-3 pl-3 mr-auto ml-auto pr-3 d-block" 

@@ -36,6 +36,7 @@ import Header from './header'
 import './style.scss'
 
 import shopIcon from 'assets/images/brand/shop-brand.png'
+const userId = window.localStorage.getItem('userId')
 
 const mapStateToProps = (state) => {
   return ({
@@ -104,10 +105,6 @@ class ShopLayout extends React.Component {
       zIndex: 1999
     }
 
-    const theme = window.localStorage.getItem('theme') || this.state || 'light'
-
-    let isSettings = this.props.location.pathname.includes('/admin/settings')?true:false
-
     return (
       <ThemeProvider theme={lightTheme}>
         <GlobalStyles />
@@ -126,31 +123,31 @@ class ShopLayout extends React.Component {
                         <h4 className="mb-0 mt-3 mb-3">PixelStore</h4>
                         <img src={shopIcon} width="130" height="130"/>
                     </div>
-                    <Card className="mb-2 mt-3 ml-auto mr-auto pt-1 pb-1 pl-3 pr-3 flex-row" 
+                    <Card className="report-count mb-2 mt-3 ml-auto mr-auto pt-1 pb-1 pl-3 pr-3 flex-row" 
                       style={{width: 'fit-content'}}>
                         <span className="text-green mr-2">20</span>
                         <span className=""></span>
                         <span className="text-grey pl-2 pr-2">2</span>
                         <span className=""></span>
-                        <span className="text-red ml-2">20</span>
+                        <span className="text-red ml-2">27</span>
                     </Card>
                     <div>
                         <Nav className="d-flex flex-row justify-content-center" navbar>
                             <NavItem className="px-3">
-                                <NavLink to="/shop/products" className="nav-link" >Products</NavLink>
+                                <NavLink to={`/${userId}/shop/products`} className="nav-link" >Products</NavLink>
                             </NavItem>
                             <NavItem className="px-3">
-                                <NavLink to="/shop/contact" className="nav-link">Contact</NavLink>
+                                <NavLink to={`/${userId}/shop/contact`} className="nav-link">Contact</NavLink>
                             </NavItem>
                             <NavItem className="px-3">
-                                <NavLink to="/shop/feedback" className="nav-link">Feedback</NavLink>
+                                <NavLink to={`/${userId}/shop/feedback`} className="nav-link">Feedback</NavLink>
                             </NavItem>
                         </Nav>
                     </div>
                 </section>
               </div>
               <div style={{backgroundColor: '#F5F5FE'}}>
-                <div className=" shop-content mt-3 mb-5 p-3">
+                <div className=" shop-content mb-5 p-3">
                     <Container className="p-0" fluid>
                       <Suspense fallback={Loading()}>
                         <ToastContainer position="top-right" autoClose={5000} style={containerStyle} />

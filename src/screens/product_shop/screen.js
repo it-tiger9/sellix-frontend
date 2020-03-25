@@ -157,7 +157,7 @@ class ShopProducts extends React.Component {
           <Card className="grey">
             <CardHeader>
               <Row>
-                <Col md={12} className="d-flex flex-wrap">
+                <Col md={12} className="filter-button d-flex flex-wrap">
                   <Button color={filter == 'all'?'primary':'white'} className="mr-2" 
                     onClick={() => this.filterProduct('all')}>All</Button>
                   <Button color={filter == 'hack'?'primary':'white'} className="mr-2" 

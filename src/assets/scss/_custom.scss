@@ -6,6 +6,11 @@
     }
   }
 
+body {
+    line-height: 1.0;
+    padding-bottom: 0;
+}
+
 .btn {
     border: none !important;
     border-radius: 10px !important;
@@ -172,6 +177,9 @@ select {
     fill: #A7A5B4;
 }
 
+label {
+    line-height: 1.5;
+}
 
 .Select--single {
     .Select-placeholder, 
@@ -288,6 +296,7 @@ textarea {
     border-radius: 10px !important;
     border-bottom: none !important;
     margin-bottom: 30px;
+    line-height: 1.5;
 }
 
 .react-bs-table-pagination {

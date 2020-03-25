@@ -25,7 +25,6 @@ import {
   Loading
 } from 'components'
 
-import logo from 'assets/images/home/logo.png'
 import top1 from 'assets/images/home/top1.svg'
 import service1 from 'assets/images/home/service1.svg'
 import service2 from 'assets/images/home/service2.svg'

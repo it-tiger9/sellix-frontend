@@ -27,7 +27,7 @@ import 'react-bootstrap-table/dist/react-bootstrap-table-all.min.css'
 import * as ProductActions from './actions'
 import './style.scss'
 
-import avatar from 'assets/images/avatars/6.jpg'
+import avatar from 'assets/images/avatars/6.png'
 import { NewMemberModal } from './sections'
 
 
@@ -170,7 +170,7 @@ class Members extends React.Component {
       <div className="member-screen">
         <div className="animated fadeIn">
           <NewMemberModal openModal={openModal} closeModal={this.closeNewMemberModal.bind(this)}/>
-          <Card className="bg-white">
+          <Card>
             <CardBody className="p-0">
               {
                 loading ?
@@ -192,8 +192,6 @@ class Members extends React.Component {
                           options={ tableOptions() }
                           data={product_list}
                           version="4"
-                          hover
-                          
                           totalSize={product_list ? product_list.length : 0}
                           className="product-table"
                           trClassName="cursor-pointer"

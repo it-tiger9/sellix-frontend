@@ -201,7 +201,6 @@ class BillingPage extends React.Component {
                           options={ tableOptions() }
                           data={product_list}
                           version="4"
-                          hover
                           
                           totalSize={product_list ? product_list.length : 0}
                           className="product-table"

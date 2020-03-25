@@ -4,8 +4,14 @@
         max-width: 1250px;
         margin: 0 auto;
     }
+
+    .nav-link {
+        font-size: 16px !important;
+    }
     .shop-header {
         box-shadow: none !important;
+
+        
     }
     .nav-link.active {
         color: #613BEA !important;
@@ -38,6 +44,11 @@
 }
 
 .shop-container {
+    .report-count {
+        span {
+            font-size: 16px !important;
+        }
+    }
     .app-header {
         border-bottom: none;
         // border-radius: 10px;
@@ -68,8 +79,14 @@
         }
       }
       .nav-link {
-          font-family: 'Poppins-semiBold';
+          font-family: 'Poppins';
+          font-size: 16px !important;
       }
+
+      .nav-link.active {
+        font-family: 'Poppins-SemiBold';
+        font-size: 18px !important;
+    }
     header {
         box-shadow: none !important;
         max-width: 1250px;
