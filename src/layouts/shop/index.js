@@ -118,7 +118,7 @@ class ShopLayout extends React.Component {
                   </Suspense>
                 </AppHeader>
               
-                <section className="pb-4">
+                <section className="pb-3">
                     <div className="text-center align-items-center logo-content">
                         <h4 className="mb-0 mt-3 mb-3">PixelStore</h4>
                         <img src={shopIcon} width="130" height="130"/>
