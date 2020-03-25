@@ -23,6 +23,7 @@ import * as ProductActions from '../../actions'
 import { Formik } from 'formik';
 import * as Yup from "yup";
 import config from 'constants/config'
+import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 
 import {
 	CommonActions
@@ -101,8 +102,8 @@ class EditProduct extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-      loading: false,
-      saving: false,
+      		loading: false,
+      		saving: false,
 			unlistedTooltipOpen: false,
 			privateTooltipOpen: false,
 			blockTooltipOpen: false,
@@ -142,9 +143,9 @@ class EditProduct extends React.Component {
 
 		this.addCustomField = this.addCustomField.bind(this)
 		this.deleteCustomField = this.deleteCustomField.bind(this)
-    this.saveCustomField = this.saveCustomField.bind(this)
+    	this.saveCustomField = this.saveCustomField.bind(this)
     
-    this.id = new URLSearchParams(props.location.search).get('id')
+    	this.id = this.props.match.params.id
 	}
 
 	componentWillUnmount() {
@@ -213,8 +214,6 @@ class EditProduct extends React.Component {
 
 		this.setState({custom_fields: custom_fields})
 	}
-
-
 
 	handleSubmit(values) {
 		this.setState({saving: true})
@@ -299,14 +298,19 @@ class EditProduct extends React.Component {
 		} = this.state
 
 		return (
-			<div className="create-product-screen">
+			<div className="create-product-screen mt-3">
 				<div className="animated fadeIn">
+					<Breadcrumb className="mb-0">
+						<BreadcrumbItem active className="mb-0">
+							<a onClick={(e) => this.props.history.goBack()}><i className="fas fa-chevron-left"/> Products</a>
+						</BreadcrumbItem>
+					</Breadcrumb>
 					<Formik
 							initialValues={initialValues}
 							onSubmit={(values) => {
 								this.handleSubmit(values)
-              }}
-              enableReinitialize={true}
+              				}}
+              				enableReinitialize={true}
 							validationSchema={Yup.object().shape({
 								title: Yup.string()
 									.required('Title is required'),

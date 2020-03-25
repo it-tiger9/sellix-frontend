@@ -68,7 +68,7 @@ class Analytics extends React.Component {
 
   render() {
     return (
-      <div className="analytics-screen">
+      <div className="analytics-screen mt-4">
         <div className="animated fadeIn">
           <Card>
             <CardBody>

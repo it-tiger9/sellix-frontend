@@ -21,6 +21,7 @@ import 'react-bootstrap-table/dist/react-bootstrap-table-all.min.css'
 
 import * as ProductActions from './actions'
 
+
 import './style.scss'
 
 const user = window.localStorage.getItem('userId')
@@ -109,6 +110,7 @@ class Pages extends React.Component {
     return (
       <div className="product-screen">
         <div className="animated fadeIn">
+          
           <Card className="grey">
             <CardHeader>
               <Row style={{alignItems: 'center'}}>
@@ -122,7 +124,7 @@ class Pages extends React.Component {
                       <Input placeholder="Search..." className="header-search-input"></Input>
                     </div>
                     <Button className="ml-3" color="primary" 
-                      onClick={() => this.props.history.push(`/sellix/${user}/pages/new`)}>Add Page</Button>
+                      onClick={() => this.props.history.push(`/${user}/pages/new`)}>Add Page</Button>
                   </div>
                 </Col>
               </Row>

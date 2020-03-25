@@ -4,11 +4,27 @@
     html:not([dir="rtl"]) .sidebar-lg-show.sidebar-fixed .main, html:not([dir="rtl"]) .sidebar-lg-show.sidebar-fixed .app-footer, html:not([dir="rtl"]) .sidebar-show.sidebar-fixed .main, html:not([dir="rtl"]) .sidebar-show.sidebar-fixed .app-footer {
       margin-left: 220px
     }
+
+    .btn {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+  }
+
+  @media (max-width: 450px){
+    .btn {
+        padding-left: 25px !important;
+        padding-right: 25px !important;
+    }
   }
 
 body {
     line-height: 1.0;
     padding-bottom: 0;
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='%2373818f' stroke-width='2.25' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E")
 }
 
 .btn {
@@ -65,6 +81,7 @@ body {
 .breadcrumb li,
 .breadcrumb li a {
     font-size: 13px;
+    cursor: pointer;
 }
 
 .react-bs-table-container .react-bs-table-pagination {
@@ -299,6 +316,12 @@ textarea {
     line-height: 1.5;
 }
 
+.breadcrumb {
+    margin-bottom: 8px;
+    padding-left: 0;
+    background-color: transparent;
+}
+
 .react-bs-table-pagination {
     padding: 0 20px;
     background-color: transparent !important;
@@ -439,7 +462,13 @@ table td a:hover {
 }
 
 
+.react-bs-table table {
+    table-layout: auto;
+  }
+
+
 table {
+    table-layout: auto;
     border-top: none !important;
 
     * {
@@ -477,7 +506,7 @@ table {
                 border-radius: 10px;
                 font-size: 13px !important;
                 font-weight: normal;
-                width: 110px;
+                max-width: 110px;
                 height: 30px;
                 align-items: center;
                 display: flex;

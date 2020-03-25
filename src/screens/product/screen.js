@@ -67,8 +67,7 @@ class Product extends React.Component {
 
   gotoEditPage(e, id){
     this.props.history.push({
-      pathname: `/${user}/products/all/edit`,
-      search: `?id=${id}`
+      pathname: `/${user}/products/all/edit/${id}`
     })
   }
 
@@ -223,7 +222,6 @@ class Product extends React.Component {
                     <Col lg={12}>
                       <div>
                         <BootstrapTable
-                          responsive
                           options={ tableOptions() }
                           data={all_products}
                           version="4"

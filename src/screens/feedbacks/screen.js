@@ -105,7 +105,7 @@ class Feedbacks extends React.Component {
     const { product_list } = this.props
 
     return (
-      <div className="product-screen">
+      <div className="product-screen mt-2">
         <div className="animated fadeIn">
           <Card className="grey">
             <CardHeader>

@@ -135,7 +135,7 @@ class Blacklist extends React.Component {
 
   render() {
     return (
-      <div className="blacklist-screen">
+      <div className="blacklist-screen mt-3">
         <div className="animated fadeIn">
           <div className='blacklist-header'>
             <div className='blacklist-title'>Blacklist</div>

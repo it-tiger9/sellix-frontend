@@ -29,10 +29,6 @@ export const GlobalStyles = createGlobalStyle`
         background: ${({ theme }) => theme.body};
     }
 
-    .admin-container .breadcrumb {
-        background: ${({ theme }) => theme.cardBody};
-        
-    }
 
     .detail-product-screen .stock-info {
         background-color: ${({ theme }) => theme.stockInfoBg};

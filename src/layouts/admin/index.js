@@ -10,7 +10,7 @@ import {
   AppBreadcrumb,
   AppHeader,
   AppSidebar,
-  AppSidebarNav,
+  AppSidebarNav2 as AppSidebarNav,
 } from '@coreui/react'
 import { ToastContainer, toast } from 'react-toastify'
 
@@ -119,11 +119,10 @@ class AdminLayout extends React.Component {
             <div className="app-body">
               <AppSidebar  className="pt-4 mb-5" fixed display="lg">
                 <Suspense>
-                  <AppSidebarNav navConfig={mainNavigation} {...this.props} />
+                  <AppSidebarNav navConfig={mainNavigation} {...this.props} router={router}/>
                 </Suspense>
               </AppSidebar>
-              <main className="main mt-5 mb-5">
-                <AppBreadcrumb appRoutes={adminRoutes} router={router}/>
+              <main className="main mb-5">
                 <Container className="p-0" fluid>
                   <Suspense fallback={Loading()}>
                     <ToastContainer position="top-right" autoClose={5000} style={containerStyle} hideProgressBar={true}/>

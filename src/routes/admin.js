@@ -39,7 +39,7 @@ const adminRoutes = [
     component: CreateProduct.screen
   },
   {
-    path: `/${user}/products/all/edit`,
+    path: `/${user}/products/all/edit/:id`,
     name: 'Edit',
     component: EditProduct.screen
   },
@@ -61,7 +61,7 @@ const adminRoutes = [
 
 
   {
-    path: `/${user}/products/categories/edit`,
+    path: `/${user}/products/categories/edit/:id`,
     name: 'Edit',
     component: EditCategory.screen
   },
@@ -86,7 +86,7 @@ const adminRoutes = [
  
 
   {
-    path: `/${user}/orders/detail`,
+    path: `/${user}/orders/detail/:id`,
     name: 'Detail',
     component: OrderDetail.screen
   },

@@ -15,6 +15,7 @@ import {
   Input
 } from 'reactstrap'
 import StarRatings from 'react-star-ratings';
+import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 
 import { Loader } from 'components'
 
@@ -47,8 +48,13 @@ class ReplyToFeedback extends React.Component {
     const flag = rate?(rate>4?'positive':'negative'):'neutral'
 
     return (
-      <div className="reply-screen">
+      <div className="reply-screen mt-3">
         <div className="animated fadeIn">
+          <Breadcrumb className="mb-0">
+						<BreadcrumbItem active className="mb-0">
+							<a onClick={(e) => this.props.history.goBack()}><i className="fas fa-chevron-left"/> Feedback</a>
+						</BreadcrumbItem>
+					</Breadcrumb>
         <Card>
             <CardHeader>
                 <Row style={{alignItems: 'center'}}>

@@ -79,8 +79,11 @@
       .nav-link {
         font-size: 14px !important;
       }
+
+      
     }
-  
+
+    
     .sidebar {
       background: #F6F4FF;
 
@@ -213,17 +216,26 @@
     }
 
     .settings-sidebar {
-        .scrollbar-container {
-            height: fit-content;
-        }
+      .scrollbar-container {
+          height: fit-content;
+      }
 
-        .nav-item {
-            width: 100%;
-        }
-        .nav-link {
-            padding: 5px 0 !important;
-            font-size: 13px !important;
-            color: #707070;
-        }
+      .nav-item {
+          width: 100%;
+      }
+      .nav-link {
+          padding: 5px 0 !important;
+          font-size: 13px !important;
+          color: #707070;
+      }
+    }
+
+    
+  
+  }
+
+  @media (max-width: 577px){
+    .settings-sidebar {
+      width: 100% !important;
     }
   }
