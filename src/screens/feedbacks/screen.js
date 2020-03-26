@@ -14,56 +14,68 @@ import StarRatings from 'react-star-ratings';
 import { Loader } from 'components'
 import { tableOptions } from 'constants/tableoptions'
 
-import * as ProductActions from './actions'
+import {getFeedbacks} from './actions'
 import './style.scss'
 
 
 const mapStateToProps = (state) => {
   return ({
-    product_list: state.product.product_list
+    feedbacks: state.feedbacks.feedbacks
   })
 }
 
 const mapDispatchToProps = (dispatch) => {
   return ({
-    productActions: bindActionCreators(ProductActions, dispatch)
+    actions: bindActionCreators({ getFeedbacks }, dispatch),
   })
 }
+
+const MockFeedBack = [
+  {id: "1",
+  uniqid: "testing-uniqid",
+  invoice_id: "testing-orderid",
+  product_id: "testing-productid",
+  user_id: "1",
+  message: "feedback message",
+  reply: "this is a reply",
+  feedback: "neutral",
+  date: "1583314021"}
+]
 
 class Feedbacks extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      loading: true,
+      loading: false,
     }
 
-    this.initializeData = this.initializeData.bind(this)
+    // this.initializeData = this.initializeData.bind(this)
   }
 
   componentDidMount () {
-    this.initializeData()
+    this.props.actions.getFeedbacks()
   }
 
-  initializeData () {
-    // this.props.productActions.getProductList().then(res => {
-    //   if (res.status === 200) {
-    //     this.setState({ loading: false })
-    //   }
-    // })
+  
 
-    this.props.productActions.getProductList()
-    this.setState({ loading: false })
+  renderThumb = (row) => {
+    if(MockFeedBack[0].feedback === 'dislike'){
+      return <i className="fa fa-thumbs-down fa-lg mr-3" style={{color: '#B22424'}}></i>
+    }
+    if(MockFeedBack[0].feedback === 'like'){
+      return <i className="fa fa-thumbs-up fa-lg mr-3" style={{color: '#2BB224'}}></i>
+    }
+    if(MockFeedBack[0].feedback === 'neutral'){
+      return <i className="fa fa-minus fa-lg mr-3" style={{color: '#8e8e8e'}}></i>
+    }
   }
 
-  renderFeedback (cell, row) {
+  renderFeedback = (cell, row) => {
     return (
       <div className="d-flex flex-row align-items-center">
-        { row.feedback?<i className="fa fa-thumbs-up fa-lg mr-3" style={{color: '#2BB224'}}></i>:
-          <i className="fa fa-thumbs-down fa-lg mr-3" style={{color: '#B22424'}}></i>
-        }
+        {this.renderThumb(row)}
         <div>
-          <p>{row.title}</p>
-          <p className="text-primary">{row.id}</p>
+          <p>{row.feedback}</p>
         </div>
       </div>
     )  
@@ -75,24 +87,33 @@ class Feedbacks extends React.Component {
     )
   }
 
-  renderRating (cell, row) {
-    return(
-      <StarRatings
-          rating={2}
-          starRatedColor={row.feedback?'#2BB224':'#B22424'}
-          numberOfStars={5}
-          starDimension="20px"
-          starSpacing="2px"
-          name='rating'
-        />
-    )
+  renderTime(cell, row) {
+    let newDate = 0
+    if (
+      row.date
+    ) {
+      newDate = (Date.now() - (+row.date * 1000)) / (3600 * 24 * 1000)
+      if(newDate > 0){
+        if(newDate === 1){
+          newDate = `${newDate.toFixed(0)} day ago`
+        }else{
+          newDate = `${newDate.toFixed(0)} days ago`
+        }
+      }
+      return (
+        <div>
+          <p>{newDate}</p>
+        </div>
+      )
+    } else {
+      return (
+        <p className="caption">No specified</p>
+      )
+    }
   }
-
 
   render() {
     const { loading } = this.state
-    const { product_list } = this.props
-
     return (
       <div className="product-screen">
         <div className="animated fadeIn">
@@ -121,10 +142,10 @@ class Feedbacks extends React.Component {
                       <div>
                         <BootstrapTable
                           options={ tableOptions() }
-                          data={product_list}
+                          data={this.props.feedbacks}
                           version="4"
                           pagination
-                          totalSize={product_list ? product_list.length : 0}
+                          // totalSize={product_list ? product_list.length : 0}
                           className="product-table"
                           trClassName="cursor-pointer"
                         >
@@ -145,13 +166,6 @@ class Feedbacks extends React.Component {
                             Message
                           </TableHeaderColumn>
                           <TableHeaderColumn
-                            dataField="rating"
-                            dataSort
-                            dataFormat={this.renderRating}
-                          >
-                            Rating
-                          </TableHeaderColumn>
-                          <TableHeaderColumn
                             dataField="id"
                             dataSort
                             dataFormat={this.renderOption}
@@ -160,6 +174,7 @@ class Feedbacks extends React.Component {
                           </TableHeaderColumn>
                           <TableHeaderColumn
                             dataField="time"
+                            dataFormat={this.renderTime}
                             dataAlign="right"
                             dataSort
                           >

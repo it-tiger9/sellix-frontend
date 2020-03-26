@@ -16,7 +16,8 @@ import {
   Notification,
   Categories,
   BlackList,
-  Coupons
+  Coupons,
+  Feedbacks
 } from 'screens'
 
 
@@ -27,7 +28,8 @@ const reducer = combineReducers({
   coupons: Coupons.reducer,
   dashboard: Dashboard.reducer,
   product: Product.reducer,
-  category: Categories.reducer
+  category: Categories.reducer,
+  feedbacks: Feedbacks.reducer
 })
 
 export default reducer
