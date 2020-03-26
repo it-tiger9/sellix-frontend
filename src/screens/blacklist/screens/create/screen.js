@@ -24,8 +24,11 @@ import {
 import { createBlacklist } from './actions'
 import { getBlacklist } from '../../actions'
 import { editBlacklist } from '../detail/actions'
+import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 
 import './style.scss'
+
+const user = window.localStorage.getItem('userId')
 
 const mapStateToProps = (state) => {
   return ({
@@ -87,7 +90,7 @@ class CreatePage extends React.Component {
     createOrEditPromise.then(res => {
       this.props.commonActions.tostifyAlert('success', res.message)
       this.props.history.push({
-        pathname: '/admin/blacklist'
+        pathname: `/${user}/blacklist`
       })
     }).catch(err => {
       this.props.commonActions.tostifyAlert('error', err.message)
@@ -102,8 +105,13 @@ class CreatePage extends React.Component {
       ? _.find(this.props.blacklist_list, item => item.uniqid === this.props.match.params.id)
       : {}
     return (
-      <div className="create-pages-screen">
+      <div className="create-pages-screen mt-3">
         <div className="animated fadeIn">
+          <Breadcrumb className="mb-0">
+            <BreadcrumbItem active className="mb-0">
+              <a onClick={(e) => this.props.history.goBack()}><i className="fas fa-chevron-left"/> Blacklist</a>
+            </BreadcrumbItem>
+          </Breadcrumb>
           <Formik
             initialValues={
               initialValues

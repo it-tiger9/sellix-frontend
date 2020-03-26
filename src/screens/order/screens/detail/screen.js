@@ -17,6 +17,7 @@ import Select from 'react-select'
 import { Loader, ImageUpload, DataSlider } from 'components'
 import { BootstrapTable, TableHeaderColumn, SearchField } from 'react-bootstrap-table'
 import { tableOptions } from 'constants/tableoptions'
+import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 
 import * as ProductActions from './actions'
 
@@ -63,8 +64,13 @@ class OrderDetail extends React.Component {
     const { product_list } = this.props
 
     return (
-      <div className="order-detail-screen">
+      <div className="order-detail-screen mt-3">
         <div className="animated fadeIn">
+          <Breadcrumb className="mb-0">
+            <BreadcrumbItem active className="mb-0">
+              <a onClick={(e) => this.props.history.goBack()}><i className="fas fa-chevron-left"/> Orders</a>
+            </BreadcrumbItem>
+          </Breadcrumb>
           <Card>
             <CardBody className="p-4">
               {

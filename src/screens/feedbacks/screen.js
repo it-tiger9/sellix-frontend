@@ -17,6 +17,8 @@ import { tableOptions } from 'constants/tableoptions'
 import {getFeedbacks} from './actions'
 import './style.scss'
 
+const user = window.localStorage.getItem('userId')
+
 
 const mapStateToProps = (state) => {
   return ({
@@ -49,7 +51,9 @@ class Feedbacks extends React.Component {
       loading: false,
     }
 
-    // this.initializeData = this.initializeData.bind(this)
+    this.initializeData = this.initializeData.bind(this)
+    this.replyToFeedback = this.replyToFeedback.bind(this)
+    this.renderOption = this.renderOption.bind(this)
   }
 
   componentDidMount () {
@@ -81,9 +85,16 @@ class Feedbacks extends React.Component {
     )  
   }
 
+  replyToFeedback(e, id) {
+    this.props.history.push({
+      pathname: `/${user}/feedback/reply`,
+      search: `?id=${id}`
+    })
+  }
+
   renderOption (cell, row) {
     return (
-      <Button color="default">Reply</Button>
+      <Button color="default" onClick={(e) => this.replyToFeedback(e, row.id)}>Reply</Button>
     )
   }
 
@@ -115,7 +126,7 @@ class Feedbacks extends React.Component {
   render() {
     const { loading } = this.state
     return (
-      <div className="product-screen">
+      <div className="product-screen mt-2">
         <div className="animated fadeIn">
           <Card className="grey">
             <CardHeader>

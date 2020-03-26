@@ -10,8 +10,8 @@ const user = window.localStorage.getItem('userId')
 
 const mainRoutes = [
   { path: `/${user}/settings`,  name: 'SettingsLayout', component: SettingsLayout },
+  { path: `/${user}/shop`, name: 'ShopLayout', component: ShopLayout },
   { path: `/${user}`, name: 'AdminLayout', component: AdminLayout },
-  { path: '/shop', name: 'ShopLayout', component: ShopLayout },
   { path: '/payment', name: 'PaymentLayout', component: DefaultLayout },
   { path: '/', name: 'InitialLayout', component: InitialLayout }
   

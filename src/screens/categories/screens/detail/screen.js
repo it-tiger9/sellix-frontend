@@ -21,6 +21,7 @@ import _ from "lodash"
 import { Spin, ImageUpload, Loader } from 'components'
 import config from 'constants/config'
 import { Product } from 'screens'
+import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 
 import {
   CommonActions
@@ -59,7 +60,7 @@ class EditCategory extends React.Component {
     }
 
     this.handleMultiChange = this.handleMultiChange.bind(this);
-    this.id = new URLSearchParams(props.location.search).get('id')
+    this.id = this.props.match.params.id
   }
 
   // componentWillUnmount() {
@@ -136,8 +137,13 @@ class EditCategory extends React.Component {
     const product_options = all_products.map(pro => {return {value: pro.uniqid, label: pro.title}})
 
     return (
-      <div className="product-screen">
+      <div className="product-screen mt-3">
         <div className="animated fadeIn">
+            <Breadcrumb className="mb-0">
+              <BreadcrumbItem active className="mb-0">
+                <a onClick={(e) => this.props.history.goBack()}><i className="fas fa-chevron-left"/> Categories</a>
+              </BreadcrumbItem>
+            </Breadcrumb>
           <Formik
             initialValues={initialData}
             enableReinitialize={true}

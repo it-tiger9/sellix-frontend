@@ -1,4 +1,7 @@
 .image-uploader {
+    a {
+        line-height: 1.5;
+    }
     .drag-drop-area {
         background-color: #FCFCFE;
         border: 1px solid #F5F5F5;
@@ -32,6 +35,7 @@
         width: 31px;
         font-size: 21px;
         height: 31px;
+        line-height: 1.5;
         color: white;
         background-color: #613BEA;
         border-radius: 50%;
@@ -67,7 +71,7 @@
     box-shadow: none;
 }
 
-
+a 
 
 .favicon-uploader {
     .drag-drop-area {

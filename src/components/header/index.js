@@ -21,10 +21,8 @@ import {
 import './style.scss'
 
 
-
-import logo from 'assets/images/home/logo.png'
 import sellix_logo from 'assets/images/Sellix_logo.svg'
-import avatar from 'assets/images/avatars/6.jpg'
+import avatar from 'assets/images/avatars/6.png'
 import chevron from 'assets/images/chevron-down-solid.png'
 
 const propTypes = {
@@ -117,13 +115,13 @@ class Header extends Component {
             </DropdownToggle>
 
             <DropdownMenu right className="mt-2">
-              <DropdownItem onClick={() => this.props.history.push(`/sellix/${userId}`)}>
+              <DropdownItem onClick={() => this.props.history.push(`/${userId}`)}>
                  Dashboard
               </DropdownItem>
-              <DropdownItem onClick={() => this.props.history.push('/shop')}>
+              <DropdownItem onClick={() => this.props.history.push(`/${userId}/shop`)}>
                  Your Shop
               </DropdownItem>
-              <DropdownItem onClick={() => this.props.history.push(`/sellix/${userId}/settings`)}>
+              <DropdownItem onClick={() => this.props.history.push(`/${userId}/settings`)}>
                  Settings
               </DropdownItem>
               <DropdownItem onClick={this.setTheme.bind(this)}>

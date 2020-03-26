@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 
 import './style.scss'
 
-import logo from 'assets/images/brand/logo.png'
 
 const propTypes = {
   children: PropTypes.node
@@ -21,7 +20,7 @@ class Footer extends Component {
     return (
       <React.Fragment>
         <div className="d-flex align-items-center justify-content-between w-100">
-          <img src={logo} className="m-2 footer-logo" />
+          
           <span>
             <Link to="/admin">Simple Vat</Link>&nbsp;
             {

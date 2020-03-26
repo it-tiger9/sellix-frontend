@@ -1,10 +1,19 @@
 .shop-product-screen {
   .card-header {
     color: #20a8d8;
+    padding: 15px 0 !important; 
   }
   .btn-group {
     .btn {
       color: #ffffff !important;
+    }
+  }
+
+  .filter-button {
+    button {
+      height: 45px !important;
+      font-size: 18px !important;
+      font-family: 'Poppins-SemiBold' !important;
     }
   }
 
@@ -23,7 +32,7 @@
   button {
     width: 200px;
     padding: 0 !important;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 
   }
 

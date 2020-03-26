@@ -18,6 +18,7 @@ import { Loader, ImageUpload, DataSlider } from 'components'
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-java";
 import "ace-builds/src-noconflict/theme-github";
+import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 
 
 import * as ProductActions from './actions'
@@ -73,8 +74,13 @@ class CreatePage extends React.Component {
     console.log(files)
 
     return (
-      <div className="create-pages-screen">
+      <div className="create-pages-screen mt-3">
         <div className="animated fadeIn">
+          <Breadcrumb className="mb-0">
+            <BreadcrumbItem active className="mb-0">
+              <a onClick={(e) => this.props.history.goBack()}><i className="fas fa-chevron-left"/> Pages</a>
+            </BreadcrumbItem>
+          </Breadcrumb>
           <Card>
             <CardHeader>
               <Row style={{alignItems: 'center'}}>

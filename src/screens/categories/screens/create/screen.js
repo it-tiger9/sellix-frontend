@@ -19,6 +19,7 @@ import { Formik } from 'formik';
 import * as Yup from "yup";
 import { Spin, ImageUpload } from 'components'
 import { Product } from 'screens'
+import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 
 import {
   CommonActions
@@ -92,9 +93,6 @@ class CreateCategories extends React.Component {
     this.setState({loading: true})
     this.props.actions.createCategory(values).then(res => {
       this.props.commonActions.tostifyAlert('success', res.message)
-      this.props.history.push({
-        pathname: '/admin/product/categories'
-      })
     }).catch(err => {
       this.props.commonActions.tostifyAlert('error', err.message)
     }).finally(() => {
@@ -117,8 +115,13 @@ class CreateCategories extends React.Component {
     const product_options = all_products.map(pro => {return {value: pro.uniqid, label: pro.title}})
 
     return (
-      <div className="product-screen">
+      <div className="product-screen mt-3">
         <div className="animated fadeIn">
+          <Breadcrumb className="mb-0">
+            <BreadcrumbItem active className="mb-0">
+              <a onClick={(e) => this.props.history.goBack()}><i className="fas fa-chevron-left"/> Categories</a>
+            </BreadcrumbItem>
+          </Breadcrumb>
           <Formik
             initialValues={initialValues}
             onSubmit={(values) => {

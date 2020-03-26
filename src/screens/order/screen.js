@@ -68,8 +68,7 @@ class Order extends React.Component {
 
   gotoDetail(e, id) {
     this.props.history.push({
-      pathname: `/sellix/${user}/orders/detail`,
-      search: `?id=${id}`
+      pathname: `/${user}/orders/detail/${id}`
     })
   }
 
@@ -80,7 +79,7 @@ class Order extends React.Component {
     ) {
       return (
         <div>
-          <p><a href="#" onClick={(e) => this.gotoDetail(e, row.id)}>
+          <p><a onClick={(e) => this.gotoDetail(e, row.id)}>
             <i className="flag-icon flag-icon-be"></i>&nbsp;&nbsp;&nbsp;{`${row.unit}-${row.mail}`}</a>
           </p>
           <p className="caption">{row.id}</p>

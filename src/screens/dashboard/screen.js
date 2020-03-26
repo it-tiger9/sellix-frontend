@@ -53,7 +53,7 @@ class Dashboard extends React.Component {
 
   render() {
     return (
-      <div className="dashboard-screen">
+      <div className="dashboard-screen mt-4">
         <div className="animated fadeIn">
           <Card>
             <CardBody>

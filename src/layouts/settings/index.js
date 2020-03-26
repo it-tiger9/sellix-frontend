@@ -3,7 +3,7 @@ import { Route, Switch, Redirect } from 'react-router-dom'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import { Container } from 'reactstrap'
+import { Container, Collapse, NavbarToggler, Navbar } from 'reactstrap'
 import {
   AppAside,
   AppBreadcrumb,
@@ -45,11 +45,14 @@ const mapDispatchToProps = (dispatch) => {
   })
 }
 
+
+
 class SettingsLayout extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      theme: 'light'
+      theme: 'light',
+      isOpen: false
     }
   }
 
@@ -95,15 +98,18 @@ class SettingsLayout extends React.Component {
     this.setState({theme: theme == 'light'? 'dark': 'light'})
   }
 
+  toggle() {
+    this.setState({isOpen: !this.state.isOpen})
+  }
+
   render() {
     const containerStyle = {
       zIndex: 1999
     }
-
-
     let isSettings = this.props.location.pathname.includes('/admin/settings')?true:false
 
     const theme = window.localStorage.getItem('theme') || this.state || 'light'
+    const {isOpen} = this.state
 
     return (
       <ThemeProvider theme={theme=='light'?lightTheme:darkTheme}>
@@ -123,16 +129,24 @@ class SettingsLayout extends React.Component {
                 </AppSidebar>
                 
                 <main className="main mt-5 mb-5 settings-main">
-                  <div className="pt-3 mb-5 mr-3 settings-sidebar" display="lg">
-                    <Suspense>
-                      <h4 style={{color: 'black', fontSize: '16px'}}>Settings</h4>
-                      <h4 className="settings-title mt-5">Account</h4>
-                      <AppSidebarNav navConfig={accountSettingsNavigation} {...this.props} />
-                      <h4 className="settings-title mt-5">Shop</h4>
-                      <AppSidebarNav navConfig={shopSettingsNavigation} {...this.props} />
-                    </Suspense>
+                  <div className="settings-sidebar mb-2 mr-3">
+                    <Navbar expand="sm" className="p-0">
+                      <NavbarToggler onClick={this.toggle.bind(this)} />
+                      <Collapse className="mr-5" isOpen={isOpen} navbar>
+                        <div className="pt-3">
+                          <Suspense>
+                            <h4 style={{color: 'black', fontSize: '16px'}}>Settings</h4>
+                            <h4 className="settings-title mt-5">Account</h4>
+                            <AppSidebarNav navConfig={accountSettingsNavigation} {...this.props} />
+                            <h4 className="settings-title mt-5">Shop</h4>
+                            <AppSidebarNav navConfig={shopSettingsNavigation} {...this.props} />
+                          </Suspense>
+                        </div>
+                      </Collapse>
+                    </Navbar>
                   </div>
-                  <Container className="p-0" fluid>
+               
+                  <Container className="p-0 mt-3" fluid>
                     <Suspense fallback={Loading()}>
                       <ToastContainer position="top-right" autoClose={5000} style={containerStyle} />
                       <Switch>

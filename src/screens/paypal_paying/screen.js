@@ -31,6 +31,8 @@ const mapDispatchToProps = (dispatch) => {
   })
 }
 
+const user = window.localStorage.getItem('userId')
+
 class PaypalPaying extends React.Component {
   
   constructor(props) {
@@ -51,7 +53,7 @@ class PaypalPaying extends React.Component {
     this.setState({openModal: false})
 
     this.props.history.push({
-      pathname: '/shop/feedback/id'
+      pathname: `/${user}/shop/feedback/id`
     })
   }
 

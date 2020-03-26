@@ -22,6 +22,7 @@ import { Loader, ImageUpload, DataSlider, Spin } from 'components'
 import * as ProductActions from '../../actions'
 import { Formik } from 'formik';
 import * as Yup from "yup";
+import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 
 import {
 	CommonActions
@@ -224,9 +225,7 @@ class CreateProduct extends React.Component {
 
 		this.props.actions.createProduct(values).then(res => {
 			this.props.commonActions.tostifyAlert('success', res.message)
-			this.props.history.push({
-				pathname: '/admin/product/all'
-			})
+			
 		}).catch(err => {
 			this.props.commonActions.tostifyAlert('error', err.error)
 		}).finally(() => {
@@ -258,8 +257,13 @@ class CreateProduct extends React.Component {
 		} = this.state
 
 		return (
-			<div className="create-product-screen">
+			<div className="create-product-screen mt-3">
 				<div className="animated fadeIn">
+					<Breadcrumb className="mb-0">
+						<BreadcrumbItem active className="mb-0">
+							<a onClick={(e) => this.props.history.goBack()}><i className="fas fa-chevron-left"/> Products</a>
+						</BreadcrumbItem>
+					</Breadcrumb>
 					<Formik
 							initialValues={initialValues}
 							onSubmit={(values) => {

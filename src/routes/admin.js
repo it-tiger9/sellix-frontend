@@ -21,7 +21,7 @@ import {
   CreateProduct,
   OrderDetail,
 } from 'screens'
-import { BlackList, CreateBlacklist, EditBlacklist, EditCoupon } from '../screens'
+import { BlackList, CreateBlacklist, EditBlacklist, EditCoupon, ReplyToFeedback } from '../screens'
 
 
 const user = window.localStorage.getItem('userId')
@@ -39,7 +39,7 @@ const adminRoutes = [
     component: CreateProduct.screen
   },
   {
-    path: `/${user}/products/all/edit`,
+    path: `/${user}/products/all/edit/:id`,
     name: 'Edit',
     component: EditProduct.screen
   },
@@ -61,7 +61,7 @@ const adminRoutes = [
 
 
   {
-    path: `/${user}/products/categories/edit`,
+    path: `/${user}/products/categories/edit/:id`,
     name: 'Edit',
     component: EditCategory.screen
   },
@@ -86,7 +86,7 @@ const adminRoutes = [
  
 
   {
-    path: `/${user}/orders/detail`,
+    path: `/${user}/orders/detail/:id`,
     name: 'Detail',
     component: OrderDetail.screen
   },
@@ -148,6 +148,14 @@ const adminRoutes = [
     name: 'Queries',
     component: Queries.screen
   },
+  
+
+  {
+    path: `/${user}/feedback/reply`,
+    name: 'Reply to Feedback',
+    component: ReplyToFeedback
+  },
+
   {
     path: `/${user}/feedback`,
     name: 'Feedback',

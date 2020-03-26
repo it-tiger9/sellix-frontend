@@ -73,8 +73,7 @@ class Categories extends React.Component {
 
   gotoEditPage(e, id) {
     this.props.history.push({
-      pathname: `/${user}/products/categories/edit`,
-      search: `?id=${id}`
+      pathname: `/${user}/products/categories/edit/${id}`
     })
   }
 
