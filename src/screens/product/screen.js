@@ -235,6 +235,7 @@ class Product extends React.Component {
                             dataField="uniqid"
                             dataFormat={this.renderProductInfo}
                             dataSort
+                            width='40%'
                           >
                             Info
                           </TableHeaderColumn>
@@ -242,20 +243,25 @@ class Product extends React.Component {
                             dataField="type"
                             dataFormat={this.renderProductType}
                             dataSort
+                            width='20%'
                           >
                             Type
                           </TableHeaderColumn>
                           <TableHeaderColumn
                             dataField="stock"
                             dataSort
+         
+                            width='15%'
                           >
                             Stock
                           </TableHeaderColumn>
                           <TableHeaderColumn
                             dataField="revenue"
-                            dataAlign="right"
+                            
                             dataFormat={this.renderProductRevenue}
                             dataSort
+                            
+                            width='15%'
                           >
                             Revenue
                           </TableHeaderColumn>

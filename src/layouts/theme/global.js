@@ -50,6 +50,7 @@ export const GlobalStyles = createGlobalStyle`
     .searchbar .header-search-input,
     table tbody td .badge-normal,
     .Select-control,
+    .react-datepicker__input-container input,
     .create-product-screen .payment-checkbox,
     .create-product-screen .file-switch .switch-slider,
     .image-uploader .drag-drop-area,
@@ -69,7 +70,6 @@ export const GlobalStyles = createGlobalStyle`
         background-color: ${({ theme }) => theme.widget} !important;
     }
 
-    select,
     .form-control {
         background-color: ${({ theme }) => theme.widget} !important;
         border: 1px solid ${({ theme }) => theme.widgetBorder} !important;

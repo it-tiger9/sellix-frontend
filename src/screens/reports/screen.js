@@ -11,24 +11,34 @@ import {
   ButtonGroup,
   Input
 } from 'reactstrap'
+import config from 'constants/config'
 import { ToastContainer, toast } from 'react-toastify'
 import { BootstrapTable, TableHeaderColumn, SearchField } from 'react-bootstrap-table'
 import { Loader } from 'components'
 import { tableOptions } from 'constants/tableoptions'
 import { NewReportModal } from './sections'
-
-import * as ProductActions from './actions'
+import {
+  CommonActions,
+} from 'services/global'
+import JavascriptTimeAgo from 'javascript-time-ago'
+import en from 'javascript-time-ago/locale/en'
+import ReactTimeAgo from 'react-time-ago'
+import moment from 'moment'
+import * as ReportActions from './actions'
 import './style.scss'
+
+JavascriptTimeAgo.locale(en)
 
 const mapStateToProps = (state) => {
   return ({
-    product_list: state.product.product_list
+    report_list: state.report.report_list
   })
 }
 
 const mapDispatchToProps = (dispatch) => {
   return ({
-    productActions: bindActionCreators(ProductActions, dispatch)
+    actions: bindActionCreators(ReportActions, dispatch),
+    commonActions: bindActionCreators(CommonActions, dispatch)
   })
 }
 
@@ -36,11 +46,13 @@ class Reports extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      loading: true,
-      openModal: false
+      loading: false,
+      openModal: false,
+      search_key: null
     }
 
     this.initializeData = this.initializeData.bind(this)
+    this.renderPeriod = this.renderPeriod.bind(this)
   }
 
   componentDidMount () {
@@ -48,80 +60,33 @@ class Reports extends React.Component {
   }
 
   initializeData () {
-    // this.props.productActions.getProductList().then(res => {
-    //   if (res.status === 200) {
-    //     this.setState({ loading: false })
-    //   }
-    // })
-    this.props.productActions.getProductList()
-    this.setState({ loading: false })
+    this.setState({ loading: true })
+    this.props.actions.getReports().catch(err => {
+      this.props.commonActions.tostifyAlert('error', err.error || 'Seomthing went wrong!')
+    }).finally(() => {
+      this.setState({ loading: false })
+    })
   }
 
-  renderProductInfo (cell, row) {
-    if (
-      row.info && row.id
-    ) {
+  renderPeriod (cell, row) { 
+      const fromDate = moment(new Date(row.from_time*1000/1)).format('MMM DD, YY')
+      const toDate = moment(new Date(row.to_time*1000/1)).format('MMM DD, YY')
+
       return (
         <div>
-          <p>{row.info}</p>
-          <p className="caption">{row.id}</p>
+          <a onClick={(e) => window.open(`${config.API_ROOT_URL}/analytics/pdf/${row.secret}/${row.uniqid}`, '_blank')}>
+            {fromDate} - {toDate}</a>
         </div>
       )  
-    } else {
-      return (
-        <p className="caption">No specified</p>
-      )
-    }
   }
 
-  renderProductType (cell, row) {
-    if (
-      row.type
-    ) {
-      return (
-        <div className="badge badge-normal">
-          {row.type}
-        </div>
-      )  
-    } else {
-      return (
-        <p className="caption">No specified</p>
-      )
-    }
+  renderRevenue(cell, row) {
+    return(<p>${row.revenue}</p>)
   }
 
-  renderProductRevenue(cell, row) {
-    if (
-      row.revenue
-    ) {
-      return (
-        <p>
-          ${row.revenue}
-        </p>
-      )  
-    } else {
-      return (
-        <p className="caption">No specified</p>
-      )
-    }
+  renderCreatedAt(cell, row){
+    return (<ReactTimeAgo date={row.date*1000/1} locale="en"/>)
   }
-
-  renderOptions(cell, row) {
-    return (
-      <div className="d-flex actions">
-        <a>
-          <i className="fas fa-pen"/>
-        </a>
-        <a>
-          <i className="fas fa-bar-chart"/>
-        </a>
-        <a>
-          <i className="fas fa-trash"/>
-        </a>
-      </div>
-    )
-  }
-
 
   openNewReportModal() {
     this.setState({openModal: true})
@@ -131,10 +96,28 @@ class Reports extends React.Component {
     this.setState({openModal: false})
   }
 
-  render() {
-    const { loading, openModal } = this.state
-    const { product_list } = this.props
 
+  searchReports(reports) {
+    const { search_key } = this.state
+    const search_fields = ['from_string', 'to_string', 'products_sold', 'revenue']
+
+    const data = reports.filter(report => {
+      for(let i=0; i<search_fields.length; i++)
+        if(report[search_fields[i]] && report[search_fields[i]].toLowerCase().includes(search_key.toLowerCase()))
+          return true
+      return false
+    })
+
+    return data
+  }
+
+  render() {
+    const { loading, openModal, search_key } = this.state
+    let  report_list = search_key?this.searchReports(this.props.report_list):this.props.report_list
+
+    report_list.sort((a, b) => {
+      return b.date-a.date
+    })
 
     return (
       <div className="product-screen">
@@ -150,7 +133,10 @@ class Reports extends React.Component {
                   <div className="d-flex justify-content-end">
                     <div className="searchbar white">
                       <i className="fas fa-search"/>
-                      <Input placeholder="Search..." className="header-search-input"></Input>
+                      <Input placeholder="Search..." className="header-search-input" 
+                        onChange={(e) => {
+                          this.setState({search_key: e.target.value})
+                      }}></Input>
                     </div>
                     <Button className="ml-3" color="primary" onClick={this.openNewReportModal.bind(this)}>
                       New Report</Button>
@@ -172,38 +158,49 @@ class Reports extends React.Component {
                       <div>
                         <BootstrapTable
                           options={ tableOptions() }
-                          data={product_list}
+                          data={report_list}
                           version="4"
                           pagination
-                          totalSize={product_list ? product_list.length : 0}
+                          totalSize={report_list ? report_list.length : 0}
                           className="product-table"
                           trClassName="cursor-pointer"
                         >
                           <TableHeaderColumn
                             isKey
-                            dataField="type"
+                            dataField="from_time"
                             dataSort
+                            dataFormat={this.renderPeriod}
+                            width="30%"
                           >
-                            Type
+                            Period
                           </TableHeaderColumn>
                           <TableHeaderColumn
-                            dataField="period"
+                            dataField="products_sold"
+                            dataAlign="right"
+                            width="10%"
                             dataSort
                           >
-                            Time Period
+                            Products Sold
                           </TableHeaderColumn>
                           <TableHeaderColumn
-                            dataField="download"
+                            dataField="revenue"
+                            dataAlign="right"
+                            width="15%"
+                            dataFormat={this.renderRevenue}
                             dataSort
                           >
-                            Download
+                            Revenue
                           </TableHeaderColumn>
                           <TableHeaderColumn
-                            dataField="createdat"
+                            dataField="date"
+                            dataFormat={this.renderCreatedAt}
                             dataSort
+                            width="20%"
+                            dataAlign="right"
                           >
                             Created At
                           </TableHeaderColumn>
+                          
                         </BootstrapTable>
                       </div>
                     </Col>

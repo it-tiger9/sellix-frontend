@@ -12,8 +12,9 @@ export const AUTH = {
   USER_PROFILE: 'USER_PROFILE'
 }
 
-export const TEMP = {
-
+export const ANALYTICS = {
+  ALL_REPORTS: 'ALL_REPORTS',
+  NEW_REPORT: 'NEW_REPORT'
 }
 
 export const BLACKLIST = {

@@ -89,8 +89,6 @@ class LogIn extends React.Component {
                               .email('Please enter the valid email')
                               .required('Email is required'),
                             password: Yup.string()
-                              .min(5, 'Too Short!')
-                              .max(20, 'Too Long!')
                               .required("Password is required")
                           })}>
                             {props => (
@@ -137,7 +135,7 @@ class LogIn extends React.Component {
                                 <div className="ml-auto mr-auto recptcah" style={{width: 'fit-content'}}>
                                   <ReCaptcha
                                     siteKey="6LdwUeAUAAAAAEe0KlqQT1YaH3Gu18qCm1HFF0Fe"
-                                    theme="light"
+                                    theme="dark"
                                     size="normal"
                                     onSuccess={(captcha) => console.log(`Successful, result is ${captcha}`)}
                                     onExpire={() => console.log("Verification has expired, re-verify.")}

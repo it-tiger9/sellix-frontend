@@ -72,7 +72,16 @@ const CUSTOM_TYPE = [
 ]
 
 const CURRENCY_LIST = [
-	{ value: 'USD', label: 'USD'}
+	{ value: 'USD', label: 'USD'},
+	{ value: 'EUR', label: 'EUR'},
+	{ value: 'JPY', label: 'JPY'},
+	{ value: 'GBP', label: 'GBP'},
+	{ value: 'AUD', label: 'AUD'},
+	{ value: 'CAD', label: 'CAD'},
+	{ value: 'CHF', label: 'CHF'},
+	{ value: 'CNY', label: 'CNY'},
+	{ value: 'SEK', label: 'SEK'},
+	{ value: 'NZD', label: 'NZD'}
 ]
 
 const EDITOR_FORMATS = [
@@ -167,7 +176,6 @@ class CreateProduct extends React.Component {
 
 
 	addFile = file => {
-		console.log(file);
 		this.setState({
 			files: file.map(file =>
 				Object.assign(file, {
@@ -210,7 +218,6 @@ class CreateProduct extends React.Component {
 
 		this.setState({custom_fields: custom_fields})
 	}
-
 
 
 	handleSubmit(values) {
@@ -274,7 +281,8 @@ class CreateProduct extends React.Component {
 									.required('Title is required'),
 								price: Yup.number()
 									.required('Price is required'),
-								description: Yup.string(),
+								description: Yup.string()
+									.required('Description is required'),
 								currency: Yup.string()
 									.required('Currency is required'),
 								type: Yup.string(),
@@ -395,7 +403,6 @@ class CreateProduct extends React.Component {
 																			<Label htmlFor="product_code">Description</Label>
 																			<div>
 																				<ReactQuill value={props.values.description}
-
 																					modules={EDITOR_MODULES}
 																					formats={EDITOR_FORMATS}
 																					placeholder={''}
@@ -405,7 +412,9 @@ class CreateProduct extends React.Component {
 																					}} 
 																				/>
 																			</div>
-																			
+																			{props.errors.description && props.touched.description && (
+																				<div className="invalid-feedback">{props.errors.description}</div>
+																			)}
 																		</FormGroup>
 																	</Col>
 																</Row>

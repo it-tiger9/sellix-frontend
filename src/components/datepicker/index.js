@@ -62,7 +62,7 @@ class DateRangePicker2 extends React.Component{
       nick_key = this.state.startDate.format('ll') + ' - ' + this.state.endDate.format('ll')
 
     return (
-      <div className="datepicker2">
+      <div className={"datepicker2 " + this.props.className || ''}>
         <i className="fas fa-calendar mr-2"/>
         <DateRangePicker 
           startDate={this.state.startDate} 
@@ -70,10 +70,11 @@ class DateRangePicker2 extends React.Component{
           showDropdowns
           opens={this.props.opens || 'right'}
           {...this.props}
+          className="is-invalid"
           getDate={this.props.getDate}
           showClearDates={true}
           withProtal={true}
-          onEvent={(e, picker) => this.handleEvent(e, picker)}>
+          onApply={(e, picker) => this.handleEvent(e, picker)}>
           <ButtonDropdown className="date-select" toggle={()=>{}}>
             <DropdownToggle caret>
               {nick_key}

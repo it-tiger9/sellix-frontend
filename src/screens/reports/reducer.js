@@ -1,48 +1,26 @@
-import { PRODUCT } from 'constants/types'
+import { ANALYTICS } from 'constants/types'
 
-const initState = {
-  product_list: [],
-  product_vat_list: [],
-  product_ware_house: [],
-  product_parent: []
+let initState = {
+  report_list: []
 }
 
-const ProductReducer = (state = initState, action) => {
+const ReportReducer = (state = initState, action) => {
   const { type, payload} = action
   
   switch(type) {
 
-    case PRODUCT.PRODUCT_LIST:
+    case ANALYTICS.ALL_REPORTS:
       return {
         ...state,
-        product_list: Object.assign([], payload.data)
+        report_list: Object.assign([], payload)
       }
 
-    case PRODUCT.PRODUCT_VAT_CATEGORY:
-      const vat_list = payload.data.map(vat => {
-        return {label: vat.name, value: vat.id}
-      })
-
+    case ANALYTICS.NEW_REPORT:
+      const data =  Object.assign([], state.report_list)
+      data.push(payload)
+      
       return {
-        ...state,
-        product_vat_list: Object.assign([], vat_list)
-      }
-
-    case PRODUCT.PRODUCT_WHARE_HOUSE:
-      const warehouse_list = payload.data.map(warehouse => {
-        return {label: warehouse.warehouseName, value: warehouse.warehouseId}
-      })
-
-      return {
-        ...state,
-        product_ware_house: Object.assign([], warehouse_list)
-      }
-
-
-    case PRODUCT.PRODUCT_PARENT:
-      return {
-        ...state,
-        product_parent: Object.assign([], payload.data)
+        report_list: data
       }
 
     default:
@@ -50,4 +28,4 @@ const ProductReducer = (state = initState, action) => {
   }
 }
 
-export default ProductReducer
+export default ReportReducer

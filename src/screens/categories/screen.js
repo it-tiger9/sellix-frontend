@@ -125,6 +125,7 @@ class Categories extends React.Component {
 
     return (
       <div className="product-screen">
+        
         <div className="animated fadeIn">
           <Card className="grey">
             <CardHeader>
@@ -165,12 +166,14 @@ class Categories extends React.Component {
                             isKey
                             dataField="id"
                             dataSort
+                            width="10%"
                           >
                             ID
                           </TableHeaderColumn>
                           <TableHeaderColumn
                             dataField="title"
                             dataSort
+                            width="30%"
                           >
                             Title
                           </TableHeaderColumn>
@@ -184,6 +187,7 @@ class Categories extends React.Component {
                           <TableHeaderColumn
                             dataField="id"
                             dataAlign="right"
+                            width="20%"
                             dataFormat={this.renderOptions}
                           >
                             Options

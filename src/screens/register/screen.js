@@ -117,11 +117,9 @@ class Register extends React.Component {
                               .required('Email is required'),
                             username: Yup.string()
                               .min(3, 'Username must be at least 3 characters long')
-                              .max(20, 'Too Long!')
                               .required('Username is required'),
                             password: Yup.string()
                               .min(8, 'Password must be at least 8 characters long')
-                              .max(20, 'Too Long!')
                               .required("Password is required"),
                             confirm_password: Yup.string()
                               .when("password", {

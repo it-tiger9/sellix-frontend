@@ -8,6 +8,7 @@ import {
   AuthActions,
   CommonActions
 } from 'services/global'
+import {NotFound} from 'components'
 
 import './style.scss'
 
@@ -80,11 +81,13 @@ class InitialLayout extends React.Component {
                 <Route
                   path={prop.path}
                   component={prop.component}
+                  exact={true}
                   key={key}
                 />
               )
             })
           }
+          
         </Switch>
       </div>
     )
