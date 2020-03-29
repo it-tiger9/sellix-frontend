@@ -51,7 +51,7 @@ class Feedbacks extends React.Component {
       loading: false,
     }
 
-    this.initializeData = this.initializeData.bind(this)
+    // this.initializeData = this.initializeData.bind(this)
     this.replyToFeedback = this.replyToFeedback.bind(this)
     this.renderOption = this.renderOption.bind(this)
   }
@@ -63,14 +63,14 @@ class Feedbacks extends React.Component {
   
 
   renderThumb = (row) => {
-    if(MockFeedBack[0].feedback === 'dislike'){
+    if(this.props.feedbacks[0].feedback === 'dislike'){
       return <i className="fa fa-thumbs-down fa-lg mr-3" style={{color: '#B22424'}}></i>
     }
-    if(MockFeedBack[0].feedback === 'like'){
+    if(this.props.feedbacks[0].feedback === 'like'){
       return <i className="fa fa-thumbs-up fa-lg mr-3" style={{color: '#2BB224'}}></i>
     }
-    if(MockFeedBack[0].feedback === 'neutral'){
-      return <i className="fa fa-minus fa-lg mr-3" style={{color: '#8e8e8e'}}></i>
+    if(this.props.feedbacks[0].feedback === 'neutral'){
+      return <i className="fas fa-hand-paper fa-lg mr-3" style={{ color: '#A7A5B4' }}></i>
     }
   }
 
@@ -87,8 +87,7 @@ class Feedbacks extends React.Component {
 
   replyToFeedback(e, id) {
     this.props.history.push({
-      pathname: `/${user}/feedback/reply`,
-      search: `?id=${id}`
+      pathname: `/${user}/feedback/reply/${id}`
     })
   }
 

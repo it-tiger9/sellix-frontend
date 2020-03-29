@@ -1,5 +1,5 @@
 import React from 'react'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
   Card,
@@ -9,82 +9,119 @@ import {
   Row,
   Col,
   Label,
-  ButtonGroup,
   Form,
   FormGroup,
   Input
 } from 'reactstrap'
-import StarRatings from 'react-star-ratings';
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
-
-import { Loader } from 'components'
+import { getFeedbacks } from '../../actions'
+import * as _ from 'lodash'
+import { Formik } from 'formik'
+import {replyFeedback} from '../../actions'
+import {
+  CommonActions
+} from 'services/global'
 
 import './style.scss'
 
+const user = window.localStorage.getItem('userId')
+
 const mapStateToProps = (state) => {
   return ({
-    
+    feedbacks: state.feedbacks.feedbacks
   })
 }
 const mapDispatchToProps = (dispatch) => {
   return ({
-   
+    actions: bindActionCreators({ getFeedbacks }, dispatch),
+    commonActions: bindActionCreators(CommonActions, dispatch),
+    replyFeedback: bindActionCreators(replyFeedback, dispatch),
   })
 }
 
 class ReplyToFeedback extends React.Component {
-  
+
   constructor(props) {
     super(props)
     this.state = {
       loading: false,
-      rate: 5
     }
   }
 
+  componentDidMount() {
+    this.props.actions.getFeedbacks()
+  }
+
+  handleSubmit(values) {
+    this.setState({ loading: true })
+    this.props.replyFeedback({ ...values, uniqid: 'testing-uniqid' }).then(res => { // IMPORTANT uniqid should be this.props.match.params.id looks like API acept only mock uniqid now - testing-uniqid
+      this.props.commonActions.tostifyAlert('success', res.message)
+      this.props.history.push({
+        pathname: `/${user}/feedbacks`
+      })
+    }).catch(err => {
+      this.props.commonActions.tostifyAlert('error', err.message)
+    }).finally(() => {
+      this.setState({ loading: false })
+    })
+  }
+
   render() {
-    const {rate} = this.state
-
-    const flag = rate?(rate>4?'positive':'negative'):'neutral'
-
+    const currentFeedback = _.find(this.props.feedbacks, (feedback) => feedback.id === this.props.match.params.id)
+    if (!currentFeedback) { return null }
     return (
       <div className="reply-screen mt-3">
         <div className="animated fadeIn">
           <Breadcrumb className="mb-0">
-						<BreadcrumbItem active className="mb-0">
-							<a onClick={(e) => this.props.history.goBack()}><i className="fas fa-chevron-left"/> Feedback</a>
-						</BreadcrumbItem>
-					</Breadcrumb>
-        <Card>
-            <CardHeader>
-                <Row style={{alignItems: 'center'}}>
-                <Col md={12}>
-                    <h1>Reply to feedback</h1>
-                </Col>
-                </Row>
-            </CardHeader>
-            <CardBody className="p5-4 pb-5">
-                <Row>
-                    <Col lg={8}>
+            <BreadcrumbItem active className="mb-0">
+              <a onClick={(e) => this.props.history.goBack()}><i className="fas fa-chevron-left" /> Feedback</a>
+            </BreadcrumbItem>
+          </Breadcrumb>
+          <Formik
+            onSubmit={(values) => {
+              this.handleSubmit(values)
+            }}>{props => (
+              <Form onSubmit={props.handleSubmit}>
+                <Card>
+                  <CardHeader>
+                    <Row style={{ alignItems: 'center' }}>
+                      <Col md={12}>
+                        <h1>Reply to feedback</h1>
+                      </Col>
+                    </Row>
+                  </CardHeader>
+                  <CardBody className="p5-4 pb-5">
+                    <Row>
+                      <Col lg={8}>
                         <FormGroup>
-                            <Label htmlFor="warehouseName">Feedback <span className={`badge badge-${flag}`}>Positive</span></Label>
-                            <div>
-                                <p className="text-grey mt-3 mb-4">This product is perfect!!!</p>
-                            </div>
+                          <Label htmlFor="warehouseName">Feedback <span className={`badge badge-${currentFeedback.feedback.toLowerCase()}`}>{currentFeedback.feedback.toLowerCase()}</span></Label>
+                          <div>
+                            <p className="text-grey mt-3 mb-4">{currentFeedback.message}</p>
+                          </div>
                         </FormGroup>
-                    </Col>
-                </Row>
-                <Row>
-                  <Col lg={12}>
-                    <FormGroup>
-                      <Label htmlFor="warehouseName">Reply</Label>
-                        <Input type="textarea" className="pt-3 pb-3 " rows={7} placeholder="Reply to feedback"/>
-                    </FormGroup>
-                  </Col>
-                </Row>
-                <Button color="primary" className="mt-4 mb-3">Submit</Button>
-            </CardBody>
-          </Card>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col lg={12}>
+                        <FormGroup>
+                          <Label htmlFor="warehouseName">Reply</Label>
+                          <Input
+                            type="textarea"
+                            className="pt-3 pb-3 "
+                            rows={7}
+                            placeholder="Reply to feedback"
+                            onChange={props.handleChange}
+                            value={props.values.reply}
+                          />
+                        </FormGroup>
+                      </Col>
+                    </Row>
+                    <Button color="primary" className="mt-4 mb-3">Submit</Button>
+                  </CardBody>
+                </Card>
+              </Form>
+            )}
+          </Formik>
         </div>
       </div>
     )

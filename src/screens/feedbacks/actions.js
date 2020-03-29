@@ -1,6 +1,7 @@
 import { FEEDBACKS } from 'constants/types'
 import {
   api,
+  formData,
   authApi
 } from 'utils'
 
@@ -24,6 +25,26 @@ export const getFeedbacks = () => {
       } else {
         throw res
       }     
+    }).catch(err => {
+      throw err
+    })
+  }
+}
+
+export const replyFeedback = (feedback) => {
+  return (dispatch) => {
+    let data = {
+      method: 'POST',
+      url: `/feedbacks/reply`,
+      data: formData(feedback)
+    }
+
+    return authApi(data).then(res => {
+      if (res.status === 200) {
+        return res
+      } else {
+        throw res
+      }
     }).catch(err => {
       throw err
     })

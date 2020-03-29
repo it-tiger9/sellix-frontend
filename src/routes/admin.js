@@ -151,7 +151,7 @@ const adminRoutes = [
   
 
   {
-    path: `/${user}/feedback/reply`,
+    path: `/${user}/feedback/reply/:id`,
     name: 'Reply to Feedback',
     component: ReplyToFeedback
   },
