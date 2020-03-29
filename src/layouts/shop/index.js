@@ -121,7 +121,7 @@ class ShopLayout extends React.Component {
                 <section className="pb-3">
                     <div className="text-center align-items-center logo-content">
                         <h4 className="mb-0 mt-3 mb-3">PixelStore</h4>
-                        <img src={shopIcon} width="130" height="130"/>
+                        <img src={shopIcon} width="130" height="130" style={{borderRadius: '50%'}}/>
                     </div>
                     <Card className="report-count mb-2 mt-3 ml-auto mr-auto pt-1 pb-1 pl-3 pr-3 flex-row" 
                       style={{width: 'fit-content'}}>

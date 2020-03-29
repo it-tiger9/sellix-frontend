@@ -110,7 +110,7 @@ class Header extends Component {
           <UncontrolledDropdown nav direction="down">
             <DropdownToggle className="user-name" nav>
               <div>
-                <img src={avatar} width="35" height="35" className="img-avatar" alt="admin@bootstrapmaster.com" />
+                <i className="fa fa-user-circle text-primary avatar-icon"/>
               </div>
             </DropdownToggle>
 

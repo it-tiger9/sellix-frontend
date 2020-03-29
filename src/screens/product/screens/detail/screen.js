@@ -73,7 +73,16 @@ const CUSTOM_TYPE = [
 ]
 
 const CURRENCY_LIST = [
-	{ value: 'USD', label: 'USD'}
+	{ value: 'USD', label: 'USD'},
+	{ value: 'EUR', label: 'EUR'},
+	{ value: 'JPY', label: 'JPY'},
+	{ value: 'GBP', label: 'GBP'},
+	{ value: 'AUD', label: 'AUD'},
+	{ value: 'CAD', label: 'CAD'},
+	{ value: 'CHF', label: 'CHF'},
+	{ value: 'CNY', label: 'CNY'},
+	{ value: 'SEK', label: 'SEK'},
+	{ value: 'NZD', label: 'NZD'}
 ]
 
 const EDITOR_FORMATS = [
@@ -280,8 +289,8 @@ class EditProduct extends React.Component {
 
 	render() {
 		const { 
-      loading, 
-      saving,
+			loading, 
+			saving,
 			unlistedTooltipOpen, 
 			privateTooltipOpen,
 			blockTooltipOpen,
@@ -291,8 +300,8 @@ class EditProduct extends React.Component {
 			showFileStock,
 			editorState,
 			initialValues,
-      type,
-      gateways,
+      		type,
+      		gateways,
 			delimiter,
 			custom_fields
 		} = this.state

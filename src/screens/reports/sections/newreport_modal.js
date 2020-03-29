@@ -12,16 +12,37 @@ import {
   ModalBody,
   ModalFooter,
 } from 'reactstrap'
+import {connect} from 'react-redux'
+import { bindActionCreators } from 'redux'
 import Select from 'react-select'
 import _ from 'lodash'
+import moment from 'moment'
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
-import { DateRangePicker2 } from 'components'
+import { DateRangePicker2, Spin } from 'components'
 
 import { Formik } from 'formik';
 import * as Yup from "yup";
+import {
+  CommonActions,
+} from 'services/global'
 
-import * as ProductActions from '../actions'
+import * as ReportActions from '../actions'
 
+
+const mapDispatchToProps = (dispatch) => {
+	return ({
+		commonActions: bindActionCreators(CommonActions, dispatch),
+		actions: bindActionCreators(ReportActions, dispatch)
+	})
+}
+
+const mapStateToProps = (state) => {
+  return ({
+    
+  })
+}
 
 class NewReportModal extends React.Component {
   
@@ -29,29 +50,55 @@ class NewReportModal extends React.Component {
     super(props)
     this.state = {
       loading: false,
-
+      fromDate: new Date(),
+      toDate: new Date(),
       initWareHouseValue: {
-        warehouseName: '',
+        fileType: 'pdf',
       },
     }
 
-    this.wareHouseHandleSubmit = this.wareHouseHandleSubmit.bind(this)
+    this.submitNewReport = this.submitNewReport.bind(this)
   }
 
   // Create or Contact
-  wareHouseHandleSubmit(data) {
-    // ProductActions.createWarehouse(data).then(res => {
-    //   if (res.status === 200) {
-    //   // this.success()
-        
-    //   }
-    // })
+  submitNewReport(data) {
+    this.setState({
+      loading: true,
+    })
 
-    this.props.closeModal()
+
+    this.props.actions.createReport({
+      from: moment(this.state.fromDate).format('MM/DD/YYYY'),
+      to: moment(this.state.toDate).format('MM/DD/YYYY')
+    }).then(res => {
+      if (res.status === 200) {
+        this.props.closeModal()
+      } else if(res.error) {
+        console.log(res)
+        this.props.commonActions.tostifyAlert('error', res.error)
+      }
+
+      this.setState({
+        loading: false,
+      })
+    })
+  }
+
+  fromDateChange = date => {
+    this.setState({
+      fromDate: date
+    })
+  }
+
+  toDateChange = date => {
+    this.setState({
+      toDate: date
+    })
   }
 
   render() {
     const { openModal, closeModal } = this.props
+    const { fileType, fromDate, toDate, loading } = this.state
 
     return (
       <div>
@@ -61,14 +108,11 @@ class NewReportModal extends React.Component {
           modalClassName="888"
           >
           <Formik
-            initialValues={this.state.initWareHouseValue}
+            initialValues={{}}
             onSubmit={(values, {resetForm}) => {
-              this.wareHouseHandleSubmit(values)
-              resetForm(this.state.initWareHouseValue)
+              this.submitNewReport(values)
             }}
             validationSchema={Yup.object().shape({
-                warehouseName: Yup.string()
-                    .required('Warehouse Name is a required field'),
             })}>
             {props => (
               <Form name="simpleForm" onSubmit={props.handleSubmit}>
@@ -77,32 +121,47 @@ class NewReportModal extends React.Component {
                     <Row>
                       <Col>
                         <FormGroup>
-                          <Label htmlFor="warehouseName">Type</Label>
-                            <Select placeholder="Type">
-                            </Select>
-                        </FormGroup>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col>
-                        <FormGroup>
                           <Label htmlFor="warehouseName">File Type</Label>
-                            <Select placeholder="File Type">
+                            <Select placeholder="File Type" 
+                              options={[{value: 'pdf', label: 'PDF'}]}
+                              value={fileType}
+                              onChange={(option) => {
+                                this.setState({fileType: option})
+                              }}
+                            >
                             </Select>
                         </FormGroup>
                       </Col>
                     </Row>
                     <Row>
-                      <Col>
+                      <Col lg={6}>
                         <FormGroup>
-                          <Label htmlFor="warehouseName">Period</Label>
-                            <DateRangePicker2 getDate={() => {}} opens={'left'}/>
+                          <Label htmlFor="warehouseName">Start At</Label>
+                          <div></div>
+                            <DatePicker
+                              maxDate={toDate}
+                              selected = {fromDate}
+                              onChange={this.fromDateChange}
+                              dateFormat="PP"
+                            />
+                        </FormGroup>
+                      </Col>
+                      <Col lg={6}>
+                        <FormGroup>
+                          <Label htmlFor="warehouseName">End At</Label>
+                          <div></div>
+                            <DatePicker
+                              minDate={fromDate}
+                              selected = {toDate}
+                              onChange={this.toDateChange}
+                              dateFormat="PP"
+                            />
                         </FormGroup>
                       </Col>
                     </Row>
                   </ModalBody>
                   <ModalFooter className="justify-content-start">
-                    <Button color="primary" type="submit" className="mr-2">Generate Report</Button>
+                    <Button color="primary" type="submit" className="mr-2" disabled={loading}>{loading ?<Spin/>:'Generate Report' }</Button>
                   </ModalFooter>
               </Form>
               )}
@@ -113,4 +172,4 @@ class NewReportModal extends React.Component {
   }
 }
 
-export default NewReportModal
+export default connect(mapStateToProps, mapDispatchToProps)(NewReportModal)

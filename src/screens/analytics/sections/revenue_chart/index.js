@@ -65,8 +65,13 @@ class RevenueChart extends Component {
   }
 
   render() {
+    const data = this.props.data
+
+    const labels = data.map(d => `${d.day_value}.${d.month}`)
+    const values = data.map(d => d.revenue)
+
     const line = {
-      labels:  ['19.Jan', '20.Jan', '21.Jan', '22.Jan', '23.Jan', '24.Jan'],
+      labels:  labels,
       datasets: [
         {
           label: [],
@@ -87,7 +92,7 @@ class RevenueChart extends Component {
           pointHoverBorderWidth: 2,
           pointRadius: 4,
           pointHitRadius: 20,
-          data: [12, 19, 3, 5, 2, 3],
+          data: values,
         }
       ]
     }

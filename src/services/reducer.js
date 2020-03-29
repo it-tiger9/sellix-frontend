@@ -17,7 +17,8 @@ import {
   Categories,
   BlackList,
   Coupons,
-  Feedbacks
+  Feedbacks,
+  Reports
 } from 'screens'
 
 
@@ -29,7 +30,8 @@ const reducer = combineReducers({
   dashboard: Dashboard.reducer,
   product: Product.reducer,
   category: Categories.reducer,
-  feedbacks: Feedbacks.reducer
+  feedbacks: Feedbacks.reducer,
+  report: Reports.reducer
 })
 
 export default reducer

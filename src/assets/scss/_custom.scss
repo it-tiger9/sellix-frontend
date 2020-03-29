@@ -205,7 +205,13 @@ select {
     margin: 0 2px;
 }
 
+.avatar-icon {
+    font-size: 35px;
+}
+
+.react-datepicker__input-container input,
 .form-control {
+    outline: 0;
     min-height: 45px !important;
     background-color: #FCFCFE;
     border: 1px solid #F5F5F5 !important;
@@ -499,6 +505,10 @@ table td a:hover {
     }
 }
 
+.sk-fading-circle {
+    width: 40px !important;
+    height: 30px !important;
+}
 
 .react-bs-table table {
     table-layout: auto;

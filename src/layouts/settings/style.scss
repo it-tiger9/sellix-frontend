@@ -4,7 +4,7 @@
     .nav-link {
       font-family: "Poppins";
       font-weight: 600;
-      font-size: 16px;
+      font-size: 15px;
     }
   
     background-color: #F6F4FF;
@@ -237,5 +237,7 @@
   @media (max-width: 577px){
     .settings-sidebar {
       width: 100% !important;
+      margin-right: 0;
+      
     }
   }

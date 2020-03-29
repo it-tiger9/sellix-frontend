@@ -15,12 +15,13 @@ import {
   OrdersChart,
   RevenueMap
 } from './sections'
-
+import { Loader } from 'components'
 import moment from 'moment'
 import { DateRangePicker2 } from 'components'
-import * as DashboardActions from './actions'
+import * as AnalyticsActions from './actions'
 
 import './style.scss'
+import { date } from 'yup'
 
 const ranges =  {
   // 'Today': [moment(), moment()],
@@ -54,7 +55,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return ({
-    DashboardActions: bindActionCreators(DashboardActions, dispatch)
+    actions: bindActionCreators(AnalyticsActions, dispatch)
   })
 }
 
@@ -63,10 +64,57 @@ class Analytics extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      loading: false,
+
+      chartData: [],
+      totalRevenue: 0,
+      totalOrders: 0,
+      totalViews: 0,
+      totalConversion: 0
     }
   }
 
+  changeDateRange(date) {
+    this.setState({
+      startDate: date.startDate,
+      endDate: date.endDate
+    })
+
+    this.getAnalyticsData()
+  }
+
+  getAnalyticsData(date) {
+    const startDate = date.startDate.format('MM/DD/YYYY')
+    const endDate = date.endDate.format('MM/DD/YYYY')
+    this.setState({loading: true})
+
+    this.props.actions.getAnalyticsData(startDate, endDate).then(res => {
+      const total = res.data.analytics.total
+
+      this.setState({
+        totalRevenue: total.revenue || 0,
+        totalOrders: total.orders_count || 0,
+        totalViews: total.views_count || 0,
+        totalConversion: total.queries_count || 0,
+        chartData: res.data.analytics.daily
+      })
+    }).finally(() => {
+      this.setState({loading:false})
+    })
+  }
+
+  componentDidMount(){
+    const date = { 
+      startDate: moment().startOf('month'),
+      endDate: moment().endOf('month')
+    }
+
+    this.getAnalyticsData(date)
+  }
+
   render() {
+    const {totalConversion, totalOrders, totalRevenue, totalViews, loading, chartData} = this.state
+
     return (
       <div className="analytics-screen mt-4">
         <div className="animated fadeIn">
@@ -75,81 +123,93 @@ class Analytics extends React.Component {
               <div className="flex-wrapper align-items-center">
                 <h1 className="title">Analytics</h1>
                 <div className="card-header-actions">
-                  <DateRangePicker2 ranges={ranges} getDate={() => {}} opens={'left'}/>
+                  <DateRangePicker2 ranges={ranges} getDate={(date) => {this.getAnalyticsData(date)}} opens={'left'}/>
                 </div>
               </div>
-              <Row className="mt-4">
-                <Col lg={3}>
-                  <Card className="grey">
-                    <CardBody className="p-4">
-                      <h3 className="text-primary">$4000.00</h3>
-                      <p className="report-title">Revenue</p>
-                    </CardBody>
-                  </Card>
-                </Col>
-                <Col lg={3}>
-                  <Card className="grey">
-                    <CardBody className="p-4">
-                    <h3 className="text-primary">253</h3>
-                      <p className="report-title">Orders</p>
-                    </CardBody>
-                  </Card>
-                </Col>
-                <Col lg={3}>
-                  <Card className="grey">
-                    <CardBody className="p-4">
-                    <h3 className="text-primary">397</h3>
-                      <p className="report-title">Views</p>
-                    </CardBody>
-                  </Card>
-                </Col>
-                <Col lg={3}>
-                  <Card className="grey">
-                    <CardBody className="p-4">
-                    <h3 className="text-primary">89%</h3>
-                      <p className="report-title">Conversion</p>
-                    </CardBody>
-                  </Card>
-                </Col>
-              </Row>
-              <div className="chart row row mt-2 mb-2">
-                <Col lg={12}>
-                  <label>Revenue</label>
-                  <hr/>
-                  <RevenueChart height="350px"/>
-                </Col>
-              </div>
 
-              <div className="chart row row mt-2 mb-2">
-                <Col lg={12}>
-                  <label>Views</label>
-                  <hr/>
-                  <ViewsChart height="350px"/>
-                </Col>
-              </div>
+              {
+                loading ?
+                  <Row>
+                    <Col lg={12}>
+                      <Loader />
+                    </Col>
+                  </Row>
+                : <div>
+                <Row className="mt-4">
+                  <Col lg={3}>
+                    <Card className="grey">
+                      <CardBody className="p-4">
+                        <h3 className="text-primary">${totalRevenue}</h3>
+                        <p className="report-title">Revenue</p>
+                      </CardBody>
+                    </Card>
+                  </Col>
+                  <Col lg={3}>
+                    <Card className="grey">
+                      <CardBody className="p-4">
+                        <h3 className="text-primary">{totalOrders}</h3>
+                        <p className="report-title">Orders</p>
+                      </CardBody>
+                    </Card>
+                  </Col>
+                  <Col lg={3}>
+                    <Card className="grey">
+                      <CardBody className="p-4">
+                        <h3 className="text-primary">{totalViews}</h3>
+                        <p className="report-title">Views</p>
+                      </CardBody>
+                    </Card>
+                  </Col>
+                  <Col lg={3}>
+                    <Card className="grey">
+                      <CardBody className="p-4">
+                        <h3 className="text-primary">{totalConversion}%</h3>
+                        <p className="report-title">Conversion</p>
+                      </CardBody>
+                    </Card>
+                  </Col>
+                </Row>
+                <div className="chart row row mt-2 mb-2">
+                  <Col lg={12}>
+                    <label>Revenue</label>
+                    <hr/>
+                    <RevenueChart height="350px" data={chartData}/>
+                  </Col>
+                </div>
 
-              <div className="chart row row mt-2 mb-2">
-                <Col lg={12}>
-                  <label>Orders</label>
-                  <hr/>
-                  <OrdersChart height="350px"/>
-                </Col>
-              </div>
+                <div className="chart row row mt-2 mb-2">
+                  <Col lg={12}>
+                    <label>Views</label>
+                    <hr/>
+                    <ViewsChart height="350px" data={chartData}/>
+                  </Col>
+                </div>
 
-              <div className="chart row mt-2 mb-2">
-                <Col lg={12}>
-                  <label>Conversion</label>
-                  <hr/>
-                  <ConverstionChart height="350px"/>
-                </Col>
+                <div className="chart row row mt-2 mb-2">
+                  <Col lg={12}>
+                    <label>Orders</label>
+                    <hr/>
+                    <OrdersChart height="350px" data={chartData}/>
+                  </Col>
+                </div>
+
+                <div className="chart row mt-2 mb-2">
+                  <Col lg={12}>
+                    <label>Conversion</label>
+                    <hr/>
+                    <ConverstionChart height="350px" data={chartData}/>
+                  </Col>
+                </div>
+                <div className="chart row mt-2 mb-2">
+                  <Col lg={12}>
+                    <label>Revenue by Country</label>
+                    <hr/>
+                    <RevenueMap/>
+                  </Col>
+                </div>
               </div>
-              <div className="chart row mt-2 mb-2">
-                <Col lg={12}>
-                  <label>Revenue by Country</label>
-                  <hr/>
-                  <RevenueMap/>
-                </Col>
-              </div>
+              }
+              
             </CardBody>
           </Card>
         </div>
