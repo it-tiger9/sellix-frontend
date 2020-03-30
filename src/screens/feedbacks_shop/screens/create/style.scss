@@ -3,3 +3,19 @@
     color: #20a8d8;
   }
 }
+
+.feedback-radioGroup{
+  .btn-secondary{
+    border: none!important;
+    width: 30px;
+    min-height: auto;
+    height: 30px;
+    margin-right: 5px; 
+    i{
+      margin: 0!important;
+    }
+  }
+  .btn{
+    padding: 0;
+  }
+}
