@@ -32,6 +32,11 @@ const backOption = {
       },
       ticks: {
       }
+    }],
+    yAxes: [{
+      ticks: {
+        beginAtZero: true
+      }
     }]
   },
   layout: {
@@ -67,7 +72,7 @@ class RevenueChart extends Component {
   render() {
     const data = this.props.data
 
-    const labels = data.map(d => `${d.day_value}.${d.month}`)
+    const labels = data.map(d => `${d.day_value}`)
     const values = data.map(d => d.revenue)
 
     const line = {

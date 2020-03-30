@@ -17,6 +17,8 @@ import {
 } from 'reactstrap'
 import { Formik } from 'formik';
 import * as Yup from "yup";
+import ReCaptcha from "@matt-block/react-recaptcha-v2";
+import config from 'constants/config'
 
 import {
   Message
@@ -52,18 +54,39 @@ class Register extends React.Component {
         password: '',
         confirm_password: ''
       },
-      alert: null
+      alert: null,
+      captchaVerify: null
     }
   }
 
   handleSubmit(data) {
+    if(!this.state.captchaVerify) {
+      this.setState({
+        alert: <Message
+          type="danger"
+          content='reCAPTCHA verification failed, please try again.'
+        />
+      })
+
+      return false
+    }
+
+    data.captcha = this.state.captchaVerify
+
     let obj = Object.assign({}, data)
     delete obj['confirm_password']
     // delete data['confirm_password']
     this.props.authActions.register(obj).then(res => {
       this.props.commonActions.tostifyAlert('success', 'You are successfully registered, Please login!')
-      const preUrl = `/${window.localStorage.getItem('userId')}/dashboard`
-      window.location.href= preUrl
+
+      if(res.status == 202) {
+        window.location.href= '/2fa'
+      }
+
+      this.props.authActions.checkAuthStatus().then(user => {
+        const preUrl = `/${user.username}/dashboard`
+        window.location.href = preUrl
+      })
     }).catch(err => {
       this.setState({
         alert: <Message
@@ -208,6 +231,16 @@ class Register extends React.Component {
                                     <div className="invalid-feedback">{props.errors.confirm_password}</div>
                                   )}
                                 </FormGroup>
+                                <div className="ml-auto mr-auto recptcah" style={{width: 'fit-content'}}>
+                                  <ReCaptcha
+                                    siteKey={config.CAPTCHA_SITE_KEY}
+                                    theme="light"
+                                    size="normal"
+                                    onSuccess={(captcha) => {this.setState({captchaVerify: captcha})}}
+                                    onExpire={() => {this.setState({captchaVerify: null})}}
+                                    onError={() => {this.setState({captchaVerify: null})}}
+                                  />
+                                </div>
                                 <Row>
                                   <Col lg={12} className="text-center mt-4">
                                     <Button

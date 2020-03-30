@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { createBrowserHistory } from 'history'
+import config from 'constants/config'
 import {
   Card,
   CardHeader,
@@ -11,25 +12,40 @@ import {
   Col,
   Input
 } from 'reactstrap'
-import { ToastContainer, toast } from 'react-toastify'
-import { BootstrapTable, TableHeaderColumn, SearchField } from 'react-bootstrap-table'
 import { Loader } from 'components'
-import { tableOptions } from 'constants/tableoptions'
-
+import {
+  CommonActions
+} from 'services/global'
 import shop_brand from 'assets/images/brand/shop_brand.png'
 
 import * as ProductActions from './actions'
 import './style.scss'
 
+
+
+const CURRENCY_LIST = { 
+  'USD': '$',
+  'EUR': '€',
+  'AUD': '$',
+  'GBP': '£',
+  'JPY': '¥',
+  'CAD': '$',
+  'CHF': '₣',
+  'CNY': '¥',
+  'SEK': 'kr',
+  'NZD': '$'
+}
+
 const mapStateToProps = (state) => {
   return ({
-    product_list: state.product.product_list
+    user_categories: state.common.user_categories,
+    user_products: state.common.user_products
   })
 }
 
 const mapDispatchToProps = (dispatch) => {
   return ({
-    productActions: bindActionCreators(ProductActions, dispatch)
+    commonActions: bindActionCreators(CommonActions, dispatch)
   })
 }
 
@@ -41,7 +57,6 @@ class ShopProducts extends React.Component {
       loading: true,
       filter: new URLSearchParams(this.props.location.search).get('filter') || 'all',
       search: new URLSearchParams(this.props.location.search).get('search') || '',
-      
     }
 
     this.initializeData = this.initializeData.bind(this)
@@ -54,89 +69,39 @@ class ShopProducts extends React.Component {
   }
 
   initializeData () {
-    // this.props.productActions.getProductList().then(res => {
-    //   if (res.status === 200) {
-    //     this.setState({ loading: false })
-    //   }
-    // })
-    this.props.productActions.getProductList()
-    this.setState({ loading: false })
+    this.props.commonActions.getUserCategories(this.props.match.params.username).then(res => {
+      if (res.status === 200) {
+        this.setState({ loading: false })
+      }
+    })
+
+    this.getAllProducts()
   }
 
-  renderProductInfo (cell, row) {
-    if (
-      row.info && row.id
-    ) {
-      return (
-        <div>
-          <p>{row.info}</p>
-          <p className="caption">{row.id}</p>
-        </div>
-      )  
-    } else {
-      return (
-        <p className="caption">No specified</p>
-      )
-    }
+
+  getAllProducts() {
+    this.props.commonActions.getUserProducts(this.props.match.params.username).then(res => {
+      if (res.status === 200) {
+        this.setState({ loading: false })
+      }
+    })
   }
 
-  renderProductType (cell, row) {
-    if (
-      row.type
-    ) {
-      return (
-        <div className="badge badge-normal">
-          {row.type}
-        </div>
-      )  
-    } else {
-      return (
-        <p className="caption">No specified</p>
-      )
-    }
-  }
-
-  renderProductRevenue(cell, row) {
-    if (
-      row.revenue
-    ) {
-      return (
-        <p>
-          ${row.revenue}
-        </p>
-      )  
-    } else {
-      return (
-        <p className="caption">No specified</p>
-      )
-    }
-  }
-
-  renderOptions(cell, row) {
-    return (
-      <div className="d-flex actions">
-        <a>
-          <i className="fas fa-pen"/>
-        </a>
-        <a>
-          <i className="fas fa-bar-chart"/>
-        </a>
-        <a>
-          <i className="fas fa-trash"/>
-        </a>
-      </div>
-    )
-  }
 
   filterProduct(filter) {
-    this.props.history.push({
-      pathname: '/shop/products',
-      search: `?filter=${filter}&search=${this.state.search}`
-    })
-
     this.setState({
       filter: filter,
+      loading: true
     })
+
+    if(filter == 'all') 
+      this.getAllProducts()
+    else 
+      this.props.commonActions.getUserProductsByCategory(filter).then(res => {
+        if (res.status === 200) {
+          this.setState({ loading: false })
+        }
+      })
   }
 
 
@@ -149,7 +114,7 @@ class ShopProducts extends React.Component {
 
   render() {
     const { loading, filter, search } = this.state
-    const { product_list } = this.props
+    const { user_categories, user_products } = this.props
 
     return (
       <div className="shop-product-screen">
@@ -160,14 +125,11 @@ class ShopProducts extends React.Component {
                 <Col md={12} className="filter-button d-flex flex-wrap">
                   <Button color={filter == 'all'?'primary':'white'} className="mr-2" 
                     onClick={() => this.filterProduct('all')}>All</Button>
-                  <Button color={filter == 'hack'?'primary':'white'} className="mr-2" 
-                    onClick={() => this.filterProduct('hack')}>Hack</Button>
-                  <Button color={filter == 'f-skins'?'primary':'white'} className="mr-2" 
-                    onClick={() => this.filterProduct('f-skins')}>Fortnite Skins</Button>
-                  <Button color={filter == 'f-account'?'primary':'white'} className="mr-2" 
-                    onClick={() => this.filterProduct('f-account')}>Fortnite Account</Button>
-                  <Button color={filter == 'cs'?'primary':'white'} className="mr-2" 
-                    onClick={() => this.filterProduct('cs')}>CS:GO Knife</Button>
+                  {
+                    user_categories.map(category => 
+                      <Button color={filter == category.uniqid?'primary':'white'} className="mr-2" 
+                        onClick={() => this.filterProduct(category.uniqid)}>{category.title}</Button>)
+                  }
                 </Col>
                 <Col md={12} className="mt-4 mb-2">
                   <div className="d-flex justify-content-start">
@@ -190,21 +152,24 @@ class ShopProducts extends React.Component {
                 :
                   <Row>
                     {
-                      product_list.map((pro, index) => 
+                      user_products.map((pro, index) => 
                         <Col lg={3} key={index}>
                           <Card className="bg-white p-0 product-card" onClick={(e) => this.gotoDetail(e, pro.id)}>
-                            <img src={shop_brand} width="100%"/>
+                            <img src={config.API_ROOT_URL+'/attachments/image/'+pro.image_attachment} 
+                              style={{borderTopLeftRadius: 10, borderTopRightRadius: 10}}
+                              width="100%" height="130"/>
                             <div className="p-3">
-                              <h5 className="mt-3 mb-3">[FA] Renegade Raider</h5>
+                              <h5 className="mt-3 mb-3">{pro.title}</h5>
                               <div className="d-flex justify-content-between mt-3 mb-2">
-                                <span className="price">$10.00</span>
-                                <span className="stock">Stock: <span className="stock-size">10</span></span>
+                                <span className="price">{`${CURRENCY_LIST[pro.currency]}${pro.price_display}`}</span>
+                                <span className="stock">Stock: <span className="stock-size">{pro.stock}</span></span>
                               </div>
                             </div> 
                           </Card>
                         </Col>
                       )
                     }
+                    {user_products.length == 0 && <p className="mt-4 mb-4 text-center text-grey w-100">No Products Found</p>}
                   </Row>
               }
               

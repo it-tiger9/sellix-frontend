@@ -20,6 +20,112 @@ export const endRequest = () => {
   }
 }
 
+export const getGeneralUserInfo = (username) => {
+  return (dispatch) => {
+    let data = {
+      method: 'get',
+      url: `/users/${username}`,
+    }
+    return api(data).then(res => {
+      if(res && res.status == 200) {
+        console.log(res)
+        dispatch({
+          type: COMMON.GENERAL_USER_INFO,
+          payload: res.data
+        })
+        // return res
+      } else throw res
+    }).catch(err => {
+      throw err
+    })
+  }
+}
+
+
+export const getUserFeedbacks = (username) => {
+  return (dispatch) => {
+    let data = {
+      method: 'get',
+      url: `/feedbacks/user/${username}`,
+    }
+    return api(data).then(res => {
+      if(res && res.status == 200) {
+        dispatch({
+          type: COMMON.USER_FEEDBACKS,
+          payload: res.data
+        })
+        return res
+      } else throw res
+    }).catch(err => {
+      throw err
+    })
+  }
+}
+
+
+export const getUserCategories = (username) => {
+  return (dispatch) => {
+    let data = {
+      method: 'get',
+      url: `/categories/user/${username}/listed`,
+    }
+    return api(data).then(res => {
+      if(res && res.status == 200) {
+        dispatch({
+          type: COMMON.USER_CATEGORY,
+          payload: res.data
+        })
+        return res
+      } else throw res
+    }).catch(err => {
+      throw err
+    })
+  }
+}
+
+
+export const getUserProducts = (username) => {
+  return (dispatch) => {
+    let data = {
+      method: 'get',
+      url: `/products/user/${username}`,
+    }
+    return api(data).then(res => {
+      if(res && res.status == 200) {
+        dispatch({
+          type: COMMON.USER_PRODUCTS,
+          payload: res.data
+        })
+        return res
+      } else throw res
+    }).catch(err => {
+      throw err
+    })
+  }
+}
+
+
+export const getUserProductsByCategory = (filter) => {
+  return (dispatch) => {
+    let data = {
+      method: 'get',
+      url: `/categories/unique/${filter}`,
+    }
+    return api(data).then(res => {
+      console.log(res)
+      if(res && res.status == 200) {
+        dispatch({
+          type: COMMON.USER_PRODUCTS,
+          payload: {products: res.data.category.products_bound}
+        })
+        return res
+      } else throw res
+    }).catch(err => {
+      throw err
+    })
+  }
+}
+
 export const setTostifyAlertFunc = (func) => {
   return (dispatch) => {
     dispatch({
@@ -43,23 +149,4 @@ export const tostifyAlert = (status, message) => {
   }
 }
 
-
-export const getSimpleVATVersion = () => {
-  return (dispatch) => {
-    let data = {
-      method: 'get',
-      url: '/config/getreleasenumber'
-    }
-    return api(data).then(res => {
-      dispatch({
-        type: COMMON.VAT_VERSION,
-        payload: {
-          data: res.data.simpleVatRelease
-        }
-      })
-    }).catch(err => {
-      throw err
-    })
-  }
-}
 

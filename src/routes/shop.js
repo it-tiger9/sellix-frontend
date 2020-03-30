@@ -12,32 +12,32 @@ import {
   const shopRoutes = [
 
     {
-      path: `/${user}/shop/contact`,
+      path: `/shop/:username/contact`,
       name: 'Contact',
       component: Contact.screen
     },
     {
-      path: `/${user}/shop/feedback/:id`,
+      path: `/shop/:username/feedback/:id`,
       name: 'Leave Feedback',
       component: LeaveFeedback.screen
     },
 
     {
-      path: `/${user}/shop/feedback`,
+      path: `/shop/:username/feedback`,
       name: 'Feedback',
       component: ShopFeedback.screen
     },
 
     {
-      path: `/${user}/shop/products`,
+      path: `/shop/:username/products`,
       name: 'Products',
       component: ShopProducts.screen
     },
   
     {
       redirect: true,
-      path: `/${user}/shop`,
-      pathTo: `/${user}/shop/products`,
+      path: `/shop/:username`,
+      pathTo: `/shop/:username/products`,
       name: 'Shop'
     }
   ]

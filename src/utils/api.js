@@ -2,7 +2,7 @@ import axios from 'axios'
 import config from 'constants/config'
 
 const api = axios.create({
-  baseURL: 'https://cors-anywhere.herokuapp.com/' + config.API_ROOT_URL,
+  baseURL:  config.API_ROOT_URL,
   // baseURL: config.API_ROOT_URL,
   headers: {
     'Content-Type': 'application/json',
@@ -15,6 +15,7 @@ api.interceptors.response.use(
     return response.data
   },
   error => {
+    console.log('11111111', error)
     return Promise.reject(error.response)
   },
 )

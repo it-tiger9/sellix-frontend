@@ -9,24 +9,25 @@ import {
   Col,
   Button,
 } from 'reactstrap'
-import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
 import StarRatings from 'react-star-ratings';
 import { Loader } from 'components'
-import { tableOptions } from 'constants/tableoptions'
-
-import * as ProductActions from './actions'
+import JavascriptTimeAgo from 'javascript-time-ago'
+import en from 'javascript-time-ago/locale/en'
+import ReactTimeAgo from 'react-time-ago'
+import {
+  CommonActions
+} from 'services/global'
 import './style.scss'
-
 
 const mapStateToProps = (state) => {
   return ({
-    product_list: state.product.product_list
+    user_feedback: state.common.user_feedback
   })
 }
 
 const mapDispatchToProps = (dispatch) => {
   return ({
-    productActions: bindActionCreators(ProductActions, dispatch)
+    commonActions: bindActionCreators(CommonActions, dispatch)
   })
 }
 
@@ -45,53 +46,16 @@ class ShopFeedback extends React.Component {
   }
 
   initializeData () {
-    // this.props.productActions.getProductList().then(res => {
-    //   if (res.status === 200) {
-    //     this.setState({ loading: false })
-    //   }
-    // })
-
-    this.props.productActions.getProductList()
-    this.setState({ loading: false })
+    this.props.commonActions.getUserFeedbacks(this.props.match.params.username).then(res => {
+      if (res.status === 200) {
+        this.setState({ loading: false })
+      }
+    })
   }
-
-  renderFeedback (cell, row) {
-    return (
-      <div className="d-flex flex-row align-items-center">
-        { row.feedback?<i className="fa fa-thumbs-up fa-lg mr-3" style={{color: '#2BB224'}}></i>:
-          <i className="fa fa-thumbs-down fa-lg mr-3" style={{color: '#B22424'}}></i>
-        }
-        <div>
-          <p>{row.title}</p>
-          <p className="text-primary">{row.id}</p>
-        </div>
-      </div>
-    )  
-  }
-
-  renderOption (cell, row) {
-    return (
-      <Button color="default">Reply</Button>
-    )
-  }
-
-  renderRating (cell, row) {
-    return(
-      <StarRatings
-          rating={2}
-          starRatedColor={row.feedback?'#2BB224':'#B22424'}
-          numberOfStars={5}
-          starDimension="20px"
-          starSpacing="2px"
-          name='rating'
-        />
-    )
-  }
-
 
   render() {
     const { loading } = this.state
-    const { product_list } = this.props
+    const { user_feedback } = this.props
 
     return (
       <div className="feedback-shop-screen">
@@ -106,22 +70,21 @@ class ShopFeedback extends React.Component {
             :
               <Row className="pt-3">
                 {
-                  product_list.map(pro => 
+                  user_feedback.map(feedback => 
                     <Col lg={3}>
                       <Card className="">
                         <CardBody className="p-3 bg-white d-flex flex-column align-items-center justify-content-between">
-                          <StarRatings
-                            rating={pro.rating}
-                            starRatedColor={pro.feedback?'#2BB224':'#B22424'}
-                            numberOfStars={5}
-                            starDimension="20px"
-                            starSpacing="2px"
-                            name='rating'
-                          />
-                          <p>{pro.message}</p>
+                          <p className="text-right w-100">{
+                            feedback.feedback == 'like'?
+                              <span className="badge badge-like" title="Like">Like</span>:
+                              (feedback.feedback == 'dislike'?
+                                <span className="badge badge-dislike" title="Dislike">Dislike</span>:
+                                <span className="badge badge-neutral" title="Neutral">Neutral</span>)
+                            }</p>
+                          <p>{feedback.message}</p>
                           <div className="d-flex flex-row justify-content-between w-100">
                             <p><i className="fas fa-check feedback-checked"></i> Verified Purchase</p>
-                            <p>{pro.time}</p>
+                            <p><ReactTimeAgo date={feedback.date*1000/1} locale="en"/></p>
                           </div>
                         </CardBody>
                       </Card>

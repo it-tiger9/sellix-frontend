@@ -26,12 +26,20 @@ import undraw from 'assets/images/home/undraw.svg'
 import undraw1 from 'assets/images/home/undraw2.svg'
 import sellix_logo from 'assets/images/Sellix_logo.svg'
 
+import * as feeAction from './actions'
+
 class Fees extends React.Component {
   
   constructor(props) {
     super(props)
     this.state = {
-      isOpen: false
+      isOpen: false,
+
+      site_fee_percentage: 0,
+      paypal: null,
+      bitcoin: {},
+      ethereum: {},
+      litecoin: {}
     }
   }
 
@@ -39,8 +47,24 @@ class Fees extends React.Component {
     this.setState({isOpen: !this.state.isOpen})
   }
 
+  componentDidMount() {
+    feeAction.getFees().then(res => {
+      const data = res.data.fees
+      console.log(data)
+      this.setState({
+        site_fee_percentage: data.site_fee_percentage,
+        paypal: data.paypal,
+        bitcoin: data.bitcoin,
+        ethereum: data.ethereum,
+        litecoin: data.litecoin
+      })
+    }).catch((err) => {
+      
+    })
+  }
+
   render() {
-    const { isOpen } = this.state
+    const { isOpen, paypal, bitcoin, ethereum, litecoin, site_fee_percentage } = this.state
 
     return (
       <div className="fees-screen">
@@ -107,9 +131,10 @@ class Fees extends React.Component {
                             </div>
                             <div className="content">
                                 <p className="small text-primary">
-                                Sellix does not take any
-                                additional fee to process
-                                PayPal invoices.
+                                  {paypal?
+                                    'Paypal':
+                                    'Sellix does not take any additional fee to process PayPal invoices.'
+                                  }
                                 </p>
                             </div>
                         </div>
@@ -122,13 +147,13 @@ class Fees extends React.Component {
                             </div>
                             <div className="content">
                                 <p className="small1 text-primary">
-                                    Transaction Fees: <b>$0.040</b>
+                                  Transaction Fees: <b>${bitcoin.transaction_fee_usd || 0}</b>
                                 </p>
                                 <p className="small1 text-primary">Sellix Fees: <img src={service2} width="25" height="25"/>
-                                    <b>0.0000060 ($0.03659)</b>
+                                    <b>{bitcoin.site_fee_low_price || 0} (${bitcoin.site_fee_low_price_usd || 0})</b>
                                 </p>
                                 <p className="small1 text-primary">
-                                if the order is less than $1.83, else 2.00% over the total.
+                                if the order is less than ${bitcoin.low_price_usd || 0}, else {site_fee_percentage}% over the total.
                                 </p>
                             </div>
                         </div>
@@ -141,13 +166,13 @@ class Fees extends React.Component {
                             </div>
                             <div className="content">
                                 <p className="small1 text-primary">
-                                    Transaction Fees: <b>$0.005</b>
+                                    Transaction Fees: <b>${litecoin.transaction_fee_usd || 0}</b>
                                 </p>
                                 <p className="small1 text-primary">Sellix Fees: <img src={service3} width="25" height="25"/>
-                                    <b>0.0006540 ($0.02942)</b>
+                                    <b>{litecoin.site_fee_low_price || 0} (${litecoin.site_fee_low_price_usd || 0})</b>
                                 </p>
                                 <p className="small1 text-primary">
-                                if the order is less than $1.47, else 2.00% over the total.
+                                if the order is less than ${litecoin.low_price_usd || 0}, else {site_fee_percentage}% over the total.
                                 </p>
                             </div>
                         </div>
@@ -160,10 +185,10 @@ class Fees extends React.Component {
                             </div>
                             <div className="content">
                                 <p className="small1 text-primary">
-                                    Transaction Fees: <b>0.0000630 ($0.00915)</b>
+                                    Transaction Fees: <b>{ethereum.transaction_fee || 0} (${ethereum.transaction_fee_usd || 0})</b>
                                 </p>
                                 <p className="small1 text-primary">Sellix Fees: <img src={service4} width="25" height="25"/>
-                                    <b>2.00% over the total</b>
+                                    <b>{site_fee_percentage}% over the total</b>
                                 </p>
                                 
                             </div>

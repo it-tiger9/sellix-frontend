@@ -14,6 +14,7 @@ import './style.scss'
 
 const mapStateToProps = (state) => {
   return ({
+    is_authed: state.auth.is_authed
   })
 }
 const mapDispatchToProps = (dispatch) => {
@@ -34,8 +35,7 @@ class InitialLayout extends React.Component {
   componentDidMount () {
     const preUrl = `/${window.localStorage.getItem('userId')}`
       
-
-    if (window.localStorage.getItem('accessToken')) {
+    if (window.localStorage.getItem('accessToken') && this.props.is_authed) {
       this.props.history.push(preUrl)
     }
 

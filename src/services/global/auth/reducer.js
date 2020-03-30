@@ -1,8 +1,9 @@
 import { AUTH } from 'constants/types'
 
 const initState = {
-  is_authed: true,
-  profile: null
+  is_authed: false,
+  profile: null,
+  notification: null
 }
 
 const AuthReducer = (state = initState, action) => {
@@ -26,6 +27,12 @@ const AuthReducer = (state = initState, action) => {
       return {
         ...state,
         profile: Object.assign({}, payload.data)
+      }
+
+    case AUTH.NOTIFICATION:
+      return {
+        ...state,
+        notification: Object.assign({}, payload.data)
       }
 
     default:

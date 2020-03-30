@@ -2,9 +2,10 @@ import {
   LogIn,
   Register,
   Home,
-  PaypalPaying,
   Fees,
-  ShopProductDetail
+  ResetPassword,
+  ForgotPassword,
+  TwoFactorAuthentication
 } from 'screens'
 
 const initialRoutes = [
@@ -14,11 +15,25 @@ const initialRoutes = [
     component: LogIn.screen
   },
   {
+    path: '/2fa',
+    name: '2FA',
+    component: TwoFactorAuthentication.screen
+  },
+  {
     path: '/register',
     name: 'Register',
     component: Register.screen
   },
-
+  {
+    path: '/password/new',
+    name: 'Forgot Password',
+    component: ForgotPassword.screen
+  },
+  {
+    path: '/reset/:id',
+    name: 'Reset Password',
+    component: ResetPassword.screen
+  },
   {
     path: '/fees',
     component: Fees.screen,

@@ -7,11 +7,7 @@ import { bindActionCreators } from 'redux'
 
 import { Container, Nav, NavItem, Label, Card } from 'reactstrap'
 import {
-  AppAside,
-  AppBreadcrumb,
   AppHeader,
-  AppSidebar,
-  AppSidebarNav,
 } from '@coreui/react'
 import { ToastContainer, toast } from 'react-toastify'
 
@@ -23,11 +19,8 @@ import {
 import { ThemeProvider, createGlobalStyle  } from 'styled-components';
 import { darkTheme, lightTheme } from 'layouts/theme/theme'
 import { GlobalStyles } from 'layouts/theme/global'
-import { mainNavigation, accountSettingsNavigation, shopSettingsNavigation } from 'constants/navigation'
 
 import {
-  Aside,
-  Footer,
   Loading
 } from 'components'
 
@@ -35,12 +28,10 @@ import Header from './header'
 
 import './style.scss'
 
-import shopIcon from 'assets/images/brand/shop-brand.png'
-const userId = window.localStorage.getItem('userId')
-
 const mapStateToProps = (state) => {
   return ({
-    version: state.common.version
+    version: state.common.version,
+    user: state.common.general_info
   })
 }
 const mapDispatchToProps = (dispatch) => {
@@ -66,30 +57,30 @@ class ShopLayout extends React.Component {
     //     this.props.authActions.logOut()
     //     this.props.history.push('/login')
     //   })
-    //   this.props.commonActions.getSimpleVATVersion()
-    //   const toastifyAlert = (status, message) => {
-    //     if (!message) {
-    //       message = 'Unexpected Error'
-    //     }
-    //     if (status === 'success') {
-    //       toast.success(message, {
-    //         position: toast.POSITION.TOP_RIGHT
-    //       })
-    //     } else if (status === 'error') {
-    //       toast.error(message, {
-    //         position: toast.POSITION.TOP_RIGHT
-    //       })
-    //     } else if (status === 'warn') {
-    //       toast.warn(message, {
-    //         position: toast.POSITION.TOP_RIGHT
-    //       })
-    //     } else if (status === 'info') {
-    //       toast.info(message, {
-    //         position: toast.POSITION.TOP_RIGHT
-    //       })
-    //     }
-    //   }
-    //   this.props.commonActions.setTostifyAlertFunc(toastifyAlert)
+      this.props.commonActions.getGeneralUserInfo(this.props.match.params.username)
+      const toastifyAlert = (status, message) => {
+        if (!message) {
+          message = 'Unexpected Error'
+        }
+        if (status === 'success') {
+          toast.success(message, {
+            position: toast.POSITION.TOP_RIGHT
+          })
+        } else if (status === 'error') {
+          toast.error(message, {
+            position: toast.POSITION.TOP_RIGHT
+          })
+        } else if (status === 'warn') {
+          toast.warn(message, {
+            position: toast.POSITION.TOP_RIGHT
+          })
+        } else if (status === 'info') {
+          toast.info(message, {
+            position: toast.POSITION.TOP_RIGHT
+          })
+        }
+      }
+      this.props.commonActions.setTostifyAlertFunc(toastifyAlert)
     // }
   }
 
@@ -104,6 +95,9 @@ class ShopLayout extends React.Component {
     const containerStyle = {
       zIndex: 1999
     }
+
+    const {user} = this.props
+    const userId = this.props.match.params.username
 
     return (
       <ThemeProvider theme={lightTheme}>
@@ -120,27 +114,30 @@ class ShopLayout extends React.Component {
               
                 <section className="pb-3">
                     <div className="text-center align-items-center logo-content">
-                        <h4 className="mb-0 mt-3 mb-3">PixelStore</h4>
-                        <img src={shopIcon} width="130" height="130" style={{borderRadius: '50%'}}/>
+                        <h4 className="mb-0 mt-3 mb-3">{user.username}</h4>
+                        {user.profile_attachment? 
+                          <img src={user.profile_attachment} width="130" height="130" style={{borderRadius: '50%'}}/>
+                          : <i className="fa fa-user-circle text-primary avatar-icon" style={{fontSize: 130}}/>
+                        }
                     </div>
                     <Card className="report-count mb-2 mt-3 ml-auto mr-auto pt-1 pb-1 pl-3 pr-3 flex-row" 
                       style={{width: 'fit-content'}}>
-                        <span className="text-green mr-2">20</span>
+                        <span className="text-green mr-2">{user.feedbacks?user.feedbacks.positive:0}</span>
                         <span className=""></span>
-                        <span className="text-grey pl-2 pr-2">2</span>
+                        <span className="text-grey pl-2 pr-2">{user.feedbacks?user.feedbacks.neutral:0}</span>
                         <span className=""></span>
-                        <span className="text-red ml-2">27</span>
+                        <span className="text-red ml-2">{user.feedbacks?user.feedbacks.negative:0}</span>
                     </Card>
                     <div>
                         <Nav className="d-flex flex-row justify-content-center" navbar>
                             <NavItem className="px-3">
-                                <NavLink to={`/${userId}/shop/products`} className="nav-link" >Products</NavLink>
+                                <NavLink to={`/shop/${userId}/products`} className="nav-link" >Products</NavLink>
                             </NavItem>
                             <NavItem className="px-3">
-                                <NavLink to={`/${userId}/shop/contact`} className="nav-link">Contact</NavLink>
+                                <NavLink to={`/shop/${userId}/contact`} className="nav-link">Contact</NavLink>
                             </NavItem>
                             <NavItem className="px-3">
-                                <NavLink to={`/${userId}/shop/feedback`} className="nav-link">Feedback</NavLink>
+                                <NavLink to={`/shop/${userId}/feedback`} className="nav-link">Feedback</NavLink>
                             </NavItem>
                         </Nav>
                     </div>
@@ -161,6 +158,7 @@ class ShopLayout extends React.Component {
                                   path={prop.path}
                                   component={prop.component}
                                   key={key}
+                                  exact={true}
                                 />
                               )
                             })

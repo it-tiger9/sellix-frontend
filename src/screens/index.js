@@ -1,7 +1,10 @@
 import Home from './home'
 import Fees from './fees'
 import LogIn from './log_in'
+import TwoFactorAuthentication from './2fa'
 import Register from './register'
+import ForgotPassword from './forgot_password'
+import ResetPassword from './reset_password'
 import Dashboard from './dashboard'
 
 import Product from './product'
@@ -62,6 +65,10 @@ export {
   LogIn,
   Register,
   Dashboard,
+  ForgotPassword,
+  ResetPassword,
+  TwoFactorAuthentication,
+
   EditCoupon,
   Product,
   CreateProduct,

@@ -60,24 +60,16 @@ class LogIn extends React.Component {
     }
 
     data.captcha = this.state.captchaVerify
-
-    this.props.authActions.logIn(data).then(res => {
+    
+    this.props.authActions.twoFactorAuthentication(data).then(res => {
       this.setState({
         alert: null
       })
 
-      if(res.status == 202) {
-        window.location.href= '/2fa'
-      }
-
-      this.props.authActions.checkAuthStatus().then(user => {
-        const preUrl = `/${user.username}/dashboard`
-        window.location.href = preUrl
-      })
-
+      const preUrl = `/${window.localStorage.getItem('userId')}/dashboard`
+      window.location.href= preUrl
     }).catch(err => {
       let errMsg = 'Invalid Email or Password. Please try again.'
-
       if(err.status == 403)
         errMsg = 'reCAPTCHA verification failed, please try again.'
 
@@ -92,7 +84,7 @@ class LogIn extends React.Component {
 
   render() {
     return (
-      <div className="log-in-screen">
+      <div className="bg-white">
         <div className="animated fadeIn">
           <div className="app flex-row align-items-center">
             <Container>
@@ -102,61 +94,39 @@ class LogIn extends React.Component {
                 </Col>
               </Row>
               <Row className="justify-content-center">
-                <Col md="11">
+                <Col lg="6">
                   <CardGroup>
                     <Card>
-                      <CardBody className="p-4 bg-gray-100">
+                      <CardBody className="p-5 bg-gray-100">
                         <Formik
-                          initialValues={{email: '', password: ''}}
+                          initialValues={{code: ''}}
                           onSubmit={(values) => {
                             this.handleSubmit(values)
                           }}
                           validationSchema={Yup.object().shape({
-                            email: Yup.string()
-                              .email('Please enter the valid email')
-                              .required('Email is required'),
-                            password: Yup.string()
-                              .required("Password is required")
+                            code: Yup.string()
+                              .required('Code is required'),
                           })}>
                             {props => (
                               <Form onSubmit={props.handleSubmit}>
                                 <h4 className="text-center mb-4">Log In</h4>
                                 <FormGroup className="mb-3">
-                                  <Label htmlFor="email">Email</Label>
+                                  <Label htmlFor="code">Code</Label>
                                   <Input
-                                    type="email"
-                                    id="email"
-                                    name="email"
-                                    placeholder="Email"
+                                    type="text"
+                                    id="code"
+                                    name="code"
+                                    placeholder="Code"
                                     onChange={props.handleChange}
-                                    value={props.values.email}
+                                    value={props.values.code}
                                     className={
-                                      props.errors.email && props.touched.email
+                                      props.errors.code && props.touched.code
                                         ? "is-invalid"
                                         : ""
                                     }
                                   />
-                                  {props.errors.email && props.touched.email && (
-                                    <div className="invalid-feedback">{props.errors.email}</div>
-                                  )}
-                                </FormGroup>
-                                <FormGroup className="mb-4">
-                                  <Label htmlFor="password">Password</Label>
-                                  <Input
-                                    type="password"
-                                    id="password"
-                                    name="password"
-                                    placeholder="Password"
-                                    onChange={props.handleChange}
-                                    value={props.values.password}
-                                    className={
-                                      props.errors.password && props.touched.password
-                                        ? "is-invalid"
-                                        : ""
-                                    }
-                                  />
-                                  {props.errors.password && props.touched.password && (
-                                    <div className="invalid-feedback">{props.errors.password}</div>
+                                  {props.errors.code && props.touched.code && (
+                                    <div className="invalid-feedback">{props.errors.code}</div>
                                   )}
                                 </FormGroup>
                                 <div className="ml-auto mr-auto recptcah" style={{width: 'fit-content'}}>
@@ -169,14 +139,13 @@ class LogIn extends React.Component {
                                     onError={() => {this.setState({captchaVerify: null})}}
                                   />
                                 </div>
-                                
                                 <Row>
                                   <Col lg={12} className="text-center mt-4">
                                     <Button
                                       color="primary"
                                       type="submit"
                                     >
-                                      Sign In
+                                      Send Code
                                     </Button>
                                   </Col>
                                 </Row>
@@ -193,20 +162,7 @@ class LogIn extends React.Component {
                         </Formik>
                       </CardBody>
                     </Card>
-                    <Card className="second-card text-white bg-primary d-md-down-none">
-                      <CardBody className="text-center bg-primary flex align-items-center">
-                          <h2><b>Hello friend!</b></h2>
-                          <p style={{width: '70%'}}>Enter your personal info and star journey with us.</p>
-                          <Link to="/register">
-                            <Button
-                              color="primary"
-                              active
-                            >
-                              Sign Up
-                            </Button>
-                          </Link>
-                      </CardBody>
-                    </Card>
+                    
                   </CardGroup>
                 </Col>
               </Row>

@@ -32,6 +32,12 @@ const backOption = {
       },
       ticks: {
       }
+    }],
+    yAxes: [{
+      ticks: {
+        beginAtZero: true,
+        stepSize: 1
+      }
     }]
   },
   layout: {
@@ -66,7 +72,7 @@ class OrdersChart extends Component {
 
   render() {
     const data = this.props.data
-    const labels = data.map(d => `${d.day_value}.${d.month}`)
+    const labels = data.map(d => `${d.day_value}`)
     const values = data.map(d => d.orders_count)
 
     const line = {

@@ -57,38 +57,38 @@ class SettingsLayout extends React.Component {
   }
 
   componentDidMount () {
-    // if (!window.localStorage.getItem('accessToken')) {
-    //   this.props.history.push('/login')
-    // } else {
-    //   this.props.authActions.checkAuthStatus().catch(err => {
-    //     this.props.authActions.logOut()
-    //     this.props.history.push('/login')
-    //   })
-    //   this.props.commonActions.getSimpleVATVersion()
-    //   const toastifyAlert = (status, message) => {
-    //     if (!message) {
-    //       message = 'Unexpected Error'
-    //     }
-    //     if (status === 'success') {
-    //       toast.success(message, {
-    //         position: toast.POSITION.TOP_RIGHT
-    //       })
-    //     } else if (status === 'error') {
-    //       toast.error(message, {
-    //         position: toast.POSITION.TOP_RIGHT
-    //       })
-    //     } else if (status === 'warn') {
-    //       toast.warn(message, {
-    //         position: toast.POSITION.TOP_RIGHT
-    //       })
-    //     } else if (status === 'info') {
-    //       toast.info(message, {
-    //         position: toast.POSITION.TOP_RIGHT
-    //       })
-    //     }
-    //   }
-    //   this.props.commonActions.setTostifyAlertFunc(toastifyAlert)
-    // }
+    if (!window.localStorage.getItem('accessToken')) {
+      this.props.history.push('/login')
+    } else {
+      this.props.authActions.checkAuthStatus().catch(err => {
+        this.props.authActions.logOut()
+        this.props.history.push('/login')
+      })
+      this.props.commonActions.getSimpleVATVersion()
+      const toastifyAlert = (status, message) => {
+        if (!message) {
+          message = 'Unexpected Error'
+        }
+        if (status === 'success') {
+          toast.success(message, {
+            position: toast.POSITION.TOP_RIGHT
+          })
+        } else if (status === 'error') {
+          toast.error(message, {
+            position: toast.POSITION.TOP_RIGHT
+          })
+        } else if (status === 'warn') {
+          toast.warn(message, {
+            position: toast.POSITION.TOP_RIGHT
+          })
+        } else if (status === 'info') {
+          toast.info(message, {
+            position: toast.POSITION.TOP_RIGHT
+          })
+        }
+      }
+      this.props.commonActions.setTostifyAlertFunc(toastifyAlert)
+    }
   }
 
   changeTheme() {

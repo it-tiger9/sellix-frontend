@@ -15,6 +15,33 @@
     }
   }
 
+  .badge {
+    text-align: center;
+    border-radius: 10px;
+    font-size: 12px !important;
+    font-weight: normal;
+    max-width: 75px;
+    height: 25px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+  }
+
+  .badge-like {
+      color: #2BB224;
+      background-color: #CBF4C9;
+  }
+
+  .badge-dislike {
+      color: #B22424;
+      background-color: #F4C9C9;
+  }
+
+  .badge-neutral {
+      color: #B27424;
+      background-color: #F4E6C9;
+  }
+
   .card {
     min-height: 200px;
 
