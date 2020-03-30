@@ -90,6 +90,7 @@ class ShopFeedback extends React.Component {
                       </Card>
                     </Col>)
                 }
+                {user_feedback.length == 0 && <p className="w-100 text-center mt-4 mb-4">No Feedback Given</p>}
               </Row>
             }
         </div>

@@ -75,9 +75,6 @@ class Header extends Component {
               <DropdownItem onClick={() => this.props.history.push(`/${userId}`)}>
                  Dashboard
               </DropdownItem>
-              <DropdownItem onClick={() => this.props.history.push(`/${userId}/shop`)}>
-                 Your Shop
-              </DropdownItem>
               <DropdownItem onClick={() => this.signOut()}>
                 Sign Out
               </DropdownItem>
