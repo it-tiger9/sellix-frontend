@@ -14,17 +14,18 @@ import { tableOptions } from 'constants/tableoptions'
 
 import * as ProductActions from './actions'
 import './style.scss'
+import {getQueries} from './actions'
 
 
 const mapStateToProps = (state) => {
   return ({
-    product_list: state.product.product_list
+    queries_list: state.queries.queries_list
   })
 }
 
 const mapDispatchToProps = (dispatch) => {
   return ({
-    productActions: bindActionCreators(ProductActions, dispatch)
+    actions: bindActionCreators({ getQueries }, dispatch),
   })
 }
 
@@ -32,14 +33,15 @@ class Queries extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      loading: true,
+      loading: false,
     }
 
     this.initializeData = this.initializeData.bind(this)
   }
 
   componentDidMount () {
-    this.initializeData()
+    // this.initializeData()
+    this.props.actions.getQueries()
   }
 
   initializeData () {
@@ -112,7 +114,7 @@ class Queries extends React.Component {
                       <div>
                         <BootstrapTable
                           options={ tableOptions() }
-                          data={product_list}
+                          data={this.props.queries}
                           version="4"
                           pagination
                           totalSize={product_list ? product_list.length : 0}

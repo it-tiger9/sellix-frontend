@@ -75,10 +75,10 @@ class ShopFeedback extends React.Component {
                       <Card className="">
                         <CardBody className="p-3 bg-white d-flex flex-column align-items-center justify-content-between">
                           <p className="text-right w-100">{
-                            feedback.feedback == 'like'?
-                              <span className="badge badge-like" title="Like">Like</span>:
-                              (feedback.feedback == 'dislike'?
-                                <span className="badge badge-dislike" title="Dislike">Dislike</span>:
+                            feedback.feedback == 'positive'?
+                              <span className="badge badge-like" title="Positive">Positive</span>:
+                              (feedback.feedback == 'negative'?
+                                <span className="badge badge-dislike" title="Negative">Negative</span>:
                                 <span className="badge badge-neutral" title="Neutral">Neutral</span>)
                             }</p>
                           <p>{feedback.message}</p>
