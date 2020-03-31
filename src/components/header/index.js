@@ -11,6 +11,9 @@ import {
   Badge
 } from 'reactstrap'
 import PropTypes from 'prop-types'
+import JavascriptTimeAgo from 'javascript-time-ago'
+import en from 'javascript-time-ago/locale/en'
+import ReactTimeAgo from 'react-time-ago'
 
 import {
   AppAsideToggler,
@@ -22,8 +25,6 @@ import './style.scss'
 
 
 import sellix_logo from 'assets/images/Sellix_logo.svg'
-import avatar from 'assets/images/avatars/6.png'
-import chevron from 'assets/images/chevron-down-solid.png'
 
 const propTypes = {
   children: PropTypes.node
@@ -52,9 +53,14 @@ class Header extends Component {
     this.props.changeTheme()
   }
 
+  markAsRead() {
+    this.props.authActions.markAsRead()
+  }
+
   render() {
     const { user, children, theme, ...attributes } = this.props
-
+    const { notifications } = user || {}
+    
     return (
       <React.Fragment>
         <AppSidebarToggler className="d-lg-none" display="md" mobile />
@@ -97,12 +103,32 @@ class Header extends Component {
               <DropdownItem>
                 <div className="d-flex justify-content-between">
                   <span className="text-primary d-flex">Notification</span>
-                  <span className="d-flex text-grey">Mark as Read</span>
+                  {
+                    (notifications && notifications.length > 0) && 
+                      <span className="d-flex text-grey" onClick={this.markAsRead.bind(this)}>Mark as Read</span>
+                  }
                 </div>
               </DropdownItem>
-              <DropdownItem >
-                 <p className="text-grey text-center pt-3">You have no notification.</p>
-              </DropdownItem>
+              
+                {notifications && notifications.length > 0? 
+                  notifications.map(notify => 
+                    <DropdownItem >
+                      <div className="notification-row">
+                        <div className="d-flex justify-content-between align-items-end">
+                          <p className="title mb-0">{notify.title}</p>
+                          <span className="timeago">
+                            <ReactTimeAgo date={notify.date*1000/1} locale="en"/></span>
+                        </div>
+                        <p className="message mb-0 text-grey">{notify.message}</p>
+                      </div>
+                    </DropdownItem>
+                  )
+                  :
+                  <DropdownItem >
+                    <p className="text-grey text-center pt-3">You have no notification.</p>
+                  </DropdownItem>
+                }
+              
               
             </DropdownMenu>
           </UncontrolledDropdown>
@@ -110,7 +136,11 @@ class Header extends Component {
           <UncontrolledDropdown nav direction="down">
             <DropdownToggle className="user-name" nav>
               <div>
-                <i className="fa fa-user-circle text-primary avatar-icon"/>
+                {user && user.profile_attachment?
+                  <img src={user.profile_attachment} width="35" height="35" style={{borderRadius: '50%'}}/>:
+                  <i className="fa fa-user-circle text-primary avatar-icon"/>
+                }
+                
               </div>
             </DropdownToggle>
 

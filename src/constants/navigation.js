@@ -20,14 +20,14 @@ export let mainNavigation =  {
           name: 'Categories',
           url: `/${user}/products/categories`,
         },
-        {
-          name: 'Sort Products',
-          url: `/${user}/products/sort-products`,
-        },
-        {
-          name: 'Sort Categories',
-          url: `/${user}/products/sort-categories`,
-        }
+        // {
+        //   name: 'Sort Products',
+        //   url: `/${user}/products/sort-products`,
+        // },
+        // {
+        //   name: 'Sort Categories',
+        //   url: `/${user}/products/sort-categories`,
+        // }
       ]
     },
     {

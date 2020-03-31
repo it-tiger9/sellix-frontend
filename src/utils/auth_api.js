@@ -2,7 +2,7 @@ import axios from 'axios'
 import config from 'constants/config'
 
 const authApi = axios.create({
-  baseURL: 'https://cors-anywhere.herokuapp.com/' + config.API_ROOT_URL,
+  baseURL: config.API_ROOT_URL,
   headers: {
     'Content-Type': 'application/json'
   }

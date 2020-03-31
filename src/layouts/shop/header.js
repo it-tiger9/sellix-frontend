@@ -55,7 +55,7 @@ class Header extends Component {
 
   render() {
     const { user, children, theme, ...attributes } = this.props
-
+    
     return (
       <React.Fragment>
         <AppNavbarBrand
@@ -67,7 +67,10 @@ class Header extends Component {
           <UncontrolledDropdown nav direction="down">
             <DropdownToggle className="user-name" nav>
               <div>
-                <i className="fa fa-user-circle text-primary avatar-icon"/>
+                {user && user.profile_attachment?
+                  <img src={user.profile_attachment} width="35" height="35" style={{borderRadius: '50%'}}/>:
+                  <i className="fa fa-user-circle text-primary avatar-icon"/>
+                }
               </div>
             </DropdownToggle>
 

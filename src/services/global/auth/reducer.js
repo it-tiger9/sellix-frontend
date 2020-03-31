@@ -29,6 +29,15 @@ const AuthReducer = (state = initState, action) => {
         profile: Object.assign({}, payload.data)
       }
 
+    case AUTH.MARK_AS_READ:
+      const profile = Object.assign({}, this.state.profile)
+      profile.notifications = []
+
+      return {
+        ...state,
+        profile: profile
+      }
+
     case AUTH.NOTIFICATION:
       return {
         ...state,

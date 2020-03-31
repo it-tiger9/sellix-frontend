@@ -107,8 +107,7 @@ class ShopProducts extends React.Component {
 
   gotoDetail(e, id) {
     this.props.history.push({
-      pathname: '/payment/checkout',
-      search: `?id=${id}`
+      pathname: `/payment/checkout/${id}`
     })
   }
 
@@ -153,11 +152,11 @@ class ShopProducts extends React.Component {
                   <Row>
                     {
                       user_products.map((pro, index) => 
-                        <Col lg={3} key={index}>
-                          <Card className="bg-white p-0 product-card" onClick={(e) => this.gotoDetail(e, pro.id)}>
+                        <Col md={3} key={index}>
+                          <Card className="bg-white p-0 product-card" onClick={(e) => this.gotoDetail(e, pro.uniqid)}>
                             <img src={config.API_ROOT_URL+'/attachments/image/'+pro.image_attachment} 
                               style={{borderTopLeftRadius: 10, borderTopRightRadius: 10}}
-                              width="100%" height="130"/>
+                              width="100%" height="150"/>
                             <div className="p-3">
                               <h5 className="mt-3 mb-3">{pro.title}</h5>
                               <div className="d-flex justify-content-between mt-3 mb-2">

@@ -200,13 +200,13 @@ class Analytics extends React.Component {
                     <ConverstionChart height="350px" data={chartData}/>
                   </Col>
                 </div>
-                <div className="chart row mt-2 mb-2">
+                {/* <div className="chart row mt-2 mb-2">
                   <Col lg={12}>
                     <label>Revenue by Country</label>
                     <hr/>
                     <RevenueMap/>
                   </Col>
-                </div>
+                </div> */}
               </div>
               }
               

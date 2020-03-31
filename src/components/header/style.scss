@@ -62,6 +62,26 @@
   color: #A7A5B4;
 }
 
+
+.notification-row {
+  .title {
+    font-size: 12px;
+    font-weight: bold;
+    overflow: hidden;
+    margin-right: 15px;
+    text-overflow: ellipsis;
+  }
+
+  .timeago {
+    font-size: 11px;
+  }
+
+  .message {
+    white-space: pre-line;
+    font-size: 13px;
+  }
+}
+
 .searchbar {
   position: relative;
 

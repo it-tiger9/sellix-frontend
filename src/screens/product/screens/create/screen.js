@@ -223,7 +223,7 @@ class CreateProduct extends React.Component {
 	handleSubmit(values) {
 		this.setState({loading: true})
 		const { gateways, custom_fields, showFileStock } = this.state
-
+		delete gateways['']
 		values.gateways = Object.keys(gateways).filter(key => { return gateways[key]}).toString()
 		values.custom_fields = JSON.stringify({
 			data: custom_fields.map(field => { return {...field, custom_type: field.custom_type.value}})

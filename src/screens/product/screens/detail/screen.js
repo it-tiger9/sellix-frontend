@@ -227,7 +227,7 @@ class EditProduct extends React.Component {
 	handleSubmit(values) {
 		this.setState({saving: true})
 		const { gateways, custom_fields, showFileStock } = this.state
-
+		delete gateways['']
 		values.gateways = Object.keys(gateways).filter(key => { return gateways[key]}).toString()
 		values.custom_fields = JSON.stringify({
 			data: custom_fields.map(field => { return {...field, custom_type: field.custom_type.value}})
@@ -315,127 +315,127 @@ class EditProduct extends React.Component {
 						</BreadcrumbItem>
 					</Breadcrumb>
 					<Formik
-							initialValues={initialValues}
-							onSubmit={(values) => {
-								this.handleSubmit(values)
-              				}}
-              				enableReinitialize={true}
-							validationSchema={Yup.object().shape({
-								title: Yup.string()
-									.required('Title is required'),
-								price: Yup.number()
-									.required('Price is required'),
-								description: Yup.string(),
-								currency: Yup.string()
-									.required('Currency is required'),
-								type: Yup.string(),
-								custom_fields: Yup.string(),
-								gateways: Yup.string(),
-								serials: Yup.string(),
-								service_text: Yup.string(),
-								file_stock: Yup.number(),
-								quantity_min: Yup.number(),
-								quantity_max: Yup.number(),
-								stock_delimeter: Yup.string(),
-								delivery_text: Yup.string(),
-								crypto_confirmations: Yup.number(),
-								max_risk_level: Yup.number(),
-								unlisted: Yup.number(),
-								private: Yup.number(),
-								block_vpn_proxies: Yup.number(),
-								sort_priority: Yup.number(),
-							})}>
-								{props => (
-									<Form onSubmit={props.handleSubmit}>
-										<Card>
-											<CardHeader>
-												<Row style={{alignItems: 'center'}}>
-													<Col md={12}>
-														<h1>Edit Product</h1>
-													</Col>
-												</Row>
-											</CardHeader>
-											<CardBody className="p-4 mb-5">
-												{
-													loading ?
-														<Row>
-															<Col lg={12}>
-																<Loader />
-															</Col>
-														</Row>
-													:
-														<Row className="mt-4 mb-4">
-															<Col lg={12}>
-																<Row>
-																	<Col lg={12}>
-																		<h4 className="mb-4">General Information</h4>
-																	</Col>
-																</Row>
-																<Row>
-																	<Col lg={8}>
-																		<FormGroup className="mb-3">
-																			<Label htmlFor="title">Title</Label>
-																			<Input
-																				type="text"
-																				id="title"
-																				name="title"
-																				placeholder="Title"
-																				onChange={props.handleChange}
-																				value={props.values.title}
-																				className={
-																					props.errors.title && props.touched.title
-																						? "is-invalid"
-																						: ""
-																				}
-																			/>
-																			{props.errors.title && props.touched.title && (
-																				<div className="invalid-feedback">{props.errors.title}</div>
-																			)}
-																		</FormGroup>
-																	</Col>
-																	<Col lg={4}>
-																		<FormGroup className="mb-3">
-																			<Label htmlFor="price">Price</Label>
-																			<div className="d-flex">
-																				<div>
-																					<Input
-																						className="price-select"
-																						type="number"
-																						id="price"
-																						name="price"
-																						placeholder="Price"
-																						onChange={props.handleChange}
-																						value={props.values.price}
-																						className={
-																							props.errors.price && props.touched.price
-																								? "is-invalid"
-																								: ""
-																						}
-																					/>
-																					{props.errors.price && props.touched.price && (
-																						<div className="invalid-feedback">{props.errors.price}</div>
-																					)}
-																				</div>
-																				
-																				<Select
-																					className="currency-select"
-																					options={CURRENCY_LIST}
-																					id="currency"
-																					name="currency"
-																					placeholder="USD"
-																					value={props.values.currency}
-																					onChange={(option) => {
-																						props.handleChange("currency")(option.value);
-																					}}
+						initialValues={initialValues}
+						onSubmit={(values) => {
+							this.handleSubmit(values)
+						}}
+						enableReinitialize={true}
+						validationSchema={Yup.object().shape({
+							title: Yup.string()
+								.required('Title is required'),
+							price: Yup.number()
+								.required('Price is required'),
+							description: Yup.string(),
+							currency: Yup.string()
+								.required('Currency is required'),
+							type: Yup.string(),
+							custom_fields: Yup.string(),
+							gateways: Yup.string(),
+							serials: Yup.string(),
+							service_text: Yup.string(),
+							file_stock: Yup.number(),
+							quantity_min: Yup.number(),
+							quantity_max: Yup.number(),
+							stock_delimeter: Yup.string(),
+							delivery_text: Yup.string(),
+							crypto_confirmations: Yup.number(),
+							max_risk_level: Yup.number(),
+							unlisted: Yup.number(),
+							private: Yup.number(),
+							block_vpn_proxies: Yup.number(),
+							sort_priority: Yup.number(),
+						})}>
+							{props => (
+								<Form onSubmit={props.handleSubmit}>
+									<Card>
+										<CardHeader>
+											<Row style={{alignItems: 'center'}}>
+												<Col md={12}>
+													<h1>Edit Product</h1>
+												</Col>
+											</Row>
+										</CardHeader>
+										<CardBody className="p-4 mb-5">
+											{
+												loading ?
+													<Row>
+														<Col lg={12}>
+															<Loader />
+														</Col>
+													</Row>
+												:
+													<Row className="mt-4 mb-4">
+														<Col lg={12}>
+															<Row>
+																<Col lg={12}>
+																	<h4 className="mb-4">General Information</h4>
+																</Col>
+															</Row>
+															<Row>
+																<Col lg={8}>
+																	<FormGroup className="mb-3">
+																		<Label htmlFor="title">Title</Label>
+																		<Input
+																			type="text"
+																			id="title"
+																			name="title"
+																			placeholder="Title"
+																			onChange={props.handleChange}
+																			value={props.values.title}
+																			className={
+																				props.errors.title && props.touched.title
+																					? "is-invalid"
+																					: ""
+																			}
+																		/>
+																		{props.errors.title && props.touched.title && (
+																			<div className="invalid-feedback">{props.errors.title}</div>
+																		)}
+																	</FormGroup>
+																</Col>
+																<Col lg={4}>
+																	<FormGroup className="mb-3">
+																		<Label htmlFor="price">Price</Label>
+																		<div className="d-flex">
+																			<div>
+																				<Input
+																					className="price-select"
+																					type="number"
+																					id="price"
+																					name="price"
+																					placeholder="Price"
+																					onChange={props.handleChange}
+																					value={props.values.price}
 																					className={
-																						props.errors.currency && props.touched.currency
-																							? "is-invalid currency-select"
-																							: "currency-select"
+																						props.errors.price && props.touched.price
+																							? "is-invalid"
+																							: ""
 																					}
 																				/>
-																				{props.errors.products_bound && props.touched.products_bound && (
-																					<div className="invalid-feedback">{props.errors.products_bound}</div>
+																				{props.errors.price && props.touched.price && (
+																					<div className="invalid-feedback">{props.errors.price}</div>
 																				)}
+																			</div>
+																			
+																			<Select
+																				className="currency-select"
+																				options={CURRENCY_LIST}
+																				id="currency"
+																				name="currency"
+																				placeholder="USD"
+																				value={props.values.currency}
+																				onChange={(option) => {
+																					props.handleChange("currency")(option.value);
+																				}}
+																				className={
+																					props.errors.currency && props.touched.currency
+																						? "is-invalid currency-select"
+																						: "currency-select"
+																				}
+																			/>
+																			{props.errors.products_bound && props.touched.products_bound && (
+																				<div className="invalid-feedback">{props.errors.products_bound}</div>
+																			)}
 																			</div>
 																		</FormGroup>
 																	</Col>
@@ -446,7 +446,6 @@ class EditProduct extends React.Component {
 																			<Label htmlFor="product_code">Description</Label>
 																			<div>
 																				<ReactQuill value={props.values.description}
-
 																					modules={EDITOR_MODULES}
 																					formats={EDITOR_FORMATS}
 																					placeholder={''}

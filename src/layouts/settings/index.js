@@ -51,7 +51,7 @@ class SettingsLayout extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      theme: 'light',
+      theme: window.localStorage.getItem('theme') || 'light',
       isOpen: false
     }
   }
@@ -64,7 +64,7 @@ class SettingsLayout extends React.Component {
         this.props.authActions.logOut()
         this.props.history.push('/login')
       })
-      this.props.commonActions.getSimpleVATVersion()
+      this.props.authActions.getSelfUser()
       const toastifyAlert = (status, message) => {
         if (!message) {
           message = 'Unexpected Error'
