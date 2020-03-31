@@ -14,7 +14,9 @@ import {
   Label
 } from 'reactstrap'
 import Select from 'react-select'
-
+import {
+  CommonActions
+} from 'services/global'
 import shop_brand from 'assets/images/brand/paypal-logo.svg'
 import paypal_white from 'assets/images/brand/paypal-white.svg'
 import sellix_logo from 'assets/images/Sellix_logo.svg'
@@ -28,6 +30,7 @@ const mapStateToProps = (state) => {
 }
 const mapDispatchToProps = (dispatch) => {
   return ({
+    commonActions: bindActionCreators(CommonActions, dispatch)
   })
 }
 
@@ -37,6 +40,7 @@ class PaypalPaying extends React.Component {
     super(props)
     this.state = {
       loading: false,
+      invoice: {}
     }
 
   }
@@ -48,13 +52,21 @@ class PaypalPaying extends React.Component {
     })
   }
 
+  componentDidMount() {
+    this.props.commonActions.getInvoice(this.props.match.params.id).then(res => {
+      this.setState({
+        invoice: res.data.invoice
+      })
+    })
+  }
+
   render() {
 
     return (
       <div className="bitcoin-paying-screen">
 
         <div className="animated fadeIn">
-          <Row>
+          <Row className="m-3">
             <Col lg={4} className="ml-auto mr-auto p-0">
               <div className="float-logo"><img src={sellix_logo} width="153"/></div>
               

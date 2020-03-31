@@ -53,7 +53,7 @@ class AdminLayout extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      theme: 'light'
+      theme: window.localStorage.getItem('theme') || 'light'
     }
   }
 
@@ -65,6 +65,7 @@ class AdminLayout extends React.Component {
         this.props.authActions.logOut()
         this.props.history.push('/login')
       })
+      this.props.authActions.getSelfUser()
       const toastifyAlert = (status, message) => {
         if (!message) {
           message = 'Unexpected Error'
@@ -103,10 +104,8 @@ class AdminLayout extends React.Component {
       zIndex: 1999
     }
 
-    // const {theme} = this.state
-
     const theme = window.localStorage.getItem('theme') || this.state || 'light'
-
+    console.log(this.props.user)
     return (
       <ThemeProvider theme={theme=='light'?lightTheme:darkTheme}>
         <GlobalStyles />

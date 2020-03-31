@@ -34,8 +34,50 @@ export const checkAuthStatus = () => {
   }
 }
 
+export const getSelfUser = () => {
+  return (dispatch) => {
+    let data = {
+      method: 'get',
+      url: `/self`
+    }
+    return authApi(data).then(res => {
+      if (!res.error) {
+        dispatch({
+          type: AUTH.USER_PROFILE,
+          payload: {
+            data: res.data.user || {}
+          }
+        })
+        return res
+      } else {
+        throw new Error('Auth Failed')
+      }
+    }).catch(err => {
+      throw err
+    })
+  }
+}
 
 
+export const markAsRead = () => {
+  return (dispatch) => {
+    let data = {
+      method: 'post',
+      url: `/notifications/read`
+    }
+    return authApi(data).then(res => {
+      if (!res.error) {
+        dispatch({
+          type: AUTH.MARK_AS_READ,
+        })
+      } else {
+        throw new Error('Auth Failed')
+      }
+    }).catch(err => {
+      throw err
+    })
+  }
+}
 
 export const logIn = (obj) => {
   return (dispatch) => {
@@ -123,7 +165,6 @@ export const requestNewPassword = (obj) => {
       data: formData(obj)
     }
     return api(data).then(res => {
-      console.log(res)
       if(res && res.status == 200) {
         dispatch({
           type: AUTH.NOTIFICATION,

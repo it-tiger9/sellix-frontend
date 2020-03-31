@@ -1,7 +1,8 @@
 import { COMMON } from 'constants/types'
 import {
   api,
-  authApi
+  authApi,
+  formData
 } from 'utils'
 
 export const startRequest = () => {
@@ -42,6 +43,23 @@ export const getGeneralUserInfo = (username) => {
 }
 
 
+export const createInvoice = (obj) => {
+  return (dispatch) => {
+    let data = {
+      method: 'post',
+      url: '/invoices/create',
+      data: formData(obj)
+    }
+    return api(data).then(res => {
+      if(res && res.status == 200) {
+        return res
+      } else throw res
+    }).catch(err => {
+      throw err
+    })
+  }
+}
+
 export const getUserFeedbacks = (username) => {
   return (dispatch) => {
     let data = {
@@ -54,6 +72,40 @@ export const getUserFeedbacks = (username) => {
           type: COMMON.USER_FEEDBACKS,
           payload: res.data
         })
+        return res
+      } else throw res
+    }).catch(err => {
+      throw err
+    })
+  }
+}
+
+
+export const getUserProductById = (id) => {
+  return (dispatch) => {
+    let data = {
+      method: 'get',
+      url: `/products/unique/${id}`,
+    }
+    return api(data).then(res => {
+      if(res && res.status == 200) {
+        return res
+      } else throw res
+    }).catch(err => {
+      throw err
+    })
+  }
+}
+
+
+export const getInvoice = (id) => {
+  return (dispatch) => {
+    let data = {
+      method: 'get',
+      url: `/invoices/unique/${id}`,
+    }
+    return api(data).then(res => {
+      if(res && res.status == 200) {
         return res
       } else throw res
     }).catch(err => {
@@ -103,6 +155,9 @@ export const getUserProducts = (username) => {
     })
   }
 }
+
+
+
 
 
 export const getUserProductsByCategory = (filter) => {

@@ -11,12 +11,12 @@ import {
       component: PaypalPaying.screen
     },
     {
-      path: '/payment/bitcoin',
+      path: '/payment/invoice/:id',
       name: 'Bitcoin',
       component: BitcoinPaying.screen
     },
     {
-      path: '/payment/checkout',
+      path: '/payment/checkout/:id',
       name: 'ShopProductDetail',
       component: ShopProductDetail.screen
     },

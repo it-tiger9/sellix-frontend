@@ -15,7 +15,6 @@ api.interceptors.response.use(
     return response.data
   },
   error => {
-    console.log('11111111', error)
     return Promise.reject(error.response)
   },
 )

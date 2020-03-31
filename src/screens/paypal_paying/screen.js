@@ -44,7 +44,6 @@ class PaypalPaying extends React.Component {
 
   }
 
-
   openFeedBackModal() {
     this.setState({openModal: true})
   }
@@ -53,7 +52,7 @@ class PaypalPaying extends React.Component {
     this.setState({openModal: false})
 
     this.props.history.push({
-      pathname: `/${user}/shop/feedback/id`
+      pathname: `/shop/${this.props.match.params.username}/feedback/id`
     })
   }
 
