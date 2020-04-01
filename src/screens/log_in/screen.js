@@ -70,11 +70,10 @@ class LogIn extends React.Component {
         window.location.href= '/2fa'
       }
 
-      this.props.authActions.checkAuthStatus().then(user => {
-        const preUrl = `/${user.username}/dashboard`
+      this.props.authActions.getSelfUser().then(res => {
+        const preUrl = `/${res.data.user.username}/dashboard`
         window.location.href = preUrl
       })
-
     }).catch(err => {
       let errMsg = 'Invalid Email or Password. Please try again.'
 

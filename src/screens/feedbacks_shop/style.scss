@@ -8,6 +8,12 @@
     }
   }
 
+  .product-card {
+    img {
+      object-fit: cover;
+    }
+  }
+
   .product-table {
     .my-link {
       text-decoration: none;

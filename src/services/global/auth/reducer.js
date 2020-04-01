@@ -30,7 +30,7 @@ const AuthReducer = (state = initState, action) => {
       }
 
     case AUTH.MARK_AS_READ:
-      const profile = Object.assign({}, this.state.profile)
+      const profile = Object.assign({}, state.profile)
       profile.notifications = []
 
       return {

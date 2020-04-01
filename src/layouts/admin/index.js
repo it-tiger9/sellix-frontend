@@ -61,11 +61,10 @@ class AdminLayout extends React.Component {
     if (!window.localStorage.getItem('accessToken')) {
       this.props.history.push('/login')
     } else {
-      this.props.authActions.checkAuthStatus().catch(err => {
+      this.props.authActions.getSelfUser().catch(err => {
         this.props.authActions.logOut()
         this.props.history.push('/login')
       })
-      this.props.authActions.getSelfUser()
       const toastifyAlert = (status, message) => {
         if (!message) {
           message = 'Unexpected Error'

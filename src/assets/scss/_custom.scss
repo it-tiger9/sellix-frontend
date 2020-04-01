@@ -515,6 +515,12 @@ table td a:hover {
   }
 
 
+  .product-card {
+    img {
+      object-fit: cover;
+    }
+  }
+
 table {
     table-layout: auto;
     border-top: none !important;

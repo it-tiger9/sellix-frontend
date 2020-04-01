@@ -1,14 +1,11 @@
 .bitcoin-paying-screen {
 
-  .sk-cube-grid {
-    width: 17px;
-    height: 17px;
+  .sk-spinner-pulse {
+    width: 20px;
+    height: 20px;
     margin: 0;
-    margin-right: 10px;
-
-    .sk-cube {
-      background-color: #613BEA !important;
-    }
+    margin-right: 5px;
+    background-color: #613bea;
   }
   .top {
     .badge {
