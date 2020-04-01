@@ -134,7 +134,10 @@ class ShopProducts extends React.Component {
                   <div className="d-flex justify-content-start">
                     <div className="searchbar white w-100">
                       <i className="fas fa-search"/>
-                      <Input placeholder="Search for a product..." className="header-search-input"></Input>
+                      <Input placeholder="Search for a product..." 
+                        className="header-search-input"
+                        onChange={e => {this.setState({search_key: e.target.value})}}
+                      ></Input>
                     </div>
                   </div>
                 </Col>

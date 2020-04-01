@@ -64,7 +64,7 @@ export const getUserFeedbacks = (username) => {
   return (dispatch) => {
     let data = {
       method: 'get',
-      url: `/feedbacks/user/${username}`,
+      url: `/feedback/user/${username}`,
     }
     return api(data).then(res => {
       if(res && res.status == 200) {

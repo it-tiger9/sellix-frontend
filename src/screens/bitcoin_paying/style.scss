@@ -1,4 +1,15 @@
 .bitcoin-paying-screen {
+
+  .sk-cube-grid {
+    width: 17px;
+    height: 17px;
+    margin: 0;
+    margin-right: 10px;
+
+    .sk-cube {
+      background-color: #613BEA !important;
+    }
+  }
   .top {
     .badge {
       background-color: #E4D6FF;
@@ -6,6 +17,7 @@
       padding: 9px;
       height: 30px;
       border-radius: 10px;
+      min-width: 60px;
     }
 
     span, p {

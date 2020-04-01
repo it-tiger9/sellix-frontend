@@ -45,7 +45,7 @@ export const getSelfUser = () => {
         dispatch({
           type: AUTH.USER_PROFILE,
           payload: {
-            data: res.data.user || {}
+            data: (res.data || {}).user || {}
           }
         })
         return res
