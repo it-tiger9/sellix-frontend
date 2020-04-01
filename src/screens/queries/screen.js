@@ -14,9 +14,9 @@ import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
 import { Loader } from 'components'
 import { tableOptions } from 'constants/tableoptions'
 
-import * as ProductActions from './actions'
 import './style.scss'
 import { getQueries } from './actions'
+import { closeQuerie } from './actions'
 
 const user = window.localStorage.getItem('userId')
 
@@ -29,6 +29,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return ({
     actions: bindActionCreators({ getQueries }, dispatch),
+    closeQuerie: bindActionCreators({ closeQuerie }, dispatch),
   })
 }
 
@@ -195,9 +196,9 @@ class Queries extends React.Component {
 
   renderQurieData = () => {
     if (this.state.filterValue === 'noSorting') {
-      return testdata //this.props.queries_list
+      return this.props.queries_list //this.props.queries_list
     } else {
-      return _.filter(testdata, querie => querie.status === this.state.filterValue)
+      return _.filter(this.props.queries_list, querie => querie.status === this.state.filterValue)
     }
   }
 
@@ -226,16 +227,22 @@ class Queries extends React.Component {
     }
   }
 
-  replyToFeedback = (e, id) => {
+  replyToQuerie= (e, id) => {
     this.props.history.push({
       pathname: `/${user}/querie/reply/${id}`
     })
   }
 
+  closeQuerie = (e, id) => {
+    console.log({id})
+    this.props.closeQuerie.closeQuerie({uniqid: id})
+    this.props.actions.getQueries()
+  }
+
   renderOption =  (cell, row) => {
     return (<>
-      <Button color="default" onClick={(e) => this.replyToFeedback(e, row.uniqid)}>Reply</Button>
-      <Button color="default" onClick={(e) => this.replyToFeedback(e, row.uniqid)}>Close</Button>
+      <Button color="default" onClick={(e) => this.replyToQuerie(e, row.uniqid)}>Reply</Button>
+      <Button color="default" onClick={(e) => this.closeQuerie(e, row.uniqid)}>Close</Button>
       </>
     )
   }

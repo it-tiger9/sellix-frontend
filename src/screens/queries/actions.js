@@ -30,12 +30,32 @@ export const getQueries = () => {
   }
 }
 
-export const replyQuerie = (feedback) => {
+export const replyQuerie = (querie) => {
   return (dispatch) => {
     let data = {
       method: 'POST',
       url: `/queries/reply`,
-      data: formData(feedback)
+      data: formData(querie)
+    }
+
+    return authApi(data).then(res => {
+      if (res.status === 200) {
+        return res
+      } else {
+        throw res
+      }
+    }).catch(err => {
+      throw err
+    })
+  }
+}
+
+export const closeQuerie = (querie) => {
+  return (dispatch) => {
+    let data = {
+      method: 'POST',
+      url: `/queries/close`,
+      data: formData(querie)
     }
 
     return authApi(data).then(res => {
