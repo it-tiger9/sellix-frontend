@@ -5,11 +5,11 @@ import {
   formData
 } from 'utils'
 
-export const checkAuthStatus = () => {
+export const checkJWT = () => {
   return (dispatch) => {
     let data = {
       method: 'get',
-      url: `/check/${window.localStorage.getItem('accessToken')}`
+      url: `/self`
     }
     return authApi(data).then(res => {
       if (!res.error) {
@@ -19,11 +19,9 @@ export const checkAuthStatus = () => {
         dispatch({
           type: AUTH.USER_PROFILE,
           payload: {
-            data: res
+            data: (res.data || {}).user || {}
           }
         })
-
-        window.localStorage.setItem('userId', res.username)
         return res
       } else {
         throw new Error('Auth Failed')
@@ -43,11 +41,16 @@ export const getSelfUser = () => {
     return authApi(data).then(res => {
       if (!res.error) {
         dispatch({
+          type: AUTH.SIGNED_IN
+        })
+        dispatch({
           type: AUTH.USER_PROFILE,
           payload: {
             data: (res.data || {}).user || {}
           }
         })
+
+        window.localStorage.setItem('userId', res.data.user.username)
         return res
       } else {
         throw new Error('Auth Failed')

@@ -13,14 +13,19 @@ import {
   Input,
   Label
 } from 'reactstrap'
-import Select from 'react-select'
 import {
   CommonActions
 } from 'services/global'
 import { Formik } from 'formik';
+import { Spin } from 'components'
 import * as Yup from "yup";
+
 import shop_brand from 'assets/images/brand/shop_brand.png'
 import bitcoinIcon from 'assets/images/crypto/btc.svg'
+import paypalIcon from 'assets/images/crypto/paypal.svg'
+import litecoinIcon from 'assets/images/crypto/ltc.svg'
+import ethereumIcon from 'assets/images/crypto/eth.svg'
+import perfectmoneyIcon from 'assets/images/crypto/perfectmoney.svg'
 import backIcon from 'assets/images/x.png'
 
 import './style.scss'
@@ -36,6 +41,13 @@ const mapDispatchToProps = (dispatch) => {
   })
 }
 
+const PAYMENT_ICONS = {
+  paypal: paypalIcon,
+  bitcoin: bitcoinIcon,
+  litecoin: litecoinIcon,
+  ethereum: ethereumIcon,
+  perfectmoney: perfectmoneyIcon
+}
 
 const CURRENCY_LIST = { 
   'USD': '$',
@@ -50,6 +62,14 @@ const CURRENCY_LIST = {
   'NZD': '$'
 }
 
+
+const PAYMENT_LABELS = {
+  'paypal': 'PayPal',
+  'bitcoin': 'Bitcoin',
+  'litecoin': 'Litecoin',
+  'ethereum': 'Ethereum'
+}
+
 class ShopProductDetail extends React.Component {
   
   constructor(props) {
@@ -60,6 +80,7 @@ class ShopProductDetail extends React.Component {
       gateway: null,
       showPaymentOptions: false,
       quantity: 1,
+      paymentoptions: [],
       email: null,
       coupon_code: '',
       product_id: this.props.match.params.id,
@@ -78,12 +99,16 @@ class ShopProductDetail extends React.Component {
     data['gateway'] = data['gateway'].toLowerCase()
     data['email'] = values.email
 
+    this.setState({loading: true})
     this.props.commonActions.createInvoice(data).then(res => {
+      this.props.commonActions.tostifyAlert('success', 'Invoice is created successfully.')
       this.props.history.push({
         pathname: `/payment/invoice/${res.data.invoice.uniqid}`
       })
     }).catch(err => {
       this.props.commonActions.tostifyAlert('error', err.error)
+    }).finally(() => {
+      this.setState({loading: false})
     })
   }
 
@@ -139,13 +164,21 @@ class ShopProductDetail extends React.Component {
     this.props.commonActions.getUserProductById(this.props.match.params.id).then(res => {
       this.setState({
         product_info: res.data.product,
-        custom_fields: res.data.product.custom_fields
+        custom_fields: res.data.product.custom_fields,
+        paymentoptions: (res.data.product.gateways || '').split(',')
       })
     })
   }
 
   render() {
-    const {gateway, showPaymentOptions, quantity, email, product_info, openCoupon} = this.state
+    const {
+      gateway, 
+      showPaymentOptions, 
+      quantity, 
+      loading, 
+      product_info,
+      openCoupon, 
+      paymentoptions} = this.state
 
     return (
       <div className="detail-product-screen">
@@ -196,7 +229,11 @@ class ShopProductDetail extends React.Component {
                                   <div className="text-center">
                                     <p className="text-center grey" style={{fontSize: 12}}>
                                       By continuing, you agree to our Terms of Service</p>
-                                    <Button color="primary" type="submit" className="mr-auto ml-auto mt-2" >Purchase</Button>
+                                    <Button color="primary" 
+                                      type="submit" 
+                                      className="mr-auto ml-auto mt-2" 
+                                      disabled={loading}>
+                                      {loading ?<Spin/>:'Purchase' }</Button>
                                   </div>
                                 </Form> )}
                             </Formik>
@@ -210,31 +247,21 @@ class ShopProductDetail extends React.Component {
                             <h3>{CURRENCY_LIST[product_info.currency]}{product_info.price_display || 0}</h3>
                             <Button color="primary" className="mr-auto ml-auto mt-3 d-block" 
                               onClick={this.showPaymentOptions.bind(this)} style={{width: 170}}>Purchase</Button>
-
-                            {showPaymentOptions && <Button className="pay-button mt-3 pl-3 mr-auto ml-auto pr-3 d-block" 
-                                onClick={(e) => this.setPaymentOptions(e, 'Paypal')}
+                            {showPaymentOptions && paymentoptions.map(option => 
+                              <Button className="pay-button mt-3 pl-3 mr-auto ml-auto pr-3 d-block" 
+                                onClick={(e) => this.setPaymentOptions(e, PAYMENT_LABELS[option])}
                                 style={{width: 170}}>
                                 <div className="d-flex justify-content-between align-items-center">
                                   <div>
-                                    <i className="fa fa-paypal mr-2"/>
-                                    PayPal
+                                    <img src={PAYMENT_ICONS[option]} className="mr-2" width="20" height="20"/>
+                                    {PAYMENT_LABELS[option]}
                                   </div>
                                   <div>></div>
                                 </div>
                                 
-                              </Button>}
-                            {showPaymentOptions && <Button className="pay-button mt-3 mr-auto ml-auto pl-3 pr-3 d-block" 
-                                onClick={(e) => this.setPaymentOptions(e, 'Bitcoin')}
-                                style={{width: 170}}>
-                                <div className="d-flex justify-content-between align-items-center">
-                                  <div>
-                                    <img src={bitcoinIcon} className="mr-2" width="20" height="20"/>
-                                    Bitcoin
-                                  </div>
-                                  <div>></div>
-                                </div>
-                                
-                              </Button>}
+                              </Button>  
+                            )}
+                            
                             <div className="d-flex justify-content-center align-items-center mt-3 stock-count">
                               <span className={quantity == 1?'text-grey':''} onClick={this.decreaseCount.bind(this)}>-</span>
                               <span style={{fontSize: 18}} className="ml-3 mr-3">{quantity}</span>

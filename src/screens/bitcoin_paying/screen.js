@@ -17,6 +17,12 @@ import paypal_white from 'assets/images/brand/paypal-white.svg'
 import sellix_logo from 'assets/images/Sellix_logo.svg'
 import backIcon from 'assets/images/x.png'
 
+import bitcoinIcon from 'assets/images/crypto/btc.svg'
+import paypalIcon from 'assets/images/crypto/paypal.svg'
+import litecoinIcon from 'assets/images/crypto/ltc.svg'
+import ethereumIcon from 'assets/images/crypto/eth.svg'
+import perfectmoneyIcon from 'assets/images/crypto/perfectmoney.svg'
+
 import './style.scss'
 
 const CURRENCY_LIST = { 
@@ -30,6 +36,15 @@ const CURRENCY_LIST = {
   'CNY': '¥',
   'SEK': 'kr',
   'NZD': '$'
+}
+
+
+const PAYMENT_ICONS = {
+  paypal: paypalIcon,
+  bitcoin: bitcoinIcon,
+  litecoin: litecoinIcon,
+  ethereum: ethereumIcon,
+  perfectmoney: perfectmoneyIcon
 }
 
 const mapStateToProps = (state) => {
@@ -131,15 +146,22 @@ class PaypalPaying extends React.Component {
   }
 
   componentDidMount() {
-    this.getInvoice()
-    let timeLeftVar = this.secondsToTime(this.state.seconds);
-    this.setState({ time: timeLeftVar });
+    this.props.commonActions.getInvoice(this.props.match.params.id).then(res => {
+      let seconds = 60*60 - (new Date().getTime() - new Date(res.data.invoice.date*1000).getTime()) / 1000
+      let timeLeftVar = this.secondsToTime(seconds);
+
+      this.setState({
+        seconds: seconds,
+        invoice: res.data.invoice,
+        time: timeLeftVar
+      })
+    })
   }
 
   setInvoiceStatus(status) {
     if(status == 0){
       this.startTimer()
-      return `${(this.state.time.m>10?this.state.time.m:'0'+this.state.time.m) || '00'}:${this.state.time.s>10?this.state.time.s:'0'+this.state.time.s || '00'}`
+      return `${(this.state.time.m>9?this.state.time.m:'0'+this.state.time.m) || '00'}:${this.state.time.s>9?this.state.time.s:'0'+this.state.time.s || '00'}`
     }
     else if(status == 1)
       return 'Paid'
@@ -156,8 +178,8 @@ class PaypalPaying extends React.Component {
     if(status == 0){
       this.startTimer()
       return (
-        <div className="d-flex">
-          <div className="sk-cube-grid"><div className="sk-cube sk-cube1"></div><div className="sk-cube sk-cube2"></div><div className="sk-cube sk-cube3"></div><div className="sk-cube sk-cube4"></div><div className="sk-cube sk-cube5"></div><div className="sk-cube sk-cube6"></div><div className="sk-cube sk-cube7"></div><div className="sk-cube sk-cube8"></div><div className="sk-cube sk-cube9"></div></div>
+        <div className="d-flex align-items-center">
+          <div class="sk-spinner sk-spinner-pulse"></div>
           Awaiting Payment</div>
       )  
     }
@@ -166,7 +188,10 @@ class PaypalPaying extends React.Component {
     else if(status == 2)
       return 'Cacelled'
     else if(status == 3)
-     return <div className="d-flex"><div className="sk-cube-grid"><div className="sk-cube sk-cube1"></div><div className="sk-cube sk-cube2"></div><div className="sk-cube sk-cube3"></div><div className="sk-cube sk-cube4"></div><div className="sk-cube sk-cube5"></div><div className="sk-cube sk-cube6"></div><div className="sk-cube sk-cube7"></div><div className="sk-cube sk-cube8"></div><div className="sk-cube sk-cube9"></div></div>Waiting Confirmation</div>
+     return <div className="d-flex align-items-center">
+              <div class="sk-spinner sk-spinner-pulse"></div>
+              Waiting Confirmation
+            </div>
     else if(status == 4)
      return 'Partial'
   }
@@ -225,7 +250,7 @@ class PaypalPaying extends React.Component {
               <Card className="bg-white p-0 detail pt-3">
                 <div className="text-right pr-3">
                 <img src={backIcon} width="15" height="15"  
-                    onClick={() => {this.props.history.goBack()}}
+                    onClick={() => {clearInterval(this.apiTimer); this.props.history.goBack()}}
                     style={{cursor: "pointer"}}/>
                 </div>
                 
@@ -237,11 +262,14 @@ class PaypalPaying extends React.Component {
                   <p className="text-grey  mb-4">{invoice.uniqid}</p>
                   <div className="d-flex justify-content-between align-items-center ">
                     <h4 className="text-grey">{(invoice.product || {}).title}</h4>
-                    <span className="text-grey ">{invoice.crypto_amount || 0}</span>
+                    <span className="text-grey d-flex align-items-center">
+                      <img src={PAYMENT_ICONS[invoice.gateway]} className="mr-1" width="15" height="15"/>
+                      {invoice.crypto_amount || 0}
+                    </span>
                   </div>
                   <div className="d-flex justify-content-between align-items-center mb-3">
                     <span className="text-grey">{invoice.product_id || ''}</span>
-                    <span className="text-grey mr-4">{CURRENCY_LIST[invoice.currency] || '$'}{invoice.total_display || 0}</span>
+                    <span className="text-grey">{CURRENCY_LIST[invoice.currency] || '$'}{invoice.total_display || 0}</span>
                   </div>
 
                   {
@@ -283,11 +311,13 @@ class PaypalPaying extends React.Component {
                   </div>
                   <div className="d-flex justify-content-between align-items-center mb-2">
                     <span className="text-primary">Created</span>
-                    <h5 className="text-primary b-4">{moment(new Date(invoice.date*1000)).format('YYYY-MM-DD, hh:mm:ss')}</h5>
+                    <h5 className="text-primary b-4">{moment(new Date(invoice.date*1000)).format('hh:mm:ss, DD/MM/YYYY')}</h5>
                   </div>
                   <div className="d-flex justify-content-between align-items-center">
                     <span className="text-primary">Received</span>
-                    <h5 className="text-primary b-4">{invoice.crypto_received}</h5>
+                    <h5 className="text-primary b-4 d-flex align-items-center">
+                      <img src={PAYMENT_ICONS[invoice.gateway]} className="mr-1" width="15" height="15"/>
+                      {invoice.crypto_received}</h5>
                   </div>
                 </div>
               </Card>
