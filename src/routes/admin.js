@@ -20,6 +20,7 @@ import {
   Pages,
   CreateProduct,
   OrderDetail,
+  ReplyToQuerie
 } from 'screens'
 import { BlackList, CreateBlacklist, EditBlacklist, EditCoupon, ReplyToFeedback } from '../screens'
 
@@ -147,6 +148,11 @@ const adminRoutes = [
     path: `/${user}/queries`,
     name: 'Queries',
     component: Queries.screen
+  },
+  {
+    path: `/${user}/querie/reply/:id`,
+    name: 'Reply to Querie',
+    component: ReplyToQuerie
   },
   
 

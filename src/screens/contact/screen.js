@@ -45,7 +45,7 @@ class Contact extends React.Component {
 
   handleSubmit(values) {
     this.setState({ loading: true })
-    this.props.createQuery({...values, user_id: '1'}).then(res => {
+    this.props.createQuery({...values, user_id: '14'}).then(res => {
       this.props.commonActions.tostifyAlert('success', res.message)
       // this.props.history.push({
       //   pathname: `/${user}/blacklist`

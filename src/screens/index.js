@@ -40,6 +40,7 @@ import BlackList from './blacklist'
 import CreateBlacklist from './blacklist/screens/create'
 import EditBlacklist from './blacklist/screens/create'
 import EditCoupon from './coupons/screens/create'
+import ReplyToQuerie from './queries/screens/reply'
 
 import PaypalPaying from './paypal_paying'
 import BitcoinPaying from './bitcoin_paying'
@@ -88,6 +89,7 @@ export {
   Coupons,
   CreateCoupon,
   Queries,
+  ReplyToQuerie,
   Feedbacks,
   ReplyToFeedback,
   Webhooks,

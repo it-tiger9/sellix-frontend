@@ -1,7 +1,8 @@
 import { QUERIES } from 'constants/types'
 import {
   api,
-  authApi
+  authApi,
+  formData
 } from 'utils'
 
 export const getQueries = () => {
@@ -16,13 +17,33 @@ export const getQueries = () => {
         console.log({res})
         dispatch({
           type: QUERIES.QUERIES_LIST,
-          payload: res.data.queries_list
+          payload: res.data.queries
         })
         return res
         
       } else {
         throw res
       }     
+    }).catch(err => {
+      throw err
+    })
+  }
+}
+
+export const replyQuerie = (feedback) => {
+  return (dispatch) => {
+    let data = {
+      method: 'POST',
+      url: `/queries/reply`,
+      data: formData(feedback)
+    }
+
+    return authApi(data).then(res => {
+      if (res.status === 200) {
+        return res
+      } else {
+        throw res
+      }
     }).catch(err => {
       throw err
     })
