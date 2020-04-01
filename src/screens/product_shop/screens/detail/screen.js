@@ -150,7 +150,7 @@ class ShopProductDetail extends React.Component {
     return (
       <div className="detail-product-screen">
         <div className="animated fadeIn">
-          <Row>
+          <Row className="p-3">
             <Col lg={9} className="ml-auto mr-auto">
               <Row>
                 <Col lg={4}>

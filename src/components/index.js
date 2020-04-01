@@ -3,6 +3,7 @@ import Loader from './loader'
 import Spin from './spin'
 import Aside from './aside'
 import Header from './header'
+import QRCodeModal from './qrcode'
 import Footer from './footer'
 import Message from './message'
 import DateRangePicker2 from './datepicker'
@@ -21,6 +22,7 @@ export {
   Aside,
   Header,
   Footer,
+  QRCodeModal,
   Message,
   DateRangePicker2,
   ConfirmDeleteModal,
