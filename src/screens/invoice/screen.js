@@ -10,16 +10,19 @@ import {
 import SweetAlert from 'react-bootstrap-sweetalert';
 import moment from 'moment'
 import { QRCodeModal } from 'components'
+import { PayPalButton } from "react-paypal-button-v2";
 import {
   CommonActions
 } from 'services/global'
 import {PaypalInvoice} from './sections'
+
 import { LeaveFeedbackModal, Loader} from 'components'
 
 import shop_brand from 'assets/images/brand/paypal-logo.svg'
 import paypal_white from 'assets/images/brand/paypal-white.svg'
 import sellix_logo from 'assets/images/Sellix_logo.svg'
 import backIcon from 'assets/images/x.png'
+
 
 import bitcoinIcon from 'assets/images/crypto/btc.svg'
 import paypalIcon from 'assets/images/crypto/paypal.svg'
@@ -80,6 +83,7 @@ class Invoice extends React.Component {
     this.apiTimer = 1;
     this.startTimer = this.startTimer.bind(this);
     this.countDown = this.countDown.bind(this);
+    this.getPayPalInvoice = this.getPayPalInvoice.bind(this)
   }
 
 
@@ -91,6 +95,15 @@ class Invoice extends React.Component {
     this.setState({openQRModal: false})
   }
 
+  getPayPalInvoice() {
+    this.props.commonActions.getPayPalInvoice(this.props.invoice.uniqid).then(res => {
+        if(res && res.data && res.data.invoice) {
+            this.setState({
+                invoice: res.data.invoice
+            })
+        }
+    })
+  }
 
   openFeedBackModal() {
     this.setState({openFeedbackModal: true})
@@ -201,20 +214,22 @@ class Invoice extends React.Component {
       return (
         <div className="d-flex align-items-center">
           <div class="sk-spinner sk-spinner-pulse"></div>
-          Awaiting Payment</div>
+          Awaiting for transaction</div>
       )  
     }
     else if(status == 1)
-      return 'Paid'
+      return null
     else if(status == 2)
-      return 'Cacelled'
+      return null
     else if(status == 3)
      return <div className="d-flex align-items-center">
               <div class="sk-spinner sk-spinner-pulse"></div>
-              Waiting Confirmation
+              Waiting for Confirmation
             </div>
     else if(status == 4)
-     return 'Partial'
+     return 'Partial Payment'
+
+    return null
   }
 
   render() {
@@ -229,9 +244,7 @@ class Invoice extends React.Component {
                 <Loader />
               </Col>
             </Row>
-          :<div> {
-            invoice.gateway == 'paypal'?
-              <PaypalInvoice invoice={invoice} {...this.props}/>:
+          :
               <div className="bitcoin-paying-screen">
                 <QRCodeModal openModal={openQRModal} value={invoice.crypto_uri || ''} closeModal={this.closeQrCodeModal.bind(this)}/>
         
@@ -294,10 +307,14 @@ class Invoice extends React.Component {
                           <p className="text-grey  mb-4">{invoice.uniqid}</p>
                           <div className="d-flex justify-content-between align-items-center ">
                             <h4 className="text-grey">{(invoice.product || {}).title}</h4>
-                            <span className="text-grey d-flex align-items-center">
-                              <img src={PAYMENT_ICONS[invoice.gateway]} className="mr-1" width="15" height="15"/>
-                              {invoice.crypto_amount || 0}
-                            </span>
+                            { 
+                              invoice.gateway != 'paypal' && 
+                                <span className="text-grey d-flex align-items-center">
+                                  <img src={PAYMENT_ICONS[invoice.gateway]} className="mr-1" width="15" height="15"/>
+                                  {invoice.crypto_amount || 0}
+                                </span>
+                            }
+                            
                           </div>
                           <div className="d-flex justify-content-between align-items-center mb-3">
                             <span className="text-grey">{invoice.product_id || ''}</span>
@@ -305,7 +322,7 @@ class Invoice extends React.Component {
                           </div>
         
                           {
-                            invoice.status == 3?'':<div>
+                            (invoice.status == 3 || invoice.status == 1 || invoice.status == 2 || invoice.gateway == 'paypal')?'':<div>
                                 <p className="text-grey bold mt-5 text-center">
                                     Please send exactly <span className="badge text-primary bold">
                                       {(invoice.crypto_amount || 0) - (invoice.crypto_received || 0)}</span> BTC to
@@ -321,13 +338,42 @@ class Invoice extends React.Component {
                             </div>
                           }
                           
+                          {(invoice.gateway == 'paypal' && invoice.status == 0) && 
+                            <div className="mt-5">
+                              <PayPalButton
+                                createOrder={(data, actions) => {
+                                    return invoice.paypal_tx_id;
+                                }}
+                                onApprove={(data, actions) => {
+                                    this.getPayPalInvoice()
+                                }}
+                                onError = {() => {
+                                    
+                                }}
+                                style={{
+                                    layout: 'horizontal',
+                                    color: 'blue',
+                                }}
+                                amount={invoice.total}
+                                currency={invoice.currency}
+                                options={{
+                                    clientId: invoice.paypal_client_id,
+                                    currency: invoice.currency
+                                }}
+                              />
+                            </div>
+                          }
                         </div>
                         <div className="bottom p-4">
                           <h4 className="text-primary mb-4">Order Details</h4>
-                          <div className="d-flex justify-content-between align-items-center mb-2">
-                            <span className="text-primary">Status</span>
-                            <h5 className="text-primary b-4">{this.getInvoiceStatus2(invoice.status || -1)}</h5>
-                          </div>
+                          {
+                            this.getInvoiceStatus2(invoice.status || -1) != null && 
+                              <div className="d-flex justify-content-between align-items-center mb-2">
+                                <span className="text-primary">Status</span>
+                                <h5 className="text-primary b-4">{this.getInvoiceStatus2(invoice.status || -1)}</h5>
+                              </div>
+                          }
+                          
                           <div className="d-flex justify-content-between align-items-center mb-2">
                             <span className="text-primary">Seller</span>
                             <h5 className="text-primary b-4">{invoice.username }</h5>
@@ -344,20 +390,22 @@ class Invoice extends React.Component {
                             <span className="text-primary">Created</span>
                             <h5 className="text-primary b-4">{moment(new Date(invoice.date*1000)).format('hh:mm:ss, DD/MM/YYYY')}</h5>
                           </div>
-                          <div className="d-flex justify-content-between align-items-center">
-                            <span className="text-primary">Received</span>
-                            <h5 className="text-primary b-4 d-flex align-items-center">
-                              <img src={PAYMENT_ICONS[invoice.gateway]} className="mr-1" width="15" height="15"/>
-                              {invoice.crypto_received}</h5>
-                          </div>
+                          { 
+                              invoice.gateway != 'paypal' && 
+                                <div className="d-flex justify-content-between align-items-center">
+                                  <span className="text-primary">Received</span>
+                                  <h5 className="text-primary b-4 d-flex align-items-center">
+                                    <img src={PAYMENT_ICONS[invoice.gateway]} className="mr-1" width="15" height="15"/>
+                                    {invoice.crypto_received}</h5>
+                                </div>
+                          }
                         </div>
                       </Card>
                     </Col>
                   </Row>
                 </div>
             </div>
-          }</div>
-        }
+          }
       </div>
     )
   }

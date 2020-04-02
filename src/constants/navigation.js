@@ -70,21 +70,21 @@ export let mainNavigation =  {
       url: `/${user}/blacklist`,
       icon: 'fas fa-ban',
     },
-    {
-      name: 'Developer',
-      url: `/${user}/developer`,
-      icon: 'fas fa-code',
-      children: [
-        {
-          name: 'Webhooks',
-          url: `/${user}/developer/webhooks`,
-        },
-        {
-          name: 'Webhook Logs',
-          url: `/${user}/developer/webhook-logos`,
-        }
-      ]
-    },
+    // {
+    //   name: 'Developer',
+    //   url: `/${user}/developer`,
+    //   icon: 'fas fa-code',
+    //   children: [
+    //     {
+    //       name: 'Webhooks',
+    //       url: `/${user}/developer/webhooks`,
+    //     },
+    //     {
+    //       name: 'Webhook Logs',
+    //       url: `/${user}/developer/webhook-logos`,
+    //     }
+    //   ]
+    // },
     {
       name: 'Pages',
       url: `/${user}/pages`,

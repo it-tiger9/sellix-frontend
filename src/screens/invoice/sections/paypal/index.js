@@ -173,6 +173,10 @@ class PaypalInvoice extends React.Component {
                                                     onError = {() => {
 
                                                     }}
+                                                    style={{
+                                                        layout: 'horizontal',
+                                                        color: 'blue',
+                                                    }}
                                                     amount={invoice.total}
                                                     currency={invoice.currency}
                                                     options={{
