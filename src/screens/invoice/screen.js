@@ -165,7 +165,7 @@ class Invoice extends React.Component {
     });
     
     // Check if we're at zero.
-    if (seconds == 0) { 
+    if (seconds < 0) { 
       clearInterval(this.timer);
     }
   }
@@ -181,6 +181,7 @@ class Invoice extends React.Component {
     this.setState({loading:true})
     this.props.commonActions.getInvoice(this.props.match.params.id).then(res => {
       let seconds = 60*60 - (new Date().getTime() - new Date(res.data.invoice.date*1000).getTime()) / 1000
+
       let timeLeftVar = this.secondsToTime(seconds);
 
       this.setState({
@@ -233,7 +234,10 @@ class Invoice extends React.Component {
   }
 
   render() {
-    const {loading, invoice, timer, showAlert, openQRModal, openFeedbackModal} = this.state
+    const {loading, invoice, timer, showAlert, openQRModal, seconds} = this.state
+
+    if(seconds < 0)
+      invoice.status = 2
 
     return (
       <div>
@@ -302,7 +306,7 @@ class Invoice extends React.Component {
                         <div className="top p-4 pt-5">
                           <div className="d-flex justify-content-between align-items-center ">
                             <h4 className="text-grey">{(invoice.gateway || '').toUpperCase()}</h4>
-                            <span className="badge text-primary bold status" id="status">{this.setInvoiceStatus(invoice.status || -1)}</span>
+                            <span className="badge text-primary bold status" id="status">{this.setInvoiceStatus(invoice.status)}</span>
                           </div>
                           <p className="text-grey  mb-4">{invoice.uniqid}</p>
                           <div className="d-flex justify-content-between align-items-center ">
@@ -367,10 +371,10 @@ class Invoice extends React.Component {
                         <div className="bottom p-4">
                           <h4 className="text-primary mb-4">Order Details</h4>
                           {
-                            this.getInvoiceStatus2(invoice.status || -1) != null && 
+                            this.getInvoiceStatus2(invoice.status) != null && 
                               <div className="d-flex justify-content-between align-items-center mb-2">
                                 <span className="text-primary">Status</span>
-                                <h5 className="text-primary b-4">{this.getInvoiceStatus2(invoice.status || -1)}</h5>
+                                <h5 className="text-primary b-4">{this.getInvoiceStatus2(invoice.status)}</h5>
                               </div>
                           }
                           
