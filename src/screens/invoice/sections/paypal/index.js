@@ -21,6 +21,8 @@ import paypal_white from 'assets/images/brand/paypal-white.svg'
 import sellix_logo from 'assets/images/Sellix_logo.svg'
 import backIcon from 'assets/images/x.png'
 
+import './style.scss'
+
 const CURRENCY_LIST = { 
   'USD': '$',
   'EUR': '€',
@@ -156,8 +158,8 @@ class PaypalInvoice extends React.Component {
                                 
                                 <div className="text-center">
                                     <img src={shop_brand} className="paypal-brand"></img>
-                                    <p className="mt-3 mb-5 text-black">You are paying with PayPal<br/>
-                                        Order ID: a73703a4-38ed-43b3-b5f4-583670e61a19</p>
+                                    <p className="mt-3 mb-5 text-black">You are paying with PayPal<br/><br/>
+                                            Order ID: {invoice.uniqid}</p>
 
                                         {
                                             invoice.status == 0 && 

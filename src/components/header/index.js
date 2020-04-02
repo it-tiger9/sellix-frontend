@@ -61,7 +61,7 @@ class Header extends Component {
     const { user, children, theme, is_authed, isShop, ...attributes } = this.props
     const { notifications } = user || {}
     
-    console.log(this.props)
+  
     return (
       <React.Fragment>
         <AppSidebarToggler className="d-lg-none" display="md" mobile />
@@ -170,7 +170,7 @@ class Header extends Component {
                 </DropdownMenu>:
                 <DropdownMenu right className="mt-2">
                   <DropdownItem onClick={() => this.props.history.push(`/login`)}>
-                    Log in
+                    Log In
                   </DropdownItem>
                 </DropdownMenu>
             }
