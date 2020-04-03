@@ -232,7 +232,7 @@ class EditCategory extends React.Component {
                               <Row>
                                 <Col lg={4}>
                                   <FormGroup className="mb-3">
-                                    <Label htmlFor="product_code">Image</Label>
+                                    <Label htmlFor="product_code">Image <small className="font-italic">(optional)</small></Label>
                                     <ImageUpload addFile={(file) => {
                                       
                                       props.handleChange('image')(file.length>0?file[0]:null); 

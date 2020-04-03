@@ -31,7 +31,8 @@ import './style.scss'
 const mapStateToProps = (state) => {
   return ({
     version: state.common.version,
-    user: state.common.general_info
+    user: state.common.general_info,
+    is_authed: state.auth.is_authed
   })
 }
 const mapDispatchToProps = (dispatch) => {
@@ -50,13 +51,9 @@ class ShopLayout extends React.Component {
   }
 
   componentDidMount () {
-    // if (!window.localStorage.getItem('accessToken')) {
-    //   this.props.history.push('/login')
-    // } else {
-    //   this.props.authActions.checkAuthStatus().catch(err => {
-    //     this.props.authActions.logOut()
-    //     this.props.history.push('/login')
-    //   })
+      this.props.authActions.getSelfUser().catch(err => {
+        this.props.authActions.logOut()
+      })
       this.props.commonActions.getGeneralUserInfo(this.props.match.params.username)
       const toastifyAlert = (status, message) => {
         if (!message) {

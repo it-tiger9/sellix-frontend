@@ -56,6 +56,7 @@ class Header extends Component {
   render() {
     const { user, children, theme, is_authed, ...attributes } = this.props
     
+    console.log(this.props)
     return (
       <React.Fragment>
         <AppNavbarBrand

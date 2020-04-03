@@ -22,6 +22,7 @@ import { Loader, ImageUpload, DataSlider, Spin } from 'components'
 import * as ProductActions from '../../actions'
 import { Formik } from 'formik';
 import * as Yup from "yup";
+import config from 'constants/config'
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 
 import {
@@ -68,7 +69,6 @@ const CUSTOM_TYPE = [
 	{ value: 'hidden', label: 'Hidden' },
 	{ value: 'largetextbox', label: 'Large Textbox' },
 	{ value: 'checkbox', label: 'Checkbox' },
-	
 ]
 
 const CURRENCY_LIST = [
@@ -88,6 +88,7 @@ const EDITOR_FORMATS = [
   'header', 'font', 'size',
   'bold', 'italic', 'underline', 'strike', 'blockquote',
   'list', 'bullet', 'indent',
+  'link', 'image'
 ]
 
 const EDITOR_MODULES  = {
@@ -96,7 +97,8 @@ const EDITOR_MODULES  = {
     [{size: []}],
     ['bold', 'italic', 'underline', 'strike', 'blockquote'],
     [{'list': 'ordered'}, {'list': 'bullet'}, 
-     {'indent': '-1'}, {'indent': '+1'}],
+	 {'indent': '-1'}, {'indent': '+1'}],
+	['link', 'image'],
     ['clean']
   ],
   clipboard: {
@@ -119,7 +121,7 @@ class CreateProduct extends React.Component {
 			images: [],
 			initialValues: {
 				title: '',
-				price: 0,
+				price: '',
 				description: '',
 				currency: 'USD',
 				gateways: '',
@@ -200,7 +202,7 @@ class CreateProduct extends React.Component {
 
 	addCustomField() {
 		const custom_fields = Object.assign([], this.state.custom_fields)
-		custom_fields.push({custom_name: '', custom_type: CUSTOM_TYPE[0], custom_required: false})
+		custom_fields.push({name: '', type: CUSTOM_TYPE[0], required: false})
 
 		this.setState({custom_fields: custom_fields})
 	}
@@ -226,13 +228,13 @@ class CreateProduct extends React.Component {
 		delete gateways['']
 		values.gateways = Object.keys(gateways).filter(key => { return gateways[key]}).toString()
 		values.custom_fields = JSON.stringify({
-			data: custom_fields.map(field => { return {...field, custom_type: field.custom_type.value}})
+			custom_fields: custom_fields.map(field => { return {...field, type: field.type.value}})
 		})
 		values.file_stock = showFileStock?values.file_stock:-1
 
 		this.props.actions.createProduct(values).then(res => {
 			this.props.commonActions.tostifyAlert('success', res.message)
-			
+			this.props.history.goBack()
 		}).catch(err => {
 			this.props.commonActions.tostifyAlert('error', err.error)
 		}).finally(() => {
@@ -359,6 +361,8 @@ class CreateProduct extends React.Component {
 																						className="price-select"
 																						type="number"
 																						id="price"
+																						step="0.01"
+																						min="1"
 																						name="price"
 																						placeholder="Price"
 																						onChange={props.handleChange}
@@ -373,7 +377,7 @@ class CreateProduct extends React.Component {
 																						<div className="invalid-feedback">{props.errors.price}</div>
 																					)}
 																				</div>
-																				
+																				<div style={{marginLeft: -10}}>
 																				<Select
 																					className="currency-select"
 																					options={CURRENCY_LIST}
@@ -393,6 +397,7 @@ class CreateProduct extends React.Component {
 																				{props.errors.products_bound && props.touched.products_bound && (
 																					<div className="invalid-feedback">{props.errors.products_bound}</div>
 																				)}
+																				</div>
 																			</div>
 																		</FormGroup>
 																	</Col>
@@ -400,8 +405,12 @@ class CreateProduct extends React.Component {
 																<Row>
 																	<Col lg={12}>
 																		<FormGroup className="mb-3">
-																			<Label htmlFor="product_code">Description</Label>
-																			<div>
+																			<Label htmlFor="description">Description</Label>
+																			<div className={
+																						props.errors.description && props.touched.description
+																							? "is-invalid"
+																							: ""
+																					}>
 																				<ReactQuill value={props.values.description}
 																					modules={EDITOR_MODULES}
 																					formats={EDITOR_FORMATS}
@@ -610,7 +619,7 @@ class CreateProduct extends React.Component {
 																{showFileStock && type.value === 'file' && <Row>
 																	<Col lg={4}>
 																		<FormGroup>
-																			<Label htmlFor="product_code">Stock Amount</Label>
+																			<Label htmlFor="product_code">Stock Amount <small className="font-italic">(leave <b>-1</b> for unlimited times)</small></Label>
 																			<Input type="number" id="file_stock" name="file_stock"
 																				min={-1}
 																				value={props.values.file_stock}
@@ -705,15 +714,15 @@ class CreateProduct extends React.Component {
 																	</Col>
 																</Row>
 																<Row>
-																	<Col lg={8}>
+																	<Col lg={12}>
 																		<FormGroup className="mb-3">
-																			<Label htmlFor="product_code">Image(optional)</Label>
+																			<Label htmlFor="product_code">Image <small className="font-italic">(optional)</small></Label>
 																			<ImageUpload addFile={(file) => {
 																			props.handleChange('image')(file[0]); 
 																			this.addImages(file)}} files={images}/>
 																		</FormGroup>
 																		<FormGroup className="mb-3">
-																			<Label htmlFor="product_code">Note to Customer(optional)</Label>
+																			<Label htmlFor="product_code">Note to Customer <small className="font-italic">(optional)</small></Label>
 																			<Input
 																				type="text"
 																				id="delivery_text"
@@ -728,7 +737,7 @@ class CreateProduct extends React.Component {
 																<Row>
 																	<Col lg={12}>
 																		<FormGroup className="mb-0">
-																			<Label htmlFor="product_code" style={{width: '100%'}}>Custom Fields(optional)</Label>
+																			<Label htmlFor="product_code" style={{width: '100%'}}>Custom Fields <small className="font-italic">(optional)</small></Label>
 																		</FormGroup>
 																	</Col>
 
@@ -740,8 +749,8 @@ class CreateProduct extends React.Component {
 																						<Col lg={4}>
 																							<FormGroup className="mb-3">
 																								<Label htmlFor="product_code" style={{width: '100%', fontSize: 13}}>Name</Label>
-																								<Input type="text" value={field.custom_name} onChange={(e) => {
-																									this.saveCustomField(e.target.value, index, 'custom_name')
+																								<Input type="text" value={field.name} onChange={(e) => {
+																									this.saveCustomField(e.target.value, index, 'name')
 																								}}/>
 																							</FormGroup>
 																						</Col>
@@ -749,9 +758,9 @@ class CreateProduct extends React.Component {
 																							<FormGroup className="mb-3">
 																								<Label htmlFor="product_code" style={{width: '100%', fontSize: 13}}>Type</Label>
 																								<Select options={CUSTOM_TYPE} 
-																									value={field.custom_type}
+																									value={field.type}
 																									onChange={(option) => {
-																										this.saveCustomField(option, index, 'custom_type')
+																										this.saveCustomField(option, index, 'type')
 																									}}
 																								/>
 																							</FormGroup>
@@ -764,9 +773,9 @@ class CreateProduct extends React.Component {
 																										style={{width: 50, marginTop: 10}}
 																										variant={'pill'} 
 																										color={'primary'}
-																										checked={field.custom_required}
+																										checked={field.required}
 																										onChange={(e) => {
-																											this.saveCustomField(e.target.checked, index, 'custom_required')
+																											this.saveCustomField(e.target.checked, index, 'required')
 																										}}
 																										size="sm"/>
 																									<a onClick={(e) => this.deleteCustomField(e, index)} style={{fontSize: 20}}>

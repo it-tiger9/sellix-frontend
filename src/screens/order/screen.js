@@ -179,7 +179,9 @@ class Order extends React.Component {
                     <Col lg={12}>
                       <div>
                         <BootstrapTable
-                          options={ tableOptions() }
+                          options={{...tableOptions(), onRowClick: (row) => {
+                            this.gotoDetail(null, row.uniqid)}
+                          }}
                           data={product_list}
                           version="4"
                           pagination

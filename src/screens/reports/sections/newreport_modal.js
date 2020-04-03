@@ -19,7 +19,7 @@ import _ from 'lodash'
 import moment from 'moment'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
+import pdfIcon from 'assets/images/pdf.png'
 import { DateRangePicker2, Spin } from 'components'
 
 import { Formik } from 'formik';
@@ -122,14 +122,7 @@ class NewReportModal extends React.Component {
                       <Col>
                         <FormGroup>
                           <Label htmlFor="warehouseName">File Type</Label>
-                            <Select placeholder="File Type" 
-                              options={[{value: 'pdf', label: 'PDF'}]}
-                              value={fileType}
-                              onChange={(option) => {
-                                this.setState({fileType: option})
-                              }}
-                            >
-                            </Select>
+                            <p><img src={pdfIcon} width="65" height="70"/></p>
                         </FormGroup>
                       </Col>
                     </Row>

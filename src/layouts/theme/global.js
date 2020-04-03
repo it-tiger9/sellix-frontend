@@ -29,6 +29,9 @@ export const GlobalStyles = createGlobalStyle`
         background: ${({ theme }) => theme.body};
     }
 
+    .switch-primary .switch-input:checked + .switch-slider {
+        background-color: #613BEA !important;
+    }
 
     .detail-product-screen .stock-info {
         background-color: ${({ theme }) => theme.stockInfoBg};

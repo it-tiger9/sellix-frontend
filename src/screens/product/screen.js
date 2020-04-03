@@ -14,6 +14,7 @@ import { BootstrapTable, TableHeaderColumn, SearchField } from 'react-bootstrap-
 import { Loader } from 'components'
 import { confirmAlert } from 'react-confirm-alert'; 
 import { tableOptions } from 'constants/tableoptions'
+import config from 'constants/config'
 import {
   CommonActions,
 } from 'services/global'
@@ -133,20 +134,20 @@ class Product extends React.Component {
     }
   }
 
-  renderProductRevenue(cell, row) {
-    if (
-      row.revenue
-    ) {
-      return (
-        <p>
-          ${row.revenue}
-        </p>
-      )  
-    } else {
-      return (
-        <p className="caption">No specified</p>
-      )
-    }
+  renderProductPrice(cell, row) {
+    return (
+      <p>
+        {config.CURRENCY_LIST[row.currency]}{row.price}
+      </p>
+    )  
+  }
+
+  renderFileStock(cell, row) {
+    return (
+      <p>
+        {row.file_stock == -1? <span style={{fontSize:  20}}>∞</span>:row.file_stock}
+      </p>
+    ) 
   }
 
   renderOptions(cell, row) {
@@ -235,7 +236,7 @@ class Product extends React.Component {
                             dataField="uniqid"
                             dataFormat={this.renderProductInfo}
                             dataSort
-                            width='40%'
+                            width='50%'
                           >
                             Info
                           </TableHeaderColumn>
@@ -243,31 +244,32 @@ class Product extends React.Component {
                             dataField="type"
                             dataFormat={this.renderProductType}
                             dataSort
-                            width='20%'
+                            width='10%'
                           >
                             Type
                           </TableHeaderColumn>
                           <TableHeaderColumn
-                            dataField="stock"
+                            dataField="file_stock"
                             dataSort
-         
-                            width='15%'
+                            dataAlign="right"
+                            dataFormat={this.renderFileStock}
+                            width='10%'
                           >
                             Stock
                           </TableHeaderColumn>
                           <TableHeaderColumn
                             dataField="revenue"
-                            
-                            dataFormat={this.renderProductRevenue}
+                            dataFormat={this.renderProductPrice}
                             dataSort
-                            
-                            width='15%'
+                            dataAlign="right"
+                            width='10%'
                           >
-                            Revenue
+                            Price
                           </TableHeaderColumn>
                           <TableHeaderColumn
                             dataField="id"
                             dataAlign="right"
+                            width='20%'
                             dataFormat={this.renderOptions}
                           >
                             Options

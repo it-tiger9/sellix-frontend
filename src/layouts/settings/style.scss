@@ -69,11 +69,6 @@
       box-shadow: 0 0 0 1px rgba(63,63,68,0.05), 0 1px 5px 0 rgba(63,63,68,0.15);
     }
   
-  
-    .sidebar .nav-dropdown.open > .nav-dropdown-toggle::before {
-      transform: rotate(90deg);
-    }
-  
     .settings-sidebar {
       width: 120px;
       .nav-link {
@@ -154,16 +149,16 @@
           }
         }
   
-        .nav-dropdown-toggle:before {
-          content: '>';
-          background-image: none;
-          width: initial;
-          height: initial;
-          margin-top: 0px;
-          font-weight: 600;
-          font-family: monospace;
-          top: 1px;
-        }
+        // .nav-dropdown-toggle:before {
+        //   content: '>';
+        //   background-image: none;
+        //   width: initial;
+        //   height: initial;
+        //   margin-top: 0px;
+        //   font-weight: 600;
+        //   font-family: monospace;
+        //   top: 1px;
+        // }
         .nav-link:hover,
         .nav-link.active {
           background-color: transparent;

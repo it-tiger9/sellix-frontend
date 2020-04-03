@@ -3,6 +3,12 @@
     color: #20a8d8;
   }
 
+  .provided-custom-table {
+    .react-bs-table {
+      padding: 0 !important;
+    }
+  }
+
   p {
     color: #A7A5B4;
   }

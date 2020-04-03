@@ -11,7 +11,6 @@ const renderShowsTotal = (start, to, total) => {
 
 export const tableOptions = () => {
     return {
-        onRowClick: () => {},
         paginationPosition: 'bottom',
         page: 1,
         sizePerPage: 5,  // which size per page you want to locate as default

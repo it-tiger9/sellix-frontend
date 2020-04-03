@@ -93,6 +93,7 @@ class CreateCategories extends React.Component {
     this.setState({loading: true})
     this.props.actions.createCategory(values).then(res => {
       this.props.commonActions.tostifyAlert('success', res.message)
+      this.props.history.goBack()
     }).catch(err => {
       this.props.commonActions.tostifyAlert('error', err.message)
     }).finally(() => {
@@ -204,9 +205,9 @@ class CreateCategories extends React.Component {
                             </Col>
                           </Row>
                           <Row>
-                            <Col lg={4}>
+                            <Col lg={12}>
                               <FormGroup className="mb-3">
-                                <Label htmlFor="product_code">Image</Label>
+                                <Label htmlFor="product_code">Image <small className="font-italic">(optional)</small></Label>
                                 <ImageUpload addFile={(file) => {
                                   props.handleChange('image')(file[0]); 
                                   this.addFile(file)}} files={files}/>
@@ -246,7 +247,7 @@ class CreateCategories extends React.Component {
                                       Unlisted &nbsp;<span href="#" id="unlistedTooltip"><i className="fa fa-question-circle"></i></span>
                                       <Tooltip placement="right" isOpen={tooltipOpen} target="unlistedTooltip" 
                                         toggle={this.unlistedTooltipToggle.bind(this)}>
-                                        This product won't show on your user profile page
+                                        This category won't be shown on your user profile page
                                       </Tooltip>
                                     </label>
                                   </div>
