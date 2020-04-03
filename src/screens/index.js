@@ -43,7 +43,7 @@ import EditCoupon from './coupons/screens/create'
 import ReplyToQuerie from './queries/screens/reply'
 
 import PaypalPaying from './paypal_paying'
-import BitcoinPaying from './bitcoin_paying'
+import Invoice from './invoice'
 import SecurityPage from './security'
 import Notification from './notification'
 import Payments from './payments'
@@ -69,6 +69,7 @@ export {
   ForgotPassword,
   ResetPassword,
   TwoFactorAuthentication,
+  Invoice,
 
   EditCoupon,
   Product,
@@ -102,7 +103,6 @@ export {
   ShopProducts,
   ShopProductDetail,
   PaypalPaying,
-  BitcoinPaying,
   BlackList,
   CreateBlacklist,
   OrderDetail,

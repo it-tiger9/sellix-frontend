@@ -35,7 +35,8 @@ import './style.scss'
 
 const mapStateToProps = (state) => {
   return ({
-    version: state.common.version
+    version: state.common.version,
+    is_authed: state.auth.is_authed
   })
 }
 const mapDispatchToProps = (dispatch) => {

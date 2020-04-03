@@ -69,16 +69,17 @@ class Reports extends React.Component {
   }
 
   renderPeriod (cell, row) { 
-      const fromDate = moment(new Date(row.from_time*1000/1)).format('MMM DD, YY')
-      const toDate = moment(new Date(row.to_time*1000/1)).format('MMM DD, YY')
+      const fromDate = moment(new Date(row.from_time*1000/1)).format('MMM DD, YYYY')
+      const toDate = moment(new Date(row.to_time*1000/1)).format('MMM DD, YYYY')
 
       return (
         <div>
-          <a onClick={(e) => window.open(`${config.API_ROOT_URL}/analytics/pdf/${row.secret}/${row.uniqid}`, '_blank')}>
+          <a>
             {fromDate} - {toDate}</a>
         </div>
       )  
   }
+  
 
   renderRevenue(cell, row) {
     return(<p>${row.revenue}</p>)
@@ -157,7 +158,9 @@ class Reports extends React.Component {
                     <Col lg={12}>
                       <div>
                         <BootstrapTable
-                          options={ tableOptions() }
+                          options={{...tableOptions(), onRowClick: (row) => {
+                            window.open(`${config.API_ROOT_URL}/analytics/pdf/${row.secret}/${row.uniqid}`, '_blank')}
+                          }}
                           data={report_list}
                           version="4"
                           pagination
@@ -167,6 +170,14 @@ class Reports extends React.Component {
                         >
                           <TableHeaderColumn
                             isKey
+                            dataField="uniqid"
+                            dataSort
+                            dataFormat={this.uniqid}
+                            width="10%"
+                          >
+                            ID
+                          </TableHeaderColumn>
+                          <TableHeaderColumn
                             dataField="from_time"
                             dataSort
                             dataFormat={this.renderPeriod}

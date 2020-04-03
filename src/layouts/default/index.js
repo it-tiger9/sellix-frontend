@@ -35,7 +35,8 @@ import './style.scss'
 
 const mapStateToProps = (state) => {
   return ({
-    version: state.common.version
+    version: state.common.version,
+    is_authed: state.auth.is_authed
   })
 }
 const mapDispatchToProps = (dispatch) => {
@@ -54,7 +55,9 @@ class DefaultLayout extends React.Component {
   }
 
   componentDidMount () {
-      this.props.authActions.getSelfUser()
+      this.props.authActions.getSelfUser().catch(err => {
+        this.props.authActions.logOut()
+      })
       const toastifyAlert = (status, message) => {
         if (!message) {
           message = 'Unexpected Error'
@@ -102,7 +105,7 @@ class DefaultLayout extends React.Component {
             <div className="app">
               <AppHeader fixed>
                 <Suspense fallback={Loading()}>
-                  <Header {...this.props} theme={theme} changeTheme={this.changeTheme.bind(this)} />
+                  <Header {...this.props} theme={theme} changeTheme={this.changeTheme.bind(this)} isShop={true}/>
                 </Suspense>
               </AppHeader>
               

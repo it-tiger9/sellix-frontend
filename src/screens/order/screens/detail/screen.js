@@ -121,10 +121,7 @@ class OrderDetail extends React.Component {
                             <p className="title">Coupon</p>
                             <p>No Coupon</p>
                           </div>
-                          <div className="d-flex">
-                            <p className="title">Risk Level</p>
-                            <p className="risk-level">15%</p>
-                          </div>
+                          
                           
                         </Col>
                         <Col lg={6}>
@@ -136,10 +133,7 @@ class OrderDetail extends React.Component {
                             <p className="title">Payment Details</p>
                             <p>BTC</p>
                           </div>
-                          <div className="d-flex">
-                            <p className="title">Fee</p>
-                            <p>$0.00 USD</p>
-                          </div>
+                          
                           <div className="d-flex">
                               <p className="title">IP Address</p>
                               <p>138.197.31.58 <span className="proxy-label">VPN/Proxy</span></p>
@@ -237,7 +231,7 @@ class OrderDetail extends React.Component {
                     :
                     <Row className="mt-3">
                       <Col lg={12}>
-                        <FormGroup className="mb-4">
+                        <FormGroup className="mb-2">
                           <Label className="title">Provided Custom Fields</Label>
                         </FormGroup>
                       </Col>
@@ -248,7 +242,7 @@ class OrderDetail extends React.Component {
                           version="4"
                           pagination
                           totalSize={product_list ? product_list.length : 0}
-                          className="product-table"
+                          className="provided-custom-table"
                           trClassName="cursor-pointer"
                         >
                           <TableHeaderColumn

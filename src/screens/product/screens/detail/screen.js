@@ -89,6 +89,7 @@ const EDITOR_FORMATS = [
   'header', 'font', 'size',
   'bold', 'italic', 'underline', 'strike', 'blockquote',
   'list', 'bullet', 'indent',
+  'link', 'image'
 ]
 
 const EDITOR_MODULES  = {
@@ -97,7 +98,8 @@ const EDITOR_MODULES  = {
     [{size: []}],
     ['bold', 'italic', 'underline', 'strike', 'blockquote'],
     [{'list': 'ordered'}, {'list': 'bullet'}, 
-     {'indent': '-1'}, {'indent': '+1'}],
+	 {'indent': '-1'}, {'indent': '+1'}],
+	['link', 'image'],
     ['clean']
   ],
   clipboard: {
@@ -205,7 +207,7 @@ class EditProduct extends React.Component {
 
 	addCustomField() {
 		const custom_fields = Object.assign([], this.state.custom_fields)
-		custom_fields.push({custom_name: '', custom_type: CUSTOM_TYPE[0], custom_required: false})
+		custom_fields.push({name: '', type: CUSTOM_TYPE[0], required: false})
 
 		this.setState({custom_fields: custom_fields})
 	}
@@ -230,7 +232,7 @@ class EditProduct extends React.Component {
 		delete gateways['']
 		values.gateways = Object.keys(gateways).filter(key => { return gateways[key]}).toString()
 		values.custom_fields = JSON.stringify({
-			data: custom_fields.map(field => { return {...field, custom_type: field.custom_type.value}})
+			custom_fields: custom_fields.map(field => { return {...field, type: field.type.value}})
 		})
 		values.file_stock = showFileStock?values.file_stock:-1
 
@@ -257,13 +259,13 @@ class EditProduct extends React.Component {
       this.props.actions.getProductByID(this.id).then(res => {
         let product = res.data.product
         let gateways = {}
-        let custom_fields = JSON.parse(product.custom_fields)['data']
+        let custom_fields = JSON.parse(product.custom_fields)['custom_fields'] || []
         let type = TYPE_OPTIONS.filter(type => type.value==product.type)
 
 
         custom_fields = custom_fields.map(field => { 
-          let c_type = CUSTOM_TYPE.filter(type => type.value==field.custom_type)
-          return {...field, custom_type: c_type[0]}
+          let c_type = CUSTOM_TYPE.filter(type => type.value==field.type)
+          return {...field, type: c_type[0]}
         })
 
         product.gateways.split(',').map(key => {
@@ -416,7 +418,7 @@ class EditProduct extends React.Component {
 																					<div className="invalid-feedback">{props.errors.price}</div>
 																				)}
 																			</div>
-																			
+																			<div style={{marginLeft: -10}}>
 																			<Select
 																				className="currency-select"
 																				options={CURRENCY_LIST}
@@ -436,6 +438,7 @@ class EditProduct extends React.Component {
 																			{props.errors.products_bound && props.touched.products_bound && (
 																				<div className="invalid-feedback">{props.errors.products_bound}</div>
 																			)}
+																			</div>
 																			</div>
 																		</FormGroup>
 																	</Col>
@@ -659,7 +662,7 @@ class EditProduct extends React.Component {
 																{showFileStock && type.value === 'file' && <Row>
 																	<Col lg={4}>
 																		<FormGroup>
-																			<Label htmlFor="product_code">Stock Amount</Label>
+																			<Label htmlFor="product_code">Stock Amount <small className="font-italic">(leave <b>-1</b> for unlimited times)</small></Label>
 																			<Input type="number" id="file_stock" name="file_stock"
 																				min={-1}
 																				value={props.values.file_stock}
@@ -754,15 +757,15 @@ class EditProduct extends React.Component {
 																	</Col>
 																</Row>
 																<Row>
-																	<Col lg={8}>
+																	<Col lg={12}>
 																		<FormGroup className="mb-3">
-																			<Label htmlFor="product_code">Image(optional)</Label>
+																			<Label htmlFor="product_code">Image <small className="font-italic">(optional)</small></Label>
 																			<ImageUpload addFile={(file) => {
 																			props.handleChange('image')(file[0]); 
 																			this.addImages(file)}} files={images}/>
 																		</FormGroup>
 																		<FormGroup className="mb-3">
-																			<Label htmlFor="product_code">Note to Customer(optional)</Label>
+																			<Label htmlFor="product_code">Note to Customer <small className="font-italic">(optional)</small></Label>
 																			<Input
 																				type="text"
 																				id="delivery_text"
@@ -777,7 +780,7 @@ class EditProduct extends React.Component {
 																<Row>
 																	<Col lg={12}>
 																		<FormGroup className="mb-0">
-																			<Label htmlFor="product_code" style={{width: '100%'}}>Custom Fields(optional)</Label>
+																			<Label htmlFor="product_code" style={{width: '100%'}}>Custom Fields <small className="font-italic">(optional)</small></Label>
 																		</FormGroup>
 																	</Col>
 
@@ -789,8 +792,8 @@ class EditProduct extends React.Component {
 																						<Col lg={4}>
 																							<FormGroup className="mb-3">
 																								<Label htmlFor="product_code" style={{width: '100%', fontSize: 13}}>Name</Label>
-																								<Input type="text" value={field.custom_name} onChange={(e) => {
-																									this.saveCustomField(e.target.value, index, 'custom_name')
+																								<Input type="text" value={field.name} onChange={(e) => {
+																									this.saveCustomField(e.target.value, index, 'name')
 																								}}/>
 																							</FormGroup>
 																						</Col>
@@ -798,9 +801,9 @@ class EditProduct extends React.Component {
 																							<FormGroup className="mb-3">
 																								<Label htmlFor="product_code" style={{width: '100%', fontSize: 13}}>Type</Label>
 																								<Select options={CUSTOM_TYPE} 
-																									value={field.custom_type}
+																									value={field.type}
 																									onChange={(option) => {
-																										this.saveCustomField(option, index, 'custom_type')
+																										this.saveCustomField(option, index, 'type')
 																									}}
 																								/>
 																							</FormGroup>
@@ -813,9 +816,9 @@ class EditProduct extends React.Component {
 																										style={{width: 50, marginTop: 10}}
 																										variant={'pill'} 
 																										color={'primary'}
-																										checked={field.custom_required}
+																										checked={field.required}
 																										onChange={(e) => {
-																											this.saveCustomField(e.target.checked, index, 'custom_required')
+																											this.saveCustomField(e.target.checked, index, 'required')
 																										}}
 																										size="sm"/>
 																									<a onClick={(e) => this.deleteCustomField(e, index)} style={{fontSize: 20}}>
@@ -956,7 +959,7 @@ class EditProduct extends React.Component {
 												}
 											</CardBody>
 											<Button color="primary" type="submit" className="" style={{width: 200}}disabled={loading || saving}
-                    >{saving ?<Spin/>:'Save Product' }</Button>
+                    							>{saving ?<Spin/>:'Save Product' }</Button>
 											
 										</Card>
 									</Form> )}

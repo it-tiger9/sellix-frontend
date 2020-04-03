@@ -1,6 +1,6 @@
 import {
     PaypalPaying,
-    BitcoinPaying,
+    Invoice,
     ShopProductDetail
   } from 'screens'
   
@@ -13,7 +13,7 @@ import {
     {
       path: '/payment/invoice/:id',
       name: 'Bitcoin',
-      component: BitcoinPaying.screen
+      component: Invoice.screen
     },
     {
       path: '/payment/checkout/:id',
