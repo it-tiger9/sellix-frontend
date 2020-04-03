@@ -871,7 +871,7 @@ class CreateProduct extends React.Component {
 																					<span href="#" id="privateTooltip"><i className="fa fa-question-circle"></i></span>
 																					<Tooltip placement="right" isOpen={privateTooltipOpen} target="privateTooltip" 
 																						toggle={this.privateTooltipToggle.bind(this)}>
-																						Private
+																						Only you can access this product
 																					</Tooltip>
 																				</label>
 																			</div>
