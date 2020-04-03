@@ -76,8 +76,9 @@ class LeaveFeedback extends React.Component {
                       <div className="mb-4 feedback-radioGroup">
                         <ButtonToolbar aria-label="Toolbar with button groups">
                           <ButtonGroup className="mr-2 feedback-radioGroup" aria-label="First group">
-                            <Button onClick={() => props.setFieldValue('feedback', 'like')}type='button'><i className="fa fa-thumbs-up fa-lg mr-3" style={{ color: '#2BB224' }}></i></Button>
-                            <Button onClick={() => props.setFieldValue('feedback', 'dislike')} type='button'><i className="fa fa-thumbs-down fa-lg mr-3" style={{ color: '#B22424' }}></i></Button>
+                            <Button onClick={() => props.setFieldValue('feedback', 'positive')}type='button'><i className="fa fa-thumbs-up fa-lg mr-3" style={{ color: '#2BB224' }}></i></Button>
+                            <Button onClick={() => props.setFieldValue('feedback', 'negative')} type='button'><i className="fa fa-thumbs-down fa-lg mr-3" style={{ color: '#B22424' }}></i></Button>
+                            <Button onClick={() => props.setFieldValue('feedback', 'neutral')} type='button'><i className="fas fa-hand-paper fa-lg mr-3" style={{ color: '#A7A5B4' }}></i></Button>
                           </ButtonGroup>
                         </ButtonToolbar>
                       </div>

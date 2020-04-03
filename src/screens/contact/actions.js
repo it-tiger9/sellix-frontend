@@ -1,7 +1,8 @@
 import { CONTACT } from 'constants/types'
 import {
   api,
-  authApi
+  authApi,
+  formData
 } from 'utils'
 
 export const getContactList = (obj) => {
@@ -60,6 +61,27 @@ export const getContactList = (obj) => {
           transactionType: 'TEMP'
         }]
       }
+    })
+  }
+}
+
+
+export const createQuery = (query) => {
+  return (dispatch) => {
+    let data = {
+      method: 'POST',
+      url: `/queries/create`,
+      data: formData(query)
+    }
+
+    return authApi(data).then(res => {
+      if (res.status === 200) {
+        return res
+      } else {
+        throw res
+      }
+    }).catch(err => {
+      throw err
     })
   }
 }

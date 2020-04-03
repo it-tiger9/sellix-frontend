@@ -27,6 +27,10 @@ export const BLACKLIST = {
   BLACKLIST_LIST: 'BLACKLIST'
 }
 
+export const QUERIES = {
+  QUERIES_LIST: 'QUERIES'
+}
+
 export const COUPONS = {
   COUPONS: 'COUPONS_FETCH_SUCCESS'
 }

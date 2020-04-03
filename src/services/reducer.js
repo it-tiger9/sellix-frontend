@@ -16,6 +16,7 @@ import {
   Notification,
   Categories,
   BlackList,
+  Queries,
   Coupons,
   Feedbacks,
   Reports
@@ -24,6 +25,7 @@ import {
 
 const reducer = combineReducers({
   common: CommonReducer,
+  queries: Queries.reducer,
   auth: AuthReducer,
   blacklist: BlackList.reducer,
   coupons: Coupons.reducer,
