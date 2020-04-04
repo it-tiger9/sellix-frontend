@@ -123,7 +123,7 @@ class Product extends React.Component {
       row.type
     ) {
       return (
-        <div className="badge badge-normal">
+        <div className="badge badge-normal" style={{ margin: '0 auto'}}>
           {row.type}
         </div>
       )  
@@ -202,7 +202,7 @@ class Product extends React.Component {
                         onChange={(e) => {
                           this.setState({search_key: e.target.value})
                         }}
-                      ></Input>
+                      />
                     </div>
                     <Button className="ml-3" color="primary" onClick={() => this.props.history.push(`/${user}/products/all/new`)}>
                       Add Product</Button>
@@ -243,6 +243,7 @@ class Product extends React.Component {
                           <TableHeaderColumn
                             dataField="type"
                             dataFormat={this.renderProductType}
+                            dataAlign="center"
                             dataSort
                             width='10%'
                           >
@@ -251,7 +252,7 @@ class Product extends React.Component {
                           <TableHeaderColumn
                             dataField="file_stock"
                             dataSort
-                            dataAlign="right"
+                            dataAlign="center"
                             dataFormat={this.renderFileStock}
                             width='10%'
                           >

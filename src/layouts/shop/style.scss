@@ -95,6 +95,12 @@
         position:  relative !important;
     }
 
+    footer {
+        background: none;
+        border-top: none;
+        justify-content: center;
+        flex-shrink: 0;
+    }
     .footer-report a,
     .footer-report a:hover {
         text-decoration: none !important;
@@ -120,6 +126,12 @@
         max-width: 1250px;
         margin: 0 auto;
         width: 100%;
+        flex: 1 0 auto;
+        display: flex;
+
+        & > section + div {
+            flex: 1 0 auto;
+        }
     }
 
     span {

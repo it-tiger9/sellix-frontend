@@ -68,7 +68,7 @@ class ShopFeedback extends React.Component {
                 </Col>
               </Row>
             :
-              <Row className="pt-3">
+              <Row className="py-3">
                 {
                   user_feedback.map(feedback => 
                     <Col lg={3}>
