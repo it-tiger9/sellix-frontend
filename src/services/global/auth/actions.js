@@ -169,10 +169,6 @@ export const requestNewPassword = (obj) => {
     }
     return api(data).then(res => {
       if(res && res.status == 200) {
-        dispatch({
-          type: AUTH.NOTIFICATION,
-          data: res.message
-        })
         return res
       } else throw res
     }).catch(err => {
@@ -191,9 +187,28 @@ export const resetPassword = (obj) => {
     }
     return api(data).then(res => {
       if(res && res.status == 200) {
+        return res
+      } else throw res
+    }).catch(err => {
+      throw err
+    })
+  }
+}
+
+
+
+export const getUserSettings = () => {
+  return (dispatch) => {
+    let data = {
+      method: 'get',
+      url: '/self/settings',
+    }
+
+    return authApi(data).then(res => {
+      if(res && res.status == 200) {
         dispatch({
-          type: AUTH.NOTIFICATION,
-          data: res.message
+          type: AUTH.USER_SETTINGS,
+          payload: res.data.settings
         })
         return res
       } else throw res

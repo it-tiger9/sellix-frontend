@@ -244,6 +244,7 @@ class Product extends React.Component {
                             dataField="type"
                             dataFormat={this.renderProductType}
                             dataSort
+                            dataAlign="center"
                             width='10%'
                           >
                             Type
@@ -251,7 +252,7 @@ class Product extends React.Component {
                           <TableHeaderColumn
                             dataField="file_stock"
                             dataSort
-                            dataAlign="right"
+                            dataAlign="center"
                             dataFormat={this.renderFileStock}
                             width='10%'
                           >
@@ -261,7 +262,7 @@ class Product extends React.Component {
                             dataField="revenue"
                             dataFormat={this.renderProductPrice}
                             dataSort
-                            dataAlign="right"
+                            dataAlign="center"
                             width='10%'
                           >
                             Price

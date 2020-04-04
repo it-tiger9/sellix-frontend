@@ -174,7 +174,7 @@ class Blacklist extends React.Component {
               OPTIONS
             </TableHeaderColumn>
           </BootstrapTable>
-          <Card>
+          {/* <Card>
             <CardBody>
               <div className="flex-wrapper align-items-center">
                 <h1 className="title">Blacklist</h1>
@@ -226,7 +226,7 @@ class Blacklist extends React.Component {
                 </Col>
               </Row>
             </CardBody>
-          </Card>
+          </Card> */}
         </div>
       </div>
     )
