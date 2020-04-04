@@ -165,14 +165,53 @@ table tbody td p {
   }
   .react-bs-table-pagination {
     margin-bottom: 1rem;
+
+    & .total-items {
+      color: black;
+      display: flex;
+      align-items: center;
+      height: 100%;
+      margin-bottom: 0
+    }
+
     ul {
       margin-bottom: 0px;
     }
     .btn.dropdown-toggle {
       border-radius: 0 !important;
     }
+    .page-item {
+      &.active {
+        &:hover {
+          .page-link{
+            background-color: #a6a4b4;
+            color: #613BEA !important;
+            transition: all .3s ease;
+            border-radius: 8px !important;
+          }
+        }
+      }
+      margin: 0 .3rem;
+
+      &:first-child {
+        .page-link {
+          border-radius: 8px !important;
+        }
+      }
+    }
     .page-link {
-      border-radius: 0 !important;
+      border-radius: 8px !important;
+      font-size: 13px;
+      padding: .5rem .9rem;
+      & span {
+        font-size: 13px;
+      }
+
+      & i {
+        font-size: 15px;
+        position: relative;
+        top: 2px;
+      }
     }
   }
 }
@@ -245,10 +284,48 @@ th {
     display: none !important;
   }
 }
-.Select-menu-outer {
-  border-radius: 0px !important;
-  z-index: 9 !important
+.Select.is-focused:not(.is-open) > .Select-control {
+  box-shadow: none !important;
 }
+.Select.is-open > .Select-control {
+  border-bottom-right-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}
+.Select-menu-outer {
+  border-bottom-left-radius: 8px !important;
+  border-bottom-right-radius: 8px !important;
+  z-index: 9 !important;
+  background-color: #201d3c !important;
+  border: 1px solid #1c173d !important;
+  border-top-color: #201d3c !important;
+  box-shadow: none !important;
+
+  .Select-menu {
+    border-bottom-left-radius: 8px !important;
+    border-bottom-right-radius: 8px !important;
+  }
+
+  .Select-option{
+    color: #211d3d;
+    background: #fefefe;
+    padding: .75rem 1.25rem;
+
+    &.is-selected {
+      background-color: #e8e1ff;
+      color: #1c173d;
+    }
+    &.is-focused {
+      background-color: #e8e1ff;
+      color: #1c173d;
+    }
+  }
+}
+
+.Select--multi .Select-value-icon {
+  padding: 0 10px 0 !important;
+  font-size: 1.1rem;
+}
+
 .select-default-width {
   .Select-menu-outer {
     width: calc(100% - 1px) !important;
@@ -256,6 +333,89 @@ th {
 }
 .select-min-width {
   min-width: 200px;
+}
+
+.Select--single {
+  .Select-placeholder,
+  .Select-value
+  {
+    padding-left: 22px !important;
+    line-height: 43px;
+    font-size: 14px;
+  }
+
+  .Select-value-label {
+    line-height: 43px;
+    font-size: 14px;
+  }
+}
+
+.Select--multi {
+  &.has-value {
+    .Select-multi-value-wrapper {
+      margin: 8px 0;
+    }
+  }
+  .Select-placeholder {
+    padding-left: 22px !important;
+    line-height: 43px;
+    font-size: 14px;
+  }
+  .Select-value {
+    margin-left: 10px;
+    margin-bottom: 4px;
+    margin-top: 4px;
+  }
+
+  .Select-value-label {
+    padding: 4px 10px;
+  }
+}
+
+.Select-control {
+  height: 45px !important;
+  background-color: #FCFCFE !important;
+  border: 1px solid #F5F5F5 !important;
+  border-radius: 10px !important;
+
+
+  // vertical-align: middle;
+
+
+  // .Select-placeholder,
+  // .Select-control .Select-value{
+  //     padding-left: 22px !important;
+  //     line-height: 48px !important;
+  // }
+
+  // .Select-multi-value-wrapper {
+
+  //     .Select-value {
+  //         margin-top: 10px !important;
+  //     }
+  // }
+
+  // .Select-value{
+  //     span {
+
+  //     }
+  // }
+
+  // .Select-input {
+
+  // }
+
+  input {
+    padding-top: 0px !important;
+    margin-left: 12px !important;
+    line-height: 3em !important;
+    width: 100% !important;
+    font-size: 14px;
+  }
+}
+
+.Select-control:hover {
+  box-shadow: none !important;
 }
 
 
@@ -336,6 +496,18 @@ th {
 
 // toast notification styles
 
-.Toastify__toast {
-  margin-top: 50px !important;
+.Toastify .Toastify__toast {
+  margin-top: 2.2rem;
+  padding: 1.2rem 2rem;
+  border-radius: 5px;
+  min-height: auto;
 }
+
+.Toastify .Toastify__toast-container {
+  width: auto;
+}
+
+.Toastify__close-button {
+  display: none;
+}
+
