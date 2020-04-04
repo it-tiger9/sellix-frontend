@@ -50,21 +50,26 @@ class ImageUpload extends React.Component {
 
     return (
       <div className="image-uploader">
-        <Dropzone 
+        <Dropzone
             multiple={false}
             accept="image/*"
-            onDrop={(accepted, rejected) => this.onDrop(accepted, rejected)}>
+            onDrop={(accepted, rejected) => this.onDrop(accepted, rejected)}
+        >
             {({getRootProps, getInputProps}) => (
-                Object.keys(files).length !== 0 ? (
-                    files.map((file, index) => <aside key={index}>{thumbs}</aside>)
-                  ) : (
-                    <div {...getRootProps()} className="drag-drop-area">
-                        <input {...getInputProps()} />
-                        <i className="fas fa-file-upload mb-2"/><br/>
-                        <p className="caption">Drag and drop files here</p>
-                        <p className="warning">{this.state.warningMsg}</p>
-                    </div>
-                  )
+                <div>
+                  {
+                    Object.keys(files).length !== 0 ? (
+                        files.map((file, index) => <aside key={index}>{thumbs}</aside>)
+                    ) : (
+                        <div {...getRootProps()} className="drag-drop-area">
+                          <input {...getInputProps()} />
+                          <i className="fas fa-file-upload mb-2"/><br/>
+                          <p className="caption">Drag and drop files here</p>
+                          <p className="warning">{this.state.warningMsg}</p>
+                        </div>
+                    )
+                  }
+                </div>
             )}
         </Dropzone>
         
