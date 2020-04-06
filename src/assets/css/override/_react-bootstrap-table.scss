@@ -1,0 +1,129 @@
+.react-bs-table {
+  &-container {
+    margin-bottom: 15px !important;
+  }
+
+  border-radius: 0 !important;
+  border-top-width: 2px !important;
+  border-left: none !important;
+  border-right: none !important;
+  border-top: none !important;
+  padding: 30px 20px!important;
+  background-color: white !important;
+  border-radius: 10px !important;
+  border-bottom: none !important;
+  margin-bottom: 30px;
+  line-height: 1.5;
+
+  td {
+    vertical-align: top;
+    border-left: 0px !important;
+    border-right: 0px !important;
+    font-size: 13px;
+    .btn-group {
+      position: inherit !important;
+    }
+    .btn-brand {
+      border-radius: 0.25rem !important;
+    }
+  }
+
+  th {
+    text-transform: uppercase !important;
+    border-bottom-width: 1px !important;
+    border-left: 0px !important;
+    border-right: 0px !important;
+    font-size: 14px !important;
+    text-transform: initial !important;
+    color: #A7A5B4 !important;
+    font-weight: 600 !important;
+  }
+
+  &-tool-bar {
+    .btn {
+      border-radius: 0 !important;
+    }
+  }
+
+  &-search-form {
+    margin-bottom: 15px !important;
+  }
+
+  &-pagination {
+    margin-bottom: 1rem;
+    font-size: 12px;
+    padding: 0 20px;
+    background-color: transparent !important;
+    align-items: center;
+
+    a {
+      background-color: transparent;
+      border: none !important;
+      &:hover {
+        background-color: transparent;
+      }
+    }
+
+    & .total-items {
+      color: black;
+      display: flex;
+      align-items: center;
+      height: 100%;
+      margin-bottom: 0
+    }
+
+    ul {
+      margin-bottom: 0;
+    }
+
+    .btn.dropdown-toggle {
+      border-radius: 0 !important;
+    }
+
+    .page-item {
+      margin: 0 .3rem;
+
+      &.active {
+        &:hover {
+          .page-link{
+            background-color: #a6a4b4;
+            color: #613BEA !important;
+            transition: all .3s ease;
+            border-radius: 8px !important;
+          }
+        }
+      }
+
+      &:first-child {
+        .page-link {
+          border-radius: 8px !important;
+        }
+      }
+
+      .page-link {
+        border-radius: 8px !important;
+        font-size: 13px;
+        padding: .5rem .9rem;
+        & span {
+          font-size: 13px;
+        }
+
+        & i {
+          font-size: 15px;
+          position: relative;
+          top: 2px;
+        }
+      }
+    }
+  }
+}
+
+td {
+  padding: 0.60rem !important;
+}
+
+th {
+  padding: 0.60rem !important;
+}
+
+

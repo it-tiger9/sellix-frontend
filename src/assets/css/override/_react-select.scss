@@ -1,0 +1,168 @@
+.create-product-screen .Select.is-focused.Select--single {
+  .Select-control {
+    box-shadow: none !important;
+  }
+}
+
+.Select {
+
+  &.is-focused:not(.is-open) > .Select-control {
+    box-shadow: none !important;
+  }
+
+  &.is-focused.Select--single {
+    .Select-control {
+      box-shadow: 0 0 0 0.2rem rgba(97, 59, 234, 0.25) !important;
+    }
+  }
+
+  .Select-noresults {
+    padding: .75rem 1.25rem;
+  }
+
+  &.is-focused:not(.is-searchable) .Select-input {
+    padding: 0;
+    width: 0 !important;
+  }
+
+  &.is-open > .Select-control {
+    border-bottom-right-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+  }
+
+  &.is-invalid > .Select-control {
+      border:1px solid #f86c6b !important;
+  }
+
+  &-menu-outer {
+    border-bottom-left-radius: 8px !important;
+    border-bottom-right-radius: 8px !important;
+    z-index: 9 !important;
+    background-color: #585385 !important;
+    border: 1px solid #1c173d !important;
+    border-top-color: #201d3c !important;
+    box-shadow: none !important;
+
+    .Select-menu {
+      border-bottom-left-radius: 6px !important;
+      border-bottom-right-radius: 6px !important;
+    }
+
+    .Select-option{
+      color: #211d3d;
+      background: #e8e1ff;
+      padding: .75rem 1.25rem;
+
+      &.is-selected {
+        background-color: #1c173d;
+        color: white;
+      }
+      &.is-focused {
+        background-color: #f0f0f0;
+        color: #211d3d;
+      }
+      &.is-focused.is-selected {
+        background-color: #211d3d;
+        color: #b4aebc;
+      }
+    }
+  }
+
+
+  &--single {
+
+    .Select-placeholder, .Select-value {
+      padding-left: 22px !important;
+      line-height: 43px;
+      font-size: 14px;
+
+      &-label {
+        line-height: 43px;
+        font-size: 14px;
+      }
+    }
+  }
+
+
+  &-control {
+    border-radius: 0 !important;
+    height: 45px !important;
+    background-color: #FCFCFE !important;
+    border: 1px solid #F5F5F5 !important;
+    border-radius: 10px !important;
+
+      &:hover {
+        box-shadow: none !important;
+      }
+
+      input {
+        padding-top: 0 !important;
+        margin-left: 12px !important;
+        line-height: 3em !important;
+        width: 100% !important;
+        font-size: 14px;
+      }
+
+    .Select-clear-zone {
+      display: none !important;
+    }
+  }
+
+
+  &--multi {
+    &.is-focused {
+      box-shadow: 0 0 0 0.2rem rgba(97, 59, 234, 0.25);
+      border-radius: 8px;
+    }
+
+    &.has-value {
+      .Select-multi-value-wrapper {
+        margin: 0;
+      }
+    }
+    .Select-multi-value-wrapper {
+      padding-top: 10px;
+    }
+
+    .Select-placeholder {
+      padding-left: 22px !important;
+      line-height: 43px;
+      font-size: 14px;
+    }
+
+    .Select-input {
+      input {
+        padding-bottom: 0;
+        height: calc(100% - 5px);
+      }
+    }
+
+    div.Select-value {
+      margin-left: 10px;
+      margin-bottom: 10px;
+      margin-top: 0;
+
+      &-label {
+        padding: 4px 10px;
+      }
+      &-icon {
+        padding: 0 10px 0 !important;
+        font-size: 1.1rem;
+      }
+    }
+  }
+}
+
+
+.select-default-width {
+  .Select-menu-outer {
+    width: calc(100% - 1px) !important;
+  }
+}
+
+.select-min-width {
+  min-width: 200px;
+}
+
+
+

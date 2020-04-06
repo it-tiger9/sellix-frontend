@@ -1,0 +1,162 @@
+.react-datepicker__input-container > input {
+  outline: 0;
+  min-height: 45px !important;
+  background-color: #FCFCFE;
+  border: 1px solid #F5F5F5 !important;
+  padding: 0 25px;
+  border-radius: 10px !important;
+  font-size: 14px !important;
+}
+
+
+.react-datepicker-popper[data-placement^="bottom"] .react-datepicker__triangle, .react-datepicker-popper[data-placement^="bottom"] .react-datepicker__triangle::before {
+  border-bottom-color: #e8e1ff !important;
+}
+.react-datepicker-popper[data-placement^="top"] .react-datepicker__triangle, .react-datepicker-popper[data-placement^="top"] .react-datepicker__triangle::before {
+  border-top-color: #e8e1ff !important;
+}
+
+
+.react-datepicker-popper[data-placement^="left"] .react-datepicker__triangle, .react-datepicker-popper[data-placement^="left"] .react-datepicker__triangle::before {
+  border-bottom-color: #e8e1ff !important;
+}
+.react-datepicker-popper[data-placement^="right"] .react-datepicker__triangle, .react-datepicker-popper[data-placement^="right"] .react-datepicker__triangle::before {
+  border-top-color: #e8e1ff !important;
+}
+
+
+.react-datepicker-popper {
+  background: transparent;
+  box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 3px 3px -2px rgba(0, 0, 0, 0.12) !important;
+
+  .react-datepicker {
+    border-radius: 4px;
+    border: none;
+
+
+    &__triangle::before {
+      box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 3px 3px -2px rgba(0, 0, 0, 0.12) !important;
+      border: none !important;
+    }
+
+    &__header {
+      border-bottom: 0;
+      border-radius: 4px 4px 0 0;
+      background: #e8e1ff;
+      padding-top: .75rem;
+    }
+
+    &__day--keyboard-selected {
+      border-radius: 0 !important;
+    }
+
+    &__day {
+      &:hover {
+        border-radius: 5px !important;
+      }
+    }
+
+
+    &__day--disabled,
+    &__month-text--disabled,
+    &__quarter-text--disabled {
+      color: #b4aebc !important;
+    }
+
+    &__day--selected,
+    &__day--in-selecting-range,
+    &__day--in-range,
+    &__month-text--selected,
+    &__month-text--in-selecting-range,
+    &__month-text--in-range,
+    &__quarter-text--selected,
+    &__quarter-text--in-selecting-range,
+    &__quarter-text--in-range {
+      background: #211d3d;
+      color: white !important;
+      font-weight: bold;
+    }
+
+    &__day--selected:hover,
+    &__day--in-selecting-range:hover,
+    &__day--in-range:hover,
+    &__month-text--selected:hover,
+    &__month-text--in-selecting-range:hover,
+    &__month-text--in-range:hover,
+    &__quarter-text--selected:hover,
+    &__quarter-text--in-selecting-range:hover,
+    &__quarter-text--in-range:hover {
+      background: #211d3d;
+    }
+
+    &__day--selected:focus,
+    &__day--in-selecting-range:focus,
+    &__day--in-range:focus,
+    &__month-text--selected:focus,
+    &__month-text--in-selecting-range:focus,
+    &__month-text--in-range:focus,
+    &__quarter-text--selected:focus,
+    &__quarter-text--in-selecting-range:focus,
+    &__quarter-text--in-range:focus {
+      outline: none;
+      box-shadow: 0 0 0 0.2rem rgba(97, 59, 234, 0.25);
+    }
+
+
+    &__current-month,
+    &-time__header,
+    &-year-header {
+      color: #211d3d;
+    }
+
+    &__navigation {
+      top: .75rem;
+
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 0.2rem rgba(97, 59, 234, 0.25);
+        border-radius: 3px;
+      }
+
+
+      &--next {
+        border-left-color: #211d3d;
+
+        &:hover {
+          border-left-color: #211d3d;
+        }
+      }
+
+      &--previous {
+        border-right-color: #211d3d;
+
+        &:hover {
+          border-right-color: #211d3d;
+        }
+      }
+    }
+
+
+    &__day-names {
+      padding-top: .5rem;
+      padding-bottom: .3rem;
+      color: #211d3d;
+    }
+
+    &__day-name,
+    &__day,
+    &__time-name {
+      color: #211d3d;
+      height: 36px;
+      width: 32px;
+      line-height: 36px;
+      font-size: 12px;
+      margin: 0;
+
+      &:focus {
+        box-shadow: 0 0 0 0.2rem rgba(97, 59, 234, 0.25);
+        border-radius: 3px;
+      }
+    }
+  }
+}
