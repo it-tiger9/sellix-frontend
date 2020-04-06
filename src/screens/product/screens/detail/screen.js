@@ -428,6 +428,7 @@ class EditProduct extends React.Component {
 																						id="currency"
 																						name="currency"
 																						placeholder="USD"
+																						searchable={false}
 																						value={props.values.currency}
 																						onChange={(option) => {
 																							props.handleChange("currency")(option.value);
@@ -622,7 +623,8 @@ class EditProduct extends React.Component {
 																			<Label htmlFor="product_code">Type</Label>
 																			<Select 
 																				placeholder="Type" 
-																				options={TYPE_OPTIONS} 
+																				options={TYPE_OPTIONS}
+																				searchable={false}
 																				className="mb-3"
 																				value={this.state.type}
 																				onChange={(option) => {
@@ -685,7 +687,8 @@ class EditProduct extends React.Component {
 																				<Label htmlFor="product_code">Stock Delimiter</Label>
 																				<Select 
 																					placeholder="Type" 
-																					options={DELIMITER_OPTIONIS} 
+																					options={DELIMITER_OPTIONIS}
+																					searchable={false}
 																					className="mb-3"
 																					value={this.state.delimiter}
 																					onChange={(option) => {
@@ -803,7 +806,8 @@ class EditProduct extends React.Component {
 																						<Col lg={4}>
 																							<FormGroup className="mb-3">
 																								<Label htmlFor="product_code" style={{width: '100%', fontSize: 13}}>Type</Label>
-																								<Select options={CUSTOM_TYPE} 
+																								<Select options={CUSTOM_TYPE}
+																								        searchable={false}
 																									value={field.type}
 																									onChange={(option) => {
 																										this.saveCustomField(option, index, 'type')

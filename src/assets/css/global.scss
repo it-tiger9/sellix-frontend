@@ -16,6 +16,7 @@
 }
 
 
+
 p, span, label, a, div, input, select, textarea, form {
   font-family: Poppins;
 }
@@ -59,21 +60,22 @@ h1, h2, h3, h4, h5, h6, th, button {
   display: block;
 }
 
-div.Select.is-invalid {
-  .Select-control {
-    border:1px solid #f86c6b !important;
-  }
-}
-
-
-
 
 table tbody td p {
   font-size: 12px !important;
 }
 
 
-
+.image-uploader .drag-drop-area {
+  transition: background-color .2s ease;
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(97, 59, 234, 0.25);
+  }
+  &:hover {
+    background-color: #342f57 !important;
+  }
+}
 
 // card styles
 .card {
@@ -98,15 +100,14 @@ table tbody td p {
   border-radius: 0 !important;
 }
 
+
+
 .tab-card {
   background: #ffffff !important;
 }
 .tab-content {
   border-radius: 0 !important;
 }
-
-
-
 
 
 
@@ -121,393 +122,16 @@ table tbody td p {
 }
 
 
+@import "override/modal";
+@import "override/react-autosuggest";
+@import "override/react-bootstrap-daterangepicker";
+@import "override/react-bootstrap-table";
+@import "override/react-datepicker";
+@import "override/react-select";
+@import "override/react-toastify";
 
 
 
 
 
-
-
-
-// react-bootstrap-table styles
-.react-bs-table-container {
-  margin-bottom: 15px !important;
-  .react-bs-table {
-    border-radius: 0 !important;
-    border-top-width: 2px !important;
-    border-left: none !important;
-    border-right: none !important;
-    td {
-      vertical-align: top;
-      border-left: 0px !important;
-      border-right: 0px !important;
-      .btn-group {
-        position: inherit !important;
-      }
-      .btn-brand {
-        border-radius: 0.25rem !important;
-      }
-    }
-    th {
-      text-transform: uppercase !important;
-      border-bottom-width: 1px !important;
-      border-left: 0px !important;
-      border-right: 0px !important;
-    }
-  }
-  .react-bs-table-tool-bar {
-    .btn {
-      border-radius: 0 !important;
-    }
-    .react-bs-table-search-form {
-      margin-bottom: 15px !important;
-    }
-  }
-  .react-bs-table-pagination {
-    margin-bottom: 1rem;
-
-    & .total-items {
-      color: black;
-      display: flex;
-      align-items: center;
-      height: 100%;
-      margin-bottom: 0
-    }
-
-    ul {
-      margin-bottom: 0px;
-    }
-    .btn.dropdown-toggle {
-      border-radius: 0 !important;
-    }
-    .page-item {
-      &.active {
-        &:hover {
-          .page-link{
-            background-color: #a6a4b4;
-            color: #613BEA !important;
-            transition: all .3s ease;
-            border-radius: 8px !important;
-          }
-        }
-      }
-      margin: 0 .3rem;
-
-      &:first-child {
-        .page-link {
-          border-radius: 8px !important;
-        }
-      }
-    }
-    .page-link {
-      border-radius: 8px !important;
-      font-size: 13px;
-      padding: .5rem .9rem;
-      & span {
-        font-size: 13px;
-      }
-
-      & i {
-        font-size: 15px;
-        position: relative;
-        top: 2px;
-      }
-    }
-  }
-}
-
-td {
-  padding: 0.60rem !important;
-}
-
-th {
-  padding: 0.60rem !important;
-}
-
-
-
-
-
-
-
-
-// modal styles
-
-.modal-open {
-  overflow: auto !important;
-}
-
-.modal-dialog {
-  border-radius: 10px !important;
-  border:none !important;
-  .modal-content {
-    border: none !important;
-    border-radius: 10px !important;
-    .modal-header {
-      background-color: white;
-      color: black;
-      font-size: 18px;
-      padding: 30px 25px;
-      border-bottom: none !important;
-      button.close {
-        span {
-          color: black;
-        }
-      }
-    }
-    .modal-body {
-      padding: 0px 25px;
-      border-radius: 0 !important;
-    }
-    .modal-footer {
-      padding: 30px 25px;
-      border-top: none !important;
-      border-radius: 0 !important;
-      button {
-        height: 45px !important;
-      }
-    }
-  }
-}
-
-
-
-
-
-
-
-
-// react-select styles
-.Select-control {
-  border-radius: 0px !important;
-  .Select-clear-zone {
-    display: none !important;
-  }
-}
-.Select.is-focused:not(.is-open) > .Select-control {
-  box-shadow: none !important;
-}
-.Select.is-open > .Select-control {
-  border-bottom-right-radius: 0 !important;
-  border-bottom-left-radius: 0 !important;
-}
-.Select-menu-outer {
-  border-bottom-left-radius: 8px !important;
-  border-bottom-right-radius: 8px !important;
-  z-index: 9 !important;
-  background-color: #201d3c !important;
-  border: 1px solid #1c173d !important;
-  border-top-color: #201d3c !important;
-  box-shadow: none !important;
-
-  .Select-menu {
-    border-bottom-left-radius: 8px !important;
-    border-bottom-right-radius: 8px !important;
-  }
-
-  .Select-option{
-    color: #211d3d;
-    background: #fefefe;
-    padding: .75rem 1.25rem;
-
-    &.is-selected {
-      background-color: #e8e1ff;
-      color: #1c173d;
-    }
-    &.is-focused {
-      background-color: #e8e1ff;
-      color: #1c173d;
-    }
-  }
-}
-
-.Select--multi .Select-value-icon {
-  padding: 0 10px 0 !important;
-  font-size: 1.1rem;
-}
-
-.select-default-width {
-  .Select-menu-outer {
-    width: calc(100% - 1px) !important;
-  }
-}
-.select-min-width {
-  min-width: 200px;
-}
-
-.Select--single {
-  .Select-placeholder,
-  .Select-value
-  {
-    padding-left: 22px !important;
-    line-height: 43px;
-    font-size: 14px;
-  }
-
-  .Select-value-label {
-    line-height: 43px;
-    font-size: 14px;
-  }
-}
-
-.Select--multi {
-  &.has-value {
-    .Select-multi-value-wrapper {
-      margin: 8px 0;
-    }
-  }
-  .Select-placeholder {
-    padding-left: 22px !important;
-    line-height: 43px;
-    font-size: 14px;
-  }
-  .Select-value {
-    margin-left: 10px;
-    margin-bottom: 4px;
-    margin-top: 4px;
-  }
-
-  .Select-value-label {
-    padding: 4px 10px;
-  }
-}
-
-.Select-control {
-  height: 45px !important;
-  background-color: #FCFCFE !important;
-  border: 1px solid #F5F5F5 !important;
-  border-radius: 10px !important;
-
-
-  // vertical-align: middle;
-
-
-  // .Select-placeholder,
-  // .Select-control .Select-value{
-  //     padding-left: 22px !important;
-  //     line-height: 48px !important;
-  // }
-
-  // .Select-multi-value-wrapper {
-
-  //     .Select-value {
-  //         margin-top: 10px !important;
-  //     }
-  // }
-
-  // .Select-value{
-  //     span {
-
-  //     }
-  // }
-
-  // .Select-input {
-
-  // }
-
-  input {
-    padding-top: 0px !important;
-    margin-left: 12px !important;
-    line-height: 3em !important;
-    width: 100% !important;
-    font-size: 14px;
-  }
-}
-
-.Select-control:hover {
-  box-shadow: none !important;
-}
-
-
-
-
-// react autosuggest styles
-.react-autosuggest__input {
-  border-color: #ccc !important;
-  border-radius: 0px !important;
-}
-
-
-
-
-// react-datepicker styles
-.react-datepicker-popper {
-  background: #ffffff !important;
-  box-shadow: 0px 1px 8px 0px rgba(0,0,0,0.2), 0px 3px 4px 0px rgba(0,0,0,0.14),
-    0px 3px 3px -2px rgba(0,0,0,0.12) !important;
-  .react-datepicker__triangle::before {
-    box-shadow: 0px 1px 8px 0px rgba(0,0,0,0.2), 0px 3px 4px 0px rgba(0,0,0,0.14),
-      0px 3px 3px -2px rgba(0,0,0,0.12) !important;
-    border: none !important;
-  }
-  .react-datepicker {
-    border-radius: 0px !important;
-    border: none !important;
-    .react-datepicker__header {
-      border-bottom: 0px !important;
-      border-radius: 0px !important;
-    }
-    .react-datepicker__day--keyboard-selected {
-      border-radius: 0px !important;
-    }
-    .react-datepicker__day:hover {
-      border-radius: 0px !important;
-    }
-  }
-}
-
-
-// react date range picker styles
-@media (min-width: 564px) {
-  .daterangepicker .drp-calendar.right {
-    padding-left: 0 !important;
-  }
-}
-
-.react-bootstrap-daterangepicker-container {
-  width: 100%;
-}
-.daterangepicker {
-  border-radius: 0px !important;
-  border: none !important;
-  box-shadow: 0px 1px 8px 0px rgba(0,0,0,0.2), 0px 3px 4px 0px rgba(0,0,0,0.14),
-    0px 3px 3px -2px rgba(0,0,0,0.12) !important;
-  .applyBtn {
-    border-radius: 0px !important;
-  }
-  .start-date {
-    border-radius: 0px !important;
-  }
-  .end-date {
-    border-radius: 0px !important;
-  }
-}
-.daterangepicker::before {
-  box-shadow: 0px 1px 8px 0px rgba(0,0,0,0.2), 0px 3px 4px 0px rgba(0,0,0,0.14),
-      0px 3px 3px -2px rgba(0,0,0,0.12) !important;
-  border: none !important;
-}
-
-
-
-
-
-
-
-// toast notification styles
-
-.Toastify .Toastify__toast {
-  margin-top: 2.2rem;
-  padding: 1.2rem 2rem;
-  border-radius: 5px;
-  min-height: auto;
-}
-
-.Toastify .Toastify__toast-container {
-  width: auto;
-}
-
-.Toastify__close-button {
-  display: none;
-}
 
