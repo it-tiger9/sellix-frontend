@@ -46,38 +46,58 @@ class DateRangePicker2 extends React.Component{
     this.props.getDate(picker)
   }
 
-  render() {
-    let nick_key = null
+  picker = null;
+  nick_key = null;
 
-    if(this.props.ranges)
-      Object.keys(this.props.ranges).map((key) => {
-        if(this.state.startDate.format('YYYY-MM-DD') === this.props.ranges[key][0].format('YYYY-MM-DD') && 
-          this.state.endDate.format('YYYY-MM-DD') === this.props.ranges[key][1].format('YYYY-MM-DD')){
-          nick_key = key
-          return true
+  render() {
+
+    let { opens, getDate, ranges } = this.props;
+    let { endDate, startDate } = this.state;
+
+    if(ranges) {
+      Object.keys(ranges).map((key) => {
+        if(startDate.format('YYYY-MM-DD') === ranges[key][0].format('YYYY-MM-DD') && endDate.format('YYYY-MM-DD') === ranges[key][1].format('YYYY-MM-DD')){
+          this.nick_key = key
         }
       })
+    }
 
-    if(this.state.startDate !== null && nick_key === null)
-      nick_key = this.state.startDate.format('ll') + ' - ' + this.state.endDate.format('ll')
+    if(startDate !== null && this.nick_key === null) {
+      this.nick_key = startDate.format('ll') + ' - ' + endDate.format('ll')
+    }
 
     return (
       <div className={"datepicker2 " + this.props.className || ''}>
         <i className="fas fa-calendar mr-2"/>
-        <DateRangePicker 
-          startDate={this.state.startDate} 
-          endDate={this.state.endDate}
-          showDropdowns
-          opens={this.props.opens || 'right'}
-          {...this.props}
+        <DateRangePicker
+          startDate={startDate}
+          endDate={endDate}
+          ranges={ranges}
+          locale={{
+            direction: "ltr",
+            format: "MMM DD, YYYY",
+            separator: " - ",
+            applyLabel: "Apply",
+            cancelLabel: "Cancel",
+            weekLabel: "W",
+            customRangeLabel: "Custom Range",
+            daysOfWeek: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
+            monthNames: moment().localeData('en').months(),
+            firstDay: 0
+          }}
+          opens={opens || 'right'}
           className="is-invalid"
-          getDate={this.props.getDate}
+          getDate={getDate}
+
           showClearDates={true}
-          withProtal={true}
-          onApply={(e, picker) => this.handleEvent(e, picker)}>
+          showDropdowns={true}
+
+          onApply={(e, picker) => this.handleEvent(e, picker)}
+          onCancel={(e, picker) => this.handleEvent(e, picker)}
+        >
           <ButtonDropdown className="date-select" toggle={()=>{}}>
             <DropdownToggle caret>
-              {nick_key}
+              {this.nick_key}
             </DropdownToggle>
           </ButtonDropdown>
         </DateRangePicker>
