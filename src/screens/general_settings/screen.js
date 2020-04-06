@@ -23,6 +23,15 @@ import * as ProductActions from './actions'
 import './style.scss'
 
 
+const CURRENCY_OPTIONS = [
+	{ value: 'USD', label: 'US Dollar (USD)' },
+]
+
+const TIMEAONES = [
+	{ value: 'GMT+00:00', label: '(GMT+00:00) London' },
+]
+
+
 const mapStateToProps = (state) => {
   return ({
     product_list: state.product.product_list
@@ -139,17 +148,19 @@ class GeneralSettings extends React.Component {
                         <Col lg={6}>
                           <FormGroup>
                             <Label>Currency</Label>
-                            <Select/>
+                            <Select options={CURRENCY_OPTIONS} className="mb-2"/>
+                            <small>Analytics and Reports will show the total/partial revenue in US dollars, your products will be sold with the currency you choose when you create one.</small>
                           </FormGroup>
                         </Col>
                         <Col lg={6}>
                           <FormGroup>
                             <Label>Timezone</Label>
-                            <Select/>
+                            <Select options={TIMEAONES} className="mb-2"/>
+                            <small>Currently our default timezone for invoices, orders, analytics and basic events is determined by the UTC primary time standard, more options will come in the future.</small>
                           </FormGroup>
                         </Col>
                       </Row>
-                      <Row>
+                      {/* <Row>
                         <Col lg={12}>
                           <FormGroup>
                             <Label>API Key</Label>
@@ -167,15 +178,7 @@ class GeneralSettings extends React.Component {
                             <Select/>
                           </FormGroup>
                         </Col>
-                      </Row>
-                      <Row>
-                        <Col lg={12}>
-                          <FormGroup className="mb-3">
-                            <Label htmlFor="product_code">Image</Label>
-                            <ImageUpload  addFile={this.addFile} files={files}/>
-                          </FormGroup>
-                        </Col>
-                      </Row>
+                      </Row> */}
                       
                     </Col>
                   </Row>

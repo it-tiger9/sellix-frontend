@@ -65,7 +65,7 @@ class SettingsLayout extends React.Component {
       this.props.history.push('/login')
     } else {
       this.props.authActions.getSelfUser().then(() => {
-        this.props.authActions.getUserSettings()
+        
       }).catch(err => {
         this.props.authActions.logOut()
         this.props.history.push('/login')

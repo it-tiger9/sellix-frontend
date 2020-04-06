@@ -37,8 +37,14 @@ class TwoFactorModal extends React.Component {
     this.props.closeModal()
   }
 
+
+  onNext() {
+    this.props.onNext()
+    this.props.closeModal()
+  }
+
   render() {
-    const { openModal, closeModal } = this.props
+    const { openModal, closeModal, onNext } = this.props
 
     return (
       <div className="">
@@ -62,7 +68,7 @@ class TwoFactorModal extends React.Component {
                     <QRCode value="hey" />,
                   </ModalBody>
                   <ModalFooter className="justify-content-start">
-                    <Button color="primary" type="submit" className="mr-2">Next</Button>
+                    <Button color="primary" type="submit" className="mr-2" onClick={this.onNext.bind(this)}>Next</Button>
                   </ModalFooter>
               </Form>
               )}

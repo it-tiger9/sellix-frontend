@@ -145,7 +145,7 @@ class Product extends React.Component {
   renderFileStock(cell, row) {
     return (
       <p>
-        {row.file_stock == -1? <span style={{fontSize:  20}}>∞</span>:row.file_stock}
+        {row.file_stock == -1 ? <span style={{fontSize:  20}}>∞</span>:row.file_stock}
       </p>
     ) 
   }
@@ -236,7 +236,7 @@ class Product extends React.Component {
                             dataField="uniqid"
                             dataFormat={this.renderProductInfo}
                             dataSort
-                            width='50%'
+                            width='44%'
                           >
                             Info
                           </TableHeaderColumn>
@@ -245,8 +245,7 @@ class Product extends React.Component {
                             dataFormat={this.renderProductType}
                             dataAlign="center"
                             dataSort
-                            dataAlign="center"
-                            width='10%'
+                            width='13%'
                           >
                             Type
                           </TableHeaderColumn>
@@ -255,7 +254,7 @@ class Product extends React.Component {
                             dataSort
                             dataAlign="center"
                             dataFormat={this.renderFileStock}
-                            width='10%'
+                            width='13%'
                           >
                             Stock
                           </TableHeaderColumn>
@@ -264,14 +263,14 @@ class Product extends React.Component {
                             dataFormat={this.renderProductPrice}
                             dataSort
                             dataAlign="center"
-                            width='10%'
+                            width='13%'
                           >
                             Price
                           </TableHeaderColumn>
                           <TableHeaderColumn
                             dataField="id"
                             dataAlign="right"
-                            width='20%'
+                            width='17%'
                             dataFormat={this.renderOptions}
                           >
                             Options

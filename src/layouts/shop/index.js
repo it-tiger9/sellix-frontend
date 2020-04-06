@@ -138,30 +138,30 @@ class ShopLayout extends React.Component {
                   </section>
 
                   <div style={{backgroundColor: '#F5F5FE'}}>
-                  <div className=" shop-content p-3">
-                      <Container className="p-0" fluid>
-                          <Suspense fallback={Loading()}>
-                              <ToastContainer position="top-right" autoClose={5000} style={containerStyle} />
-                              <Switch>
-                                  {
-                                      shopRoutes.map((prop, key) => {
-                                          if (prop.redirect)
-                                              return <Redirect from={prop.path} to={prop.pathTo} key={key} />
-                                          return (
-                                              <Route
-                                                  path={prop.path}
-                                                  component={prop.component}
-                                                  key={key}
-                                                  exact={true}
-                                              />
-                                          )
-                                      })
-                                  }
-                              </Switch>
-                          </Suspense>
+                    <div className="main p-3">
+                        <Container className="p-0" fluid>
+                            <Suspense fallback={Loading()}>
+                                <ToastContainer position="top-right" autoClose={5000} style={containerStyle} />
+                                <Switch>
+                                    {
+                                        shopRoutes.map((prop, key) => {
+                                            if (prop.redirect)
+                                                return <Redirect from={prop.path} to={prop.pathTo} key={key} />
+                                            return (
+                                                <Route
+                                                    path={prop.path}
+                                                    component={prop.component}
+                                                    key={key}
+                                                    exact={true}
+                                                />
+                                            )
+                                        })
+                                    }
+                                </Switch>
+                            </Suspense>
 
-                      </Container>
-                  </div>
+                        </Container>
+                    </div>
                 </div>
                 </div>
 

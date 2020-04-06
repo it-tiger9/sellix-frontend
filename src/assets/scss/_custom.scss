@@ -439,6 +439,11 @@ table td a:hover {
     max-width: 1800px !important;
 }
 
+
+.react-datepicker__input-container input, .form-control {
+    width: 100%;
+}
+
 .react-bs-table table {
     table-layout: auto;
   }

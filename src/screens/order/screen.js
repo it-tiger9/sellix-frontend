@@ -97,7 +97,7 @@ class Order extends React.Component {
       row.status
     ) {
       return (
-        <div className={`badge badge-${row.status.toLowerCase()}`}>
+        <div className={`badge badge-${row.status.toLowerCase()}`} style={{ textTransform: 'lowercase', margin: '0 auto'}}>
           {row.status}
         </div>
       )  
@@ -194,12 +194,13 @@ class Order extends React.Component {
                             dataField="email"
                             dataFormat={this.renderOrderInfo}
                             dataSort
-                            width='50%'
+                            width='45%'
                           >
                             Info
                           </TableHeaderColumn>
                           <TableHeaderColumn
                             dataField="status"
+                            dataAlign="center"
                             dataFormat={this.renderOrderStatus}
                             dataSort
                             width='20%'
@@ -208,8 +209,10 @@ class Order extends React.Component {
                           </TableHeaderColumn>
                           <TableHeaderColumn
                             dataField="value"
+                            dataAlign="center"
                             dataSort
                             dataFormat={this.renderOrderValue}
+                            width='20%'
                           >
                             Value
                           </TableHeaderColumn>
@@ -218,6 +221,7 @@ class Order extends React.Component {
                             dataAlign="right"
                             dataFormat={this.renderOrderTime}
                             dataSort
+                            width='15%'
                           >
                             Time
                           </TableHeaderColumn>
