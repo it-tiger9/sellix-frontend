@@ -46,64 +46,46 @@ class DateRangePicker2 extends React.Component{
     this.props.getDate(picker)
   }
 
-  picker = null;
-  nick_key = null;
-
   render() {
+    let nick_key = null
 
-    let { opens, getDate, ranges } = this.props;
-    let { endDate, startDate } = this.state;
-
-    if(ranges) {
-      Object.keys(ranges).map((key) => {
-        if(startDate.format('YYYY-MM-DD') === ranges[key][0].format('YYYY-MM-DD') && endDate.format('YYYY-MM-DD') === ranges[key][1].format('YYYY-MM-DD')){
-          this.nick_key = key
+    if(this.props.ranges) {
+      Object.keys(this.props.ranges).map((key) => {
+        if(this.state.startDate.format('YYYY-MM-DD') === this.props.ranges[key][0].format('YYYY-MM-DD') &&
+            this.state.endDate.format('YYYY-MM-DD') === this.props.ranges[key][1].format('YYYY-MM-DD')){
+          nick_key = key
+          return true
         }
       })
     }
 
-    if(startDate !== null && this.nick_key === null) {
-      this.nick_key = startDate.format('ll') + ' - ' + endDate.format('ll')
+    if(this.state.startDate !== null && nick_key === null) {
+      nick_key = this.state.startDate.format('ll') + ' - ' + this.state.endDate.format('ll')
     }
 
     return (
-      <div className={"datepicker2 " + this.props.className || ''}>
-        <i className="fas fa-calendar mr-2"/>
-        <DateRangePicker
-          startDate={startDate}
-          endDate={endDate}
-          ranges={ranges}
-          locale={{
-            direction: "ltr",
-            format: "MMM DD, YYYY",
-            separator: " - ",
-            applyLabel: "Apply",
-            cancelLabel: "Cancel",
-            weekLabel: "W",
-            customRangeLabel: "Custom Range",
-            daysOfWeek: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
-            monthNames: moment().localeData('en').months(),
-            firstDay: 0
-          }}
-          opens={opens || 'right'}
-          className="is-invalid"
-          getDate={getDate}
+        <div className={"datepicker2 " + this.props.className || ''}>
+          <i className="fas fa-calendar mr-2"/>
+          <DateRangePicker
+              startDate={this.state.startDate}
+              endDate={this.state.endDate}
+              showDropdowns
+              showClearDates
+              opens={this.props.opens || 'right'}
+              ranges={this.props.ranges}
+              className="is-invalid"
+              getDate={this.props.getDate}
+              onApply={(e, picker) => this.handleEvent(e, picker)}
+          >
+            <ButtonDropdown className="date-select" toggle={()=>{}}>
+              <DropdownToggle caret>
+                {nick_key}
+              </DropdownToggle>
+            </ButtonDropdown>
+          </DateRangePicker>
 
-          showClearDates={true}
-          showDropdowns={true}
+        </div>
 
-          onApply={(e, picker) => this.handleEvent(e, picker)}
-          onCancel={(e, picker) => this.handleEvent(e, picker)}
-        >
-          <ButtonDropdown className="date-select" toggle={()=>{}}>
-            <DropdownToggle caret>
-              {this.nick_key}
-            </DropdownToggle>
-          </ButtonDropdown>
-        </DateRangePicker>
-
-      </div>
-      
     );
   }
 }
