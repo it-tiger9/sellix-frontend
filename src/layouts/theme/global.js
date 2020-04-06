@@ -1,7 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyles = createGlobalStyle`
-    h1, h2, h3, h4, h5, p, label, span, a, th, td, input, select {
+    h1, h2, h3, h4, h5, p, label, span, a, th, td, input, select, textarea, .Select-placeholder {
         color: ${({ theme }) => theme.text} !important;
     }
     .admin-container {

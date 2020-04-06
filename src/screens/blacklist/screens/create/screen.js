@@ -10,32 +10,25 @@ import {
   Col,
   FormGroup,
   Label,
-  Tooltip,
   Form,
-  Input
+  Input,
 } from 'reactstrap'
 import Select from 'react-select'
 import { Loader } from 'components'
 import { Formik } from 'formik'
-import * as _ from 'lodash'
-import {
-  CommonActions
-} from 'services/global'
+import { CommonActions } from 'services/global'
 import { createBlacklist } from './actions'
 import { getBlacklist } from '../../actions'
 import { editBlacklist } from '../detail/actions'
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
-
+import find from 'lodash/find'
 import './style.scss'
+import * as Yup from "yup";
 
 const user = window.localStorage.getItem('userId')
 
-const mapStateToProps = (state) => {
-  return ({
-    blacklist_list: state.blacklist.blacklist_list
-  })
-}
-const mapDispatchToProps = (dispatch) => {
+const mapStateToProps = ({ blacklist: { blacklist_list } }) => ({ blacklist_list })
+const mapDispatchToProps = dispatch => {
   return ({
     commonActions: bindActionCreators(CommonActions, dispatch),
     actions: bindActionCreators({ getBlacklist }, dispatch),
@@ -44,33 +37,28 @@ const mapDispatchToProps = (dispatch) => {
   })
 }
 
-const MockDataType = [
-  { label: 'email', value: 'email' }
+const TYPE_OPTIONS = [
+  { label: 'Email', value: 'email' },
+  { label: 'IP', value: 'ip' },
+  { label: 'Country', value: 'country' },
 ]
 
-const MockData = [
-  { label: 'emailForBlackList@gmail.com', value: 'emailForBlackList@gmail.com' },
-  { label: 'testing@gmail.com', value: 'testing@gmail.com'}
-]
 
 class CreatePage extends React.Component {
 
   constructor(props) {
-    super(props)
+    super(props);
+
+    let initialValues = this.isEdit() ? find(props.blacklist_list, item => item.uniqid === props.match.params.id) : {
+      type: '',
+      data: '',
+      note: '',
+    };
+
     this.state = {
       loading: false,
-      tooltipOpen: false,
-      files: [],
+      initialValues: initialValues,
     }
-  }
-
-  componentWillUnmount() {
-    // Make sure to revoke the data uris to avoid memory leaks
-    this.state.files.forEach(file => URL.revokeObjectURL(file.preview));
-  }
-
-  unlistedTooltipToggle() {
-    this.setState({ tooltipOpen: !this.state.tooltipOpen })
   }
 
   componentDidMount() {
@@ -93,17 +81,25 @@ class CreatePage extends React.Component {
         pathname: `/${user}/blacklist`
       })
     }).catch(err => {
-      this.props.commonActions.tostifyAlert('error', err.message)
+      this.props.commonActions.tostifyAlert('error', err.error || err.message)
     }).finally(() => {
       this.setState({ loading: false })
     })
   }
 
   render() {
-    const { loading } = this.state
-    let initialValues = this.isEdit() 
-      ? _.find(this.props.blacklist_list, item => item.uniqid === this.props.match.params.id)
-      : {}
+
+    const { loading, initialValues } = this.state;
+
+    const validateIP = ip => {
+      if (/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(ip)) {
+        return true
+      } else {
+        this.props.commonActions.tostifyAlert('error', 'IP address incorrect')
+        return false
+      }
+    };
+
     return (
       <div className="create-pages-screen mt-3">
         <div className="animated fadeIn">
@@ -113,13 +109,15 @@ class CreatePage extends React.Component {
             </BreadcrumbItem>
           </Breadcrumb>
           <Formik
-            initialValues={
-              initialValues
-            }
-            enableReinitialize={true}
-            onSubmit={(values) => {
-              this.handleSubmit(values)
-            }}>{props => (
+              initialValues={initialValues}
+              onSubmit={(values) => this.handleSubmit(values)}
+              validationSchema={Yup.object().shape({
+                type: Yup.string().required('Type is required'),
+                data: Yup.string().required('Specify data to be blocked'),
+                note: Yup.string().required('Note is required'),
+              })}
+          >
+            {props => (
               <Form onSubmit={props.handleSubmit}>
                 <Card>
                   <CardHeader>
@@ -146,12 +144,21 @@ class CreatePage extends React.Component {
                                   <Label htmlFor="product_code">Type</Label>
                                   <Select
                                     placeholder="Type"
-                                    options={MockDataType}
+                                    options={TYPE_OPTIONS}
                                     onChange={(option) => {
                                       props.setFieldValue('type', option.value)
                                     }}
                                     value={props.values.type}
+                                    className={
+                                      props.errors.type && props.touched.type
+                                          ? "is-invalid"
+                                          : ""
+                                    }
+                                    searchable={false}
                                   />
+                                  {props.errors.type && props.touched.type && (
+                                      <div className="invalid-feedback">{props.errors.type}</div>
+                                  )}
                                 </FormGroup>
                               </Col>
                             </Row>
@@ -159,14 +166,20 @@ class CreatePage extends React.Component {
                               <Col lg={12}>
                                 <FormGroup className="mb-3">
                                   <Label htmlFor="product_code">Blocked Data</Label>
-                                  <Select
-                                    placeholder="Blocked Data"
-                                    options={MockData}
-                                    onChange={(option) => {
-                                      props.setFieldValue('data', option.value)
-                                    }}
-                                    value={props.values.data}
+                                  <Input
+                                      placeholder="Blocked Data"
+                                      name="data"
+                                      onChange={props.handleChange}
+                                      value={props.values.data}
+                                      className={
+                                        props.errors.data && props.touched.data
+                                            ? "is-invalid"
+                                            : ""
+                                      }
                                   />
+                                  {props.errors.data && props.touched.data && (
+                                      <div className="invalid-feedback">{props.errors.data}</div>
+                                  )}
                                 </FormGroup>
                               </Col>
                             </Row>
@@ -176,10 +189,20 @@ class CreatePage extends React.Component {
                                   <Label htmlFor="product_code">Note</Label>
                                   <Input
                                     placeholder="Note"
+                                    type="textarea"
                                     name="note"
+                                    rows={6}
                                     onChange={props.handleChange}
                                     value={props.values.note}
+                                    className={
+                                      props.errors.note && props.touched.note
+                                          ? "is-invalid"
+                                          : ""
+                                    }
                                   />
+                                  {props.errors.note && props.touched.note && (
+                                      <div className="invalid-feedback">{props.errors.note}</div>
+                                  )}
                                 </FormGroup>
                               </Col>
                             </Row>

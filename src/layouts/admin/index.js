@@ -93,9 +93,9 @@ class AdminLayout extends React.Component {
 
   changeTheme() {
     const theme = window.localStorage.getItem('theme') || 'light'
-    window.localStorage.setItem('theme', theme == 'light'? 'dark': 'light')
+    window.localStorage.setItem('theme', theme === 'light' ? 'dark': 'light')
 
-    this.setState({theme: theme == 'light'? 'dark': 'light'})
+    this.setState({theme: theme === 'light' ? 'dark': 'light'})
   }
 
   render() {
@@ -106,7 +106,7 @@ class AdminLayout extends React.Component {
     const theme = window.localStorage.getItem('theme') || this.state || 'light'
     console.log(this.props.user)
     return (
-      <ThemeProvider theme={theme=='light'?lightTheme:darkTheme}>
+      <ThemeProvider theme={theme === 'light' ? lightTheme:darkTheme}>
         <GlobalStyles />
         <div className="admin-container">
           <div className="app">
@@ -118,7 +118,7 @@ class AdminLayout extends React.Component {
             <div className="app-body">
               <AppSidebar  className="pt-4 mb-5" fixed display="lg">
                 <Suspense>
-                  <AppSidebarNav navConfig={mainNavigation} {...this.props} router={router}/>
+                  <AppSidebarNav navConfig={mainNavigation} location={this.props.location} router={router}/>
                 </Suspense>
               </AppSidebar>
               <main className="main mb-5">

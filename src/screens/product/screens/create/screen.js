@@ -25,9 +25,7 @@ import * as Yup from "yup";
 import config from 'constants/config'
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 
-import {
-	CommonActions
-} from 'services/global'
+import { CommonActions } from 'services/global'
 
 import './style.scss'
 
@@ -39,10 +37,7 @@ import litecoinIcon from 'assets/images/crypto/ltc.svg'
 import skrillIcon from 'assets/images/crypto/skrill.svg'
 import perfectmoneyIcon from 'assets/images/crypto/perfectmoney.svg'
 
-const mapStateToProps = (state) => {
-	return ({
-	})
-}
+
 const mapDispatchToProps = (dispatch) => {
 	return ({
 		commonActions: bindActionCreators(CommonActions, dispatch),
@@ -386,6 +381,7 @@ class CreateProduct extends React.Component {
 																					onChange={(option) => {
 																						props.handleChange("currency")(option.value);
 																					}}
+																					searchable={false}
 																					className={
 																						props.errors.currency && props.touched.currency
 																							? "is-invalid currency-select"
@@ -578,6 +574,7 @@ class CreateProduct extends React.Component {
 																				options={TYPE_OPTIONS} 
 																				className="mb-3"
 																				value={this.state.type}
+																				searchable={false}
 																				onChange={(option) => {
 																					this.setState({
 																						type: option
@@ -638,7 +635,8 @@ class CreateProduct extends React.Component {
 																				<Label htmlFor="product_code">Stock Delimiter</Label>
 																				<Select 
 																					placeholder="Type" 
-																					options={DELIMITER_OPTIONIS} 
+																					options={DELIMITER_OPTIONIS}
+																					searchable={false}
 																					className="mb-3"
 																					value={this.state.delimiter}
 																					onChange={(option) => {
@@ -758,6 +756,7 @@ class CreateProduct extends React.Component {
 																								<Label htmlFor="product_code" style={{width: '100%', fontSize: 13}}>Type</Label>
 																								<Select options={CUSTOM_TYPE} 
 																									value={field.type}
+																									    searchable={false}
 																									onChange={(option) => {
 																										this.saveCustomField(option, index, 'type')
 																									}}
@@ -928,4 +927,4 @@ class CreateProduct extends React.Component {
 	}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateProduct)
+export default connect(null, mapDispatchToProps)(CreateProduct)
