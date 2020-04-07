@@ -6,7 +6,6 @@ import {
   Button,
   Card,
   CardBody,
-  CardGroup,
   Col,
   Container,
   Form,
@@ -17,63 +16,51 @@ import {
 } from 'reactstrap'
 import { Formik } from 'formik';
 import * as Yup from "yup";
-import { Message } from 'components'
-import ReCaptcha from "@matt-block/react-recaptcha-v2";
-import config from 'constants/config'
 
-import { AuthActions } from 'services/global'
+import { AuthActions, CommonActions } from 'services/global'
 
 import './style.scss'
 
-const mapStateToProps = (state) => {
-  return ({
-  })
-}
-const mapDispatchToProps = (dispatch) => {
-  return ({
-    authActions: bindActionCreators(AuthActions, dispatch)
-  })
-}
+
+const mapDispatchToProps = (dispatch) => ({
+  tostifyAlert: bindActionCreators(CommonActions.tostifyAlert, dispatch),
+  resetPassword: bindActionCreators(AuthActions.resetPassword, dispatch)
+})
 
 class ForgotPassword extends React.Component {
   
   constructor(props) {
-    super(props)
+    super(props);
+
     this.state = {
-      email: '',
-      alert: null,
-      captchaVerify: null,
       emailSent: false
     }
   }
 
-  handleSubmit(data) {
-    data.uniqid = this.props.match.params.id
-    this.props.authActions.resetPassword(data).then(res => {
-      this.setState({
-        alert: null
-      })
+  handleSubmit = (data) => {
 
-      this.setState({
-        emailSent: true,
-        alert: <Message
-          type="success"
-          content="New password has been set successfully. Please login again with your new password"
-        />
-      })
+    let { resetPassword, tostifyAlert, match } = this.props;
+    let { id } = match.params;
 
-    }).catch(err => {
-      this.setState({
-        alert: <Message
-          type="danger"
-          content={err.error}
-        />
-      })
-    })
+    data.uniqid = id;
+
+    resetPassword(data)
+        .then(() => {
+            tostifyAlert('success', "New password has been set successfully. Please login again with your new password")
+        })
+        .catch(err => {
+            tostifyAlert('error', err.error)
+        })
   }
 
   render() {
-    const  {emailSent} = this.state
+
+    let { emailSent } = this.state;
+    let validationSchema = Yup.object()
+        .shape({
+          password: Yup.string()
+            .required('Password is required')
+        })
 
     return (
       <div className="bg-white">
@@ -81,25 +68,15 @@ class ForgotPassword extends React.Component {
           <div className="app flex-row align-items-center">
             <Container>
               <Row className="justify-content-center">
-                <Col md="8">
-                  { this.state.alert }
-                </Col>
-              </Row>
-              <Row className="justify-content-center">
                 <Col lg="6">
                     <Card>
                       <CardBody className="p-5 bg-gray-100">
                         <Formik
-                          initialValues={{password: ''}}
-                          onSubmit={(values) => {
-                            this.handleSubmit(values)
-                          }}
-                          validationSchema={Yup.object().shape({
-                            password: Yup.string()
-                              .required('Password is required'),
-                          })}>
-                            {props => (
-                              <Form onSubmit={props.handleSubmit}>
+                          onSubmit={this.handleSubmit}
+                          validationSchema={validationSchema}
+                        >
+                            {({ handleSubmit, handleChange, values, errors, touched }) => (
+                              <Form onSubmit={handleSubmit}>
                                 <h4 className="text-center mb-4">Reset Password</h4>
                                 <FormGroup className="mb-3">
                                   <Label htmlFor="email">New Password</Label>
@@ -108,25 +85,16 @@ class ForgotPassword extends React.Component {
                                     id="password"
                                     name="password"
                                     placeholder="New Password"
-                                    onChange={props.handleChange}
-                                    value={props.values.password}
-                                    className={
-                                      props.errors.password && props.touched.password
-                                        ? "is-invalid"
-                                        : ""
-                                    }
+                                    onChange={handleChange}
+                                    value={values.password}
+                                    className={errors.password && touched.password ? "is-invalid" : ""}
                                   />
-                                  {props.errors.password && props.touched.password && (
-                                    <div className="invalid-feedback">{props.errors.password}</div>
-                                  )}
+                                  {errors.password && touched.password && <div className="invalid-feedback">{errors.password}</div>}
                                 </FormGroup>
                                 <Row>
                                   <Col lg={12} className="text-center mt-4">
-                                    <Button
-                                      color="primary"
-                                      type="submit"
-                                    >
-                                      {emailSent?'Resend Confirmation Email':'Reset my Password'}
+                                    <Button color="primary" type="submit">
+                                      { emailSent ? 'Resend Confirmation Email' : 'Reset my Password' }
                                     </Button>
                                   </Col>
                                 </Row>
@@ -140,7 +108,8 @@ class ForgotPassword extends React.Component {
                                     </FormGroup>
                                   </Col>
                                 </Row>
-                              </Form> )}
+                              </Form>
+                            )}
                         </Formik>
                       </CardBody>
                     </Card>
@@ -154,4 +123,4 @@ class ForgotPassword extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ForgotPassword)
+export default connect(null, mapDispatchToProps)(ForgotPassword)
