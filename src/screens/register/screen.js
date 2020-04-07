@@ -60,17 +60,18 @@ class Register extends React.Component {
     let obj = Object.assign({}, data)
     delete obj['confirm_password'];
 
-    register(obj).then(res => {
-      tostifyAlert('success', 'You are successfully registered, Please login!')
+    register(obj)
+        .then(res => {
+          tostifyAlert('success', 'You are successfully registered, Please login!')
 
-      if(res.status === 202) {
-        history.push('/2fa')
-      }
+          if(res.status === 202) {
+            history.push('/2fa')
+          }
 
-      return checkAuthStatus()
-    })
-        .then(({ username }) => {
-          history.push(`/${username}/dashboard`)
+          return getSelfUser()
+        })
+        .then(({ data: { user }}) => {
+          history.push(`/${user.username}/dashboard`)
         })
         .catch(err => {
             tostifyAlert('error', err.error)

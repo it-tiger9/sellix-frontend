@@ -42,7 +42,7 @@ class LogIn extends React.Component {
   handleSubmit = (data) => {
 
     let { captchaVerify } = this.state;
-    let { tostifyAlert, twoFactorAuthentication, history } = this.props;
+    let { tostifyAlert, getSelfUser, twoFactorAuthentication, history } = this.props;
 
     if(!captchaVerify) {
       tostifyAlert('error', 'reCAPTCHA verification failed, please try again.')
@@ -53,8 +53,12 @@ class LogIn extends React.Component {
     
     twoFactorAuthentication(data)
         .then(() => {
-            history.push(`/${window.localStorage.getItem('userId')}/dashboard`)
-        }).catch(err => {
+          return getSelfUser()
+        })
+        .then(({ data: { user }}) => {
+          history.push(`/${user.username}/dashboard`)
+        })
+        .catch(err => {
             let errMsg = err.status === 403 ? 'reCAPTCHA verification failed, please try again.' : 'Invalid Code'
             tostifyAlert('error', errMsg)
         })
