@@ -43,6 +43,22 @@ const mapDispatchToProps = (dispatch) => {
   })
 }
 
+const Progress = ({ progress, isPositive, is24 }) => {
+  if(is24) {
+    return (
+        <div className={'progress-indicator'} >
+          <i className={`fas fa-caret-${isPositive ? 'up' : 'down'}`} />
+          {isPositive ?
+              <span>+<b>{progress}</b> %</span> :
+              <span>-<b>{progress}</b> %</span>
+          }
+        </div>
+    )
+  } else {
+    return null
+  }
+}
+
 class Dashboard extends React.Component {
   
   constructor(props) {
@@ -77,6 +93,7 @@ class Dashboard extends React.Component {
                     <CardBody className="p-4">
                       <h3 className="text-primary">$4000.00</h3>
                       <p className="report-title">Revenue</p>
+                      <Progress progress={99.32} is24={true} isPositive={true} />
                     </CardBody>
                   </Card>
                 </Col>
@@ -85,6 +102,7 @@ class Dashboard extends React.Component {
                     <CardBody className="p-4">
                       <h3 className="text-primary">253</h3>
                       <p className="report-title">Orders</p>
+                      <Progress progress={33.21} is24={true} isPositive={false} />
                     </CardBody>
                   </Card>
                 </Col>
@@ -93,6 +111,7 @@ class Dashboard extends React.Component {
                     <CardBody className="p-4">
                       <h3 className="text-primary">397</h3>
                       <p className="report-title">Views</p>
+                      <Progress progress={99.32} is24={true} isPositive={true} />
                     </CardBody>
                   </Card>
                 </Col>
@@ -101,6 +120,7 @@ class Dashboard extends React.Component {
                     <CardBody className="p-4">
                     <h3 className="text-primary">89%</h3>
                       <p className="report-title">Conversion</p>
+                      <Progress progress={99.32} is24={true} isPositive={true} />
                     </CardBody>
                   </Card>
                 </Col>

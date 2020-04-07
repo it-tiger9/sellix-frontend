@@ -307,6 +307,26 @@ table td a:hover {
             font-family: 'Poppins-SemiBold' !important;
             margin-bottom: 0;
         }
+
+        .progress-indicator {
+            display: flex;
+            align-items: center;
+            margin: 1.5rem 0px -0.5rem;
+            font-size: .9rem;
+            white-space: nowrap;
+
+            & i {
+                font-size: 1.3rem;
+                margin-right: .5rem;
+
+                &.fa-caret-up {
+                    color: #2BB224;
+                }
+                &.fa-caret-down {
+                    color: #B22424;
+                }
+            }
+        }
     }
 }
 

@@ -201,6 +201,8 @@ div.daterangepicker {
               font-size: .944rem;
               margin-right: .5rem;
               width: auto;
+              text-align-last: center;
+              text-align: center;
 
               &:focus {
                 outline: none;
@@ -292,7 +294,11 @@ div.daterangepicker {
   }
 
   .drp-selected {
-    display: none;
+    //display: none;
+    color: #201d3c !important;
+    font-size: .9rem;
+    margin-top: .5rem;
+    font-weight: bold;
   }
 
   .drp-buttons {
