@@ -83,7 +83,7 @@ class Analytics extends React.Component {
     this.getAnalyticsData()
   }
 
-  getAnalyticsData(date) {
+  getAnalyticsData = (date) => {
     const startDate = date.startDate.format('MM/DD/YYYY')
     const endDate = date.endDate.format('MM/DD/YYYY')
     this.setState({loading: true})
@@ -123,7 +123,7 @@ class Analytics extends React.Component {
               <div className="flex-wrapper align-items-center">
                 <h1 className="title">Analytics</h1>
                 <div className="card-header-actions">
-                  <DateRangePicker2 ranges={ranges} getDate={(date) => {this.getAnalyticsData(date)}} opens={'left'}/>
+                  <DateRangePicker2 ranges={ranges} getDate={this.getAnalyticsData} opens={'left'}/>
                 </div>
               </div>
 
