@@ -1,4 +1,4 @@
-# SimpleVat Frontend Admin Website
+# Sellix Frontend
 
 ## Project Folder Structure
 
