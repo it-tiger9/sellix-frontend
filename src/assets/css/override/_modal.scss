@@ -1,0 +1,52 @@
+.modal-open {
+  overflow: auto !important;
+}
+
+.modal-dialog {
+  border-radius: 10px !important;
+  border:none !important;
+
+  .modal-content {
+    border: none !important;
+    border-radius: 10px !important;
+
+    .modal-header {
+      background-color: white;
+      color: black;
+      font-size: 18px;
+      padding: 30px 25px;
+      border-bottom: none !important;
+      button.close {
+        span {
+          color: black;
+          border-radius: 100%;
+          width: 1.6rem;
+          height: 1.5rem;
+          display: block;
+        }
+
+        &:focus {
+          outline: none;
+          span {
+            box-shadow: 0 0 0 0.2rem rgba(97, 59, 234, 0.25);
+          }
+        }
+      }
+    }
+
+    .modal-body {
+      padding: 0px 25px;
+      border-radius: 0 !important;
+    }
+
+    .modal-footer {
+      padding: 30px 25px;
+      border-top: none !important;
+      border-radius: 0 !important;
+      button {
+        height: 45px !important;
+      }
+    }
+
+  }
+}

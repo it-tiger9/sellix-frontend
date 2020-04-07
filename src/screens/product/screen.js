@@ -123,7 +123,7 @@ class Product extends React.Component {
       row.type
     ) {
       return (
-        <div className="badge badge-normal">
+        <div className="badge badge-normal" style={{ margin: '0 auto'}}>
           {row.type}
         </div>
       )  
@@ -145,7 +145,7 @@ class Product extends React.Component {
   renderFileStock(cell, row) {
     return (
       <p>
-        {row.file_stock == -1? <span style={{fontSize:  20}}>∞</span>:row.file_stock}
+        {row.file_stock == -1 ? <span style={{fontSize:  20}}>∞</span>:row.file_stock}
       </p>
     ) 
   }
@@ -202,7 +202,7 @@ class Product extends React.Component {
                         onChange={(e) => {
                           this.setState({search_key: e.target.value})
                         }}
-                      ></Input>
+                      />
                     </div>
                     <Button className="ml-3" color="primary" onClick={() => this.props.history.push(`/${user}/products/all/new`)}>
                       Add Product</Button>
@@ -236,24 +236,25 @@ class Product extends React.Component {
                             dataField="uniqid"
                             dataFormat={this.renderProductInfo}
                             dataSort
-                            width='50%'
+                            width='44%'
                           >
                             Info
                           </TableHeaderColumn>
                           <TableHeaderColumn
                             dataField="type"
                             dataFormat={this.renderProductType}
+                            dataAlign="center"
                             dataSort
-                            width='10%'
+                            width='13%'
                           >
                             Type
                           </TableHeaderColumn>
                           <TableHeaderColumn
                             dataField="file_stock"
                             dataSort
-                            dataAlign="right"
+                            dataAlign="center"
                             dataFormat={this.renderFileStock}
-                            width='10%'
+                            width='13%'
                           >
                             Stock
                           </TableHeaderColumn>
@@ -261,15 +262,15 @@ class Product extends React.Component {
                             dataField="revenue"
                             dataFormat={this.renderProductPrice}
                             dataSort
-                            dataAlign="right"
-                            width='10%'
+                            dataAlign="center"
+                            width='13%'
                           >
                             Price
                           </TableHeaderColumn>
                           <TableHeaderColumn
                             dataField="id"
                             dataAlign="right"
-                            width='20%'
+                            width='17%'
                             dataFormat={this.renderOptions}
                           >
                             Options

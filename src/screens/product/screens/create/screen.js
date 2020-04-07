@@ -25,9 +25,7 @@ import * as Yup from "yup";
 import config from 'constants/config'
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 
-import {
-	CommonActions
-} from 'services/global'
+import { CommonActions } from 'services/global'
 
 import './style.scss'
 
@@ -39,10 +37,7 @@ import litecoinIcon from 'assets/images/crypto/ltc.svg'
 import skrillIcon from 'assets/images/crypto/skrill.svg'
 import perfectmoneyIcon from 'assets/images/crypto/perfectmoney.svg'
 
-const mapStateToProps = (state) => {
-	return ({
-	})
-}
+
 const mapDispatchToProps = (dispatch) => {
 	return ({
 		commonActions: bindActionCreators(CommonActions, dispatch),
@@ -268,25 +263,23 @@ class CreateProduct extends React.Component {
 		return (
 			<div className="create-product-screen mt-3">
 				<div className="animated fadeIn">
+
 					<Breadcrumb className="mb-0">
 						<BreadcrumbItem active className="mb-0">
 							<a onClick={(e) => this.props.history.goBack()}><i className="fas fa-chevron-left"/> Products</a>
 						</BreadcrumbItem>
 					</Breadcrumb>
+
 					<Formik
 							initialValues={initialValues}
 							onSubmit={(values) => {
 								this.handleSubmit(values)
 							}}
 							validationSchema={Yup.object().shape({
-								title: Yup.string()
-									.required('Title is required'),
-								price: Yup.number()
-									.required('Price is required'),
-								description: Yup.string()
-									.required('Description is required'),
-								currency: Yup.string()
-									.required('Currency is required'),
+								title: Yup.string().required('Title is required'),
+								price: Yup.number().required('Price is required'),
+								description: Yup.string().required('Description is required'),
+								currency: Yup.string().required('Currency is required'),
 								type: Yup.string(),
 								custom_fields: Yup.string(),
 								gateways: Yup.string(),
@@ -307,6 +300,7 @@ class CreateProduct extends React.Component {
 								{props => (
 									<Form onSubmit={props.handleSubmit}>
 										<Card>
+
 											<CardHeader>
 												<Row style={{alignItems: 'center'}}>
 													<Col md={12}>
@@ -314,6 +308,7 @@ class CreateProduct extends React.Component {
 													</Col>
 												</Row>
 											</CardHeader>
+
 											<CardBody className="p-4 mb-5">
 												{
 													loading ?
@@ -358,20 +353,18 @@ class CreateProduct extends React.Component {
 																			<div className="d-flex">
 																				<div>
 																					<Input
-																						className="price-select"
+																						className={"price-select " + props.errors.price && props.touched.price ? "is-invalid" : ""}
+																						style={{
+																							paddingRight: "110px",
+																							width: "calc(100% + 89px)"
+																						}}
 																						type="number"
 																						id="price"
 																						step="0.01"
-																						min="1"
 																						name="price"
 																						placeholder="Price"
 																						onChange={props.handleChange}
 																						value={props.values.price}
-																						className={
-																							props.errors.price && props.touched.price
-																								? "is-invalid"
-																								: ""
-																						}
 																					/>
 																					{props.errors.price && props.touched.price && (
 																						<div className="invalid-feedback">{props.errors.price}</div>
@@ -388,6 +381,7 @@ class CreateProduct extends React.Component {
 																					onChange={(option) => {
 																						props.handleChange("currency")(option.value);
 																					}}
+																					searchable={false}
 																					className={
 																						props.errors.currency && props.touched.currency
 																							? "is-invalid currency-select"
@@ -431,8 +425,9 @@ class CreateProduct extends React.Component {
 																	<Col lg={12}>
 																		<FormGroup className="mb-3 mr-4">
 																			<Label htmlFor="product_code">Payment Methods</Label>
+
 																			<div className="d-flex flex-wrap">
-																				<div className="custom-checkbox custom-control payment-checkbox">
+																				<label className="custom-checkbox custom-control payment-checkbox ">
 																					<input 
 																						className="custom-control-input"
 																						type="checkbox"
@@ -441,14 +436,14 @@ class CreateProduct extends React.Component {
 																						onChange={(e) => {
 																							this.setGateWays('paypal', e.target.checked)
 																						}}
-																						/>
+																					/>
 																					<label className="custom-control-label" htmlFor="paypal">
-																						<i className="fa fa-paypal"></i>
+																						<i className="fa fa-paypal" />
 																						PayPal
 																					</label>
-																				</div>
+																				</label>
 
-																				<div className="custom-checkbox custom-control payment-checkbox">
+																				<label className="custom-checkbox custom-control payment-checkbox">
 																					<input 
 																						className="custom-control-input"
 																						type="checkbox"
@@ -462,9 +457,9 @@ class CreateProduct extends React.Component {
 																						<img src={bitcoinIcon} width="20" height="20"/>
 																						Bitcoin
 																					</label>
-																				</div>
+																				</label>
 
-																				<div className="custom-checkbox custom-control payment-checkbox">
+																				<label className="custom-checkbox custom-control payment-checkbox">
 																					<input 
 																						className="custom-control-input"
 																						type="checkbox"
@@ -478,9 +473,9 @@ class CreateProduct extends React.Component {
 																						<img src={ethereumIcon} width="20" height="20"/>
 																						Ethereum
 																					</label>
-																				</div>
+																				</label>
 
-																				<div className="custom-checkbox custom-control payment-checkbox">
+																				<label className="custom-checkbox custom-control payment-checkbox">
 																					<input 
 																						className="custom-control-input"
 																						type="checkbox"
@@ -494,9 +489,9 @@ class CreateProduct extends React.Component {
 																						<img src={litecoinIcon} width="20" height="20"/>
 																						Litecoin
 																					</label>
-																				</div>
+																				</label>
 
-																				<div className="custom-checkbox custom-control payment-checkbox">
+																				<label className="custom-checkbox custom-control payment-checkbox">
 																					<input 
 																						className="custom-control-input"
 																						type="checkbox"
@@ -510,9 +505,9 @@ class CreateProduct extends React.Component {
 																						<img src={stripeIcon} width="20" height="20"/>
 																						Stripe
 																					</label>
-																				</div>
+																				</label>
 
-																				<div className="custom-checkbox custom-control payment-checkbox">
+																				<label className="custom-checkbox custom-control payment-checkbox">
 																					<input 
 																						className="custom-control-input"
 																						type="checkbox"
@@ -526,9 +521,9 @@ class CreateProduct extends React.Component {
 																						<img src={perfectmoneyIcon} width="20" height="20"/>
 																						Perfect Money
 																					</label>
-																				</div>
+																				</label>
 
-																				<div className="custom-checkbox custom-control payment-checkbox">
+																				<label className="custom-checkbox custom-control payment-checkbox">
 																					<input 
 																						className="custom-control-input"
 																						type="checkbox"
@@ -542,9 +537,9 @@ class CreateProduct extends React.Component {
 																						<img src={bitcoinCashIcon} width="20" height="20"/>
 																						Bitcoin Cash
 																					</label>
-																				</div>
+																				</label>
 
-																				<div className="custom-checkbox custom-control payment-checkbox">
+																				<label className="custom-checkbox custom-control payment-checkbox">
 																					<input 
 																						className="custom-control-input"
 																						type="checkbox"
@@ -558,7 +553,7 @@ class CreateProduct extends React.Component {
 																						<img src={skrillIcon} width="20" height="20"/>
 																						Skrill
 																					</label>
-																				</div>
+																				</label>
 																			</div>
 																		</FormGroup>
 																	</Col>
@@ -579,6 +574,7 @@ class CreateProduct extends React.Component {
 																				options={TYPE_OPTIONS} 
 																				className="mb-3"
 																				value={this.state.type}
+																				searchable={false}
 																				onChange={(option) => {
 																					this.setState({
 																						type: option
@@ -639,7 +635,8 @@ class CreateProduct extends React.Component {
 																				<Label htmlFor="product_code">Stock Delimiter</Label>
 																				<Select 
 																					placeholder="Type" 
-																					options={DELIMITER_OPTIONIS} 
+																					options={DELIMITER_OPTIONIS}
+																					searchable={false}
 																					className="mb-3"
 																					value={this.state.delimiter}
 																					onChange={(option) => {
@@ -759,6 +756,7 @@ class CreateProduct extends React.Component {
 																								<Label htmlFor="product_code" style={{width: '100%', fontSize: 13}}>Type</Label>
 																								<Select options={CUSTOM_TYPE} 
 																									value={field.type}
+																									    searchable={false}
 																									onChange={(option) => {
 																										this.saveCustomField(option, index, 'type')
 																									}}
@@ -814,6 +812,7 @@ class CreateProduct extends React.Component {
 																				receiveValue = {(value) => {
 																					props.handleChange('crypto_confirmations')(value)
 																				}}
+																				className={'CCC'}
 																			/>
 																		</FormGroup>
 																	</Col>
@@ -826,7 +825,8 @@ class CreateProduct extends React.Component {
 																				ticks={[1, 50, 100]}
 																				receiveValue = {(value) => {
 																					props.handleChange('max_risk_level')(value)
-																				}}/>
+																				}}
+																			/>
 																		</FormGroup>
 																	</Col>
 																</Row>
@@ -849,7 +849,7 @@ class CreateProduct extends React.Component {
 																					<span href="#" id="unlistedTooltip"><i className="fa fa-question-circle"></i></span>
 																					<Tooltip placement="right" isOpen={unlistedTooltipOpen} target="unlistedTooltip" 
 																						toggle={this.unlistedTooltipToggle.bind(this)}>
-																						Unlisted!
+																						The product wont be displayed on your Shop, but can still be accessed via direct URL.
 																					</Tooltip>
 																				</label>
 																			</div>
@@ -871,7 +871,7 @@ class CreateProduct extends React.Component {
 																					<span href="#" id="privateTooltip"><i className="fa fa-question-circle"></i></span>
 																					<Tooltip placement="right" isOpen={privateTooltipOpen} target="privateTooltip" 
 																						toggle={this.privateTooltipToggle.bind(this)}>
-																						Private
+																						Only you can access this product
 																					</Tooltip>
 																				</label>
 																			</div>
@@ -915,8 +915,10 @@ class CreateProduct extends React.Component {
 														</Row>
 												}
 											</CardBody>
-											<Button color="primary" type="submit" className="" style={{width: 200}}
-											>Save Product</Button>
+
+											<Button color="primary" type="submit" className="" style={{width: 200}}>
+												Save Product
+											</Button>
 											
 										</Card>
 									</Form> )}
@@ -927,4 +929,4 @@ class CreateProduct extends React.Component {
 	}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateProduct)
+export default connect(null, mapDispatchToProps)(CreateProduct)

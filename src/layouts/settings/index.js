@@ -22,7 +22,11 @@ import {
   CommonActions
 } from 'services/global'
 
-import { mainNavigation, accountSettingsNavigation, shopSettingsNavigation } from 'constants/navigation'
+import { 
+  mainNavigation, 
+  accountSettingsNavigation, 
+  shopSettingsNavigation 
+} from 'constants/navigation'
 
 import {
   Aside,
@@ -47,7 +51,6 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 
-
 class SettingsLayout extends React.Component {
   constructor(props) {
     super(props)
@@ -61,10 +64,13 @@ class SettingsLayout extends React.Component {
     if (!window.localStorage.getItem('accessToken')) {
       this.props.history.push('/login')
     } else {
-      this.props.authActions.getSelfUser().catch(err => {
+      this.props.authActions.getSelfUser().then(() => {
+        
+      }).catch(err => {
         this.props.authActions.logOut()
         this.props.history.push('/login')
       })
+      
       const toastifyAlert = (status, message) => {
         if (!message) {
           message = 'Unexpected Error'

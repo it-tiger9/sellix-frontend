@@ -6,9 +6,7 @@ import { Link, NavLink } from 'react-router-dom';
 import { bindActionCreators } from 'redux'
 
 import { Container, Nav, NavItem, Label, Card } from 'reactstrap'
-import {
-  AppHeader,
-} from '@coreui/react'
+import { AppHeader, AppFooter } from '@coreui/react'
 import { ToastContainer, toast } from 'react-toastify'
 
 import { shopRoutes } from 'routes'
@@ -16,13 +14,11 @@ import {
   AuthActions,
   CommonActions
 } from 'services/global'
-import { ThemeProvider, createGlobalStyle  } from 'styled-components';
-import { darkTheme, lightTheme } from 'layouts/theme/theme'
+import { ThemeProvider  } from 'styled-components';
+import { lightTheme } from 'layouts/theme/theme'
 import { GlobalStyles } from 'layouts/theme/global'
 
-import {
-  Loading
-} from 'components'
+import { Loading } from 'components'
 
 import Header from './header'
 
@@ -99,30 +95,29 @@ class ShopLayout extends React.Component {
     return (
       <ThemeProvider theme={lightTheme}>
         <GlobalStyles />
-          <div className="shop-container bg-white">
+          <div className={"shop-container bg-white "}>
             <div className="app">
-              
-              <div className="shop-content flex-column">
+
                 <AppHeader>
-                  <Suspense fallback={Loading()}>
-                    <Header {...this.props}/>
-                  </Suspense>
+                    <Suspense fallback={Loading()}>
+                        <Header {...this.props}/>
+                    </Suspense>
                 </AppHeader>
-              
-                <section className="pb-3">
+
+                <div className="shop-content flex-column">
+                  <section className="pb-3">
                     <div className="text-center align-items-center logo-content">
                         <h4 className="mb-0 mt-3 mb-3">{user.username}</h4>
-                        {user.profile_attachment? 
+                        {user.profile_attachment?
                           <img src={user.profile_attachment} width="130" height="130" style={{borderRadius: '50%'}}/>
                           : <i className="fa fa-user-circle text-primary avatar-icon" style={{fontSize: 130}}/>
                         }
                     </div>
-                    <Card className="report-count mb-2 mt-3 ml-auto mr-auto pt-1 pb-1 pl-3 pr-3 flex-row" 
-                      style={{width: 'fit-content'}}>
+                    <Card className="report-count mb-2 mt-3 ml-auto mr-auto pt-1 pb-1 pl-3 pr-3 flex-row" style={{width: 'fit-content'}}>
                         <span className="text-green mr-2">{user.feedbacks?user.feedbacks.positive:0}</span>
-                        <span className=""></span>
+                        <span className=""/>
                         <span className="text-grey pl-2 pr-2">{user.feedbacks?user.feedbacks.neutral:0}</span>
-                        <span className=""></span>
+                        <span className=""/>
                         <span className="text-red ml-2">{user.feedbacks?user.feedbacks.negative:0}</span>
                     </Card>
                     <div>
@@ -138,37 +133,41 @@ class ShopLayout extends React.Component {
                             </NavItem>
                         </Nav>
                     </div>
-                </section>
-              </div>
-              <div style={{backgroundColor: '#F5F5FE'}}>
-                <div className=" shop-content mb-5 p-3">
-                    <Container className="p-0" fluid>
-                      <Suspense fallback={Loading()}>
-                        <ToastContainer position="top-right" autoClose={5000} style={containerStyle} />
-                        <Switch>
-                          {
-                            shopRoutes.map((prop, key) => {
-                              if (prop.redirect)
-                                return <Redirect from={prop.path} to={prop.pathTo} key={key} />
-                              return (
-                                <Route
-                                  path={prop.path}
-                                  component={prop.component}
-                                  key={key}
-                                  exact={true}
-                                />
-                              )
-                            })
-                          }
-                        </Switch>
-                      </Suspense>
-                      
-                    </Container>
-                  </div>
-                  <p className="text-center text-grey footer-report pb-4">
-                  Copyright by Sellix.io - <a href="mailto:abuse@sellix.io">Report Abuse</a>
-                </p>
-              </div>
+                  </section>
+
+                  <div style={{backgroundColor: '#F5F5FE'}}>
+                    <div className="main p-3">
+                        <Container className="p-0" fluid>
+                            <Suspense fallback={Loading()}>
+                                <ToastContainer position="top-right" autoClose={5000} style={containerStyle} />
+                                <Switch>
+                                    {
+                                        shopRoutes.map((prop, key) => {
+                                            if (prop.redirect)
+                                                return <Redirect from={prop.path} to={prop.pathTo} key={key} />
+                                            return (
+                                                <Route
+                                                    path={prop.path}
+                                                    component={prop.component}
+                                                    key={key}
+                                                    exact={true}
+                                                />
+                                            )
+                                        })
+                                    }
+                                </Switch>
+                            </Suspense>
+
+                        </Container>
+                    </div>
+                </div>
+                </div>
+
+                <AppFooter>
+                    <p className="text-center text-grey footer-report py-4 m-0">
+                        Copyright by Sellix.io - <a href="mailto:abuse@sellix.io">Report Abuse</a>
+                    </p>
+                </AppFooter>
               
             </div>
           </div>

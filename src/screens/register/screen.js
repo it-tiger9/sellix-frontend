@@ -83,8 +83,8 @@ class Register extends React.Component {
         window.location.href= '/2fa'
       }
 
-      this.props.authActions.checkAuthStatus().then(user => {
-        const preUrl = `/${user.username}/dashboard`
+      this.props.authActions.getSelfUser().then(res => {
+        const preUrl = `/${res.data.user.username}/dashboard`
         window.location.href = preUrl
       })
     }).catch(err => {
@@ -145,6 +145,7 @@ class Register extends React.Component {
                               .min(8, 'Password must be at least 8 characters long')
                               .required("Password is required"),
                             confirm_password: Yup.string()
+                              .required("Password confirmation is required")
                               .when("password", {
                                 is: val => (val && val.length > 0 ? true : false),
                                 then: Yup.string().oneOf(

@@ -39,6 +39,8 @@ import litecoinIcon from 'assets/images/crypto/ltc.svg'
 import skrillIcon from 'assets/images/crypto/skrill.svg'
 import perfectmoneyIcon from 'assets/images/crypto/perfectmoney.svg'
 
+const userId = window.localStorage.getItem('userId')
+
 const mapStateToProps = (state) => {
 	return ({
 	})
@@ -237,6 +239,8 @@ class EditProduct extends React.Component {
 		values.file_stock = showFileStock?values.file_stock:-1
 
 		this.props.actions.editProduct(values).then(res => {
+
+			this.props.history.push(`/${userId}/products/all`)
 			this.props.commonActions.tostifyAlert('success', res.message)
 
 		}).catch(err => {
@@ -317,19 +321,17 @@ class EditProduct extends React.Component {
 						</BreadcrumbItem>
 					</Breadcrumb>
 					<Formik
+						noValidate="noValidate"
 						initialValues={initialValues}
 						onSubmit={(values) => {
 							this.handleSubmit(values)
 						}}
 						enableReinitialize={true}
 						validationSchema={Yup.object().shape({
-							title: Yup.string()
-								.required('Title is required'),
-							price: Yup.number()
-								.required('Price is required'),
+							title: Yup.string().required('Title is required'),
+							price: Yup.number().required('Price is required'),
 							description: Yup.string(),
-							currency: Yup.string()
-								.required('Currency is required'),
+							currency: Yup.string().required('Currency is required'),
 							type: Yup.string(),
 							custom_fields: Yup.string(),
 							gateways: Yup.string(),
@@ -399,46 +401,47 @@ class EditProduct extends React.Component {
 																	<FormGroup className="mb-3">
 																		<Label htmlFor="price">Price</Label>
 																		<div className="d-flex">
-																			<div>
-																				<Input
-																					className="price-select"
-																					type="number"
-																					id="price"
-																					name="price"
-																					placeholder="Price"
-																					onChange={props.handleChange}
-																					value={props.values.price}
-																					className={
-																						props.errors.price && props.touched.price
-																							? "is-invalid"
-																							: ""
-																					}
-																				/>
-																				{props.errors.price && props.touched.price && (
-																					<div className="invalid-feedback">{props.errors.price}</div>
-																				)}
-																			</div>
-																			<div style={{marginLeft: -10}}>
-																			<Select
-																				className="currency-select"
-																				options={CURRENCY_LIST}
-																				id="currency"
-																				name="currency"
-																				placeholder="USD"
-																				value={props.values.currency}
-																				onChange={(option) => {
-																					props.handleChange("currency")(option.value);
-																				}}
-																				className={
-																					props.errors.currency && props.touched.currency
-																						? "is-invalid currency-select"
-																						: "currency-select"
-																				}
-																			/>
-																			{props.errors.products_bound && props.touched.products_bound && (
-																				<div className="invalid-feedback">{props.errors.products_bound}</div>
-																			)}
-																			</div>
+																				<div>
+																					<Input
+																						className={"price-select " + props.errors.price && props.touched.price ? "is-invalid" : ""}
+																						style={{
+																							paddingRight: "110px",
+																							width: "calc(100% + 89px)"
+																						}}
+																						type="number"
+																						step="0.01"
+																						id="price"
+																						name="price"
+																						placeholder="Price"
+																						onChange={props.handleChange}
+																						value={props.values.price}
+																					/>
+																					{props.errors.price && props.touched.price && (
+																						<div className="invalid-feedback">{props.errors.price}</div>
+																					)}
+																				</div>
+																				<div style={{marginLeft: -10}}>
+																					<Select
+																						className="currency-select"
+																						options={CURRENCY_LIST}
+																						id="currency"
+																						name="currency"
+																						placeholder="USD"
+																						searchable={false}
+																						value={props.values.currency}
+																						onChange={(option) => {
+																							props.handleChange("currency")(option.value);
+																						}}
+																						className={
+																							props.errors.currency && props.touched.currency
+																								? "is-invalid currency-select"
+																								: "currency-select"
+																						}
+																					/>
+																					{props.errors.products_bound && props.touched.products_bound && (
+																						<div className="invalid-feedback">{props.errors.products_bound}</div>
+																					)}
+																				</div>
 																			</div>
 																		</FormGroup>
 																	</Col>
@@ -467,7 +470,7 @@ class EditProduct extends React.Component {
 																		<FormGroup className="mb-3 mr-4">
 																			<Label htmlFor="product_code">Payment Methods</Label>
 																			<div className="d-flex flex-wrap">
-																				<div className="custom-checkbox custom-control payment-checkbox">
+																				<label className="custom-checkbox custom-control payment-checkbox">
 																					<input 
 																						className="custom-control-input"
 																						type="checkbox"
@@ -482,9 +485,9 @@ class EditProduct extends React.Component {
 																						<i className="fa fa-paypal"></i>
 																						PayPal
 																					</label>
-																				</div>
+																				</label>
 
-																				<div className="custom-checkbox custom-control payment-checkbox">
+																				<label className="custom-checkbox custom-control payment-checkbox">
 																					<input 
 																						className="custom-control-input"
 																						type="checkbox"
@@ -499,9 +502,9 @@ class EditProduct extends React.Component {
 																						<img src={bitcoinIcon} width="20" height="20"/>
 																						Bitcoin
 																					</label>
-																				</div>
+																				</label>
 
-																				<div className="custom-checkbox custom-control payment-checkbox">
+																				<label className="custom-checkbox custom-control payment-checkbox">
 																					<input 
 																						className="custom-control-input"
 																						type="checkbox"
@@ -516,9 +519,9 @@ class EditProduct extends React.Component {
 																						<img src={ethereumIcon} width="20" height="20"/>
 																						Ethereum
 																					</label>
-																				</div>
+																				</label>
 
-																				<div className="custom-checkbox custom-control payment-checkbox">
+																				<label className="custom-checkbox custom-control payment-checkbox">
 																					<input 
 																						className="custom-control-input"
 																						type="checkbox"
@@ -533,9 +536,9 @@ class EditProduct extends React.Component {
 																						<img src={litecoinIcon} width="20" height="20"/>
 																						Litecoin
 																					</label>
-																				</div>
+																				</label>
 
-																				<div className="custom-checkbox custom-control payment-checkbox">
+																				<label className="custom-checkbox custom-control payment-checkbox">
 																					<input 
 																						className="custom-control-input"
 																						type="checkbox"
@@ -550,9 +553,9 @@ class EditProduct extends React.Component {
 																						<img src={stripeIcon} width="20" height="20"/>
 																						Stripe
 																					</label>
-																				</div>
+																				</label>
 
-																				<div className="custom-checkbox custom-control payment-checkbox">
+																				<label className="custom-checkbox custom-control payment-checkbox">
 																					<input 
 																						className="custom-control-input"
 																						type="checkbox"
@@ -567,9 +570,9 @@ class EditProduct extends React.Component {
 																						<img src={perfectmoneyIcon} width="20" height="20"/>
 																						Perfect Money
 																					</label>
-																				</div>
+																				</label>
 
-																				<div className="custom-checkbox custom-control payment-checkbox">
+																				<label className="custom-checkbox custom-control payment-checkbox">
 																					<input 
 																						className="custom-control-input"
 																						type="checkbox"
@@ -584,9 +587,9 @@ class EditProduct extends React.Component {
 																						<img src={bitcoinCashIcon} width="20" height="20"/>
 																						Bitcoin Cash
 																					</label>
-																				</div>
+																				</label>
 
-																				<div className="custom-checkbox custom-control payment-checkbox">
+																				<label className="custom-checkbox custom-control payment-checkbox">
 																					<input 
 																						className="custom-control-input"
 																						type="checkbox"
@@ -601,7 +604,7 @@ class EditProduct extends React.Component {
 																						<img src={skrillIcon} width="20" height="20"/>
 																						Skrill
 																					</label>
-																				</div>
+																				</label>
 																			</div>
 																		</FormGroup>
 																	</Col>
@@ -619,7 +622,8 @@ class EditProduct extends React.Component {
 																			<Label htmlFor="product_code">Type</Label>
 																			<Select 
 																				placeholder="Type" 
-																				options={TYPE_OPTIONS} 
+																				options={TYPE_OPTIONS}
+																				searchable={false}
 																				className="mb-3"
 																				value={this.state.type}
 																				onChange={(option) => {
@@ -682,7 +686,8 @@ class EditProduct extends React.Component {
 																				<Label htmlFor="product_code">Stock Delimiter</Label>
 																				<Select 
 																					placeholder="Type" 
-																					options={DELIMITER_OPTIONIS} 
+																					options={DELIMITER_OPTIONIS}
+																					searchable={false}
 																					className="mb-3"
 																					value={this.state.delimiter}
 																					onChange={(option) => {
@@ -800,7 +805,8 @@ class EditProduct extends React.Component {
 																						<Col lg={4}>
 																							<FormGroup className="mb-3">
 																								<Label htmlFor="product_code" style={{width: '100%', fontSize: 13}}>Type</Label>
-																								<Select options={CUSTOM_TYPE} 
+																								<Select options={CUSTOM_TYPE}
+																								        searchable={false}
 																									value={field.type}
 																									onChange={(option) => {
 																										this.saveCustomField(option, index, 'type')
@@ -857,6 +863,7 @@ class EditProduct extends React.Component {
 																				receiveValue = {(value) => {
 																					props.handleChange('crypto_confirmations')(value)
 																				}}
+																				className={'CCC'}
 																			/>
 																		</FormGroup>
 																	</Col>
@@ -958,8 +965,9 @@ class EditProduct extends React.Component {
 														</Row>
 												}
 											</CardBody>
-											<Button color="primary" type="submit" className="" style={{width: 200}}disabled={loading || saving}
-                    							>{saving ?<Spin/>:'Save Product' }</Button>
+											<Button color="primary" type="submit" className="" style={{width: 200}} disabled={loading || saving}>
+												{saving ?<Spin/>:'Save Product' }
+											</Button>
 											
 										</Card>
 									</Form> )}

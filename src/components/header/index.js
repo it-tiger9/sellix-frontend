@@ -100,7 +100,7 @@ class Header extends Component {
               <i className="fas fa-bell nav-icon"></i>
             </DropdownToggle>
             
-            <DropdownMenu right className="mt-2" style={{width: 300, height: 300, overflow: 'auto'}}>
+            <DropdownMenu right className="mt-2" style={{width: 300, maxHeight: 300, overflow: 'auto'}}>
               <DropdownItem>
                 <div className="d-flex justify-content-between">
                   <span className="text-primary d-flex">Notification</span>
@@ -160,7 +160,7 @@ class Header extends Component {
                   </DropdownItem>
                   {
                     !isShop && <DropdownItem onClick={this.setTheme.bind(this)}>
-                      {(theme || 'light') == 'light'?'Dark Mode':'Light Mode'}
+                      {(theme || 'light') === 'light' ? 'Dark Mode' : 'Light Mode'}
                     </DropdownItem>
                   }
                   

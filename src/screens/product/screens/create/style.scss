@@ -45,11 +45,18 @@
   }
 
   .currency-select {
-    width: 80px;
+    width: 99px !important;
+    min-width: 99px !important;
+
     .Select-control {
       border-top-left-radius: 0 !important;
       border-bottom-left-radius: 0 !important;
+      border-top: none !important;
+      border-bottom: none !important;
+      height: 43px !important;
+      top: 1px;
     }
+
   }
 
   .file-switch {
@@ -82,6 +89,7 @@
     border: 1px solid #F5F5F5;
     margin-right: 15px;
     margin-bottom: 15px;
+    cursor: pointer;
     // padding: 0 20px;
 
     label {
@@ -90,6 +98,7 @@
       display: flex;
       align-items: center;
       font-family: 'Poppins' !important;
+      cursor: pointer;
 
       i, img {
         margin-right: 10px;
@@ -98,8 +107,8 @@
       }
     }
 
-    label::before,label::after {
-      top: 0.28em;
+    & label label::before, & label label::after {
+      top: 0.20em;
     }
   }
 }

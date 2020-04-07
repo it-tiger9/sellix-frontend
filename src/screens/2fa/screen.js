@@ -47,27 +47,17 @@ class LogIn extends React.Component {
     }
   }
 
-  handleSubmit(data) {
-    if(!this.state.captchaVerify) {
-      this.setState({
-        alert: <Message
-          type="danger"
-          content='reCAPTCHA verification failed, please try again.'
-        />
-      })
-
-      return false
-    }
-
-    data.captcha = this.state.captchaVerify
-    
+  handleSubmit(data) {    
     this.props.authActions.twoFactorAuthentication(data).then(res => {
       this.setState({
         alert: null
       })
 
-      const preUrl = `/${window.localStorage.getItem('userId')}/dashboard`
-      window.location.href= preUrl
+      this.props.authActions.getSelfUser().then(res => {
+        const preUrl = `/${res.data.user.username}/dashboard`
+        window.location.href = preUrl
+      })
+
     }).catch(err => {
       let errMsg = 'Invalid Email or Password. Please try again.'
       if(err.status == 403)
@@ -129,16 +119,7 @@ class LogIn extends React.Component {
                                     <div className="invalid-feedback">{props.errors.code}</div>
                                   )}
                                 </FormGroup>
-                                <div className="ml-auto mr-auto recptcah" style={{width: 'fit-content'}}>
-                                  <ReCaptcha
-                                    siteKey={config.CAPTCHA_SITE_KEY}
-                                    theme="light"
-                                    size="normal"
-                                    onSuccess={(captcha) => {this.setState({captchaVerify: captcha})}}
-                                    onExpire={() => {this.setState({captchaVerify: null})}}
-                                    onError={() => {this.setState({captchaVerify: null})}}
-                                  />
-                                </div>
+                                
                                 <Row>
                                   <Col lg={12} className="text-center mt-4">
                                     <Button

@@ -102,11 +102,9 @@ class Blacklist extends React.Component {
   }
 
   renderBlacklistNote = (cell, row) => {
-    if (
-      row.note
-    ) {
+    if (row.note) {
       return (
-        <div>
+        <div style={{ whiteSpace: "pre-wrap" }}>
           {row.note}
         </div>
       )  
@@ -155,6 +153,8 @@ class Blacklist extends React.Component {
               dataField="type"
               dataFormat={this.renderBlacklistData}
               dataSort
+              dataAlign="left"
+              width='20%'
             >
               BLOCKED DATA
             </TableHeaderColumn>
@@ -162,6 +162,8 @@ class Blacklist extends React.Component {
               dataField="type"
               dataFormat={this.renderBlacklistNote}
               dataSort
+              dataAlign="left"
+              width='60%'
             >
               NOTE
             </TableHeaderColumn>
@@ -170,11 +172,12 @@ class Blacklist extends React.Component {
               dataSort
               dataAlign="right"
               dataFormat={this.renderOptions}
+              width='20%'
             >
               OPTIONS
             </TableHeaderColumn>
           </BootstrapTable>
-          <Card>
+          {/* <Card>
             <CardBody>
               <div className="flex-wrapper align-items-center">
                 <h1 className="title">Blacklist</h1>
@@ -226,7 +229,7 @@ class Blacklist extends React.Component {
                 </Col>
               </Row>
             </CardBody>
-          </Card>
+          </Card> */}
         </div>
       </div>
     )

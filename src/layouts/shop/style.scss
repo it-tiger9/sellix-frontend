@@ -1,9 +1,4 @@
 .admin-container {
-    .shop-content {
-        width: 100% !important;
-        max-width: 1250px;
-        margin: 0 auto;
-    }
 
     .nav-link {
         font-size: 15px !important;
@@ -53,7 +48,7 @@
         border-bottom: none;
         // border-radius: 10px;
         box-shadow: 0 0 9px 1px rgba(0, 0, 0, 0.2);
-        
+        margin: 0 auto;
         padding: 0 10px;
         // height: 100px;
         // margin: 0 20px;
@@ -95,6 +90,12 @@
         position:  relative !important;
     }
 
+    footer {
+        background: none;
+        border-top: none;
+        justify-content: center;
+        flex-shrink: 0;
+    }
     .footer-report a,
     .footer-report a:hover {
         text-decoration: none !important;
@@ -116,10 +117,21 @@
         color: #613BEA !important;
     }
 
-    .shop-content {
+    .main {
         max-width: 1250px;
         margin: 0 auto;
+    }
+
+    .shop-content {
+        // max-width: 1250px;
+        margin: 0 auto;
         width: 100%;
+        flex: 1 0 auto;
+        display: flex;
+
+        & > section + div {
+            flex: 1 0 auto;
+        }
     }
 
     span {

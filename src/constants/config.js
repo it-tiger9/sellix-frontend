@@ -12,5 +12,6 @@ export default {
     'CNY': '¥',
     'SEK': 'kr',
     'NZD': '$'
-  }
+  },
+  DISCORD_CONNECT_URL: 'https://discordapp.com/oauth2/authorize?client_id=694529072046407703&permissions=2048&scope=bot'
 }

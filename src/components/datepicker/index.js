@@ -46,44 +46,56 @@ class DateRangePicker2 extends React.Component{
     this.props.getDate(picker)
   }
 
+  setCustomAttribs = () => {
+    document.querySelector('.daterangepicker').classList.add(window.localStorage.getItem('theme') || 'light')
+  }
+
   render() {
     let nick_key = null
 
-    if(this.props.ranges)
+    if(this.props.ranges) {
       Object.keys(this.props.ranges).map((key) => {
-        if(this.state.startDate.format('YYYY-MM-DD') === this.props.ranges[key][0].format('YYYY-MM-DD') && 
-          this.state.endDate.format('YYYY-MM-DD') === this.props.ranges[key][1].format('YYYY-MM-DD')){
+        if(this.state.startDate.format('YYYY-MM-DD') === this.props.ranges[key][0].format('YYYY-MM-DD') &&
+            this.state.endDate.format('YYYY-MM-DD') === this.props.ranges[key][1].format('YYYY-MM-DD')){
           nick_key = key
           return true
         }
       })
+    }
 
-    if(this.state.startDate !== null && nick_key === null)
+    if(this.state.startDate !== null && nick_key === null) {
       nick_key = this.state.startDate.format('ll') + ' - ' + this.state.endDate.format('ll')
+    }
 
     return (
-      <div className={"datepicker2 " + this.props.className || ''}>
-        <i className="fas fa-calendar mr-2"/>
-        <DateRangePicker 
-          startDate={this.state.startDate} 
-          endDate={this.state.endDate}
-          showDropdowns
-          opens={this.props.opens || 'right'}
-          {...this.props}
-          className="is-invalid"
-          getDate={this.props.getDate}
-          showClearDates={true}
-          withProtal={true}
-          onApply={(e, picker) => this.handleEvent(e, picker)}>
-          <ButtonDropdown className="date-select" toggle={()=>{}}>
-            <DropdownToggle caret>
-              {nick_key}
-            </DropdownToggle>
-          </ButtonDropdown>
-        </DateRangePicker>
+        <div className={"datepicker2 " + this.props.className || ''}>
+          <i className="fas fa-calendar mr-2"/>
+          <DateRangePicker
+              onShow={this.setCustomAttribs}
+              startDate={this.state.startDate}
+              endDate={this.state.endDate}
+              showDropdowns
+              showClearDates
+              opens={this.props.opens || 'right'}
+              ranges={this.props.ranges}
+              getDate={this.props.getDate}
+              onApply={(e, picker) => this.handleEvent(e, picker)}
+              locale={{
+                format: "MMM DD, YYYY",
+                daysOfWeek: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
+                monthNames: moment().localeData('en').months(),
+                firstDay: 0
+              }}
+          >
+            <ButtonDropdown className="date-select" toggle={()=>{}}>
+              <DropdownToggle caret>
+                {nick_key}
+              </DropdownToggle>
+            </ButtonDropdown>
+          </DateRangePicker>
 
-      </div>
-      
+        </div>
+
     );
   }
 }

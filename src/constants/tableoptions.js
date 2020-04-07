@@ -2,7 +2,7 @@ import React from 'react'
 
 const renderShowsTotal = (start, to, total) => {
     return (
-      <p style={ { color: 'black' } }>
+      <p className={'total-items'} >
         Showing { start } to { to } entries
       </p>
     );
@@ -11,13 +11,12 @@ const renderShowsTotal = (start, to, total) => {
 
 export const tableOptions = () => {
     return {
-        paginationPosition: 'bottom',
         page: 1,
         sizePerPage: 5,  // which size per page you want to locate as default
         pageStartIndex: 1, // where to start counting the pages
         paginationSize: 3,  // the pagination bar size.
-        prePage: '<Prev', // Previous page button text
-        nextPage: 'Next>', // Next page button text
+        prePage: <span><i className={'fas fa-caret-left'} />&nbsp;&nbsp;Prev</span>   , // Previous page button text
+        nextPage: <span>Next&nbsp;&nbsp;<i className={'fas fa-caret-right'} /></span>        , // Next page button text
         firstPage: 'First', // First page button text
         lastPage: 'Last', // Last page button text
         paginationShowsTotal: renderShowsTotal,  // Accept bool or function
