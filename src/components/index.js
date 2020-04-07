@@ -5,7 +5,6 @@ import Aside from './aside'
 import Header from './header'
 import QRCodeModal from './qrcode'
 import Footer from './footer'
-import Message from './message'
 import DateRangePicker2 from './datepicker'
 import ConfirmDeleteModal from './confirm_delete_modal'
 import ImageUpload from './upload/imageUploader'
@@ -23,7 +22,6 @@ export {
   Header,
   Footer,
   QRCodeModal,
-  Message,
   DateRangePicker2,
   ConfirmDeleteModal,
   ImageUpload,

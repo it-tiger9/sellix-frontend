@@ -47,9 +47,9 @@ class Contact extends React.Component {
     this.setState({ loading: true })
     this.props.createQuery({...values, user_id: '14'}).then(res => {
       this.props.commonActions.tostifyAlert('success', res.message)
-      // this.props.history.push({
-      //   pathname: `/dashboard/blacklist`
-      // })
+      this.props.history.push({
+        pathname: `/shop/${user}/contact/${res.data.uniqid}`
+      })
     }).catch(err => {
       this.props.commonActions.tostifyAlert('error', err.message)
     }).finally(() => {

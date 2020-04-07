@@ -1,5 +1,3 @@
-import { withTheme } from "styled-components"
-
 export const lightTheme = {
     widgetBorder: '#F5F5F5',
     tdBorder: '#F5F5F5',

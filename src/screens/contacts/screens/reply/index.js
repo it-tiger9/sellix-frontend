@@ -20,7 +20,7 @@ import { Formik } from 'formik'
 import { replyQuerie } from '../../actions'
 import { getQuerie } from '../../actions'
 import { closeQuerie } from '../../actions'
-import { getQueries } from '../../actions'
+import { reopenQuerie } from '../../actions'
 import {
   CommonActions
 } from 'services/global'
@@ -38,9 +38,9 @@ const mapDispatchToProps = (dispatch) => {
   return ({
     commonActions: bindActionCreators(CommonActions, dispatch),
     replyQuerie: bindActionCreators(replyQuerie, dispatch),
-    getQuerie: bindActionCreators({ getQuerie }, dispatch),
+    actions: bindActionCreators({ getQuerie }, dispatch),
     closeQuerie: bindActionCreators({ closeQuerie }, dispatch),
-    actions: bindActionCreators({ getQueries }, dispatch),
+    reopenQuerie: bindActionCreators({ reopenQuerie }, dispatch),
   })
 }
 
@@ -55,27 +55,41 @@ class ReplyToQuerie extends React.Component {
 
   componentDidMount() {
     // this.props.actions.getFeedbacks()
-    this.props.getQuerie.getQuerie(this.props.match.params.id)
+    this.props.actions.getQuerie(this.props.match.params.id)
   }
 
   handleSubmit(values) {
     this.setState({ loading: true })
-    this.props.replyQuerie({ ...values, uniqid: this.props.match.params.id }).then(res => {
-      this.props.commonActions.tostifyAlert('success', res.message)
-      this.props.history.push({
-        pathname: `/dashboard/queries`
+
+    const sendData = () => {
+      this.props.replyQuerie({ ...values, uniqid: this.props.match.params.id }).then(res => {
+        this.props.commonActions.tostifyAlert('success', res.message)
+      }).catch(err => {
+        this.props.commonActions.tostifyAlert('error', err.message)
+      }).finally(() => {
+        this.setState({ loading: false })
       })
-    }).catch(err => {
-      this.props.commonActions.tostifyAlert('error', err.message)
-    }).finally(() => {
-      this.setState({ loading: false })
-    })
+    }
+    
+    if (this.props.querie[0].status === 'closed') {
+      this.props.reopenQuerie.reopenQuerie({ uniqid: this.props.match.params.id }).then(res => {
+        sendData()
+        this.props.commonActions.tostifyAlert('success', res.message)
+      }).catch(err => {
+        this.props.commonActions.tostifyAlert('error', err.message)
+      }).finally(() => {
+        this.setState({ loading: false })
+      })
+    }else{
+      sendData()
+    }
+
   }
 
   renderMessages = () => {
     return _.map(this.props.querie, querie => {
-      return <div className={querie.role === 'customer' ? 'alignForCustomer' : 'AlignForYou'}>
-        <div className='querieMessageBlock'>
+      return <div className={querie.role === 'customer' ? 'alignForCustomerCS' : 'AlignForYouCS'}>
+        <div className='querieMessageBlockCS'>
           <div className='querieMessageTitle'>{querie.role === 'customer' ? 'Customer' : 'You'}</div>
           <div>{querie.message}</div>
           <div className='querieMessageDate'>{querie.day_value}-{querie.month}-{querie.year}</div>
@@ -85,8 +99,7 @@ class ReplyToQuerie extends React.Component {
   }
 
   closeQuerie = (uniqid) => {
-    this.props.closeQuerie.closeQuerie({uniqid})
-    this.props.actions.getQueries()
+    this.props.closeQuerie.closeQuerie({ uniqid })
   }
 
   render() {
@@ -96,11 +109,6 @@ class ReplyToQuerie extends React.Component {
     return (
       <div className="reply-screen mt-3">
         <div className="animated fadeIn">
-          <Breadcrumb className="mb-0">
-            <BreadcrumbItem active className="mb-0">
-              <a onClick={(e) => this.props.history.goBack()}><i className="fas fa-chevron-left" /> Queries</a>
-            </BreadcrumbItem>
-          </Breadcrumb>
           <Formik
             onSubmit={(values) => {
               this.handleSubmit(values)

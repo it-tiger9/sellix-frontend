@@ -1,5 +1,6 @@
 import {
     Contact,
+    Contacts,
     ShopProducts,
     ShopFeedback,
     LeaveFeedback,
@@ -10,7 +11,11 @@ import {
   const user = window.localStorage.getItem('userId')
   
   const shopRoutes = [
-
+    {
+      path: `/shop/:username/contact/:id`,
+      name: 'Contacts',
+      component: Contacts
+    },
     {
       path: `/shop/:username/contact`,
       name: 'Contact',
