@@ -19,15 +19,14 @@
 
   .product-card {
     cursor: pointer;
-    
     transition: transform 0.3s;
   }
 
-  .product-card:hover {
-    transform: scale(1.07);
-    z-index: 2;
-    box-shadow: 0 4px 30px #969ad680 !important;
-  }
+  // .product-card:hover {
+  //   transform: scale(1.07);
+  //   z-index: 2;
+  //   box-shadow: 0 4px 30px #969ad680 !important;
+  // }
 
   button {
     width: 200px;
@@ -38,7 +37,6 @@
 
   h5 {
     font-size: 16px;
-    color: #A7A5B4;
   }
 
   span {

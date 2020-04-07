@@ -55,6 +55,7 @@ class ShopProducts extends React.Component {
     super(props)
     this.state = {
       loading: true,
+      search_key: null,
       filter: new URLSearchParams(this.props.location.search).get('filter') || 'all',
       search: new URLSearchParams(this.props.location.search).get('search') || '',
     }
@@ -161,7 +162,7 @@ class ShopProducts extends React.Component {
                               style={{borderTopLeftRadius: 10, borderTopRightRadius: 10}}
                               width="100%" height="150"/>
                             <div className="p-3">
-                              <h5 className="mt-3 mb-3">{pro.title}</h5>
+                              <h5 className="mb-3 text-black">{pro.title}</h5>
                               <div className="d-flex justify-content-between mt-3 mb-2">
                                 <span className="price">{`${CURRENCY_LIST[pro.currency]}${pro.price_display}`}</span>
                                 <span className="stock">Stock: <span className="stock-size">{pro.stock}</span></span>

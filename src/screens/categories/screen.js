@@ -164,23 +164,23 @@ class Categories extends React.Component {
                         >
                           <TableHeaderColumn
                             isKey
-                            dataField="id"
+                            dataField="uniqid"
                             dataSort
-                            width="10%"
+                            width="15%"
                           >
                             ID
                           </TableHeaderColumn>
                           <TableHeaderColumn
                             dataField="title"
                             dataSort
-                            width="30%"
+                            width="50%"
                           >
                             Title
                           </TableHeaderColumn>
                           <TableHeaderColumn
                             dataField="products_count"
                             dataSort
-                            
+                            dataAlign="right"
                           >
                             Product Count
                           </TableHeaderColumn>

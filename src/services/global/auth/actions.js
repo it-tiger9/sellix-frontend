@@ -53,7 +53,7 @@ export const getSelfUser = () => {
         window.localStorage.setItem('userId', res.data.user.username)
         return res
       } else {
-        throw new Error('Auth Failed')
+        throw res
       }
     }).catch(err => {
       throw err

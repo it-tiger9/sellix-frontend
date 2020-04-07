@@ -58,9 +58,10 @@ class Header extends Component {
   }
 
   render() {
-    const { user, children, theme, ...attributes } = this.props
+    const { user, children, theme, is_authed, isShop, ...attributes } = this.props
     const { notifications } = user || {}
     
+  
     return (
       <React.Fragment>
         <AppSidebarToggler className="d-lg-none" display="md" mobile />
@@ -99,7 +100,7 @@ class Header extends Component {
               <i className="fas fa-bell nav-icon"></i>
             </DropdownToggle>
             
-            <DropdownMenu right className="mt-2" style={{width: 300}}>
+            <DropdownMenu right className="mt-2" style={{width: 300, height: 300, overflow: 'auto'}}>
               <DropdownItem>
                 <div className="d-flex justify-content-between">
                   <span className="text-primary d-flex">Notification</span>
@@ -143,24 +144,37 @@ class Header extends Component {
                 
               </div>
             </DropdownToggle>
-
-            <DropdownMenu right className="mt-2">
-              <DropdownItem onClick={() => this.props.history.push(`/${userId}`)}>
-                 Dashboard
-              </DropdownItem>
-              <DropdownItem onClick={() => this.props.history.push(`/shop/${userId}`)}>
-                 Your Shop
-              </DropdownItem>
-              <DropdownItem onClick={() => this.props.history.push(`/${userId}/settings`)}>
-                 Settings
-              </DropdownItem>
-              <DropdownItem onClick={this.setTheme.bind(this)}>
-                 {(theme || 'light') == 'light'?'Dark Mode':'Light Mode'}
-              </DropdownItem>
-              <DropdownItem onClick={() => this.signOut()}>
-                Sign Out
-              </DropdownItem>
-            </DropdownMenu>
+            {
+              is_authed? 
+                <DropdownMenu right className="mt-2">
+                  <DropdownItem onClick={() => this.props.history.push(`/${userId}`)}>
+                    Dashboard
+                  </DropdownItem>
+                  {
+                    !isShop && <DropdownItem onClick={() => this.props.history.push(`/shop/${userId}`)}>
+                      Your Shop
+                    </DropdownItem>
+                  }
+                  <DropdownItem onClick={() => this.props.history.push(`/${userId}/settings`)}>
+                    Settings
+                  </DropdownItem>
+                  {
+                    !isShop && <DropdownItem onClick={this.setTheme.bind(this)}>
+                      {(theme || 'light') == 'light'?'Dark Mode':'Light Mode'}
+                    </DropdownItem>
+                  }
+                  
+                  <DropdownItem onClick={() => this.signOut()}>
+                    Sign Out
+                  </DropdownItem>
+                </DropdownMenu>:
+                <DropdownMenu right className="mt-2">
+                  <DropdownItem onClick={() => this.props.history.push(`/login`)}>
+                    Log In
+                  </DropdownItem>
+                </DropdownMenu>
+            }
+            
           </UncontrolledDropdown>
           
         </Nav>

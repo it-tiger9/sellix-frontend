@@ -115,6 +115,23 @@ export const getInvoice = (id) => {
 }
 
 
+
+export const getPayPalInvoice = (id) => {
+  return (dispatch) => {
+    let data = {
+      method: 'get',
+      url: `/invoices/paypal/${id}`,
+    }
+    return api(data).then(res => {
+      if(res && res.status == 200) {
+        return res
+      } else throw res
+    }).catch(err => {
+      throw err
+    })
+  }
+}
+
 export const getUserCategories = (username) => {
   return (dispatch) => {
     let data = {

@@ -160,7 +160,7 @@ class CreateCoupon extends React.Component {
                                       onChange={props.handleChange}
                                       value={props.values.code}
                                     />
-                                    <Button color="primary">Generate</Button>
+                                    <Button color="primary" style={{marginLeft: -15}}>Generate</Button>
                                   </div>
                                 </FormGroup>
                               </Col>

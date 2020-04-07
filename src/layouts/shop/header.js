@@ -54,8 +54,9 @@ class Header extends Component {
   }
 
   render() {
-    const { user, children, theme, ...attributes } = this.props
+    const { user, children, theme, is_authed, ...attributes } = this.props
     
+    console.log(this.props)
     return (
       <React.Fragment>
         <AppNavbarBrand
@@ -73,15 +74,24 @@ class Header extends Component {
                 }
               </div>
             </DropdownToggle>
-
-            <DropdownMenu right className="mt-2">
-              <DropdownItem onClick={() => this.props.history.push(`/${userId}`)}>
-                 Dashboard
-              </DropdownItem>
-              <DropdownItem onClick={() => this.signOut()}>
-                Sign Out
-              </DropdownItem>
-            </DropdownMenu>
+            {
+              is_authed?
+                <DropdownMenu right className="mt-2">
+                  <DropdownItem onClick={() => this.props.history.push(`/${userId}`)}>
+                    Dashboard
+                  </DropdownItem>
+                  <DropdownItem onClick={() => this.signOut()}>
+                    Sign Out
+                  </DropdownItem>
+                </DropdownMenu>
+                :
+                <DropdownMenu right className="mt-2">
+                  <DropdownItem onClick={() => this.props.history.push(`/login`)}>
+                    Log In
+                  </DropdownItem>
+                </DropdownMenu>
+            }
+            
           </UncontrolledDropdown>
           
         </Nav>
