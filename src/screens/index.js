@@ -41,6 +41,7 @@ import CreateBlacklist from './blacklist/screens/create'
 import EditBlacklist from './blacklist/screens/create'
 import EditCoupon from './coupons/screens/create'
 import ReplyToQuerie from './queries/screens/reply'
+import Contacts from './contacts/screens/reply/index.js'
 
 import PaypalPaying from './paypal_paying'
 import BitcoinPaying from './bitcoin_paying'
@@ -83,6 +84,7 @@ export {
   EditCategory,
   
   Contact,
+  Contacts,
   Order,
   Analytics,
   Reports,

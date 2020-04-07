@@ -56,10 +56,32 @@ export const getQuerie = (id) => {
 }
 
 export const replyQuerie = (querie) => {
+  console.log({querie})
   return (dispatch) => {
     let data = {
       method: 'POST',
       url: `/queries/reply`,
+      data: formData(querie),
+      withoutAuth: true
+    }
+
+    return authApi(data).then(res => {
+      if (res.status === 200) {
+        return res
+      } else {
+        throw res
+      }
+    }).catch(err => {
+      throw err
+    })
+  }
+}
+
+export const reopenQuerie = (querie) => {
+  return (dispatch) => {
+    let data = {
+      method: 'POST',
+      url: `/queries/reopen`,
       data: formData(querie),
     }
 

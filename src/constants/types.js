@@ -31,6 +31,10 @@ export const QUERIES = {
   QUERIES_LIST: 'QUERIES'
 }
 
+export const QUERIE = {
+  QUERIE: 'QUERIE'
+}
+
 export const COUPONS = {
   COUPONS: 'COUPONS_FETCH_SUCCESS'
 }
