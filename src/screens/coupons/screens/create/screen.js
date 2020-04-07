@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as _ from 'lodash'
@@ -25,9 +26,8 @@ import {
 } from 'services/global'
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 
-
 import './style.scss'
-
+var random = require('random-letters');
 const user = window.localStorage.getItem('userId')
 
 const mapStateToProps = (state) => {
@@ -63,6 +63,7 @@ class CreateCoupon extends React.Component {
       loading: false,
       tooltipOpen: false,
       files: [],
+      codeFromGenerator: null
     }
   }
 
@@ -106,6 +107,7 @@ class CreateCoupon extends React.Component {
   }
 
   render() {
+    console.log(random(16))
     const { loading } = this.state
     let initialValues = this.isEdit()
       ? _.find(this.props.coupons, item => item.uniqid === this.props.match.params.id) || {
@@ -160,7 +162,7 @@ class CreateCoupon extends React.Component {
                                       onChange={props.handleChange}
                                       value={props.values.code}
                                     />
-                                    <Button color="primary" style={{marginLeft: -15}}>Generate</Button>
+                                    <Button onClick={() => props.setFieldValue('code', random(16))} color="primary" style={{marginLeft: -15}}>Generate</Button>
                                   </div>
                                 </FormGroup>
                               </Col>

@@ -36,6 +36,10 @@ export const QUERIE = {
   QUERIE: 'QUERIE'
 }
 
+export const PRODUCTS = {
+  PRODUCTS: 'PRODUCTS'
+}
+
 export const COUPONS = {
   COUPONS: 'COUPONS_FETCH_SUCCESS'
 }
