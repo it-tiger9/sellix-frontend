@@ -240,7 +240,7 @@ class EditProduct extends React.Component {
 
 		this.props.actions.editProduct(values).then(res => {
 
-			this.props.history.push(`/${userId}/products/all`)
+			this.props.history.push(`/dashboard/products/all`)
 			this.props.commonActions.tostifyAlert('success', res.message)
 
 		}).catch(err => {

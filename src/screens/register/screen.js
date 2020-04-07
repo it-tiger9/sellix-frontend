@@ -84,7 +84,7 @@ class Register extends React.Component {
       }
 
       this.props.authActions.getSelfUser().then(res => {
-        const preUrl = `/${res.data.user.username}/dashboard`
+        const preUrl = `/dashboard`
         window.location.href = preUrl
       })
     }).catch(err => {

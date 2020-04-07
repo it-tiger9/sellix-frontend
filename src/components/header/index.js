@@ -148,7 +148,7 @@ class Header extends Component {
             {
               is_authed? 
                 <DropdownMenu right className="mt-2">
-                  <DropdownItem onClick={() => this.props.history.push(`/${userId}`)}>
+                  <DropdownItem onClick={() => this.props.history.push(`/dashboard`)}>
                     Dashboard
                   </DropdownItem>
                   {
@@ -156,7 +156,7 @@ class Header extends Component {
                       Your Shop
                     </DropdownItem>
                   }
-                  <DropdownItem onClick={() => this.props.history.push(`/${userId}/settings`)}>
+                  <DropdownItem onClick={() => this.props.history.push(`/settings`)}>
                     Settings
                   </DropdownItem>
                   {

@@ -96,7 +96,7 @@ class CreateCoupon extends React.Component {
     createOrEditPromise.then(res => {
       this.props.commonActions.tostifyAlert('success', res.message)
       this.props.history.push({
-        pathname: `/${user}/coupons/`
+        pathname: `/dashboard/coupons/`
       })
     }).catch(err => {
       this.props.commonActions.tostifyAlert('error', err.message)

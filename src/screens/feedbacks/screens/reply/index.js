@@ -57,7 +57,7 @@ class ReplyToFeedback extends React.Component {
     this.props.replyFeedback({ ...values, uniqid: 'testing-uniqid' }).then(res => { // IMPORTANT uniqid should be this.props.match.params.id looks like API acept only mock uniqid now - testing-uniqid
       this.props.commonActions.tostifyAlert('success', res.message)
       this.props.history.push({
-        pathname: `/${user}/feedbacks`
+        pathname: `/dashboard/feedbacks`
       })
     }).catch(err => {
       this.props.commonActions.tostifyAlert('error', err.message)

@@ -68,7 +68,7 @@ class Order extends React.Component {
 
   gotoDetail(e, id) {
     this.props.history.push({
-      pathname: `/${user}/orders/detail/${id}`
+      pathname: `/dashboard/orders/detail/${id}`
     })
   }
 

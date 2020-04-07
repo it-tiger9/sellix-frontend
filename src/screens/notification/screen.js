@@ -78,7 +78,7 @@ class Notification extends React.Component {
     this.props.actions.saveNotificationSettings({
       notifications_invoices: this.state.invoice_notification,
       notifications_tickets: this.state.ticket_notification,
-      notifications_feedbacks: this.state.feedback_notification,
+      notifications_feedback: this.state.feedback_notification,
       notifications_replies: this.state.reply_notification,
       webhook_enabled: this.state.webhook_enabled,
       webhook_url: this.state.webhook_url,

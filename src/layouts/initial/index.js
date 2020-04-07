@@ -72,7 +72,7 @@ class InitialLayout extends React.Component {
     return (
       <div className="initial-container">
         <ToastContainer position="top-right" autoClose={5000} style={containerStyle} hideProgressBar={true}/>
-        <Switch>
+   
           {
             initialRoutes.map((prop, key) => {
               if (prop.redirect)
@@ -81,13 +81,14 @@ class InitialLayout extends React.Component {
                 <Route
                   path={prop.path}
                   component={prop.component}
+                  exact={true}
                   key={key}
                 />
               )
             })
           }
-          
-        </Switch>
+          <Route path="*" component={NotFound} exact/>
+       
       </div>
     )
   }
