@@ -1,65 +1,26 @@
 import { CONTACT } from 'constants/types'
 import {
-  api,
+  formData,
   authApi
 } from 'utils'
 
-export const getContactList = (obj) => {
+// Save Notification
+export const savePayments = (settings) => {
   return (dispatch) => {
-    dispatch({
-      type: CONTACT.CONTACT_LIST,
-      payload: {
-        data: [{
-          transactionCategoryId: 2,
-          transactionCategoryCode: 'admin@admin.com',
-          transactionCategoryName: 'Mr.admin',
-          transactionCategoryDescription: 'temp',
-          parentTransactionCategory: 'Customer',
-          transactionType: 'TEMP'
-        }, {
-          transactionCategoryId: 1,
-          transactionCategoryCode: 4,
-          transactionCategoryName: 'temp',
-          transactionCategoryDescription: 'temp',
-          parentTransactionCategory: 'Loream Ipsume',
-          transactionType: 'TEMP'
-        }, {
-          transactionCategoryId: 1,
-          transactionCategoryCode: 4,
-          transactionCategoryName: 'temp',
-          transactionCategoryDescription: 'temp',
-          parentTransactionCategory: 'Loream Ipsume',
-          transactionType: 'TEMP'
-        }, {
-          transactionCategoryId: 1,
-          transactionCategoryCode: 4,
-          transactionCategoryName: 'temp',
-          transactionCategoryDescription: 'temp',
-          parentTransactionCategory: 'Loream Ipsume',
-          transactionType: 'TEMP'
-        }, {
-          transactionCategoryId: 1,
-          transactionCategoryCode: 4,
-          transactionCategoryName: 'temp',
-          transactionCategoryDescription: 'temp',
-          parentTransactionCategory: 'Loream Ipsume',
-          transactionType: 'TEMP'
-        },{
-          transactionCategoryId: 1,
-          transactionCategoryCode: 4,
-          transactionCategoryName: 'temp',
-          transactionCategoryDescription: 'temp',
-          parentTransactionCategory: 'Loream Ipsume',
-          transactionType: 'TEMP'
-        },{
-          transactionCategoryId: 1,
-          transactionCategoryCode: 4,
-          transactionCategoryName: 'temp',
-          transactionCategoryDescription: 'temp',
-          parentTransactionCategory: 'Loream Ipsume',
-          transactionType: 'TEMP'
-        }]
+    let data = {
+      method: 'POST',
+      url: `/settings/payments`,
+      data: formData(settings)
+    }
+
+    return authApi(data).then(res => {
+      if (res.status === 200) {
+        return res
+      } else {
+        throw res
       }
+    }).catch(err => {
+      throw err
     })
   }
 }

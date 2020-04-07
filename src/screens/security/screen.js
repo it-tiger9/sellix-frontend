@@ -45,7 +45,8 @@ class SecurityPage extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      loading: false,
+      loadingPwd: false,
+      loadingWebhook: false,
       loading2FA: false,
       openModal: false,
       initState: {
@@ -148,7 +149,7 @@ class SecurityPage extends React.Component {
   }
 
   render() {
-    const { loading, openModal, initState, loading2FA } = this.state
+    const { loadingPwd, openModal, initState, loading2FA, loadingWebhook} = this.state
 
     return (
       <div className="security-screen">
@@ -183,7 +184,7 @@ class SecurityPage extends React.Component {
                   <Card>
                     <CardBody className="p-4 mb-5">
                       {
-                        loading ?
+                        loadingPwd ?
                           <Row>
                             <Col lg={12}>
                               <Loader />
@@ -263,6 +264,7 @@ class SecurityPage extends React.Component {
                                   </FormGroup>
                                 </Col>
                               </Row>
+                              
                             </Col>
                           </Row>
                       }
@@ -275,6 +277,77 @@ class SecurityPage extends React.Component {
               )}
             </Formik>
           
+          <Formik
+            initialValues={initState}
+            onSubmit={(values) => {
+              this.handleSubmit(values)
+            }}
+            validationSchema={Yup.object().shape({
+              current_password: Yup.string()
+                .required('Current password is required'),
+              new_password: Yup.string()
+                .min(8, 'Password must be at least 8 characters long')
+                .required("New password is required"),
+              confirm_password: Yup.string()
+                .required("Confirm new password is required")
+                .when("new_password", {
+                  is: val => (val && val.length > 0 ? true : false),
+                  then: Yup.string().oneOf(
+                    [Yup.ref("new_password")],
+                    "Both password need to be the same"
+                )})
+            })}>
+              {props => (
+                <Form onSubmit={props.handleSubmit}>
+                  <Card>
+                    <CardBody className="p-4 mb-5">
+                      {
+                        loadingWebhook ?
+                          <Row>
+                            <Col lg={12}>
+                              <Loader />
+                            </Col>
+                          </Row>
+                        : 
+                        
+                          <Row className="mt-4 mb-4">
+                            <Col lg={12}>
+                              <FormGroup className="mb-5">
+                                <Label className="title">Password</Label>
+                              </FormGroup>
+                            </Col>
+                            <Col lg={12}>
+                              <Row>
+                                <Col lg={12}>
+                                  <FormGroup>
+                                    <Label>API Key</Label>
+                                    <div className="d-flex input-group">
+                                      <Input className="bg-brown" value="vXwyXyji89sxZGyDKyvxzmNnpTa3Bhg4h5jFjJSn5yy2eoVmDg"/>
+                                      <Button color="primary">Re-Generate</Button>
+                                    </div>
+                                  </FormGroup>
+                                </Col>
+                              </Row>
+                              <Row>
+                                <Col lg={12}>
+                                  <FormGroup>
+                                    <Label>Webhook Secret</Label>
+                                    <Input className="bg-brown" value="vXwyXyji89sxZGyDKyvxzmNnpTa3Bhg4h5jFjJSn5yy2eoVmDg"/>
+                                  </FormGroup>
+                                </Col>
+                              </Row>
+                            </Col>
+                          </Row>
+                      }
+                    </CardBody>
+                    <Button color="primary" className="mb-4" style={{width: 200}}
+                    >Save Settings</Button>
+                    
+                  </Card> 
+                </Form>
+              )}
+            </Formik>
+
           <Card>
             <CardBody className="p-4 mb-5">
               {

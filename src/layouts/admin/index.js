@@ -134,7 +134,6 @@ class AdminLayout extends React.Component {
                             <Route
                               path={prop.path}
                               component={prop.component}
-                              exact={true}
                               key={key}
                             />
                           )

@@ -13,10 +13,13 @@ import {
   Tooltip,
   Input
 } from 'reactstrap'
-import Select from 'react-select'
+import {
+  CommonActions,
+  AuthActions
+} from 'services/global'
 import { Loader, ImageUpload, DataSlider } from 'components'
 
-import * as ProductActions from './actions'
+import * as Actions from './actions'
 
 import './style.scss'
 
@@ -27,7 +30,9 @@ const mapStateToProps = (state) => {
 }
 const mapDispatchToProps = (dispatch) => {
   return ({
-    productActions: bindActionCreators(ProductActions, dispatch)
+    actions: bindActionCreators(Actions, dispatch),
+    authActions: bindActionCreators(AuthActions, dispatch),
+    commonActions: bindActionCreators(CommonActions, dispatch)
   })
 }
 
@@ -37,34 +42,48 @@ class Payments extends React.Component {
     super(props)
     this.state = {
       loading: false,
-      tooltipOpen: false,
-      files: []
+      email_paypal: '',
+      wallet_bitcoin: '',
+      wallet_litecoin: '',
+      wallet_ethereum: ''
     }
   }
 
-
-  componentWillUnmount() {
-    // Make sure to revoke the data uris to avoid memory leaks
-    this.state.files.forEach(file => URL.revokeObjectURL(file.preview));
+  savePayments() {
+    this.setState({loading: true})
+    this.props.actions.savePayments({
+      email_paypal: this.state.email_paypal,
+      wallet_bitcoin: this.state.wallet_bitcoin,
+      wallet_litecoin: this.state.wallet_litecoin,
+      wallet_ethereum: this.state.wallet_ethereum,
+    }).then(res => {
+      this.props.commonActions.tostifyAlert('success', res.message)
+    }).catch(res => {
+      this.props.commonActions.tostifyAlert('error', res.error)
+    }).finally(() => {
+      this.setState({loading: false})
+    })
   }
 
-  unlistedTooltipToggle() {
-    this.setState({tooltipOpen: !this.state.tooltipOpen})
-  }
 
-  addFile = file => {
-    console.log(file);
-    this.setState({
-      files: file.map(file =>
-        Object.assign(file, {
-          preview: URL.createObjectURL(file)
-        })
-      )
-    });
-  };
+  componentDidMount() {
+    this.setState({loading: true})
+    this.props.authActions.getUserSettings().then(res => {
+      const settings = res.data.settings
+
+      this.setState({
+        email_paypal: settings.email_paypal,
+        wallet_bitcoin: settings.wallet_bitcoin,
+        wallet_litecoin: settings.wallet_litecoin,
+        wallet_ethereum: settings.wallet_ethereum,
+      })
+    }).finally(() => {
+      this.setState({loading: false})
+    })
+  }
 
   render() {
-    const { loading, tooltipOpen, files } = this.state
+    const { loading, email_paypal, wallet_bitcoin, wallet_ethereum, wallet_litecoin } = this.state
 
     return (
       <div className="payments-screen">
@@ -90,12 +109,63 @@ class Payments extends React.Component {
                         <Col lg={12}>
                           <FormGroup className="mb-3">
                             <Label htmlFor="product_code">PayPal Email</Label>
-                            <Input type="text" placeholder="PayPal Email"></Input>
+                            <Input 
+                              type="text" 
+                              placeholder="PayPal Email"  
+                              value={email_paypal}
+                              onChange={e => {
+                                this.setState({email_paypal: e.target.value})
+                              }}
+                            ></Input>
                           </FormGroup>
                         </Col>
                       </Row>
-                      
                       <Row>
+                        <Col lg={12}>
+                          <FormGroup className="mb-3">
+                            <Label htmlFor="product_code">Bitcoin Address</Label>
+                            <Input 
+                              type="text" 
+                              placeholder="Bitcoin Wallet"
+                              value={wallet_bitcoin}
+                              onChange={e => {
+                                this.setState({wallet_bitcoin: e.target.value})
+                              }}
+                            ></Input>
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col lg={12}>
+                          <FormGroup className="mb-3">
+                            <Label htmlFor="product_code">Ethereum Address</Label>
+                            <Input 
+                              type="text" 
+                              placeholder="Ethereum Address"
+                              value={wallet_ethereum}
+                              onChange={e => {
+                                this.setState({wallet_ethereum: e.target.value})
+                              }}
+                            ></Input>
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col lg={12}>
+                          <FormGroup className="mb-3">
+                            <Label htmlFor="product_code">Litecoin Address</Label>
+                            <Input 
+                              type="text" 
+                              placeholder="Litecoin Address"
+                              value={wallet_litecoin}
+                              onChange={e => {
+                                this.setState({wallet_litecoin: e.target.value})
+                              }}
+                            ></Input>
+                          </FormGroup>
+                        </Col>
+                      </Row>
+                      {/* <Row>
                         <Col lg={6}>
                           <FormGroup className="mb-3">
                             <Label htmlFor="product_code">Perfect Money ID</Label>
@@ -130,16 +200,16 @@ class Payments extends React.Component {
                             <Input type="text" placeholder="Skrill Secret Word"></Input>
                           </FormGroup>
                         </Col>
-                      </Row>
+                      </Row> */}
                     </Col>
                   </Row>
               }
             </CardBody>
-            <Button color="primary" className="mb-4" style={{width: 200}}
+            <Button color="primary" className="mb-4" style={{width: 200}} onClick={this.savePayments.bind(this)}
             >Save Settings</Button>
             
           </Card>
-          <Card>
+          {/* <Card>
             <CardBody className="p-4 mb-5">
               {
                 loading ?
@@ -167,7 +237,7 @@ class Payments extends React.Component {
               
             </CardBody>
             <Button color="primary" className="mb-4" style={{width: 200}}>Save Settings</Button>
-          </Card>
+          </Card> */}
         </div>
       </div>
     )

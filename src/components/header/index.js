@@ -61,6 +61,7 @@ class Header extends Component {
     const { user, children, theme, is_authed, isShop, ...attributes } = this.props
     const { notifications } = user || {}
     
+    console.log(user)
   
     return (
       <React.Fragment>
@@ -118,7 +119,7 @@ class Header extends Component {
                         <div className="d-flex justify-content-between align-items-end">
                           <p className="title mb-0">{notify.title}</p>
                           <span className="timeago">
-                            <ReactTimeAgo date={notify.date*1000/1} locale="en"/></span>
+                            <ReactTimeAgo date={notify.created_at*1000/1} locale="en"/></span>
                         </div>
                         <p className="message mb-0 text-grey">{notify.message}</p>
                       </div>
