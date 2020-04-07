@@ -17,88 +17,78 @@ import {
 } from 'reactstrap'
 import { Formik } from 'formik';
 import * as Yup from "yup";
-import { Message } from 'components'
 import ReCaptcha from "@matt-block/react-recaptcha-v2";
 import config from 'constants/config'
 
-import { AuthActions } from 'services/global'
+import { AuthActions, CommonActions } from 'services/global'
 
 import './style.scss'
 
-const mapStateToProps = (state) => {
-  return ({
-  })
-}
-const mapDispatchToProps = (dispatch) => {
-  return ({
-    authActions: bindActionCreators(AuthActions, dispatch)
-  })
-}
+const mapDispatchToProps = dispatch => ({
+  tostifyAlert: bindActionCreators(CommonActions.tostifyAlert, dispatch),
+  twoFactorAuthentication: bindActionCreators(AuthActions.twoFactorAuthentication, dispatch)
+})
 
 class LogIn extends React.Component {
   
   constructor(props) {
-    super(props)
+    super(props);
+
     this.state = {
-      email: '',
-      password: '',
-      alert: null,
       captchaVerify: null
     }
   }
 
-  handleSubmit(data) {    
-    this.props.authActions.twoFactorAuthentication(data).then(res => {
-      this.setState({
-        alert: null
-      })
+  handleSubmit = (data) => {
 
-      this.props.authActions.getSelfUser().then(res => {
-        const preUrl = `/${res.data.user.username}/dashboard`
-        window.location.href = preUrl
-      })
+    let { captchaVerify } = this.state;
+    let { tostifyAlert, getSelfUser, twoFactorAuthentication, history } = this.props;
 
-    }).catch(err => {
-      let errMsg = 'Invalid Email or Password. Please try again.'
-      if(err.status == 403)
-        errMsg = 'reCAPTCHA verification failed, please try again.'
+    if(!captchaVerify) {
+      tostifyAlert('error', 'reCAPTCHA verification failed, please try again.')
+      return false
+    }
 
-      this.setState({
-        alert: <Message
-          type="danger"
-          content={errMsg}
-        />
-      })
-    })
+    data.captcha = captchaVerify;
+    
+    twoFactorAuthentication(data)
+        .then(() => {
+          return getSelfUser()
+        })
+        .then(({ data: { user }}) => {
+          history.push(`/${user.username}/dashboard`)
+        })
+        .catch(err => {
+            let errMsg = err.status === 403 ? 'reCAPTCHA verification failed, please try again.' : 'Invalid Code'
+            tostifyAlert('error', errMsg)
+        })
   }
 
   render() {
+
+    let validationSchema = Yup.object()
+        .shape({
+          code: Yup.string()
+            .required('Code is required'),
+        });
+
     return (
       <div className="bg-white">
         <div className="animated fadeIn">
           <div className="app flex-row align-items-center">
             <Container>
               <Row className="justify-content-center">
-                <Col md="8">
-                  { this.state.alert }
-                </Col>
-              </Row>
-              <Row className="justify-content-center">
                 <Col lg="6">
                   <CardGroup>
                     <Card>
                       <CardBody className="p-5 bg-gray-100">
                         <Formik
-                          initialValues={{code: ''}}
-                          onSubmit={(values) => {
-                            this.handleSubmit(values)
-                          }}
-                          validationSchema={Yup.object().shape({
-                            code: Yup.string()
-                              .required('Code is required'),
-                          })}>
-                            {props => (
-                              <Form onSubmit={props.handleSubmit}>
+                          initialValues={{ code: '' }}
+                          onSubmit={this.handleSubmit}
+                          validationSchema={validationSchema}
+                        >
+                          {({ handleSubmit, handleChange, values, errors, touched }) => (
+                              <Form onSubmit={handleSubmit}>
                                 <h4 className="text-center mb-4">Log In</h4>
                                 <FormGroup className="mb-3">
                                   <Label htmlFor="code">Code</Label>
@@ -107,27 +97,25 @@ class LogIn extends React.Component {
                                     id="code"
                                     name="code"
                                     placeholder="Code"
-                                    onChange={props.handleChange}
-                                    value={props.values.code}
-                                    className={
-                                      props.errors.code && props.touched.code
-                                        ? "is-invalid"
-                                        : ""
-                                    }
+                                    onChange={handleChange}
+                                    value={values.code}
+                                    className={errors.code && touched.code ? "is-invalid" : ""}
                                   />
-                                  {props.errors.code && props.touched.code && (
-                                    <div className="invalid-feedback">{props.errors.code}</div>
-                                  )}
+                                  {errors.code && touched.code && <div className="invalid-feedback">{errors.code}</div>}
                                 </FormGroup>
-                                
+                                <div className="ml-auto mr-auto recptcah" style={{width: 'fit-content'}}>
+                                  <ReCaptcha
+                                    siteKey={config.CAPTCHA_SITE_KEY}
+                                    theme="light"
+                                    size="normal"
+                                    onSuccess={(captcha) => {this.setState({captchaVerify: captcha})}}
+                                    onExpire={() => {this.setState({captchaVerify: null})}}
+                                    onError={() => {this.setState({captchaVerify: null})}}
+                                  />
+                                </div>
                                 <Row>
                                   <Col lg={12} className="text-center mt-4">
-                                    <Button
-                                      color="primary"
-                                      type="submit"
-                                    >
-                                      Send Code
-                                    </Button>
+                                    <Button color="primary" type="submit">Send Code</Button>
                                   </Col>
                                 </Row>
                                 <Row>
@@ -139,7 +127,9 @@ class LogIn extends React.Component {
                                     </FormGroup>
                                   </Col>
                                 </Row>
-                              </Form> )}
+                              </Form>
+                            )}
+
                         </Formik>
                       </CardBody>
                     </Card>
@@ -155,4 +145,4 @@ class LogIn extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(LogIn)
+export default connect(null, mapDispatchToProps)(LogIn)
