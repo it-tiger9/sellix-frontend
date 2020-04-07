@@ -46,6 +46,10 @@ class DateRangePicker2 extends React.Component{
     this.props.getDate(picker)
   }
 
+  setCustomAttribs = () => {
+    document.querySelector('.daterangepicker').classList.add(window.localStorage.getItem('theme') || 'light')
+  }
+
   render() {
     let nick_key = null
 
@@ -67,15 +71,21 @@ class DateRangePicker2 extends React.Component{
         <div className={"datepicker2 " + this.props.className || ''}>
           <i className="fas fa-calendar mr-2"/>
           <DateRangePicker
+              onShow={this.setCustomAttribs}
               startDate={this.state.startDate}
               endDate={this.state.endDate}
               showDropdowns
               showClearDates
               opens={this.props.opens || 'right'}
               ranges={this.props.ranges}
-              className="is-invalid"
               getDate={this.props.getDate}
               onApply={(e, picker) => this.handleEvent(e, picker)}
+              locale={{
+                format: "MMM DD, YYYY",
+                daysOfWeek: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
+                monthNames: moment().localeData('en').months(),
+                firstDay: 0
+              }}
           >
             <ButtonDropdown className="date-select" toggle={()=>{}}>
               <DropdownToggle caret>
