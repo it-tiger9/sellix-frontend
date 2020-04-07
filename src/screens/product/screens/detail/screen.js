@@ -406,12 +406,11 @@ class EditProduct extends React.Component {
 																						className={"price-select " + props.errors.price && props.touched.price ? "is-invalid" : ""}
 																						style={{
 																							paddingRight: "110px",
-																							width: "calc(100% + 90px)"
+																							width: "calc(100% + 89px)"
 																						}}
 																						type="number"
 																						step="0.01"
 																						id="price"
-																						novalidate
 																						name="price"
 																						placeholder="Price"
 																						onChange={props.handleChange}
@@ -864,6 +863,7 @@ class EditProduct extends React.Component {
 																				receiveValue = {(value) => {
 																					props.handleChange('crypto_confirmations')(value)
 																				}}
+																				className={'CCC'}
 																			/>
 																		</FormGroup>
 																	</Col>

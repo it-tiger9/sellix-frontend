@@ -18,135 +18,74 @@ const railStyle = {
     backgroundColor: '#F1F1F1',
 }
 
+const Handle = ({ handle: { id, value, percent }, getHandleProps }) => (
+    <div style={{ left: `${percent}%` }} {...getHandleProps(id)}>
+        <span>{value}<i>%</i></span>
+    </div>
+)
+
+const Track = ({ source: { percent }, target, getTrackProps }) => (
+    <div style={{ left: `${percent}%`, width: `${target.percent - percent}%`}} {...getTrackProps()} />
+)
+
+const Tick = ({ tick: { percent, value }, count, symbol }) => (
+    <div style={{marginLeft: `${-(100 / count) / 2}%`, width: `${100 / count}%`, left: `${percent}%`}}>
+        {value + symbol}
+    </div>
+)
+
+
 class DataSlider extends React.Component{
-    constructor(props) {
-        super(props)
-    }
 
     render() {
-        const Handle = ({handle: { id, value, percent }, getHandleProps}) => {
-            return (
-                <div
-                    className='Handle'
-                    style={{
-                        left: `${percent}%`,
-                        position: 'absolute',
-                        marginLeft: -7,
-                        marginTop: 15,
-                        zIndex: 2,
-                        width: 15,
-                        height: 15,
-                        border: 0,
-                        textAlign: 'center',
-                        cursor: 'pointer',
-                        borderRadius: '50%',
-                        backgroundColor: '#613BEA',
-                        color: '#333',
-                    }}
-                    {...getHandleProps(id)}
-                    >
-                        <div style={{
-                            position: 'absolute',
-                            top: -25,
-                            color: '#a7a5b4',
-                            left: -6
-                        }}>{value}%</div>
-                </div>
-            )
-        }
 
-        const Track = ({ source, target, getTrackProps }) => {
-
-            return(
-                <div
-                    style={{
-                        position: 'absolute',
-                        height: 5,
-                        zIndex: 1,
-                        marginTop: 20,
-                        backgroundColor: '#613BEA',
-                        borderRadius: 5,
-                        cursor: 'pointer',
-                        left: `${source.percent}%`,
-                        width: `${target.percent - source.percent}%`,
-                    }}
-                    {...getTrackProps() /* this will set up events if you want it to be clickeable (optional) */}
-                    />
-            )
-        }
-
-        const Tick = ({ tick, count, symbol }) => {
-            return(
-                <div>
-                    <div
-                        style={{
-                            position: 'absolute',
-                            marginTop: 35,
-                            fontSize: 14,
-                            textAlign: 'center',
-                            marginLeft: `${-(100 / count) / 2}%`,
-                            width: `${100 / count}%`,
-                            left: `${tick.percent}%`,
-                            color: '#A7A5B4',
-                            paddingLeft: 10,
-                            paddingRight: 10
-                        }}
-                    >
-                        {tick.value + symbol}
-                    </div>
-                </div>
-            )
-        }
-
-        const {domain, value, ticks, step, suffix, receiveValue, currentValue} = this.props
+        const { domain, value, ticks, step, suffix, receiveValue, className } = this.props
 
         return(
-            <div className="hor-slider pl-2 pr-2">
+            <div className={"react-compound-slider pl-2 pr-2 " + className || ''}>
                 <Slider
                     rootStyle={sliderStyle}
                     domain={domain}
                     step={step || 1}
                     mode={1}
                     values={value}
-                    onChange={(value) => {
-                        receiveValue(value[0])
-                    }}
+                    onChange={(value) => receiveValue(value[0])}
                 >
                     <Rail>
-                    {({ getRailProps }) => (
-                        <div style={railStyle} {...getRailProps()} />
-                    )}
+                        {({ getRailProps }) => (
+                            <div style={railStyle} {...getRailProps()} />
+                        )}
                     </Rail>
                     <Handles>
-                    {({ handles, getHandleProps }) => (
-                        <div className="slider-handles">
-                        {handles.map(handle => (
-                            <Handle
-                            key={handle.id}
-                            handle={handle}
-                            getHandleProps={getHandleProps}
-                            />
-                        ))}
-                        </div>
-                    )}
+                        {({ handles, getHandleProps }) => (
+                            <div className="react-compound-slider-handles">
+                                {handles.map(handle => (
+                                    <Handle
+                                        key={handle.id}
+                                        handle={handle}
+                                        getHandleProps={getHandleProps}
+                                    />
+                                ))}
+                            </div>
+                        )}
                     </Handles>
                     <Tracks right={false}>
-                    {({ tracks, getTrackProps }) => (
-                        <div className="slider-tracks">
-                        {tracks.map(({ id, source, target }) => (
-                            <Track
-                            key={id}
-                            source={source}
-                            target={target}
-                            getTrackProps={getTrackProps}
-                            />
-                        ))}
-                        </div>
-                    )}
+                        {({ tracks, getTrackProps }) => (
+                            <div className="react-compound-slider-tracks">
+                                {tracks.map(({ id, source, target }) => (
+                                    <Track
+                                        key={id}
+                                        source={source}
+                                        target={target}
+                                        getTrackProps={getTrackProps}
+                                    />
+                                ))}
+                            </div>
+                        )}
                     </Tracks>
                     <Ticks values={ticks}>
                         {({ ticks }) => (
-                            <div className="slider-ticks" >
+                            <div className="react-compound-slider-ticks" >
                                 {ticks.map(tick => (
                                     <Tick key={tick.id} tick={tick} count={ticks.length} symbol={suffix || ''}/>
                                 ))}

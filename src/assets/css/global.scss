@@ -65,6 +65,11 @@ table tbody td p {
   font-size: 12px !important;
 }
 
+.light .image-uploader .drag-drop-area {
+  &:hover {
+    background-color: #f6f4ff !important;
+  }
+}
 
 .image-uploader .drag-drop-area {
   transition: background-color .2s ease;
@@ -129,6 +134,7 @@ table tbody td p {
 @import "override/react-datepicker";
 @import "override/react-select";
 @import "override/react-toastify";
+@import "override/react-compound-slider";
 
 
 

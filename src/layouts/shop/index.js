@@ -14,13 +14,11 @@ import {
   AuthActions,
   CommonActions
 } from 'services/global'
-import { ThemeProvider, createGlobalStyle  } from 'styled-components';
-import { darkTheme, lightTheme } from 'layouts/theme/theme'
+import { ThemeProvider  } from 'styled-components';
+import { lightTheme } from 'layouts/theme/theme'
 import { GlobalStyles } from 'layouts/theme/global'
 
-import {
-  Loading
-} from 'components'
+import { Loading } from 'components'
 
 import Header from './header'
 
@@ -97,7 +95,7 @@ class ShopLayout extends React.Component {
     return (
       <ThemeProvider theme={lightTheme}>
         <GlobalStyles />
-          <div className="shop-container bg-white">
+          <div className={"shop-container bg-white "}>
             <div className="app">
 
                 <AppHeader>
