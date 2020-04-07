@@ -33,12 +33,13 @@
     padding: 10px;
 }
 
-.alignForCustomer{
+.AlignForYouCS{
     display: flex;
     justify-content: flex-start;
 }
 
-.AlignForYou{
+
+.alignForCustomerCS{
     display: flex;
     justify-content: flex-end;
 }
@@ -54,12 +55,12 @@
     margin-top: 15px;
 }
 
-.querieMessageBlock{
+.querieMessageBlockCS{
     padding: 10px;
     width: 160px;
     margin-bottom: 15px;
     border-radius: 10px;
-    background: #221D3E;
+    background: #f5f5fe;
 }
 
 .querieTitle{

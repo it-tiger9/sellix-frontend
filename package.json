@@ -24,6 +24,7 @@
     "lodash": "^4.17.15",
     "node-sass": "^4.13.1",
     "prop-types": "^15.7.2",
+    "random-letters": "^1.0.0-rc.1",
     "react": "^16.8.6",
     "react-ace": "^8.0.0",
     "react-app-polyfill": "^1.0.1",
