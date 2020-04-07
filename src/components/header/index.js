@@ -161,7 +161,7 @@ class Header extends Component {
                   </DropdownItem>
                   {
                     !isShop && <DropdownItem onClick={this.setTheme.bind(this)}>
-                      {(theme || 'light') == 'light'?'Dark Mode':'Light Mode'}
+                      {(theme || 'light') === 'light' ? 'Dark Mode' : 'Light Mode'}
                     </DropdownItem>
                   }
                   

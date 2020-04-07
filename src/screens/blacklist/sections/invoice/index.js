@@ -10,7 +10,6 @@ import {
   Card,
   CardBody
 } from 'reactstrap'
-import { DateRangePicker2 } from 'components'
 import moment from 'moment'
 
 import './style.scss'

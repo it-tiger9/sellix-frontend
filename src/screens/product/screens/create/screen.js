@@ -356,7 +356,7 @@ class CreateProduct extends React.Component {
 																						className={"price-select " + props.errors.price && props.touched.price ? "is-invalid" : ""}
 																						style={{
 																							paddingRight: "110px",
-																							width: "calc(100% + 90px)"
+																							width: "calc(100% + 89px)"
 																						}}
 																						type="number"
 																						id="price"
@@ -812,6 +812,7 @@ class CreateProduct extends React.Component {
 																				receiveValue = {(value) => {
 																					props.handleChange('crypto_confirmations')(value)
 																				}}
+																				className={'CCC'}
 																			/>
 																		</FormGroup>
 																	</Col>
@@ -824,7 +825,8 @@ class CreateProduct extends React.Component {
 																				ticks={[1, 50, 100]}
 																				receiveValue = {(value) => {
 																					props.handleChange('max_risk_level')(value)
-																				}}/>
+																				}}
+																			/>
 																		</FormGroup>
 																	</Col>
 																</Row>

@@ -108,7 +108,7 @@ class AdminLayout extends React.Component {
     return (
       <ThemeProvider theme={theme === 'light' ? lightTheme:darkTheme}>
         <GlobalStyles />
-        <div className="admin-container">
+        <div className={"admin-container "  + window.localStorage.getItem('theme') || 'light'}>
           <div className="app">
             <AppHeader fixed>
               <Suspense fallback={Loading()}>
