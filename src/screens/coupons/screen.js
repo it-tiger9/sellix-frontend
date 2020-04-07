@@ -272,6 +272,7 @@ class Product extends React.Component {
                             isKey
                             dataField="type"
                             dataFormat={this.renderCouponCode}
+                            width="30%"
                             dataSort
                           >
                             Code

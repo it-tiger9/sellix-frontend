@@ -33,21 +33,21 @@ import {
         component: Payments.screen
     },
 
-    {
-        path: `/${user}/settings/memebers`,
-        name: 'Memebers',
-        component: MemberPage.screen
-    },
-    {
-      path: `/${user}/settings/billing`,
-      name: 'Billings',
-      component: Billings.screen
-    },
-    {
-      path: `/${user}/settings/customization`,
-      name: 'Customization',
-      component: Customization.screen
-    },
+    // {
+    //     path: `/${user}/settings/memebers`,
+    //     name: 'Memebers',
+    //     component: MemberPage.screen
+    // },
+    // {
+    //   path: `/${user}/settings/billing`,
+    //   name: 'Billings',
+    //   component: Billings.screen
+    // },
+    // {
+    //   path: `/${user}/settings/customization`,
+    //   name: 'Customization',
+    //   component: Customization.screen
+    // },
     {
       redirect: true,
       pathTo: `/${user}/settings/general`,

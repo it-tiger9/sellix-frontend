@@ -86,7 +86,7 @@ class Reports extends React.Component {
   }
 
   renderCreatedAt(cell, row){
-    return (<ReactTimeAgo date={row.date*1000/1} locale="en"/>)
+    return (<ReactTimeAgo date={row.created_at*1000/1} locale="en"/>)
   }
 
   openNewReportModal() {
@@ -173,7 +173,7 @@ class Reports extends React.Component {
                             dataField="uniqid"
                             dataSort
                             dataFormat={this.uniqid}
-                            width="10%"
+                            width="30%"
                           >
                             ID
                           </TableHeaderColumn>
@@ -187,7 +187,7 @@ class Reports extends React.Component {
                           </TableHeaderColumn>
                           <TableHeaderColumn
                             dataField="products_sold"
-                            dataAlign="right"
+                            dataAlign="center"
                             width="10%"
                             dataSort
                           >

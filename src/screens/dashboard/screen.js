@@ -78,9 +78,10 @@ class Dashboard extends React.Component {
                 <div className="card-header-actions">
                   <div className="new-select fill">
                     <select className="form-control" ref={this.dateRangeSelect}>
-                      <option value="12">Last 12 Months</option>
-                      <option value="6">Last 6 Months</option>
+                      <option value="12">Last 24 Hours</option>
+                      <option value="6">Last 30 Days</option>
                       <option value="3">Last 3 Months</option>
+                      <option value="3">Total</option>
                     </select>
                     <i className="fa fa-caret-down fa-lg mt-4"/>
                   </div>

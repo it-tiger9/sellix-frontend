@@ -849,7 +849,7 @@ class CreateProduct extends React.Component {
 																					<span href="#" id="unlistedTooltip"><i className="fa fa-question-circle"></i></span>
 																					<Tooltip placement="right" isOpen={unlistedTooltipOpen} target="unlistedTooltip" 
 																						toggle={this.unlistedTooltipToggle.bind(this)}>
-																						Unlisted!
+																						The product wont be displayed on your Shop, but can still be accessed via direct URL.
 																					</Tooltip>
 																				</label>
 																			</div>
@@ -871,7 +871,7 @@ class CreateProduct extends React.Component {
 																					<span href="#" id="privateTooltip"><i className="fa fa-question-circle"></i></span>
 																					<Tooltip placement="right" isOpen={privateTooltipOpen} target="privateTooltip" 
 																						toggle={this.privateTooltipToggle.bind(this)}>
-																						Private
+																						Only you can access this product
 																					</Tooltip>
 																				</label>
 																			</div>

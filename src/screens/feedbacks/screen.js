@@ -77,7 +77,6 @@ class Feedbacks extends React.Component {
   renderFeedback = (cell, row) => {
     return (
       <div className="d-flex flex-row align-items-center">
-        {this.renderThumb(row)}
         <div>
           <p>{row.feedback}</p>
         </div>
@@ -174,6 +173,15 @@ class Feedbacks extends React.Component {
                             width = "30%"
                           >
                             Message
+                          </TableHeaderColumn>
+                          <TableHeaderColumn
+                            dataField="id"
+                            dataSort
+                            width="10%"
+                            dataAlign="center"
+                            dataFormat={this.renderThumb}
+                          >
+                            Rating
                           </TableHeaderColumn>
                           <TableHeaderColumn
                             dataField="id"

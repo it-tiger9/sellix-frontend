@@ -114,22 +114,22 @@ export const accountSettingsNavigation =  {
 
 export const shopSettingsNavigation =  {
   items: [
-    {
-      name: 'Members',
-      url: `/${user}/settings/memebers`
-    },
+    // {
+    //   name: 'Members',
+    //   url: `/${user}/settings/memebers`
+    // },
     {
       name: 'Payments',
       url: `/${user}/settings/payments`
     },
-    {
-      name: 'Billing',
-      url: `/${user}/settings/billing`
-    },
-    {
-      name: 'Customization',
-      url: `/${user}/settings/customization`
-    }
+    // {
+    //   name: 'Billing',
+    //   url: `/${user}/settings/billing`
+    // },
+    // {
+    //   name: 'Customization',
+    //   url: `/${user}/settings/customization`
+    // }
   ]
 }
 

@@ -21,6 +21,25 @@ export const endRequest = () => {
   }
 }
 
+
+export const checkDiscordChannel = (channel) => {
+  return (dispatch) => {
+    let data = {
+      method: 'post',
+      url: `/discord/try`,
+      data: formData(channel)
+    }
+    return authApi(data).then(res => {
+      if(res && res.status == 200) {
+        return res
+      } else throw res
+    }).catch(err => {
+      throw err
+    })
+  }
+}
+
+
 export const getGeneralUserInfo = (username) => {
   return (dispatch) => {
     let data = {
