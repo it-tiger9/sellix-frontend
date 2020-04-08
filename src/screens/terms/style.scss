@@ -1,0 +1,174 @@
+.home-screen {
+  * {
+    font-family: 'Poppins';
+  }
+
+  background-color: #f8f8f8;
+  header {
+    // position: fixed;
+    width: 100%;
+    // z-index: 9999;
+    // top: 0;
+    background-color: white;
+    // border-bottom: 1px solid grey;
+  }
+  .navbar {
+    
+    max-width: 1252px;
+    margin: 0 auto;
+
+    .logo {
+      width: 88px !important;
+      height: 25px;
+    }
+
+    .nav-item a{
+      margin: 0 15px;
+      color: #A7A5B4 !important;
+      font-weight: 600;
+      font-size: 15px;
+    }
+
+    .nav-item a:hover,
+    .nav-item.active a {
+      color: #613BEA !important;
+    }
+  }
+
+  .section {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  
+  .white {
+    background-color: white;
+  }
+
+  .purple {
+    background-color: #613BEA;
+
+    h1, p {
+      color: white !important;
+    }
+  }
+
+  p {
+    color: #A7A5B4;
+    line-height: 2em;
+  }
+
+  h1 {
+    color: #613BEA;
+    font-size: 30px;
+    font-weight: 600;
+  }
+
+  h3 {
+    color: #613BEA;
+    font-size: 26px;
+    font-weight: 600;
+  }
+
+  h4 {
+    color: #613BEA;
+    font-size: 22px;
+    font-weight: 600;
+  }
+
+  h5 {
+    line-height: 1.4em;
+    color: #613BEA;
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  p.large {
+    font-size: 20px;
+  }
+
+  p.small {
+    font-size: 18px;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+
+  .service-img {
+    max-width: 120px;
+    max-height: 120px;
+  }
+
+  .undraw-img {
+    max-width: 600px;
+    max-height: 440px;
+  }
+
+  .pc-img  {
+    max-width: 680px;
+    max-height: 380px;
+  }
+
+  .digital-img {
+    max-width: 570px;
+  }
+
+  .home-container {
+    max-width: 1252px;
+
+    
+
+    .service-row {
+      margin-top: 100px;
+    }
+
+    
+  }
+
+  footer {
+    .nav-link {
+      margin: 0 !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+      font-size: 14px !important;
+      font-weight: normal !important;
+    }
+  }
+}
+
+.termsWrapper{
+  // height: calc(100vh - 79px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px 350px;
+}
+
+.termsTitle{
+  color: #6b3de2;
+  font-size: 35px;
+  font-weight: 700;
+  margin-bottom: 25px;
+}
+
+.termsSubTitle{
+  color: #bfbec3;
+  margin-bottom: 45px;
+}
+
+.termsTextTitle{
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.termsText{
+  font-size: 14px;
+  margin-bottom: 25px;
+  line-height: 1.3;
+}
+
+.termsSpaceAfterLine{
+  margin-bottom: 10px;
+}

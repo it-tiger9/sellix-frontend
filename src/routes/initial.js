@@ -7,7 +7,8 @@ import {
   ForgotPassword,
   TwoFactorAuthentication,
   OTPLogin,
-  ResetOTP
+  ResetOTP,
+  Terms
 } from 'screens'
 
 const initialRoutes = [
@@ -50,6 +51,11 @@ const initialRoutes = [
     path: '/fees',
     component: Fees.screen,
     name: 'Fees'
+  },
+  {
+    path: '/terms',
+    component: Terms,
+    name: 'Terms'
   },
   {
     path: '/',
