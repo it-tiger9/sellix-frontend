@@ -796,7 +796,8 @@ class EditProduct extends React.Component {
 																		<FormGroup className="mb-3">
 																			<Label htmlFor="product_code">Note to Customer <small className="font-italic">(optional)</small></Label>
 																			<Input
-																				type="text"
+																				type="textarea"
+																				rows={4}
 																				id="delivery_text"
 																				name="delivery_text"
 																				placeholder="Note to Customer"

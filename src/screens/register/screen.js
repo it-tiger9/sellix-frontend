@@ -47,7 +47,7 @@ class Register extends React.Component {
   handleSubmit = (data) => {
 
     let { tostifyAlert, history } = this.props;
-    let { register, checkAuthStatus } = this.props.authActions;
+    let { register, getSelfUser } = this.props.authActions;
     let { captchaVerify } = this.state;
 
     if(!captchaVerify) {

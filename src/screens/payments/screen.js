@@ -1,40 +1,36 @@
 import React from 'react'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
   Card,
-  CardHeader,
   CardBody,
   Button,
   Row,
   Col,
   FormGroup,
   Label,
-  Tooltip,
   Input
 } from 'reactstrap'
-import {
-  CommonActions,
-  AuthActions
-} from 'services/global'
-import { Loader, ImageUpload, DataSlider } from 'components'
-
+import { CommonActions, AuthActions } from 'services/global'
+import { Loader } from 'components'
 import * as Actions from './actions'
 
 import './style.scss'
 
-const mapStateToProps = (state) => {
-  return ({
-    product_list: state.product.product_list
-  })
-}
-const mapDispatchToProps = (dispatch) => {
-  return ({
-    actions: bindActionCreators(Actions, dispatch),
-    authActions: bindActionCreators(AuthActions, dispatch),
-    commonActions: bindActionCreators(CommonActions, dispatch)
-  })
-}
+import bitcoinIcon from "../../assets/images/crypto/btc.svg";
+import ethereumIcon from "../../assets/images/crypto/eth.svg";
+import litecoinIcon from "../../assets/images/crypto/ltc.svg";
+
+const mapStateToProps = (state) => ({
+  product_list: state.product.product_list
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  actions: bindActionCreators(Actions, dispatch),
+  authActions: bindActionCreators(AuthActions, dispatch),
+  commonActions: bindActionCreators(CommonActions, dispatch)
+})
+
 
 class Payments extends React.Component {
   
@@ -49,41 +45,31 @@ class Payments extends React.Component {
     }
   }
 
-  savePayments() {
-    this.setState({loading: true})
-    this.props.actions.savePayments({
-      email_paypal: this.state.email_paypal,
-      wallet_bitcoin: this.state.wallet_bitcoin,
-      wallet_litecoin: this.state.wallet_litecoin,
-      wallet_ethereum: this.state.wallet_ethereum,
-    }).then(res => {
-      this.props.commonActions.tostifyAlert('success', res.message)
-    }).catch(res => {
-      this.props.commonActions.tostifyAlert('error', res.error)
-    }).finally(() => {
-      this.setState({loading: false})
-    })
+  savePayments = () => {
+
+    this.setState({ loading: true });
+    let { commonActions: { tostifyAlert }, actions: { savePayments } } = this.props.commonActions;
+
+    savePayments(this.state)
+        .then(res => tostifyAlert('success', res.message))
+        .catch(res => tostifyAlert('error', res.error))
+        .finally(() => this.setState({loading: false}))
   }
 
 
   componentDidMount() {
-    this.setState({loading: true})
+    this.setState({ loading: true })
     this.props.authActions.getUserSettings().then(res => {
       const settings = res.data.settings
 
-      this.setState({
-        email_paypal: settings.email_paypal,
-        wallet_bitcoin: settings.wallet_bitcoin,
-        wallet_litecoin: settings.wallet_litecoin,
-        wallet_ethereum: settings.wallet_ethereum,
-      })
+      this.setState(settings)
     }).finally(() => {
       this.setState({loading: false})
     })
   }
 
   render() {
-    const { loading, email_paypal, wallet_bitcoin, wallet_ethereum, wallet_litecoin } = this.state
+    const { loading, email_paypal, wallet_bitcoin, wallet_ethereum, wallet_litecoin } = this.state;
 
     return (
       <div className="payments-screen">
@@ -108,60 +94,52 @@ class Payments extends React.Component {
                       <Row>
                         <Col lg={12}>
                           <FormGroup className="mb-3">
-                            <Label htmlFor="product_code">PayPal Email</Label>
+                            <Label htmlFor="product_code"><i className="fa fa-paypal" style={{ color: '#0097df', marginRight: '.5rem', fontSize: '20px' }}/>PayPal Email</Label>
                             <Input 
                               type="text" 
                               placeholder="PayPal Email"  
                               value={email_paypal}
-                              onChange={e => {
-                                this.setState({email_paypal: e.target.value})
-                              }}
-                            ></Input>
+                              onChange={e => this.setState({email_paypal: e.target.value})}
+                            />
                           </FormGroup>
                         </Col>
                       </Row>
                       <Row>
                         <Col lg={12}>
                           <FormGroup className="mb-3">
-                            <Label htmlFor="product_code">Bitcoin Address</Label>
+                            <Label htmlFor="product_code"><img src={bitcoinIcon} width="20" height="20" style={{ marginRight: '.5rem' }}/>Bitcoin Address</Label>
                             <Input 
                               type="text" 
                               placeholder="Bitcoin Wallet"
                               value={wallet_bitcoin}
-                              onChange={e => {
-                                this.setState({wallet_bitcoin: e.target.value})
-                              }}
-                            ></Input>
+                              onChange={e => this.setState({wallet_bitcoin: e.target.value})}
+                            />
                           </FormGroup>
                         </Col>
                       </Row>
                       <Row>
                         <Col lg={12}>
                           <FormGroup className="mb-3">
-                            <Label htmlFor="product_code">Ethereum Address</Label>
+                            <Label htmlFor="product_code"><img src={ethereumIcon} width="20" height="20" style={{ marginRight: '.5rem' }}/>Ethereum Address</Label>
                             <Input 
                               type="text" 
                               placeholder="Ethereum Address"
                               value={wallet_ethereum}
-                              onChange={e => {
-                                this.setState({wallet_ethereum: e.target.value})
-                              }}
-                            ></Input>
+                              onChange={e => this.setState({wallet_ethereum: e.target.value})}
+                            />
                           </FormGroup>
                         </Col>
                       </Row>
                       <Row>
                         <Col lg={12}>
                           <FormGroup className="mb-3">
-                            <Label htmlFor="product_code">Litecoin Address</Label>
+                            <Label htmlFor="product_code"><img src={litecoinIcon} width="20" height="20" style={{ marginRight: '.5rem' }}/>Litecoin Address</Label>
                             <Input 
                               type="text" 
                               placeholder="Litecoin Address"
                               value={wallet_litecoin}
-                              onChange={e => {
-                                this.setState({wallet_litecoin: e.target.value})
-                              }}
-                            ></Input>
+                              onChange={e => this.setState({wallet_litecoin: e.target.value})}
+                            />
                           </FormGroup>
                         </Col>
                       </Row>
@@ -205,8 +183,9 @@ class Payments extends React.Component {
                   </Row>
               }
             </CardBody>
-            <Button color="primary" className="mb-4" style={{width: 200}} onClick={this.savePayments.bind(this)}
-            >Save Settings</Button>
+            <Button color="primary" className="mb-4" style={{ width: 200 }} onClick={this.savePayments}>
+              Save Settings
+            </Button>
             
           </Card>
           {/* <Card>
