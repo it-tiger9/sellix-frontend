@@ -96,7 +96,7 @@ class CreateCoupon extends React.Component {
       max_uses: values.max_uses ? values.max_uses : -1
     }
     const createOrEditPromise = this.isEdit()
-      ? this.props.editCoupon({ ...values, uniqid: this.props.match.params.id })
+      ? this.props.editCoupon({ ...newValues, uniqid: this.props.match.params.id })
       : this.props.createCoupon(newValues)
     createOrEditPromise.then(res => {
       this.props.commonActions.tostifyAlert('success', res.message)
@@ -111,15 +111,18 @@ class CreateCoupon extends React.Component {
   }
 
   render() {
+
+    
     console.log(random(16))
     const { loading } = this.state
+    const currentCouponData = _.find(this.props.coupons, item => item.uniqid === this.props.match.params.id)
+
+    if (this.isEdit() && !currentCouponData) {
+      return 'load'
+    }
     let initialValues = this.isEdit()
-      ? _.find(this.props.coupons, item => item.uniqid === this.props.match.params.id) || {
-        discount_value: [50]
-      }
-      : {
-        discount_value: [50]
-      }
+      ? { ...currentCouponData, products_bound: currentCouponData.products_bound.length === 0 ? [''] : currentCouponData.products_bound}
+      : { discount_value: [50] }
     return (
       <div className="product-screen mt-3">
         <div className="animated fadeIn">
@@ -233,7 +236,7 @@ class CreateCoupon extends React.Component {
                                     name="max_uses"
                                     placeholder="Leave blank for unlimited"
                                     onChange={props.handleChange}
-                                    value={props.values.max_uses}
+                                    value={props.values.max_uses === '-1' ? "" : props.values.max_uses}
                                   />
                                 </FormGroup>
                               </Col>
