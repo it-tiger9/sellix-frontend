@@ -50,12 +50,7 @@ class TwoFactorModal extends React.Component {
       verifyCode: ''
     }
 
-    this.wareHouseHandleSubmit = this.wareHouseHandleSubmit.bind(this)
-  }
-
-  // Create or Contact
-  wareHouseHandleSubmit(data) {
-    this.props.closeModal()
+    this.verifyOTP = this.verifyOTP.bind(this)
   }
 
   onNext() {
@@ -69,16 +64,17 @@ class TwoFactorModal extends React.Component {
     })
   }
 
-  verifyOTP() {
+  verifyOTP(values) {
     this.setState({loading: true})
-    this.props.actions.verifyOTP({code: this.state.verifyCode}).then(res => {
-      this.props.commonActions.tostifyAlert('success', res.message)
+    this.props.actions.verifyOTP({code: values.verifyCode}).then(res => {
       this.props.otpEnabled()
+      this.props.commonActions.tostifyAlert('success', res.message)
     }).catch(err => {
       this.props.commonActions.tostifyAlert('error', err.error || 'Seomthing went wrong!')
-      this.props.otpEnabled()
     }).finally(() => {
+      
       this.setState({loading: false})
+      this.props.closeModal()
     })
   }
 
@@ -91,20 +87,19 @@ class TwoFactorModal extends React.Component {
         <Modal isOpen={openModal}
           className="modal-success newmember-modal"
           >
-          <Formik
-            initialValues={this.state.initWareHouseValue}
-            onSubmit={(values, {resetForm}) => {
-              this.wareHouseHandleSubmit(values)
-              resetForm(this.state.initWareHouseValue)
-            }}
-            validationSchema={Yup.object().shape({
-                warehouseName: Yup.string()
-                    .required('Warehouse Name is a required field'),
-            })}>
-            {props => (
-              <Form name="simpleForm" onSubmit={props.handleSubmit}>
-                <ModalHeader toggle={closeModal}>Enable Two-Factor Authentication</ModalHeader>
-                  <ModalBody className="text-center">
+          <ModalHeader toggle={closeModal}>Enable Two-Factor Authentication</ModalHeader>
+            <ModalBody className="text-center">
+                  <Formik
+                    initialValues={{verifyCode: verifyCode}}
+                    onSubmit={this.verifyOTP}
+                    validationSchema={Yup.object().shape({
+                      verifyCode: Yup.string()
+                        .required('OTP code is required')
+                        .min(6, 'OTP code must 6 characters long')
+                        .max(6, 'OTP code must 6 characters long')
+                    })}>
+                    {props => (
+                      <Form name="simpleForm" onSubmit={props.handleSubmit}>
                     {
                       !nextStep?
                         <div>
@@ -122,28 +117,45 @@ class TwoFactorModal extends React.Component {
                               </div>
                             </div>
                           </Alert>
-                          <div className="mt-5">
-                              <p className="text-left">Enter the 6 digit OTP code displayed in your Google Authenticator App</p>
-                              <div className="d-flex">
-                                <Input 
-                                  type="text" 
-                                  value={verifyCode}
-                                  placeholder="Enter the 6 digit OTP code" 
-                                  onChange={e => {this.setState({verifyCode: e.target.value})}}></Input>
-                              </div>
-                            </div>
+                          <FormGroup className="mb-3">
+                            <Label htmlFor="verifyCode" className="text-left">
+                              Enter the 6 digit OTP code displayed in your Google Authenticator App</Label>
+                            <Input 
+                                type="text" 
+                                id="verifyCode"
+                                name="verifyCode"
+                                onChange={props.handleChange}
+                                value={props.values.verifyCode}
+                                placeholder="Enter the 6 digit OTP code" 
+                                className={
+                                  props.errors.verifyCode && props.touched.verifyCode
+                                    ? "is-invalid"
+                                    : ""
+                                }
+                              />
+                              {props.errors.verifyCode && props.touched.verifyCode && (
+                                <div className="invalid-feedback">{props.errors.verifyCode}</div>
+                              )}
+                          </FormGroup>
                         </div>
                     }
-                  </ModalBody>
-                  <ModalFooter className="justify-content-center mt-4">
-                    <Button color="primary" type="submit" className="mr-2" disabled={loading}
-                      onClick={nextStep?this.verifyOTP.bind(this):this.nextStep.bind(this)}>
-                     {loading?<Spin/>:<span>{nextStep?'Verify':'Next'}</span>}
-                    </Button>
-                  </ModalFooter>
-              </Form>
-              )}
-            </Formik>
+                    {nextStep &&
+                      <Button color="primary" type="submit" className="mr-2 mt-4 mb-4" disabled={loading}>
+                      {loading?<Spin/>:<span>Verify</span>}
+                      </Button>
+                    }
+                  </Form>
+                )}             
+              </Formik>
+            </ModalBody>
+            {!nextStep && 
+              <ModalFooter className="justify-content-center">
+                <Button color="primary" type="button" className="mr-2"
+                  onClick={this.nextStep.bind(this)}>
+                  Next
+                </Button>
+              </ModalFooter>
+            }
           </Modal>
         </div>
     )

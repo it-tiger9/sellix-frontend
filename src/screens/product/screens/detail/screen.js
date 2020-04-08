@@ -116,7 +116,8 @@ class EditProduct extends React.Component {
 		super(props)
 		this.state = {
       		loading: false,
-      		saving: false,
+			saving: false,
+			duplicating: false,  
 			unlistedTooltipOpen: false,
 			privateTooltipOpen: false,
 			blockTooltipOpen: false,
@@ -255,6 +256,19 @@ class EditProduct extends React.Component {
 			gateways: {...this.state.gateways, [value]:isChecked}
 		})
   }
+
+
+  duplicateProduct() {
+	this.setState({duplicating: true})
+	this.props.actions.duplicateProduct({uniqid: this.id}).then(res => {
+		this.props.commonActions.tostifyAlert('success', res.message)
+		this.props.history.push(`/dashboard/products/all`)
+	}).catch(err => {
+		this.props.commonActions.tostifyAlert('error', err.error)
+	}).finally(() => {
+		this.setState({duplicating: false})
+	})
+  }
   
 
   componentDidMount() {
@@ -297,6 +311,7 @@ class EditProduct extends React.Component {
 		const { 
 			loading, 
 			saving,
+			duplicating,
 			unlistedTooltipOpen, 
 			privateTooltipOpen,
 			blockTooltipOpen,
@@ -355,8 +370,17 @@ class EditProduct extends React.Component {
 										<CardHeader>
 											<Row style={{alignItems: 'center'}}>
 												<Col md={12}>
-													<h1>Edit Product</h1>
+													<div className="d-flex justify-content-between align-items-center">
+														<h1>Edit Product</h1>	
+														<Button color="primary" type="button" 
+															onClick={this.duplicateProduct.bind(this)}
+															 disabled={duplicating}>
+															{duplicating ?<Spin/>:'Duplicate Product' }
+														</Button>
+													</div>
+													
 												</Col>
+												
 											</Row>
 										</CardHeader>
 										<CardBody className="p-4 mb-5">
@@ -965,9 +989,13 @@ class EditProduct extends React.Component {
 														</Row>
 												}
 											</CardBody>
-											<Button color="primary" type="submit" className="" style={{width: 200}} disabled={loading || saving}>
-												{saving ?<Spin/>:'Save Product' }
-											</Button>
+											<div className="d-flex">
+												<Button color="primary" type="submit" className="" style={{width: 200}} disabled={loading || saving}>
+													{saving ?<Spin/>:'Save Product' }
+												</Button>
+												
+											</div>
+											
 											
 										</Card>
 									</Form> )}

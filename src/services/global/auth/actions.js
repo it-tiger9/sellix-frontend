@@ -107,7 +107,7 @@ export const logIn = (obj) => {
 }
 
 
-export const twoFactorAuthentication = (obj) => {
+export const EmailAuthentication = (obj) => {
   return (dispatch) => {
     let data = {
       method: 'post',
@@ -116,20 +116,36 @@ export const twoFactorAuthentication = (obj) => {
     }
     return authApi(data).then(res => {
       if(res && res.status == 200) {
-        
-        let data1 = {
-          method: 'get',
-          url: `/check/${res.data.token}`
-        }
-
-        return authApi(data1).then(user => {
-          dispatch({
-            type: AUTH.SIGNED_IN
-          })
-  
-          window.localStorage.setItem('accessToken', res.data.token)
-          window.localStorage.setItem('userId', user.username)
+        dispatch({
+          type: AUTH.SIGNED_IN
         })
+        window.localStorage.setItem('accessToken', res.data.token)
+        return res
+      } else if(res && res.status == 202) {
+        window.localStorage.setItem('accessToken', res.data.token)
+        return res
+      } else throw res
+    }).catch(err => {
+      throw err
+    })
+  }
+}
+
+
+export const OTPAuthentication = (obj) => {
+  return (dispatch) => {
+    let data = {
+      method: 'post',
+      url: '/auth/2fa/otp',
+      data: formData(obj)
+    }
+    return authApi(data).then(res => {
+      if(res && res.status == 200) {
+        dispatch({
+          type: AUTH.SIGNED_IN
+        })
+        window.localStorage.setItem('accessToken', res.data.jwt)
+        return res
       } else throw res
     }).catch(err => {
       throw err

@@ -54,15 +54,18 @@ class LogIn extends React.Component {
 
     logIn(data)
       .then(res => {
-
+ 
         if(res.status === 202) {
-            history.push('/2fa');
+          if(res.data.type == 'email')
+            history.push('/email-2fa')
+          else if(res.data.type == 'otp')
+            history.push('/otp-2fa')
         }
 
-        return getSelfUser()
-      })
-      .then(({ data: { user }}) => {
-          history.push(`/dashboard`);
+        if(res.status === 200)
+          getSelfUser().then(res => {
+            history.push(`/dashboard`);
+          })
       })
       .catch(err => {
           let errMsg = err.status === 403 ? 'reCAPTCHA verification failed, please try again.' : 'Invalid Email or Password. Please try again.';
@@ -99,7 +102,7 @@ class LogIn extends React.Component {
                         >
                             {({ handleSubmit, handleChange, values, errors, touched }) =>
                                 <Form onSubmit={handleSubmit}>
-                                  {console.log(values)}
+                                
                                   <h4 className="text-center mb-4">Log In</h4>
 
                                   <FormGroup className="mb-3">

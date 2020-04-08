@@ -95,6 +95,29 @@ export const editProduct = (product) => {
 }
 
 
+
+// Duplicate Product
+export const duplicateProduct = (product) => {
+  return (dispatch) => {
+    let data = {
+      method: 'POST',
+      url: `/products/duplicate`,
+      data: formData(product)
+    }
+
+    return authApi(data).then(res => {
+      if (res.status === 200) {
+        return res
+      } else {
+        throw res
+      }
+    }).catch(err => {
+      throw err
+    })
+  }
+}
+
+
 // Delete Product
 export const deleteProduct = (product) => {
   return (dispatch) => {

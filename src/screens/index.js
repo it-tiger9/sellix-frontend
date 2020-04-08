@@ -2,6 +2,7 @@ import Home from './home'
 import Fees from './fees'
 import LogIn from './log_in'
 import TwoFactorAuthentication from './2fa'
+import OTPLogin from './otp_2fa'
 import Register from './register'
 import ForgotPassword from './forgot_password'
 import ResetPassword from './reset_password'
@@ -66,6 +67,7 @@ export {
   Fees,
   LogIn,
   Register,
+  OTPLogin,
   Dashboard,
   ForgotPassword,
   ResetPassword,

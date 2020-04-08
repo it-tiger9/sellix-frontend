@@ -29,56 +29,48 @@ const mapDispatchToProps = dispatch => ({
   authActions: bindActionCreators(AuthActions, dispatch)
 })
 
-class LogIn extends React.Component {
+class OTPLogin extends React.Component {
   
   constructor(props) {
     super(props);
 
     this.state = {
-      captchaVerify: null
+      captchaVerify: null,
+      loading: false,
+      qr_image: '',
+      recover_key: ''
     }
   }
 
   handleSubmit = (data) => {
-
-    let { captchaVerify } = this.state;
     let { tostifyAlert, history } = this.props;
 
-    if(!captchaVerify) {
-      tostifyAlert('error', 'reCAPTCHA verification failed, please try again.')
-      return false
-    }
-
-    data.captcha = captchaVerify;
-    
-    this.props.authActions.EmailAuthentication(data)
-      .then(res => {
-        if(res.status === 202) {
-          if(res.data.type == 'email')
-            history.push('/email-2fa')
-          else if(res.data.type == 'otp')
-            history.push('/otp-2fa')
-        }
-
-        if(res.status === 200)
-          this.props.authActions.getSelfUser().then(res => {
-            history.push(`/dashboard`)
-          })
-
+    this.props.authActions.OTPAuthentication(data)
+      .then(() => {
+        this.props.authActions.getSelfUser().then(res => {
+          history.push(`/dashboard`)
+        })
       })
       .catch(err => {
-          console.log(err)
           let errMsg = 'Invalid Code'
           tostifyAlert('error', errMsg)
       })
   }
 
+
+  componentDidMount() {
+
+  }
+
   render() {
+    const { qr_image, loading, recover } = this.state
 
     let validationSchema = Yup.object()
         .shape({
           code: Yup.string()
-            .required('Code is required'),
+            .required('Code is required')
+            .min(6, 'OTP code must 6 characters long')
+            .max(6, 'OTP code must 6 characters long')
         });
 
     return (
@@ -91,6 +83,7 @@ class LogIn extends React.Component {
                   <CardGroup>
                     <Card>
                       <CardBody className="p-5 bg-gray-100">
+    
                         <Formik
                           initialValues={{ code: '' }}
                           onSubmit={this.handleSubmit}
@@ -99,30 +92,23 @@ class LogIn extends React.Component {
                           {({ handleSubmit, handleChange, values, errors, touched }) => (
                               <Form onSubmit={handleSubmit}>
                                 <h4 className="text-center mb-4">Log In</h4>
-                                <p className="mt-4 mb-4 text-grey">You have setup the multi factor authentication with your email, please check your emails to get the code needed to proceed with the login</p>
+                                <p className="mt-4 mb-4 text-grey">
+                                You have setup a one time password for your multi factor authentication, please use Google Authenticator or any similar to get the code and proceed with the login.
+                                </p>
                                 <FormGroup className="mb-3">
                                   <Label htmlFor="code">Code</Label>
                                   <Input
                                     type="text"
                                     id="code"
                                     name="code"
-                                    placeholder="Code"
+                                    placeholder="Enter the OTP code"
                                     onChange={handleChange}
                                     value={values.code}
                                     className={errors.code && touched.code ? "is-invalid" : ""}
                                   />
                                   {errors.code && touched.code && <div className="invalid-feedback">{errors.code}</div>}
                                 </FormGroup>
-                                <div className="ml-auto mr-auto recptcah" style={{width: 'fit-content'}}>
-                                  <ReCaptcha
-                                    siteKey={config.CAPTCHA_SITE_KEY}
-                                    theme="light"
-                                    size="normal"
-                                    onSuccess={(captcha) => {this.setState({captchaVerify: captcha})}}
-                                    onExpire={() => {this.setState({captchaVerify: null})}}
-                                    onError={() => {this.setState({captchaVerify: null})}}
-                                  />
-                                </div>
+                                
                                 <Row>
                                   <Col lg={12} className="text-center mt-4">
                                     <Button color="primary" type="submit">Send Code</Button>
@@ -131,8 +117,8 @@ class LogIn extends React.Component {
                                 <Row>
                                   <Col>
                                     <FormGroup className="mb-0 text-center mt-3">
-                                      <Link to="/password/new">
-                                        <Label style={{cursor: 'pointer'}}><b>Forgot Password?</b></Label>
+                                      <Link to="/login">
+                                        <Label style={{cursor: 'pointer'}}><b>Login?</b></Label>
                                       </Link>
                                     </FormGroup>
                                   </Col>
@@ -155,4 +141,4 @@ class LogIn extends React.Component {
   }
 }
 
-export default connect(null, mapDispatchToProps)(LogIn)
+export default connect(null, mapDispatchToProps)(OTPLogin)

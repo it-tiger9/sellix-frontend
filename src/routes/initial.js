@@ -5,7 +5,8 @@ import {
   Fees,
   ResetPassword,
   ForgotPassword,
-  TwoFactorAuthentication
+  TwoFactorAuthentication,
+  OTPLogin
 } from 'screens'
 
 const initialRoutes = [
@@ -15,9 +16,14 @@ const initialRoutes = [
     component: LogIn.screen
   },
   {
-    path: '/2fa',
+    path: '/email-2fa',
     name: '2FA',
     component: TwoFactorAuthentication.screen
+  },
+  {
+    path: '/otp-2fa',
+    name: '2FA',
+    component: OTPLogin.screen
   },
   {
     path: '/register',

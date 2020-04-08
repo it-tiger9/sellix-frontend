@@ -52,6 +52,7 @@ class SecurityPage extends React.Component {
       loading2FA: false,
       openModal: false,
       email_2fa: false,
+      changed_otp: true,
       otp_enabled: false,
       QRCode: '',
       recover: '',
@@ -60,14 +61,13 @@ class SecurityPage extends React.Component {
         current_password: '',
         new_password: '',
         confirm_password: '',
-        email_2fa: false,
         webhook_secret: '',
       }
     }
   }
 
   componentDidMount() {
-    this.setState({loading2FA: true})
+    this.setState({loading: true})
     this.props.authActions.getUserSettings().then(res => {
       this.setState({
         api_key: res.data.settings.apikey,
@@ -76,10 +76,9 @@ class SecurityPage extends React.Component {
         initState: {
           ...this.state.initState, 
           webhook_secret: res.data.settings.webhook_secret || '',
-          email_2fa: res.data.settings.email_2fa == '1'?true:false
         }})
     }).finally(() =>{
-      this.setState({loading2FA: false})
+      this.setState({loading: false})
     })
   }
 
@@ -93,34 +92,20 @@ class SecurityPage extends React.Component {
     this.setState({openModal: false})
   }
 
-
-  set2FA(checked) {
-    this.setState({
-      email_2fa: checked
-    })
-
-    const data = {
-      email_2fa: checked
-    }
-
-    this.props.actions.saveSecurity(data).catch(err => {
-      this.props.commonActions.tostifyAlert('error', err.error || 'Seomthing went wrong!')
-    })
-  }
-
-  removeOTP() {
-
-  }
-
-
   otpEnabled(){
-    this.setState({otp_enabled:true})
+    this.setState({
+      otp_enabled:true,
+      changed_otp: true
+    })
   }
 
   saveSettings(data, loading) {
     this.setState({[loading]: true})
     this.props.actions.saveSecurity(data).then(res => {
       this.props.commonActions.tostifyAlert('success', res.message)
+      if(!this.state.changed_otp){
+        this.setState({otp_enabled: false})
+      }
     }).catch(err => {
       this.props.commonActions.tostifyAlert('error', err.error || 'Seomthing went wrong!')
     }).finally(() => {
@@ -141,7 +126,10 @@ class SecurityPage extends React.Component {
 
   handleSubmit(values, loading){
     delete values['confirm_password']
-    values['email_2fa'] = this.state.initState.email_2fa
+    values['email_2fa'] = this.state.email_2fa
+
+    if(!this.state.changed_otp)
+      values['otp_2fa'] = false
 
     this.saveSettings(values, loading)
   }
@@ -153,7 +141,7 @@ class SecurityPage extends React.Component {
       initState, 
       loading2FA, 
       email_2fa, 
-      loadingWebhook, 
+      changed_otp, 
       QRCode,
       recover,
       api_key,
@@ -308,58 +296,62 @@ class SecurityPage extends React.Component {
                           </Row>
                       }
                     </CardBody>
+                    <CardBody className="p-4 mb-5">
+                      {
+                        loading ?
+                          <Row>
+                            <Col lg={12}>
+                              <Loader />
+                            </Col>
+                          </Row>
+                        : 
+                          <Row className="mt-4 mb-4">
+                            <Col lg={12}>
+                              <FormGroup className="mb-5">
+                                <Label className="title">Multi Factor Authentication</Label>
+                              </FormGroup>
+                              <FormGroup row>
+                                <Col className="d-flex align-items-center">
+                                  <Label className="mb-0 mr-2" style={{width: 160}}>Email: </Label>
+                                  <AppSwitch className="mx-1 file-switch mr-2"
+                                    variant={'pill'} 
+                                    color={'primary'}
+                                    checked={email_2fa}
+                                    onChange={(e) => {
+                                      this.setState({email_2fa: e.target.checked})
+                                    }}
+                                  />
+                                </Col>
+                              </FormGroup>
+                              <FormGroup row>
+                                <Col className="d-flex align-items-center mt-2">
+                                    <Label className="mb-0 mr-2" style={{width: 160}}>One Time Password: </Label>
+                                    {
+                                      otp_enabled?
+                                        <AppSwitch className="mx-1 file-switch mr-2"
+                                          variant={'pill'} 
+                                          color={'primary'}
+                                          checked={changed_otp}
+                                          onChange={(e) => {
+                                            this.setState({changed_otp: e.target.checked})
+                                          }}
+                                        />:
+                                        <Button color="default" onClick={this.openTwoFactorModal.bind(this)}>
+                                          Add
+                                        </Button>
+                                      }
+                                  </Col>
+                              </FormGroup>
+                            </Col>
+                          </Row>
+                      }
+                    </CardBody> 
                     <Button color="primary" className="mb-4" style={{width: 200}}
                     >Save Settings</Button>
-                    
                   </Card> 
                 </Form>
               )}
             </Formik>
-        
-          <Card>
-            <CardBody className="p-4 mb-5">
-              {
-                loading2FA ?
-                  <Row>
-                    <Col lg={12}>
-                      <Loader />
-                    </Col>
-                  </Row>
-                : 
-                  <Row className="mt-4 mb-4">
-                    <Col lg={12}>
-                      <FormGroup className="mb-3">
-                        <Label className="title">Email Two-Factor Authentication</Label>
-                      </FormGroup>
-                      <FormGroup row>
-                        <Col className="d-flex align-items-center">
-                          <AppSwitch className="mx-1 file-switch mr-2"
-                            style={{width: 50}}
-                            variant={'pill'} 
-                            color={'primary'}
-                            size="ms"
-                            checked={email_2fa}
-                            onChange={(e) => {
-                              this.set2FA(e.target.checked)
-                            }}
-                            />
-                          <div className="ml-2">
-                            <Label className="mb-0">Email 2FA</Label>
-                          </div>
-                        </Col>
-                      </FormGroup>
-                      <FormGroup className="mt-5">
-                        <Label className="title">OTP Two-Factor Authentication</Label>
-                      </FormGroup>
-                      <Button color="default" onClick={
-                        !otp_enabled?this.openTwoFactorModal.bind(this):this.removeOTP.bind(this)}>
-                          {otp_enabled?'Remove OTP':'Add'}
-                      </Button>
-                    </Col>
-                  </Row>
-              }
-            </CardBody>
-          </Card>
         </div>
       </div>
     )

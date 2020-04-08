@@ -104,7 +104,7 @@ class AdminLayout extends React.Component {
     }
 
     const theme = window.localStorage.getItem('theme') || this.state || 'light'
-    console.log(this.props.user)
+
     return (
       <ThemeProvider theme={theme === 'light' ? lightTheme:darkTheme}>
         <GlobalStyles />

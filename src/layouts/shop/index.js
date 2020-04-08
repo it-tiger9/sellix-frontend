@@ -136,7 +136,7 @@ class ShopLayout extends React.Component {
                   </section>
 
                   <div style={{backgroundColor: '#F5F5FE'}}>
-                    <div className="main p-3">
+                    <div className="shop-main p-3">
                         <Container className="p-0" fluid>
                             <Suspense fallback={Loading()}>
                                 <ToastContainer position="top-right" autoClose={5000} style={containerStyle} />
