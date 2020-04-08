@@ -626,7 +626,7 @@ class CreateProduct extends React.Component {
 
 																{type.value === 'serials' && <div><Row>
 																		<Col lg={12} className="mb-3">
-																			<textarea className="form-control" rows={5}></textarea>
+																			<textarea className="form-control" rows={5} />
 																		</Col>
 																	</Row>
 																	<Row>
@@ -644,9 +644,11 @@ class CreateProduct extends React.Component {
 																							delimiter: option
 																						})
 																						
-																						if(option.value !== 'custom')
+																						if(option.value !== 'custom') {
 																							props.handleChange("stock_delimeter")(option.value)
-																						else props.handleChange("stock_delimeter")('')
+																						} else {
+																							props.handleChange("stock_delimeter")('')
+																						}
 																					}}>                                       
 																				</Select>
 																			</FormGroup>
@@ -660,7 +662,7 @@ class CreateProduct extends React.Component {
 																						name="stock_delimeter"
 																						value={props.values.stock_delimeter}
 																						onChange={props.handleChange}
-																					></Input>
+																					/>
 																				</FormGroup>
 																			</Col>
 																		}
@@ -673,7 +675,7 @@ class CreateProduct extends React.Component {
 																					name="quantity_min"
 																					value={props.values.quantity_min}
 																					onChange={props.handleChange}
-																				></Input>
+																				/>
 																			</FormGroup>
 																		</Col>
 																		<Col lg={3}>
@@ -685,7 +687,7 @@ class CreateProduct extends React.Component {
 																					name="quantity_max"
 																					value={props.values.quantity_max}
 																					onChange={props.handleChange}
-																				></Input>
+																				/>
 																			</FormGroup>
 																		</Col>
 																</Row></div>}
@@ -698,7 +700,8 @@ class CreateProduct extends React.Component {
 																				id='service_text'
 																				name="service_text"
 																				value={props.values.service_text}
-																				rows={5} onChange={props.handleChange}></textarea>
+																				rows={5} onChange={props.handleChange}
+																			/>
 																		</FormGroup>
 																	</Col>
 																</Row>}
@@ -721,7 +724,8 @@ class CreateProduct extends React.Component {
 																		<FormGroup className="mb-3">
 																			<Label htmlFor="product_code">Note to Customer <small className="font-italic">(optional)</small></Label>
 																			<Input
-																				type="text"
+																				type="textarea"
+																				rows={4}
 																				id="delivery_text"
 																				name="delivery_text"
 																				placeholder="Note to Customer"
