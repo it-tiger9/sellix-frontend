@@ -6,7 +6,7 @@ import {
   ResetPassword,
   ForgotPassword,
   TwoFactorAuthentication,
-  Terms
+  Terms,
   OTPLogin
 } from 'screens'
 
