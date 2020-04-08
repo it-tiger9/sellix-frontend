@@ -21,6 +21,7 @@ import { Loader, DataSlider } from 'components'
 import { createCoupon } from './actions'
 import { getCoupons } from '../../actions'
 import { editCoupon } from '../detail/actions'
+import { getProducts } from './actions'
 import {
   CommonActions
 } from 'services/global'
@@ -35,7 +36,8 @@ const mapStateToProps = (state) => {
     coupons: _.map(state.coupons.coupons, coupon => ({
       ...coupon,
       discount_value: [+coupon.discount]
-    }))
+    })),
+    products: [{ label: 'Select all products', value: ''}, ..._.map(state.coupons.products, product => ({label: product.title, value: product.id})) ] 
   })
 }
 
@@ -45,6 +47,7 @@ const mapDispatchToProps = (dispatch) => {
     editCoupon: bindActionCreators(editCoupon, dispatch),
     createCoupon: bindActionCreators(createCoupon, dispatch),
     commonActions: bindActionCreators(CommonActions, dispatch),
+    getProducts: bindActionCreators(getProducts, dispatch),
   })
 }
 
@@ -69,6 +72,7 @@ class CreateCoupon extends React.Component {
 
   componentDidMount() {
     this.props.actions.getCoupons()
+    this.props.getProducts()
   }
 
   isEdit = () => {
@@ -192,7 +196,7 @@ class CreateCoupon extends React.Component {
                                     className="select-default-width"
                                     id="products_bound"
                                     multi
-                                    options={MockProducts}
+                                    options={this.props.products}
                                     name="products_bound"
                                     placeholder="Select Products"
                                     onChange={(options) => {
