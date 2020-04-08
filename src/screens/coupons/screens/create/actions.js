@@ -36,7 +36,7 @@ export const getProducts = () => {
       if (res.status === 200) {
         dispatch({
           type: PRODUCTS.PRODUCTS,
-          payload: res.data.product
+          payload: res.data.products
         })
         return res
       } else {

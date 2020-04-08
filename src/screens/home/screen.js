@@ -218,7 +218,7 @@ class Home extends React.Component {
                         <NavLink href="#">Register</NavLink>
                       </NavItem>
                       <NavItem>
-                        <NavLink href="#">Terms</NavLink>
+                        <NavLink href="/terms">Terms</NavLink>
                       </NavItem>
                       <NavItem>
                         <NavLink href="#">Privacy Policy</NavLink>

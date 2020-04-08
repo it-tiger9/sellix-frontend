@@ -21,6 +21,7 @@ import { Loader, DataSlider } from 'components'
 import { createCoupon } from './actions'
 import { getCoupons } from '../../actions'
 import { editCoupon } from '../detail/actions'
+import { getProducts } from './actions'
 import {
   CommonActions
 } from 'services/global'
@@ -35,7 +36,8 @@ const mapStateToProps = (state) => {
     coupons: _.map(state.coupons.coupons, coupon => ({
       ...coupon,
       discount_value: [+coupon.discount]
-    }))
+    })),
+    products: [{ label: 'Select all products', value: ''}, ..._.map(state.coupons.products, product => ({label: product.title, value: product.id})) ] 
   })
 }
 
@@ -45,6 +47,7 @@ const mapDispatchToProps = (dispatch) => {
     editCoupon: bindActionCreators(editCoupon, dispatch),
     createCoupon: bindActionCreators(createCoupon, dispatch),
     commonActions: bindActionCreators(CommonActions, dispatch),
+    getProducts: bindActionCreators(getProducts, dispatch),
   })
 }
 
@@ -69,6 +72,7 @@ class CreateCoupon extends React.Component {
 
   componentDidMount() {
     this.props.actions.getCoupons()
+    this.props.getProducts()
   }
 
   isEdit = () => {
@@ -92,7 +96,7 @@ class CreateCoupon extends React.Component {
       max_uses: values.max_uses ? values.max_uses : -1
     }
     const createOrEditPromise = this.isEdit()
-      ? this.props.editCoupon({ ...values, uniqid: this.props.match.params.id })
+      ? this.props.editCoupon({ ...newValues, uniqid: this.props.match.params.id })
       : this.props.createCoupon(newValues)
     createOrEditPromise.then(res => {
       this.props.commonActions.tostifyAlert('success', res.message)
@@ -107,15 +111,18 @@ class CreateCoupon extends React.Component {
   }
 
   render() {
+
+    
     console.log(random(16))
     const { loading } = this.state
+    const currentCouponData = _.find(this.props.coupons, item => item.uniqid === this.props.match.params.id)
+
+    if (this.isEdit() && !currentCouponData) {
+      return 'load'
+    }
     let initialValues = this.isEdit()
-      ? _.find(this.props.coupons, item => item.uniqid === this.props.match.params.id) || {
-        discount_value: [50]
-      }
-      : {
-        discount_value: [50]
-      }
+      ? { ...currentCouponData, products_bound: currentCouponData.products_bound.length === 0 ? [''] : currentCouponData.products_bound}
+      : { discount_value: [50] }
     return (
       <div className="product-screen mt-3">
         <div className="animated fadeIn">
@@ -192,7 +199,7 @@ class CreateCoupon extends React.Component {
                                     className="select-default-width"
                                     id="products_bound"
                                     multi
-                                    options={MockProducts}
+                                    options={this.props.products}
                                     name="products_bound"
                                     placeholder="Select Products"
                                     onChange={(options) => {
@@ -229,7 +236,7 @@ class CreateCoupon extends React.Component {
                                     name="max_uses"
                                     placeholder="Leave blank for unlimited"
                                     onChange={props.handleChange}
-                                    value={props.values.max_uses}
+                                    value={props.values.max_uses === '-1' ? "" : props.values.max_uses}
                                   />
                                 </FormGroup>
                               </Col>
