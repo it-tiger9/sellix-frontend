@@ -3,4 +3,18 @@
     font-size: 22px;
     cursor: pointer;
   }
+
+  .input-group {
+		input {
+			border-top-right-radius: 0 !important;
+			border-bottom-right-radius: 0 !important;
+		}
+		button {
+			border-top-left-radius: 0 !important;
+			border-bottom-left-radius: 0 !important;
+			padding-left: 20px !important;
+      padding-right: 20px !important;
+      width: 140px;
+		}
+	}
 }

@@ -104,7 +104,7 @@ class AdminLayout extends React.Component {
     }
 
     const theme = window.localStorage.getItem('theme') || this.state || 'light'
-    console.log(this.props.user)
+
     return (
       <ThemeProvider theme={theme === 'light' ? lightTheme:darkTheme}>
         <GlobalStyles />
@@ -134,7 +134,6 @@ class AdminLayout extends React.Component {
                             <Route
                               path={prop.path}
                               component={prop.component}
-                              exact={true}
                               key={key}
                             />
                           )

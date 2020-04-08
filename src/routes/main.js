@@ -6,13 +6,12 @@ import {
   SettingsLayout
 } from 'layouts'
 
-const user = window.localStorage.getItem('userId')
 
 const mainRoutes = [
-  { path: `/${user}/settings`,  name: 'SettingsLayout', component: SettingsLayout },
-  { path: `/${user}`, name: 'AdminLayout', component: AdminLayout },
+  { path: `/settings`,  name: 'SettingsLayout', component: SettingsLayout },
   { path: `/shop/:username`, name: 'ShopLayout', component: ShopLayout },
   { path: '/payment', name: 'PaymentLayout', component: DefaultLayout },
+  { path: `/dashboard`, name: 'AdminLayout', component: AdminLayout },
   { path: '/', name: 'InitialLayout', component: InitialLayout },
 ]
 

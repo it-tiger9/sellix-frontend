@@ -63,7 +63,7 @@ class ReplyToQuerie extends React.Component {
     this.props.replyQuerie({ ...values, uniqid: this.props.match.params.id }).then(res => {
       this.props.commonActions.tostifyAlert('success', res.message)
       this.props.history.push({
-        pathname: `/${user}/queries`
+        pathname: `/dashboard/queries`
       })
     }).catch(err => {
       this.props.commonActions.tostifyAlert('error', err.message)

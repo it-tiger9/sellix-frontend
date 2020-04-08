@@ -180,7 +180,7 @@ class Invoice extends React.Component {
   componentDidMount() {
     this.setState({loading:true})
     this.props.commonActions.getInvoice(this.props.match.params.id).then(res => {
-      let seconds = 60*60 - (new Date().getTime() - new Date(res.data.invoice.date*1000).getTime()) / 1000
+      let seconds = 60*60 - (new Date().getTime() - new Date(res.data.invoice.created_at*1000).getTime()) / 1000
 
       let timeLeftVar = this.secondsToTime(seconds);
 
@@ -392,7 +392,7 @@ class Invoice extends React.Component {
                           </div>
                           <div className="d-flex justify-content-between align-items-center mb-2">
                             <span className="text-primary">Created</span>
-                            <h5 className="text-primary b-4">{moment(new Date(invoice.date*1000)).format('hh:mm:ss, DD/MM/YYYY')}</h5>
+                            <h5 className="text-primary b-4">{moment(new Date(invoice.created_at*1000)).format('hh:mm:ss, DD/MM/YYYY')}</h5>
                           </div>
                           { 
                               invoice.gateway != 'paypal' && 

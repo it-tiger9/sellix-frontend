@@ -124,7 +124,7 @@ class Pages extends React.Component {
                       <Input placeholder="Search..." className="header-search-input"></Input>
                     </div>
                     <Button className="ml-3" color="primary" 
-                      onClick={() => this.props.history.push(`/${user}/pages/new`)}>Add Page</Button>
+                      onClick={() => this.props.history.push(`/dashboard/pages/new`)}>Add Page</Button>
                   </div>
                 </Col>
               </Row>
