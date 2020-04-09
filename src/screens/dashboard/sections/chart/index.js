@@ -32,6 +32,11 @@ const backOption = {
       },
       ticks: {
       }
+    }],
+    yAxes: [{
+      ticks: {
+        beginAtZero: true
+      }
     }]
   },
   layout: {
@@ -45,7 +50,7 @@ const backOption = {
 }
 
 
-class DashBoardChart extends Component {
+class RevenueChart extends Component {
 
   constructor(props) {
     super(props)
@@ -65,8 +70,13 @@ class DashBoardChart extends Component {
   }
 
   render() {
+    const data = this.props.data
+
+    const labels = data.map(d => `${d.day_value || d.month || d.year}`)
+    const values = data.map(d => d.revenue)
+
     const line = {
-      labels:  ['19.Jan', '20.Jan', '21.Jan', '22.Jan', '23.Jan', '24.Jan', '25.Jan', '26.Jan', '27.Jan', '28.Jan', '29.Jan', '30.Jan', '31.Jan'],
+      labels:  labels,
       datasets: [
         {
           label: [],
@@ -87,7 +97,7 @@ class DashBoardChart extends Component {
           pointHoverBorderWidth: 2,
           pointRadius: 4,
           pointHitRadius: 20,
-          data: [12, 19, 3, 5, 2, 3, 0, 0, 0, 0, 0, 0, 0],
+          data: values,
         }
       ]
     }
@@ -95,7 +105,7 @@ class DashBoardChart extends Component {
     return (
       <div className="animated fadeIn">
         <Card className="bank-card">
-          <CardBody className="tab-card">
+          <CardBody className="p-0">
             <div className="flex-wrapper">
               <div className="chart-wrapper" style={{width: '100%', height: this.props.height}}>
                 <Line data={line} options={backOption} datasetKeyProvider={() => {return Math.random()}}/>
@@ -108,4 +118,4 @@ class DashBoardChart extends Component {
   }
 }
 
-export default DashBoardChart
+export default RevenueChart

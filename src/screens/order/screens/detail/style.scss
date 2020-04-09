@@ -13,6 +13,15 @@
     color: #A7A5B4;
   }
 
+  p.hash {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
+    max-width: 100%;
+    flex: 1;
+    line-height: 1.3em;
+  }
+
   p.title {
     max-width: 150px;
     width: 100%;

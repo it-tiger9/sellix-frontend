@@ -20,7 +20,7 @@ import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import {
 	CommonActions
 } from 'services/global'
-
+import {ResendModal} from './sections'
 import bitcoinIcon from 'assets/images/crypto/btc.svg'
 import paypalIcon from 'assets/images/crypto/paypal.svg'
 import litecoinIcon from 'assets/images/crypto/ltc.svg'
@@ -45,6 +45,8 @@ const PAYMENT_ICONS = {
   bitcoincash: bitcoincashIcon,
   skrill: skrillIcon
 }
+
+const CRYPTOS = ['bitcoin', 'litecoin', 'ethereum', 'bitcoincash']
 
 const mapStateToProps = (state) => {
   return ({
@@ -93,6 +95,14 @@ class OrderDetail extends React.Component {
     this.id = this.props.match.params.id
   }
 
+  closeResendModal() {
+    this.setState({openModal: false})
+  }
+
+  openResendModal() {
+    this.setState({openModal: true})
+  }
+
   componentDidMount () {
     this.initializeData()
   }
@@ -109,7 +119,7 @@ class OrderDetail extends React.Component {
   }
 
 
-  resendInvoice(){
+  resendInvoice(email){
     this.setState({ resending: true })
     this.props.actions.resendInvoice({
       uniqid: this.state.order.uniqid
@@ -125,7 +135,7 @@ class OrderDetail extends React.Component {
   }
 
   render() {
-    const { loading, order, resending } = this.state
+    const { loading, order, resending, openModal } = this.state
 
     let custom_fields = []
 
@@ -139,6 +149,12 @@ class OrderDetail extends React.Component {
     return (
       <div className="order-detail-screen mt-3">
         <div className="animated fadeIn">
+          <ResendModal openModal={openModal} 
+            resendInvoice = {this.resendInvoice.bind(this)}
+            invoiceId = {order.uniqid}
+            email = {order.customer_email}
+            closeModal={this.closeResendModal.bind(this)}/>
+
           <Breadcrumb className="mb-0">
             <BreadcrumbItem active className="mb-0">
               <a onClick={(e) => this.props.history.push('/dashboard/orders')}><i className="fas fa-chevron-left"/> Orders</a>
@@ -164,8 +180,8 @@ class OrderDetail extends React.Component {
                         }</Label>
                         { 
                           order.status && (order.status == '0' || order.status == '1') && 
-                            <Button color="primary" onClick={this.resendInvoice.bind(this)} disabled={resending}>
-                              {resending?<Spin/>:'Resend Invoice'}
+                            <Button color="primary" onClick={this.openResendModal.bind(this)}>
+                              Resend Order
                             </Button>
                         }
                       </div>
@@ -385,6 +401,43 @@ class OrderDetail extends React.Component {
                                     <p className="title">Return url:</p>
                                     <p className="title">{order.developer_return_url}</p>
                                   </div>
+                                </Col>
+                              </Row>
+                            </Col>
+                          </Row>
+                        }
+                      </CardBody>
+                    </Card> 
+                }
+                {
+                  order.gateway && CRYPTOS.includes(order.gateway)  && 
+                    <Card>
+                      <CardBody className="">
+                        {
+                          loading ?
+                            <Row>
+                              <Col lg={12}>
+                                <Loader />
+                              </Col>
+                            </Row>
+                          :
+                          <Row className="mt-3">
+                            <Col lg={12}>
+                              <FormGroup className="mb-4">
+                                <Label className="title">{PAYMENT_OPTS[order.gateway]} Transactions</Label>
+                              </FormGroup>
+                            </Col>
+                            <Col lg={12}>
+                              <Row>
+                                <Col lg={12}>
+                                  {
+                                    order.crypto_transactions && order.crypto_transactions.map(trans => 
+                                      <div className="d-flex">
+                                        <p className="hash">
+                                          {trans.crypto_amount} <img src={PAYMENT_ICONS[order.gateway]} width="15"/> - {trans.hash}</p>
+                                      </div>
+                                    )
+                                  }
                                 </Col>
                               </Row>
                             </Col>
