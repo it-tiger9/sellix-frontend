@@ -56,7 +56,10 @@
 
   .app-footer {
     border-top: none;
-    background: #ffffff;
+    margin-left: 0 !important;
+    background-color: transparent;
+    background: transparent !important;
+    text-align: center;
     .footer-logo {
       max-width: 100px;
     }

@@ -17,6 +17,9 @@ import {
 import Select from 'react-select'
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import 'react-quill/dist/quill.snow.css';
+import ReactMde from "react-mde";
+import * as Showdown from "showdown";
 import { AppSwitch } from '@coreui/react'
 import { Loader, ImageUpload, DataSlider, Spin } from 'components'
 import * as ProductActions from '../../actions'
@@ -52,6 +55,12 @@ const mapDispatchToProps = (dispatch) => {
 	})
 }
 
+const converter = new Showdown.Converter({
+	tables: true,
+	simplifiedAutoLink: true,
+	strikethrough: true,
+	tasklists: true
+  });
 
 const TYPE_OPTIONS = [
 	{ value: 'file', label: 'File' },
@@ -122,6 +131,7 @@ class EditProduct extends React.Component {
 			privateTooltipOpen: false,
 			blockTooltipOpen: false,
 			paypalTooltipOpen: false,
+			selectedTab: 'write',
 			files: [],
 			images: [],
 			initialValues: {
@@ -318,6 +328,7 @@ class EditProduct extends React.Component {
 			paypalTooltipOpen,
 			files, 
 			images,
+			selectedTab,
 			showFileStock,
 			editorState,
 			initialValues,
@@ -475,14 +486,18 @@ class EditProduct extends React.Component {
 																		<FormGroup className="mb-3">
 																			<Label htmlFor="product_code">Description</Label>
 																			<div>
-																				<ReactQuill value={props.values.description}
-																					modules={EDITOR_MODULES}
-																					formats={EDITOR_FORMATS}
-																					placeholder={''}
-																					bounds={'.app'}
+																				<ReactMde
+																					value={props.values.description}
 																					onChange={(value) => {
 																						props.handleChange('description')(value)
-																					}} 
+																					}}
+																					selectedTab={selectedTab}
+																					onTabChange={(tab) => {
+																						this.setState({selectedTab:tab})
+																					}}
+																					generateMarkdownPreview={markdown =>
+																						Promise.resolve(converter.makeHtml(markdown))
+																					}
 																				/>
 																			</div>
 																			
