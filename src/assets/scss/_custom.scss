@@ -377,6 +377,53 @@ table td a:hover {
     }
   }
 
+
+.badge {
+    text-align: center;
+    border-radius: 10px;
+    font-size: 13px !important;
+    font-weight: normal;
+    height: 30px;
+    padding: 0 10px;
+    width: fit-content;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.badge-normal {
+    background-color: #E4D6FF;
+    color: #613BEA;
+}
+
+.badge-completed,
+.badge-open,
+.badge-live {
+    color: #2BB224 !important;
+    background-color: #CBF4C9;
+}
+
+.badge-pending,
+.badge-closed {
+    color: #B22424 !important;
+    background-color: #F4C9C9;
+}
+
+.badge-cancelled {
+    color: #2f353a !important;
+    background-color: #c1c1c1;
+}
+
+.badge-confirmation {
+    color: #453aa2 !important;
+    background-color: #b2d8e8;
+}
+
+.badge-partial {
+    color: #B27424 !important;
+    background-color: #F4E6C9;
+}
+
 table {
     table-layout: auto;
     border-top: none !important;
@@ -414,10 +461,11 @@ table {
             .badge {
                 text-align: center;
                 border-radius: 10px;
-                font-size: 13px !important;
+                font-size: 12px !important;
+                padding: 0 10px;
                 font-weight: normal;
-                max-width: 110px;
                 height: 30px;
+                width: fit-content;
                 align-items: center;
                 display: flex;
                 justify-content: center;
@@ -441,9 +489,19 @@ table {
                 background-color: #F4C9C9;
             }
 
+            .badge-cancelled {
+                color: #2f353a;
+                background-color: #c1c1c1;
+            }
+
             .badge-partial {
                 color: #B27424;
                 background-color: #F4E6C9;
+            }
+
+            .badge-confirmation {
+                color: #453aa2;
+                background-color: #b2d8e8;
             }
 
             .actions {

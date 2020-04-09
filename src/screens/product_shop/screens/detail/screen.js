@@ -21,12 +21,17 @@ import { Spin } from 'components'
 import * as Yup from "yup";
 import * as Showdown from "showdown";
 import shop_brand from 'assets/images/brand/shop_brand.png'
+
+
 import bitcoinIcon from 'assets/images/crypto/btc.svg'
 import paypalIcon from 'assets/images/crypto/paypal.svg'
 import litecoinIcon from 'assets/images/crypto/ltc.svg'
 import ethereumIcon from 'assets/images/crypto/eth.svg'
 import perfectmoneyIcon from 'assets/images/crypto/perfectmoney.svg'
 import backIcon from 'assets/images/x.png'
+import stripeIcon from 'assets/images/crypto/stripe.svg'
+import bitcoincashIcon from 'assets/images/crypto/bitcoincash.svg'
+import skrillIcon from 'assets/images/crypto/skrill.svg'
 
 import './style.scss'
 
@@ -50,13 +55,17 @@ const converter = new Showdown.Converter({
   });
 
 
-const PAYMENT_ICONS = {
-  paypal: paypalIcon,
-  bitcoin: bitcoinIcon,
-  litecoin: litecoinIcon,
-  ethereum: ethereumIcon,
-  perfectmoney: perfectmoneyIcon
-}
+  const PAYMENT_ICONS = {
+    paypal: paypalIcon,
+    bitcoin: bitcoinIcon,
+    litecoin: litecoinIcon,
+    ethereum: ethereumIcon,
+    perfectmoney: perfectmoneyIcon,
+    stripe: stripeIcon,
+    bitcoincash: bitcoincashIcon,
+    skrill: skrillIcon
+  }
+  
 
 const CURRENCY_LIST = { 
   'USD': '$',
@@ -76,7 +85,11 @@ const PAYMENT_LABELS = {
   'paypal': 'PayPal',
   'bitcoin': 'Bitcoin',
   'litecoin': 'Litecoin',
-  'ethereum': 'Ethereum'
+  'ethereum': 'Ethereum',
+  'stripe': 'Stripe',
+  'perfectmoney': 'Perfect Money',
+  'bitcoincash': 'Bitcoin Cash',
+  'skrill': 'Skrill'
 }
 
 class ShopProductDetail extends React.Component {

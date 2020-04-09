@@ -10,18 +10,41 @@ import {
   Col,
   FormGroup,
   Label,
-  Tooltip,
-  Input
 } from 'reactstrap'
-import Select from 'react-select'
-import { Loader, ImageUpload, DataSlider } from 'components'
+import moment from 'moment'
+import config from 'constants/config'
+import { Loader, Spin } from 'components'
 import { BootstrapTable, TableHeaderColumn, SearchField } from 'react-bootstrap-table'
 import { tableOptions } from 'constants/tableoptions'
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import {
+	CommonActions
+} from 'services/global'
 
-import * as ProductActions from './actions'
+import bitcoinIcon from 'assets/images/crypto/btc.svg'
+import paypalIcon from 'assets/images/crypto/paypal.svg'
+import litecoinIcon from 'assets/images/crypto/ltc.svg'
+import ethereumIcon from 'assets/images/crypto/eth.svg'
+import perfectmoneyIcon from 'assets/images/crypto/perfectmoney.svg'
+import stripeIcon from 'assets/images/crypto/stripe.svg'
+import bitcoincashIcon from 'assets/images/crypto/bitcoincash.svg'
+import skrillIcon from 'assets/images/crypto/skrill.svg'
+
+import * as OrderActions from '../../actions'
 
 import './style.scss'
+
+
+const PAYMENT_ICONS = {
+  paypal: paypalIcon,
+  bitcoin: bitcoinIcon,
+  litecoin: litecoinIcon,
+  ethereum: ethereumIcon,
+  perfectmoney: perfectmoneyIcon,
+  stripe: stripeIcon,
+  bitcoincash: bitcoincashIcon,
+  skrill: skrillIcon
+}
 
 const mapStateToProps = (state) => {
   return ({
@@ -30,8 +53,30 @@ const mapStateToProps = (state) => {
 }
 const mapDispatchToProps = (dispatch) => {
   return ({
-    productActions: bindActionCreators(ProductActions, dispatch)
+    actions: bindActionCreators(OrderActions, dispatch),
+    commonActions: bindActionCreators(CommonActions, dispatch),
   })
+}
+
+
+
+const ORDER_STATUS = {
+  '0': 'Pending',
+  '1': 'Completed',
+  '2': 'Cancelled',
+  '3': 'Confirmation',
+  '4': 'Partial'
+}
+
+const PAYMENT_OPTS = {
+  'paypal': 'PayPal',
+  'bitcoin': 'BTC',
+  'litecoin': 'LTC',
+  'ethereum': 'ETH',
+  'skrill': 'Skrill',
+  'stripe': 'Stripe',
+  'bitcoincash': 'BTH',
+  'perfectmoney': 'Perfect Money'
 }
 
 class OrderDetail extends React.Component {
@@ -40,8 +85,12 @@ class OrderDetail extends React.Component {
     super(props)
     this.state = {
       loading: false,
-      openModal: false
+      resending: false,
+      openModal: false,
+      order: {}
     }
+
+    this.id = this.props.match.params.id
   }
 
   componentDidMount () {
@@ -49,26 +98,50 @@ class OrderDetail extends React.Component {
   }
 
   initializeData () {
-    // this.props.productActions.getProductList().then(res => {
-    //   if (res.status === 200) {
-    //     this.setState({ loading: false })
-    //   }
-    // })
-
-    this.setState({ loading: false })
+    this.setState({ loading: true })
+    this.props.actions.getOrderByID(this.id).then(res => {
+      if(res.status == 200)
+        this.setState({order: res.data.invoice})
+      else throw res
+    }).finally(() => {
+      this.setState({ loading: false })
+    })
   }
 
 
+  resendInvoice(){
+    this.setState({ resending: true })
+    this.props.actions.resendInvoice({
+      uniqid: this.state.order.uniqid
+    }).then(res => {
+      if(res.status == 200)
+      this.props.commonActions.tostifyAlert('success', res.message)
+      else throw res
+    }).catch(err => {
+      this.props.commonActions.tostifyAlert('error', err.error)
+    }).finally(() => {
+      this.setState({ resending: false })
+    })
+  }
+
   render() {
-    const { loading, openModal } = this.state
-    const { product_list } = this.props
+    const { loading, order, resending } = this.state
+
+    let custom_fields = []
+
+    if(order.custom_fields){
+      const data = JSON.parse(order.custom_fields || {})['custom_fields'] || {}
+      custom_fields = Object.keys(data).map((key) => {
+        return {field: key, value: data[key]}
+      })
+    }
 
     return (
       <div className="order-detail-screen mt-3">
         <div className="animated fadeIn">
           <Breadcrumb className="mb-0">
             <BreadcrumbItem active className="mb-0">
-              <a onClick={(e) => this.props.history.goBack()}><i className="fas fa-chevron-left"/> Orders</a>
+              <a onClick={(e) => this.props.history.push('/dashboard/orders')}><i className="fas fa-chevron-left"/> Orders</a>
             </BreadcrumbItem>
           </Breadcrumb>
           <Card>
@@ -81,45 +154,61 @@ class OrderDetail extends React.Component {
                     </Col>
                   </Row>
                 : 
-                  <Row className="mt-3">
+                  <Row className="mt-3 mb-2">
                     <Col lg={12}>
-                      <FormGroup className="mb-4">
-                        <Label className="title">View Order</Label>
-                      </FormGroup>
+                      <div className="d-flex justify-content-between align-items-center mb-4">
+                        <Label className="title">View Order {order.developer_invoice == '1' && 
+                          <span className={`small-badge badge-developer`} style={{  margin: '0 auto'}}>
+                            Developer
+                          </span>
+                        }</Label>
+                        { 
+                          order.status && (order.status == '0' || order.status == '1') && 
+                            <Button color="primary" onClick={this.resendInvoice.bind(this)} disabled={resending}>
+                              {resending?<Spin/>:'Resend Invoice'}
+                            </Button>
+                        }
+                      </div>
+                      
                     </Col>
                     <Col lg={12}>
                       <Row className="flex">
                         <Col lg={12} className="mb-5">
                           <div className="d-flex align-items-center">
-                            <i className="fas fa-user avatar mr-3"/>
+                            <img src={PAYMENT_ICONS[order.gateway]} className="avatar mr-3"/>
                             <div>
-                              <p className="email text-primary mb-1 d-flex align-items-center">olivia.messla@hotmail.de 
-                                <span className="risk-level ml-2">Completed</span>
+                              <p className="email text-primary mb-1 d-flex align-items-center">
+                                <a href={`mailto:${order.customer_email}`}>{order.customer_email}</a>
+                                <span className={`small-badge badge-${ORDER_STATUS[order.status] && ORDER_STATUS[order.status].toLowerCase()}`} style={{  margin: '0 auto'}}>
+                                  {ORDER_STATUS[order.status]}
+                                </span>
                               </p>
-                              <p className="mb-0">365efcd4-e9a8-4025-b696-f8a3ed1795c4</p>
+                              <p className="mb-0">{order.uniqid}</p>
                             </div>
                           </div>
                         </Col>
                         <Col lg={6}>
                           <div className="d-flex">
                             <p className="title">Product</p>
-                            <p><a href="#">Selly Pay API</a></p>
+                            <p>
+                              <a href="#">
+                              {order.developer_invoice == '1'?order.developer_title:(order.product && order.product.title || '')}</a></p>
                           </div>
                           <div className="d-flex">
                             <p className="title">Value</p>
-                            <p>$3.00 USD</p>
+                            <p>{`${config.CURRENCY_LIST[order.currency]}${order.product_price} ${order.currency}`}</p>
                           </div>
                           <div className="d-flex">
                             <p className="title">Created At</p>
-                            <p>21 Jan 7:06:18 pm</p>
+                            <p>{moment(new Date(order.created_at*1000)).format('DD MMM h:mm:ss')}</p>
                           </div>
                           <div className="d-flex">
                             <p className="title">Quantity</p>
-                            <p>1</p>
+                            <p>{order.quantity}</p>
                           </div>
                           <div className="d-flex">
                             <p className="title">Coupon</p>
-                            <p>No Coupon</p>
+                            <p>{order.coupon_id?order.coupon_id:'No Coupon'}</p>
                           </div>
                           
                           
@@ -127,24 +216,21 @@ class OrderDetail extends React.Component {
                         <Col lg={6}>
                           <div className="d-flex">
                             <p className="title">Gateway</p>
-                            <p>PayPal</p>
-                          </div>
-                          <div className="d-flex">
-                            <p className="title">Payment Details</p>
-                            <p>BTC</p>
+                            <p>{PAYMENT_OPTS[order.gateway]}</p>
                           </div>
                           
                           <div className="d-flex">
                               <p className="title">IP Address</p>
-                              <p>138.197.31.58 <span className="proxy-label">VPN/Proxy</span></p>
+                              <p>{order.ip} {order.is_vpn_or_proxy == '1' && <span className="proxy-label">VPN/Proxy</span> }</p>
                             </div>
                             <div className="d-flex">
                               <p className="title">Device</p>
-                              <p>Chrome, Windows, Desktop</p>
+                              <p>{order.user_agent}</p>
                             </div>
                             <div className="d-flex">
                               <p className="title">Country</p>
-                              <p><i className="flag-icon flag-icon-be mr-2"/> Clifton, New Jersey, United States</p>
+                              <p><i className={`flag-icon flag-icon-${order.country && order.country.toLowerCase()} mr-2`}/> 
+                                {order.location}</p>
                             </div>
                         </Col>
                       </Row>
@@ -153,39 +239,8 @@ class OrderDetail extends React.Component {
               }
             </CardBody>
           </Card>
-         
           <Row>
-            <Col lg={6}>
-              <Card>
-                <CardBody className="">
-                  {
-                    loading ?
-                      <Row>
-                        <Col lg={12}>
-                          <Loader />
-                        </Col>
-                      </Row>
-                    :
-                    <Row className="mt-3">
-                      <Col lg={12}>
-                        <FormGroup className="mb-4">
-                          <Label className="title">Delivered Goods</Label>
-                        </FormGroup>
-                      </Col>
-                      <Col lg={12}>
-                        <Row flex jusity-content-between>
-                          <Col lg={8}>
-                            <label>No product has been delivered</label>
-                          </Col>
-                          
-                        </Row>
-                      </Col>
-                    </Row>
-                  }
-                </CardBody>
-              </Card>
-            </Col>
-            <Col lg={6}>
+          <Col lg={12}>
               <Card>
                 <CardBody className="">
                   {
@@ -203,9 +258,54 @@ class OrderDetail extends React.Component {
                         </FormGroup>
                       </Col>
                       <Col lg={12}>
-                        <Row flex jusity-content-between>
-                          <Col lg={8}>
-                            <label>No webhooks sent for this order</label>
+                        <Row>
+                          <Col lg={12}>
+                          <BootstrapTable
+                            options={ tableOptions() }
+                            data={order.webhooks || []}
+                            version="4"
+                            pagination
+                            totalSize={order.webhooks ? order.webhooks.length : 0}
+                            className="provided-custom-table"
+                            trClassName="cursor-pointer"
+                        >
+                          <TableHeaderColumn
+                            isKey
+                            dataField="url"
+                            width='30%'
+                          >
+                            URL
+                          </TableHeaderColumn>
+                          <TableHeaderColumn
+                            dataField="event"
+                            width='20%'
+                          >
+                            Event
+                          </TableHeaderColumn>
+                          <TableHeaderColumn
+                            dataField="attempts"
+                            dataAlign='center'
+                            width='10%'
+                          >
+                            Attemps
+                          </TableHeaderColumn>
+                          <TableHeaderColumn
+                            dataField="response_code"
+                            dataAlign='center'
+                            width='20%'
+                          >
+                            Response Code
+                          </TableHeaderColumn>
+                          <TableHeaderColumn
+                            dataField="created_at"
+                            dataAlign='center'
+                            dataFormat={(cell, row) => <div>
+                              {moment(new Date(row.created_at*1000)).format('DD MMM hh:mm:ss')}
+                            </div>}
+                          >
+                            Time
+                          </TableHeaderColumn>
+                        </BootstrapTable>
                           </Col>
                           
                         </Row>
@@ -216,8 +316,85 @@ class OrderDetail extends React.Component {
               </Card>
             </Col>
           </Row>
-
           <Row>
+            <Col lg={6}>
+              <div>
+                <Card>
+                  <CardBody className="">
+                    {
+                      loading ?
+                        <Row>
+                          <Col lg={12}>
+                            <Loader />
+                          </Col>
+                        </Row>
+                      :
+                      <Row className="mt-3">
+                        <Col lg={12}>
+                          <FormGroup className="mb-4">
+                            <Label className="title">Delivered Goods</Label>
+                          </FormGroup>
+                        </Col>
+                        <Col lg={12}>
+                          <Row>
+                            <Col lg={12}>
+                              {
+                                (order.serials && order.serials.length == 0)?
+                                  <label>No product has been delivered</label>:
+                                  (order.serials || []).map(ser => <p>{ser}</p>)
+                              }
+                              
+                            </Col>
+                            
+                          </Row>
+                        </Col>
+                      </Row>
+                    }
+                  </CardBody>
+                </Card>
+                {
+                  order.developer_invoice == '1'  && 
+                    <Card>
+                      <CardBody className="">
+                        {
+                          loading ?
+                            <Row>
+                              <Col lg={12}>
+                                <Loader />
+                              </Col>
+                            </Row>
+                          :
+                          <Row className="mt-3">
+                            <Col lg={12}>
+                              <FormGroup className="mb-4">
+                                <Label className="title">Developer Settings</Label>
+                              </FormGroup>
+                            </Col>
+                            <Col lg={12}>
+                              <Row>
+                                <Col lg={12}>
+                                  <div className="d-flex">
+                                    <p className="title">Title:</p>
+                                    <p className="title">{order.developer_title}</p>
+                                  </div>
+                                  <div className="d-flex">
+                                    <p className="title">Webhook:</p>
+                                    <p className="title">{order.developer_webhook}</p>
+                                  </div>
+                                  <div className="d-flex">
+                                    <p className="title">Return url:</p>
+                                    <p className="title">{order.developer_return_url}</p>
+                                  </div>
+                                </Col>
+                              </Row>
+                            </Col>
+                          </Row>
+                        }
+                      </CardBody>
+                    </Card> 
+                }
+              </div>
+            </Col>
             <Col lg={6}>
               <Card>
                 <CardBody className="">
@@ -231,30 +408,30 @@ class OrderDetail extends React.Component {
                     :
                     <Row className="mt-3">
                       <Col lg={12}>
-                        <FormGroup className="mb-2">
+                        <FormGroup className="mb-4">
                           <Label className="title">Provided Custom Fields</Label>
                         </FormGroup>
                       </Col>
                       <Col lg={12}>
                       <BootstrapTable
                           options={ tableOptions() }
-                          data={product_list}
+                          data={custom_fields}
                           version="4"
                           pagination
-                          totalSize={product_list ? product_list.length : 0}
+                          totalSize={custom_fields ? custom_fields.length : 0}
                           className="provided-custom-table"
                           trClassName="cursor-pointer"
                         >
                           <TableHeaderColumn
                             isKey
-                            dataField="mail"
+                            dataField="field"
                             dataSort
                             width='50%'
                           >
                             Field
                           </TableHeaderColumn>
                           <TableHeaderColumn
-                            dataField="id"
+                            dataField="value"
                             dataSort
                           >
                             Value

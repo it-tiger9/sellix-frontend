@@ -85,11 +85,11 @@ export let mainNavigation =  {
     //     }
     //   ]
     // },
-    {
-      name: 'Pages',
-      url: `/dashboard/pages`,
-      icon: 'fa fa-file',
-    }
+    // {
+    //   name: 'Pages',
+    //   url: `/dashboard/pages`,
+    //   icon: 'fa fa-file',
+    // }
   ]
 }
 

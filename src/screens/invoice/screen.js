@@ -23,12 +23,14 @@ import paypal_white from 'assets/images/brand/paypal-white.svg'
 import sellix_logo from 'assets/images/Sellix_logo.svg'
 import backIcon from 'assets/images/x.png'
 
-
 import bitcoinIcon from 'assets/images/crypto/btc.svg'
 import paypalIcon from 'assets/images/crypto/paypal.svg'
 import litecoinIcon from 'assets/images/crypto/ltc.svg'
 import ethereumIcon from 'assets/images/crypto/eth.svg'
 import perfectmoneyIcon from 'assets/images/crypto/perfectmoney.svg'
+import stripeIcon from 'assets/images/crypto/stripe.svg'
+import bitcoincashIcon from 'assets/images/crypto/bitcoincash.svg'
+import skrillIcon from 'assets/images/crypto/skrill.svg'
 
 import './style.scss'
 
@@ -51,7 +53,10 @@ const PAYMENT_ICONS = {
   bitcoin: bitcoinIcon,
   litecoin: litecoinIcon,
   ethereum: ethereumIcon,
-  perfectmoney: perfectmoneyIcon
+  perfectmoney: perfectmoneyIcon,
+  stripe: stripeIcon,
+  bitcoincash: bitcoincashIcon,
+  skrill: skrillIcon
 }
 
 const mapStateToProps = (state) => {
