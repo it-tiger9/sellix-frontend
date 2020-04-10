@@ -59,7 +59,6 @@ export const resendInvoice = (invoice) => {
     })
   }
 }
-
 export const issueReplacement = (coupon) => {
   return (dispatch) => {
     let data = {
@@ -73,8 +72,7 @@ export const issueReplacement = (coupon) => {
         return res
       } else {
         throw res
-      }
-    }).catch(err => {
+      }}).catch(err => {
       throw err
     })
   }
