@@ -1,0 +1,22 @@
+ //Cash Card
+.cash-card {
+  h1 {
+    font-size: 25px;
+    margin-right: 50px;
+    color: #279bd4;
+  }
+
+  .data-info {
+    margin-top: 10px;
+  }
+
+  canvas {
+    height: 250px !important;
+  }
+
+  @media screen and (max-width: 480px) {
+    .data-item{
+      width: 100%;
+    }
+  }
+}

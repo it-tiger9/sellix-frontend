@@ -24,7 +24,8 @@ import {
 import './style.scss'
 
 
-import sellix_logo from 'assets/images/Sellix_logo.svg'
+// import sellix_logo from 'assets/images/Sellix_logo.svg'
+import sellix_logo from 'assets/images/Sellix_logo_beta.svg'
 
 const propTypes = {
   children: PropTypes.node

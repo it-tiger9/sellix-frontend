@@ -21,6 +21,7 @@ import {
 	CommonActions
 } from 'services/global'
 import {ResendModal} from './sections'
+import {IssueReplacementModal} from './sections'
 import bitcoinIcon from 'assets/images/crypto/btc.svg'
 import paypalIcon from 'assets/images/crypto/paypal.svg'
 import litecoinIcon from 'assets/images/crypto/ltc.svg'
@@ -90,6 +91,7 @@ class OrderDetail extends React.Component {
       loading: false,
       resending: false,
       openModal: false,
+      openIssueReplacementModal: false,
       order: {}
     }
 
@@ -100,8 +102,16 @@ class OrderDetail extends React.Component {
     this.setState({openModal: false})
   }
 
+  closeIssueReplacementModal() {
+    this.setState({openIssueReplacementModal: false})
+  }
+
   openResendModal() {
     this.setState({openModal: true})
+  }
+
+  openIssueReplacementModal() {
+    this.setState({openIssueReplacementModal: true})
   }
 
   componentDidMount () {
@@ -140,7 +150,7 @@ class OrderDetail extends React.Component {
   }
 
   render() {
-    const { loading, order, resending, openModal } = this.state
+    const { loading, order, resending, openModal, openIssueReplacementModal } = this.state
 
     let custom_fields = []
 
@@ -159,7 +169,11 @@ class OrderDetail extends React.Component {
             invoiceId = {order.uniqid}
             email = {order.customer_email}
             closeModal={this.closeResendModal.bind(this)}/>
-
+          <IssueReplacementModal openModal={openIssueReplacementModal} 
+            // resendInvoice = {this.resendInvoice.bind(this)}
+            invoiceId = {order.uniqid}
+            // email = {order.customer_email}
+            closeModal={this.closeIssueReplacementModal.bind(this)}/>
           <Breadcrumb className="mb-0">
             <BreadcrumbItem active className="mb-0">
               <a onClick={(e) => this.props.history.push(`/dashboard/${user}/orders`)}><i className="fas fa-chevron-left"/> Orders</a>
@@ -184,10 +198,14 @@ class OrderDetail extends React.Component {
                           </span>
                         }</Label>
                         { 
-                          order.status && (order.status == '0' || order.status == '1') && 
+                          order.status && (order.status == '0' || order.status == '1') && <div className='orderHeaderButtons'>
                             <Button color="primary" onClick={this.openResendModal.bind(this)}>
                               Resend Order
                             </Button>
+                            <Button color="primary" onClick={this.openIssueReplacementModal.bind(this)}>
+                              Issue Replacement
+                            </Button>
+                          </div>
                         }
                       </div>
                       

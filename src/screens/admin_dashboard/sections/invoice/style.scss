@@ -1,0 +1,22 @@
+ //Invoice Card
+.invoice-card {
+  .data-item:not(:last-child),
+  .data-item {
+    padding: 0 20px !important;
+
+    p {
+      font-size: 12px !important;
+    }
+
+    h3 {
+      font-size: 18px !important;
+    }
+  }
+  canvas {
+    height: 250px !important;
+  }
+
+  button {
+    margin-top: 5px;
+  }
+}

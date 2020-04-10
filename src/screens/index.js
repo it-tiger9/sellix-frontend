@@ -45,6 +45,7 @@ import EditCoupon from './coupons/screens/create'
 import ReplyToQuerie from './queries/screens/reply'
 import Contacts from './contacts/screens/reply/index.js'
 import Terms from './terms/screen.js'
+import AdminDashboard from './admin_dashboard/screen'
 
 import PaypalPaying from './paypal_paying'
 import Invoice from './invoice'
@@ -65,6 +66,7 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 
 export {
+  AdminDashboard,
   Home,
   Fees,
   LogIn,
