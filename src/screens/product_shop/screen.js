@@ -165,7 +165,9 @@ class ShopProducts extends React.Component {
                               <h5 className="mb-3 text-black">{pro.title}</h5>
                               <div className="d-flex justify-content-between mt-3 mb-2">
                                 <span className="price">{`${CURRENCY_LIST[pro.currency]}${pro.price_display}`}</span>
-                                <span className="stock">Stock: <span className="stock-size">{pro.stock}</span></span>
+                                <span className="stock">Stock: <span className="stock-size">
+                                {pro.type == 'file'?(pro.file_stock == '-1'?<span style={{fontSize: 18}}>∞</span>:pro.file_stock):(pro.stock == '-1'?<span style={{fontSize: 18}}>∞</span>:pro.stock) || 0}
+                                </span></span>
                               </div>
                             </div> 
                           </Card>

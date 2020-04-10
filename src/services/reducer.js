@@ -10,6 +10,7 @@ import {
   GeneralSettings,
   Receipt,
   SupplierInvoice,
+  Order,
   Product,
   Project,
   Help,
@@ -33,7 +34,8 @@ const reducer = combineReducers({
   product: Product.reducer,
   category: Categories.reducer,
   feedbacks: Feedbacks.reducer,
-  report: Reports.reducer
+  report: Reports.reducer,
+  order: Order.reducer
 })
 
 export default reducer

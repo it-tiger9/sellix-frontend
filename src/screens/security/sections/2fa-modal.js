@@ -68,7 +68,7 @@ class TwoFactorModal extends React.Component {
     this.setState({loading: true})
     this.props.actions.verifyOTP({code: values.verifyCode}).then(res => {
       this.props.otpEnabled()
-      this.props.commonActions.tostifyAlert('success', res.message)
+      this.props.commonActions.tostifyAlert('success', "OTP has setup successfully!")
     }).catch(err => {
       this.props.commonActions.tostifyAlert('error', err.error || 'Seomthing went wrong!')
     }).finally(() => {

@@ -3,6 +3,7 @@ import Fees from './fees'
 import LogIn from './log_in'
 import TwoFactorAuthentication from './2fa'
 import OTPLogin from './otp_2fa'
+import ResetOTP from './reset_otp'
 import Register from './register'
 import ForgotPassword from './forgot_password'
 import ResetPassword from './reset_password'
@@ -71,12 +72,14 @@ export {
   LogIn,
   Register,
   OTPLogin,
+  ResetOTP,
   Dashboard,
   ForgotPassword,
   ResetPassword,
   TwoFactorAuthentication,
   Invoice,
   Terms,
+
 
   EditCoupon,
   Product,

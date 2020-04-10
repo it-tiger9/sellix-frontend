@@ -21,12 +21,14 @@ import ReCaptcha from "@matt-block/react-recaptcha-v2";
 import config from 'constants/config'
 
 import { AuthActions, CommonActions } from 'services/global'
+import * as Actions from './actions'
 
 import './style.scss'
 
 const mapDispatchToProps = dispatch => ({
   tostifyAlert: bindActionCreators(CommonActions.tostifyAlert, dispatch),
-  authActions: bindActionCreators(AuthActions, dispatch)
+  authActions: bindActionCreators(AuthActions, dispatch),
+  actions: bindActionCreators(Actions, dispatch),
 })
 
 class OTPLogin extends React.Component {
@@ -35,42 +37,29 @@ class OTPLogin extends React.Component {
     super(props);
 
     this.state = {
-      captchaVerify: null,
       loading: false,
-      qr_image: '',
-      recover_key: ''
     }
   }
 
   handleSubmit = (data) => {
     let { tostifyAlert, history } = this.props;
 
-    this.props.authActions.OTPAuthentication(data)
-      .then(() => {
-        this.props.authActions.getSelfUser().then(res => {
-          history.push(`/dashboard`)
-        })
+    this.props.actions.resetOTP(data)
+      .then((res) => {
+        tostifyAlert('success', res.message)
+        history.push(`/login`)
       })
       .catch(err => {
-          let errMsg = 'Invalid Code'
-          tostifyAlert('error', errMsg)
+          tostifyAlert('error', err.error)
       })
-  }
-
-
-  componentDidMount() {
-
   }
 
   render() {
-    const { qr_image, loading, recover } = this.state
 
     let validationSchema = Yup.object()
         .shape({
-          code: Yup.string()
-            .required('Code is required')
-            .min(6, 'OTP code must 6 characters long')
-            .max(6, 'OTP code must 6 characters long')
+          recover: Yup.string()
+            .required('Recovery code is required')
         });
 
     return (
@@ -85,28 +74,28 @@ class OTPLogin extends React.Component {
                       <CardBody className="p-5 bg-gray-100">
     
                         <Formik
-                          initialValues={{ code: '' }}
+                          initialValues={{ recover: '' }}
                           onSubmit={this.handleSubmit}
                           validationSchema={validationSchema}
                         >
                           {({ handleSubmit, handleChange, values, errors, touched }) => (
                               <Form onSubmit={handleSubmit}>
-                                <h4 className="text-center mb-4">Log In</h4>
+                                <h4 className="text-center mb-4">Reset OTP</h4>
                                 <p className="mt-4 mb-4 text-grey">
-                                You have setup a one time password for your multi factor authentication, please use Google Authenticator or any similar to get the code and proceed with the login.
+                                
                                 </p>
                                 <FormGroup className="mb-3">
-                                  <Label htmlFor="code">Code</Label>
+                                  <Label htmlFor="code">Recovery Code</Label>
                                   <Input
                                     type="text"
-                                    id="code"
-                                    name="code"
-                                    placeholder="Enter the OTP code"
+                                    id="recover"
+                                    name="recover"
+                                    placeholder="Enter the recover code"
                                     onChange={handleChange}
-                                    value={values.code}
-                                    className={errors.code && touched.code ? "is-invalid" : ""}
+                                    value={values.recover}
+                                    className={errors.recover && touched.recover ? "is-invalid" : ""}
                                   />
-                                  {errors.code && touched.code && <div className="invalid-feedback">{errors.code}</div>}
+                                  {errors.recover && touched.recover && <div className="invalid-feedback">{errors.recover}</div>}
                                 </FormGroup>
                                 
                                 <Row>
@@ -117,8 +106,8 @@ class OTPLogin extends React.Component {
                                 <Row>
                                   <Col>
                                     <FormGroup className="mb-0 text-center mt-3">
-                                      <Link to="/reset-otp">
-                                        <Label style={{cursor: 'pointer'}}><b>Reset OTP</b></Label>
+                                      <Link to="/login">
+                                        <Label style={{cursor: 'pointer'}}><b>Login</b></Label>
                                       </Link>
                                     </FormGroup>
                                   </Col>

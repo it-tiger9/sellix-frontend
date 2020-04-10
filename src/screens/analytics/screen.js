@@ -23,6 +23,32 @@ import * as AnalyticsActions from './actions'
 import './style.scss'
 import { date } from 'yup'
 
+
+
+const Progress = ({ progress, isPositive, is24 }) => {
+  if(is24) {
+    return (
+        <div className={'progress-indicator'} >
+          {
+            progress != 0 ? 
+              <i className={`fas fa-caret-${isPositive ? 'up' : 'down'}`} />:
+              <i className={`fa fa-minus`} />
+          }
+          
+          {progress != 0 ?
+             (isPositive ?
+              <span>+<b>{(Math.round(progress*100)/100).toFixed(2)}</b> %</span> :
+              <span><b>{(Math.round(progress*100)/100).toFixed(2)}</b> %</span>) :
+              <span><b>{(Math.round(progress*100)/100).toFixed(2)}</b> %</span>
+          }
+        </div>
+    )
+  } else {
+    return null
+  }
+}
+
+
 const ranges =  {
   // 'Today': [moment(), moment()],
   // 'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
@@ -34,22 +60,6 @@ const ranges =  {
 
 const mapStateToProps = (state) => {
   return ({
-    // Bank Account
-    bank_account_type: state.dashboard.bank_account_type,
-    bank_account_graph: state.dashboard.bank_account_graph,
-
-    // Cash Flow
-    cash_flow_graph: state.dashboard.cash_flow_graph,
-
-    // Invoice 
-    invoice_graph: state.dashboard.invoice_graph,
-
-    // Profit and Loss
-    profit_loss: state.dashboard.proft_loss,
-
-    // Revenues and Expenses
-    revenue_graph: state.dashboard.revenue_graph,
-    expense_graph: state.dashboard.expense_graph
   })
 }
 
@@ -70,7 +80,11 @@ class Analytics extends React.Component {
       totalRevenue: 0,
       totalOrders: 0,
       totalViews: 0,
-      totalConversion: 0
+      totalQueries: 0,
+      revenueProgress: 0,
+      ordersProgress: 0,
+      viewsProgress: 0,
+      queriesProgress: 0
     }
   }
 
@@ -95,7 +109,11 @@ class Analytics extends React.Component {
         totalRevenue: total.revenue || 0,
         totalOrders: total.orders_count || 0,
         totalViews: total.views_count || 0,
-        totalConversion: total.queries_count || 0,
+        totalQueries: total.queries_count || 0,
+        revenueProgress: total.revenue_progress || 0,
+        ordersProgress: total.orders_count_progress || 0,
+        viewsProgress: total.views_count_progress || 0,
+        queriesProgress: total.queries_count_progress || 0,
         chartData: res.data.analytics.daily
       })
     }).finally(() => {
@@ -113,7 +131,18 @@ class Analytics extends React.Component {
   }
 
   render() {
-    const {totalConversion, totalOrders, totalRevenue, totalViews, loading, chartData} = this.state
+    const {
+      totalQueries, 
+      totalOrders, 
+      totalRevenue, 
+      totalViews, 
+      loading, 
+      chartData,
+      revenueProgress,
+      ordersProgress,
+      viewsProgress,
+      queriesProgress
+    } = this.state
 
     return (
       <div className="analytics-screen mt-4">
@@ -141,6 +170,7 @@ class Analytics extends React.Component {
                       <CardBody className="p-4">
                         <h3 className="text-primary">${totalRevenue}</h3>
                         <p className="report-title">Revenue</p>
+                        <Progress progress={ordersProgress} is24={true} isPositive={ordersProgress>=0} />
                       </CardBody>
                     </Card>
                   </Col>
@@ -149,6 +179,7 @@ class Analytics extends React.Component {
                       <CardBody className="p-4">
                         <h3 className="text-primary">{totalOrders}</h3>
                         <p className="report-title">Orders</p>
+                        <Progress progress={ordersProgress} is24={true} isPositive={ordersProgress>=0} />
                       </CardBody>
                     </Card>
                   </Col>
@@ -157,14 +188,16 @@ class Analytics extends React.Component {
                       <CardBody className="p-4">
                         <h3 className="text-primary">{totalViews}</h3>
                         <p className="report-title">Views</p>
+                        <Progress progress={viewsProgress} is24={true} isPositive={viewsProgress>=0} />
                       </CardBody>
                     </Card>
                   </Col>
                   <Col lg={3}>
                     <Card className="grey">
                       <CardBody className="p-4">
-                        <h3 className="text-primary">{totalConversion}%</h3>
-                        <p className="report-title">Conversion</p>
+                        <h3 className="text-primary">{totalQueries}</h3>
+                        <p className="report-title">Queries</p>
+                        <Progress progress={queriesProgress} is24={true} isPositive={queriesProgress>=0} />
                       </CardBody>
                     </Card>
                   </Col>
@@ -195,7 +228,7 @@ class Analytics extends React.Component {
 
                 <div className="chart row mt-2 mb-2">
                   <Col lg={12}>
-                    <label>Conversion</label>
+                    <label>Queries</label>
                     <hr/>
                     <ConverstionChart height="350px" data={chartData}/>
                   </Col>

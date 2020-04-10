@@ -14,28 +14,47 @@ import {
 import { ToastContainer, toast } from 'react-toastify'
 import { BootstrapTable, TableHeaderColumn, SearchField } from 'react-bootstrap-table'
 import moment from 'moment'
-
-import { Loader } from 'components'
+import config from 'constants/config'
+import { Loader, Spin } from 'components'
 import { tableOptions } from 'constants/tableoptions'
 
 import 'react-toastify/dist/ReactToastify.css'
 import 'react-bootstrap-table/dist/react-bootstrap-table-all.min.css'
 
-import * as ProductActions from './actions'
+import * as OrderActions from './actions'
 import './style.scss'
 
 const user = window.localStorage.getItem('userId')
 
 const mapStateToProps = (state) => {
   return ({
-    product_list: state.product.product_list
+    order_list: state.order.order_list
   })
 }
 
 const mapDispatchToProps = (dispatch) => {
   return ({
-    productActions: bindActionCreators(ProductActions, dispatch)
+    actions: bindActionCreators(OrderActions, dispatch)
   })
+}
+
+const ORDER_STATUS = {
+  '0': 'Pending',
+  '1': 'Completed',
+  '2': 'Cancelled',
+  '3': 'Confirmation',
+  '4': 'Partial'
+}
+
+const PAYMENT_OPTS = {
+  'paypal': 'PayPal',
+  'bitcoin': 'BTC',
+  'litecoin': 'LTC',
+  'ethereum': 'ETH',
+  'skrill': 'Skrill',
+  'stripe': 'Stripe',
+  'bitcoincash': 'BTH',
+  'perfectmoney': 'Perfect Money'
 }
 
 
@@ -56,14 +75,14 @@ class Order extends React.Component {
   }
 
   initializeData () {
-    // this.props.productActions.getProductList().then(res => {
-    //   if (res.status === 200) {
-    //     this.setState({ loading: false })
-    //   }
-    // })
-
-    this.props.productActions.getProductList()
-    this.setState({ loading: false })
+    this.setState({ loading: true })
+    this.props.actions.getOrderList().then(res => {
+      if (res.status === 200) {
+        this.setState({ loading: false })
+      }
+    }).finally(() => {
+      this.setState({loading: false})
+    })
   }
 
   gotoDetail(e, id) {
@@ -73,79 +92,49 @@ class Order extends React.Component {
   }
 
   renderOrderInfo (cell, row) {
-    console.log(this)
-    if (
-      row.mail && row.id
-    ) {
-      return (
-        <div>
-          <p><a onClick={(e) => this.gotoDetail(e, row.id)}>
-            <i className="flag-icon flag-icon-be"></i>&nbsp;&nbsp;&nbsp;{`${row.unit}-${row.mail}`}</a>
-          </p>
-          <p className="caption">{row.id}</p>
-        </div>
-      )  
-    } else {
-      return (
-        <p className="caption">No specified</p>
-      )
-    }
+    return (
+      <div>
+        <p><a onClick={(e) => this.gotoDetail(e, row.uniqid)}>
+          <i className={`flag-icon flag-icon-${row.country.toLowerCase()}`}>
+            </i>&nbsp;&nbsp;&nbsp;{`${PAYMENT_OPTS[row.gateway]} - ${row.customer_email}`}</a>
+        </p>
+        <p className="caption">{row.uniqid} - {row.developer_invoice == '1'?row.developer_title:row.product_title}</p>
+      </div>
+    )  
   }
 
   renderOrderStatus (cell, row) {
-    if (
-      row.status
-    ) {
-      return (
-        <div className={`badge badge-${row.status.toLowerCase()}`} style={{ textTransform: 'lowercase', margin: '0 auto'}}>
-          {row.status}
-        </div>
-      )  
-    } else {
-      return (
-        <p className="caption">No specified</p>
-      )
-    }
+    return (
+      <div className={`badge badge-${ORDER_STATUS[row.status].toLowerCase()}`} style={{  margin: '0 auto'}}>
+        {ORDER_STATUS[row.status]} {ORDER_STATUS == '3' && <Spin/>}
+      </div>
+    )  
   }
 
   renderOrderValue(cell, row) {
-    if (
-      row.value
-    ) {
-      return (
-        <div className="order">
-          <p className="order-value">{row.value}</p>
-          <p className="caption">{row.rate}</p>
-        </div>
-      )  
-    } else {
-      return (
-        <p className="caption">No specified</p>
-      )
-    }
+    return (
+      <div className="order">
+        <p className="order-value">{'+' + config.CURRENCY_LIST[row.currency] + row.total_display}</p>
+        <p className="caption">{row.crypto_amount?(row.crypto_amount + ' '):''} {PAYMENT_OPTS[row.gateway]}</p>
+      </div>
+    )  
   }
 
   renderOrderTime(cell, row) {
-    if (
-      row.datetime
-    ) {
-      return (
-        <div>
-          <p>{new moment(row.datetime).format('ddd MM')}</p>
-          <p>{new moment(row.datetime).format('HH:mm')}</p>
-        </div>
-      )  
-    } else {
-      return (
-        <p className="caption">No specified</p>
-      )
-    }
+    return (
+      <div>
+        <p>{new moment(new Date(row.created_at*1000)).format('ddd MM')}</p>
+        <p>{new moment(new Date(row.created_at*1000)).format('HH:mm')}</p>
+      </div>
+    )  
   }
 
   render() {
 
     const { loading } = this.state
-    const { product_list } = this.props
+    const { order_list } = this.props
+
+    console.log(order_list)
 
     return (
       <div className="order-screen">
@@ -182,16 +171,16 @@ class Order extends React.Component {
                           options={{...tableOptions(), onRowClick: (row) => {
                             this.gotoDetail(null, row.uniqid)}
                           }}
-                          data={product_list}
+                          data={order_list}
                           version="4"
                           pagination
-                          totalSize={product_list ? product_list.length : 0}
+                          totalSize={order_list ? order_list.length : 0}
                           className="product-table"
                           trClassName="cursor-pointer"
                         >
                           <TableHeaderColumn
                             isKey
-                            dataField="email"
+                            dataField="uniqid"
                             dataFormat={this.renderOrderInfo}
                             dataSort
                             width='45%'

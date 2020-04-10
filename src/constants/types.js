@@ -19,6 +19,11 @@ export const AUTH = {
   USER_SETTINGS: 'USER_SETTINGS'
 }
 
+
+export const ORDER = {
+  ALL_ORDERS: 'ALL_ORDERS'
+}
+
 export const ANALYTICS = {
   ALL_REPORTS: 'ALL_REPORTS',
   NEW_REPORT: 'NEW_REPORT'
@@ -103,23 +108,9 @@ export const PRODUCT = {
   PRODUCT_LIST: 'PRODUCT_LIST'
 }
 
-export const PROJECT = {
-  PROJECT_LIST: 'PROJECT_LIST',
-  PROJECT_CURRENCY_LIST: 'PROJECT_CURRENCY_LIST',
-  PROJECT_COUNTRY_LIST: 'PROJECT_COUNTRY_LIST',
-  PROJECT_TITLE_LIST: 'PROJECT_TITLE_LIST'
-}
 
 export const PAYMENT = {
   PAYMENT_LIST: 'PAYMENT_LIST'
-}
-
-export const TRANSACTION = {
-  TRANSACTION_LIST: 'TRANSACTION_LIST',
-  TRANSACTION_ROW: 'TRANSACTION_ROW',
-  TRANSACTION_TYPES: 'TRANSACTION_TYPES',
-  TRANSACTION_VAT_CATEGORIES: 'TRANSACTION_VAT_CATEGORIES',
-  TRANSACTION_PARENT_CATRGORY_CODE_LIST: 'TRANSACTION_PARENT_CATEGORY_CODE_LIST'
 }
 
 export const USER = {
@@ -137,48 +128,3 @@ export const CATEGORY = {
   CURRENT_CATEGORY: 'CURRENT_CATEGORY'
 }
 
-export const CURRENCY = {
-
-}
-
-export const DATA_BACKUP = {
-
-}
-
-export const HELP = {
-
-}
-
-export const NOTIFICATION = {
-
-}
-
-export const ORGANIZATION = {
-
-}
-
-export const USERS_ROLES = {
-  
-}
-
-export const REPORTS_FILING = {
-
-}
-
-export const VAT_TRANSACTIONS = {
-  
-}
-
-export const CHART_ACCOUNT = {
-  
-}
-
-
-export const BEGINING_BALANCE = {
-  
-}
-
-
-export const JOURNAL = {
-  JOURNAL_LIST: 'JOURNAL_LIST'
-}

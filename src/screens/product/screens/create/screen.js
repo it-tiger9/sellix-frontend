@@ -17,6 +17,10 @@ import {
 import Select from 'react-select'
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import ReactMde from "react-mde";
+import * as Showdown from "showdown";
+import "react-mde/lib/styles/css/react-mde-all.css";
+
 import { AppSwitch } from '@coreui/react'
 import { Loader, ImageUpload, DataSlider, Spin } from 'components'
 import * as ProductActions from '../../actions'
@@ -45,6 +49,12 @@ const mapDispatchToProps = (dispatch) => {
 	})
 }
 
+const converter = new Showdown.Converter({
+	tables: true,
+	simplifiedAutoLink: true,
+	strikethrough: true,
+	tasklists: true
+  });
 
 const TYPE_OPTIONS = [
 	{ value: 'file', label: 'File' },
@@ -112,6 +122,7 @@ class CreateProduct extends React.Component {
 			privateTooltipOpen: false,
 			blockTooltipOpen: false,
 			paypalTooltipOpen: false,
+			selectedTab: 'write',
 			files: [],
 			images: [],
 			initialValues: {
@@ -254,6 +265,7 @@ class CreateProduct extends React.Component {
 			images,
 			showFileStock,
 			editorState,
+			selectedTab,
 			initialValues,
 			type,
 			delimiter,
@@ -405,15 +417,21 @@ class CreateProduct extends React.Component {
 																							? "is-invalid"
 																							: ""
 																					}>
-																				<ReactQuill value={props.values.description}
-																					modules={EDITOR_MODULES}
-																					formats={EDITOR_FORMATS}
-																					placeholder={''}
-																					bounds={'.app'}
+
+																				<ReactMde
+																					value={props.values.description}
 																					onChange={(value) => {
 																						props.handleChange('description')(value)
-																					}} 
+																					}}
+																					selectedTab={selectedTab}
+																					onTabChange={(tab) => {
+																						this.setState({selectedTab:tab})
+																					}}
+																					generateMarkdownPreview={markdown =>
+																						Promise.resolve(converter.makeHtml(markdown))
+																					}
 																				/>
+																				
 																			</div>
 																			{props.errors.description && props.touched.description && (
 																				<div className="invalid-feedback">{props.errors.description}</div>
@@ -626,7 +644,7 @@ class CreateProduct extends React.Component {
 
 																{type.value === 'serials' && <div><Row>
 																		<Col lg={12} className="mb-3">
-																			<textarea className="form-control" rows={5}></textarea>
+																			<textarea className="form-control" rows={5} />
 																		</Col>
 																	</Row>
 																	<Row>
@@ -644,9 +662,11 @@ class CreateProduct extends React.Component {
 																							delimiter: option
 																						})
 																						
-																						if(option.value !== 'custom')
+																						if(option.value !== 'custom') {
 																							props.handleChange("stock_delimeter")(option.value)
-																						else props.handleChange("stock_delimeter")('')
+																						} else {
+																							props.handleChange("stock_delimeter")('')
+																						}
 																					}}>                                       
 																				</Select>
 																			</FormGroup>
@@ -660,7 +680,7 @@ class CreateProduct extends React.Component {
 																						name="stock_delimeter"
 																						value={props.values.stock_delimeter}
 																						onChange={props.handleChange}
-																					></Input>
+																					/>
 																				</FormGroup>
 																			</Col>
 																		}
@@ -673,7 +693,7 @@ class CreateProduct extends React.Component {
 																					name="quantity_min"
 																					value={props.values.quantity_min}
 																					onChange={props.handleChange}
-																				></Input>
+																				/>
 																			</FormGroup>
 																		</Col>
 																		<Col lg={3}>
@@ -685,7 +705,7 @@ class CreateProduct extends React.Component {
 																					name="quantity_max"
 																					value={props.values.quantity_max}
 																					onChange={props.handleChange}
-																				></Input>
+																				/>
 																			</FormGroup>
 																		</Col>
 																</Row></div>}
@@ -698,7 +718,8 @@ class CreateProduct extends React.Component {
 																				id='service_text'
 																				name="service_text"
 																				value={props.values.service_text}
-																				rows={5} onChange={props.handleChange}></textarea>
+																				rows={5} onChange={props.handleChange}
+																			/>
 																		</FormGroup>
 																	</Col>
 																</Row>}
@@ -721,7 +742,8 @@ class CreateProduct extends React.Component {
 																		<FormGroup className="mb-3">
 																			<Label htmlFor="product_code">Note to Customer <small className="font-italic">(optional)</small></Label>
 																			<Input
-																				type="text"
+																				type="textarea"
+																				rows={4}
 																				id="delivery_text"
 																				name="delivery_text"
 																				placeholder="Note to Customer"

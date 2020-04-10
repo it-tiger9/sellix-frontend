@@ -19,14 +19,19 @@ import {
 import { Formik } from 'formik';
 import { Spin } from 'components'
 import * as Yup from "yup";
-
+import * as Showdown from "showdown";
 import shop_brand from 'assets/images/brand/shop_brand.png'
+
+
 import bitcoinIcon from 'assets/images/crypto/btc.svg'
 import paypalIcon from 'assets/images/crypto/paypal.svg'
 import litecoinIcon from 'assets/images/crypto/ltc.svg'
 import ethereumIcon from 'assets/images/crypto/eth.svg'
 import perfectmoneyIcon from 'assets/images/crypto/perfectmoney.svg'
 import backIcon from 'assets/images/x.png'
+import stripeIcon from 'assets/images/crypto/stripe.svg'
+import bitcoincashIcon from 'assets/images/crypto/bitcoincash.svg'
+import skrillIcon from 'assets/images/crypto/skrill.svg'
 
 import './style.scss'
 
@@ -41,13 +46,26 @@ const mapDispatchToProps = (dispatch) => {
   })
 }
 
-const PAYMENT_ICONS = {
-  paypal: paypalIcon,
-  bitcoin: bitcoinIcon,
-  litecoin: litecoinIcon,
-  ethereum: ethereumIcon,
-  perfectmoney: perfectmoneyIcon
-}
+
+const converter = new Showdown.Converter({
+	tables: true,
+	simplifiedAutoLink: true,
+	strikethrough: true,
+	tasklists: true
+  });
+
+
+  const PAYMENT_ICONS = {
+    paypal: paypalIcon,
+    bitcoin: bitcoinIcon,
+    litecoin: litecoinIcon,
+    ethereum: ethereumIcon,
+    perfectmoney: perfectmoneyIcon,
+    stripe: stripeIcon,
+    bitcoincash: bitcoincashIcon,
+    skrill: skrillIcon
+  }
+  
 
 const CURRENCY_LIST = { 
   'USD': '$',
@@ -67,7 +85,11 @@ const PAYMENT_LABELS = {
   'paypal': 'PayPal',
   'bitcoin': 'Bitcoin',
   'litecoin': 'Litecoin',
-  'ethereum': 'Ethereum'
+  'ethereum': 'Ethereum',
+  'stripe': 'Stripe',
+  'perfectmoney': 'Perfect Money',
+  'bitcoincash': 'Bitcoin Cash',
+  'skrill': 'Skrill'
 }
 
 class ShopProductDetail extends React.Component {
@@ -84,7 +106,7 @@ class ShopProductDetail extends React.Component {
       email: null,
       coupon_code: '',
       product_id: this.props.match.params.id,
-      custom_fields: '',
+      custom_fields: {},
       product_info: {}
     }
   }
@@ -96,6 +118,7 @@ class ShopProductDetail extends React.Component {
     delete data["product_info"]
     delete data["openCoupon"]
 
+    data['custom_fields'] = JSON.stringify({custom_fields: this.state.custom_fields})
     data['gateway'] = data['gateway'].toLowerCase()
     data['email'] = values.email
 
@@ -112,6 +135,12 @@ class ShopProductDetail extends React.Component {
     })
   }
 
+  setCustomFields(key, value) {
+    this.setState({
+      custom_fields: {...this.state.custom_fields, [key]:value}
+    })
+  }
+
   showPaymentOptions(){
     this.setState({
       showPaymentOptions: true
@@ -125,12 +154,19 @@ class ShopProductDetail extends React.Component {
   }
 
   increaseCount() {
-    if((this.state.product_info.quantity_max != -1 && this.state.quantity < this.state.product_info.quantity_max) || 
-      (this.state.product_info.quantity_max == -1 && this.state.quantity < this.state.product_info.stock)) {
-      this.setState({
-        quantity: this.state.quantity + 1
-      })
+    const { product_info } = this.state
+    if((product_info.type != 'file' && product_info.quantity_max != -1 && this.state.quantity >= product_info.quantity_max) || 
+      (product_info.type != 'file' && product_info.quantity_max == -1 && this.state.quantity >= product_info.stock)) {
+      return true
     }
+
+    if(product_info.type == 'file' &&  product_info.file_stock != -1 && this.state.quantity >= product_info.file_stock) {
+      return true
+    }
+
+    this.setState({
+      quantity: this.state.quantity + 1
+    })
   }
 
   decreaseCount() {
@@ -164,10 +200,11 @@ class ShopProductDetail extends React.Component {
     this.props.commonActions.getUserProductById(this.props.match.params.id).then(res => {
       this.setState({
         product_info: res.data.product,
-        custom_fields: res.data.product.custom_fields,
         paymentoptions: (res.data.product.gateways || '').split(',')
       })
     })
+
+    
   }
 
   render() {
@@ -179,6 +216,12 @@ class ShopProductDetail extends React.Component {
       product_info,
       openCoupon, 
       paymentoptions} = this.state
+
+    
+    let custom_fields = []
+
+    if(product_info && product_info.custom_fields)
+      custom_fields = JSON.parse(product_info.custom_fields)['custom_fields']
 
     return (
       <div className="detail-product-screen">
@@ -226,6 +269,79 @@ class ShopProductDetail extends React.Component {
                                       <div className="invalid-feedback">{props.errors.email}</div>
                                     )}
                                   </FormGroup>
+                                  {
+                                    custom_fields.map(field => {
+                                      if(field.type == 'text') {
+                                        return (
+                                          <FormGroup className="mb-3">
+                                            <Label htmlFor="email">{field.name} <small className="font-italic">{!field.required && '(optional)'}</small></Label>
+                                            <Input
+                                              type="text"
+                                              id="text"
+                                              name="text"
+                                              onChange={(e) => {this.setCustomFields(field.name, e.target.value)}}
+                                              value={this.state.custom_fields[field.name]}
+                                              placeholder={field.name}
+                                              required={field.required}
+                                            />
+                                          </FormGroup>
+                                        )
+                                      }
+
+                                      if(field.type == 'number') {
+                                        return (
+                                          <FormGroup className="mb-3">
+                                            <Label htmlFor="number">{field.name} <small className="font-italic">{!field.required && '(optional)'}</small></Label>
+                                            <Input
+                                              type="number"
+                                              id="number"
+                                              name="number"
+                                              onChange={(e) => {this.setCustomFields(field.name, e.target.value)}}
+                                              value={this.state.custom_fields[field.name]}
+                                              placeholder={field.name}
+                                              required={field.required}
+                                            />
+                                          </FormGroup>
+                                        )
+                                      }
+
+                                      if(field.type == 'largetextbox') {
+                                        return (
+                                          <FormGroup className="mb-3">
+                                            <Label htmlFor="number">{field.name} <small className="font-italic">{!field.required && '(optional)'}</small></Label>
+                                            <textarea className="form-control" 
+                                              id='service_text'
+                                              name="service_text"
+                                              value={this.state.custom_fields[field.name]}
+                                              rows={5} 
+                                              required={field.required}
+                                              onChange={(e) => {this.setCustomFields(field.name, e.target.value)}}></textarea>
+                                          </FormGroup>
+                                        )
+                                      }
+
+                                      if(field.type == 'checkbox') {
+                                        return (
+                                          <FormGroup className="mb-3">
+                                            <label className="custom-checkbox custom-control payment-checkbox">
+                                              <input 
+                                                className="custom-control-input"
+                                                type="checkbox"
+                                                id="sk"
+                                                name="SMTP-auth"
+                                                checked={this.state.custom_fields[field.name] || false}
+                                                onChange={(e) => {this.setCustomFields(field.name, e.target.checked)}}
+                                                />
+                                              <label className="custom-control-label" htmlFor="sk">
+                                                {field.name} <small className="font-italic">{!field.required && '(optional)'}</small>
+                                              </label>
+                                            </label>
+                                          </FormGroup>
+                                        )
+                                      }
+                                    }
+                                  )
+                                  }
                                   <div className="text-center">
                                     <p className="text-center grey" style={{fontSize: 12}}>
                                       By continuing, you agree to our Terms of Service</p>
@@ -247,7 +363,8 @@ class ShopProductDetail extends React.Component {
                             <h3>{CURRENCY_LIST[product_info.currency]}{product_info.price_display || 0}</h3>
                             <Button color="primary" className="mr-auto ml-auto mt-3 d-block" 
                               onClick={this.showPaymentOptions.bind(this)} style={{width: 170}}>Purchase</Button>
-                            {showPaymentOptions && paymentoptions.map(option => 
+                            {showPaymentOptions && paymentoptions.map(option => {
+                              if(option != '') return(
                               <Button className="pay-button mt-3 pl-3 mr-auto ml-auto pr-3 d-block" 
                                 onClick={(e) => this.setPaymentOptions(e, PAYMENT_LABELS[option])}
                                 style={{width: 170}}>
@@ -258,8 +375,8 @@ class ShopProductDetail extends React.Component {
                                   </div>
                                   <div>></div>
                                 </div>
-                                
                               </Button>  
+                              )}
                             )}
                             
                             <div className="d-flex justify-content-center align-items-center mt-3 stock-count">
@@ -294,7 +411,9 @@ class ShopProductDetail extends React.Component {
                       </div>
                       <div className="d-flex justify-content-between p-2">
                         <span className="text-primary">Stock</span>
-                        <span className="text-primary bold">{product_info.stock || 0}</span>
+                        <span className="text-primary bold">
+                          {product_info.type == 'file'?(product_info.file_stock == '-1'?'∞':product_info.file_stock):(product_info.stock == '-1'?'∞':product_info.stock) || 0}
+                        </span>
                       </div>
                       <div className="d-flex justify-content-between p-2">
                         <span className="text-primary">Feedback</span>
@@ -305,10 +424,9 @@ class ShopProductDetail extends React.Component {
                 </Col>  
                 <Col lg={8}>
                   <Card className="bg-white p-4 detail">
-                    <h4 className="text-primary mb-4">100k vbuks [Nitendo]</h4>
-                    <p>
-                      Leave a good feedback pls
-                    </p>
+                    <h4 className="text-primary mb-4">{product_info.title}</h4>
+                    <div className="description" dangerouslySetInnerHTML={{__html: converter.makeHtml(product_info.description)}}>
+                    </div>
                   </Card>
                 </Col>
               </Row>
