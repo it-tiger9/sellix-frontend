@@ -10,7 +10,7 @@ export const getFeedbacks = () => {
   return (dispatch) => {
     let data = {
       method: 'GET',
-      url: `self/feedbacks`
+      url: `self/feedback`
     }
 
     return authApi(data).then(res => {
@@ -35,7 +35,7 @@ export const replyFeedback = (feedback) => {
   return (dispatch) => {
     let data = {
       method: 'POST',
-      url: `/feedbacks/reply`,
+      url: `/feedback/reply`,
       data: formData(feedback)
     }
 

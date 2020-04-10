@@ -9,7 +9,7 @@ export const createFeedback = (feedback) => {
   return (dispatch) => {
     let data = {
       method: 'POST',
-      url: `/feedbacks/send`,
+      url: `/feedback/send`,
       data: formData(feedback)
     }
 
