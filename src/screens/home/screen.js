@@ -25,7 +25,8 @@ import {
   Loading
 } from 'components'
 
-import top1 from 'assets/images/home/top1.svg'
+// import top1 from 'assets/images/home/top1.svg'
+import top1 from 'assets/images/home/Laptop.svg'
 import service1 from 'assets/images/home/service1.svg'
 import service2 from 'assets/images/home/service2.svg'
 import service3 from 'assets/images/home/service3.svg'

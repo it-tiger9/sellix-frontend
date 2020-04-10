@@ -20,7 +20,8 @@ import {
   Pages,
   CreateProduct,
   OrderDetail,
-  ReplyToQuerie
+  ReplyToQuerie,
+  AdminDashboard
 } from 'screens'
 import { BlackList, CreateBlacklist, EditBlacklist, EditCoupon, ReplyToFeedback } from '../screens'
 
@@ -28,6 +29,12 @@ import { BlackList, CreateBlacklist, EditBlacklist, EditCoupon, ReplyToFeedback 
 const user = window.localStorage.getItem('userId')
 
 const adminRoutes = [
+
+  {
+    path: `/admin/dashboard`,
+    name: 'AdminDashboard',
+    component: AdminDashboard
+  },
   {
     path: `/dashboard/home`,
     name: 'Dashboard',
@@ -50,9 +57,6 @@ const adminRoutes = [
     name: 'Product Sort',
     component: ProductSort.screen
   },
-
-
-
   {
     path: `/dashboard/products/sort-categories`,
     name: 'Cateogry Sort',
