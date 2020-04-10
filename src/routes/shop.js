@@ -12,39 +12,50 @@ import {
   
   const shopRoutes = [
     {
-      path: `/shop/:username/contact/:id`,
+      path: `/u/:username/contact/:id`,
       name: 'Contacts',
       component: Contacts
     },
     {
-      path: `/shop/:username/contact`,
+      path: `/u/:username/contact`,
       name: 'Contact',
       component: Contact.screen
     },
+
+
     {
-      path: `/shop/:username/feedback/:id`,
+      path: `/u/:username/query/:id`,
+      name: 'Leave Query',
+      component: LeaveFeedback.screen
+    },
+
+
+
+    {
+      path: `/u/:username/feedback/:id`,
       name: 'Leave Feedback',
       component: LeaveFeedback.screen
     },
 
     {
-      path: `/shop/:username/feedback`,
+      path: `/u/:username/feedback`,
       name: 'Feedback',
       component: ShopFeedback.screen
     },
 
+
+
     {
-      path: `/shop/:username/products`,
+      path: `/u/:username/category/:id`,
       name: 'Products',
       component: ShopProducts.screen
     },
-  
+
     {
-      redirect: true,
-      path: `/shop/:username`,
-      pathTo: `/shop/:username/products`,
-      name: 'Shop'
-    }
+      path: `/u/:username`,
+      name: 'Products',
+      component: ShopProducts.screen
+    },
   ]
   
   export default shopRoutes

@@ -77,7 +77,7 @@ class Header extends Component {
             {
               is_authed?
                 <DropdownMenu right className="mt-2">
-                  <DropdownItem onClick={() => this.props.history.push(`/dashboard`)}>
+                  <DropdownItem onClick={() => this.props.history.push(`/dashboard/${userId}`)}>
                     Dashboard
                   </DropdownItem>
                   <DropdownItem onClick={() => this.signOut()}>
@@ -86,7 +86,7 @@ class Header extends Component {
                 </DropdownMenu>
                 :
                 <DropdownMenu right className="mt-2">
-                  <DropdownItem onClick={() => this.props.history.push(`/login`)}>
+                  <DropdownItem onClick={() => this.props.history.push(`/auth/login`)}>
                     Log In
                   </DropdownItem>
                 </DropdownMenu>

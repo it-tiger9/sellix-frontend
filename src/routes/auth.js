@@ -1,67 +1,49 @@
 import {
   LogIn,
   Register,
-  Home,
-  Fees,
   ResetPassword,
   ForgotPassword,
   TwoFactorAuthentication,
   OTPLogin,
-  ResetOTP,
-  Terms
+  ResetOTP
 } from 'screens'
 
 const initialRoutes = [
   {
-    path: '/login',
+    path: '/auth/login',
     name: 'LogIn',
     component: LogIn.screen
   },
   {
-    path: '/email-2fa',
+    path: '/auth/email',
     name: '2FA',
     component: TwoFactorAuthentication.screen
   },
   {
-    path: '/otp-2fa',
+    path: '/auth/otp',
     name: '2FA',
     component: OTPLogin.screen
   },
   {
-    path: '/reset-otp',
+    path: '/auth/otp/reset',
     name: '2FA',
     component: ResetOTP.screen
   },
   {
-    path: '/register',
+    path: '/auth/register',
     name: 'Register',
     component: Register.screen
   },
   {
-    path: '/password/new',
+    path: '/auth/password/new',
     name: 'Forgot Password',
     component: ForgotPassword.screen
   },
   {
-    path: '/reset/:id',
+    path: '/auth/reset/:id',
     name: 'Reset Password',
     component: ResetPassword.screen
-  },
-  {
-    path: '/fees',
-    component: Fees.screen,
-    name: 'Fees'
-  },
-  {
-    path: '/terms',
-    component: Terms,
-    name: 'Terms'
-  },
-  {
-    path: '/',
-    component: Home.screen,
-    name: 'Home'
-  },
+  }
 ]
 
 export default initialRoutes

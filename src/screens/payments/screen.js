@@ -45,14 +45,12 @@ class Payments extends React.Component {
     }
   }
 
-  savePayments = () => {
+  savePayments(){
 
     this.setState({ loading: true });
-    let { commonActions: { tostifyAlert }, actions: { savePayments } } = this.props.commonActions;
-
-    savePayments(this.state)
-        .then(res => tostifyAlert('success', res.message))
-        .catch(res => tostifyAlert('error', res.error))
+    this.props.actions.savePayments(this.state)
+        .then(res => this.props.commonActions.tostifyAlert('success', res.message))
+        .catch(res => this.props.commonActions.tostifyAlert('error', res.error))
         .finally(() => this.setState({loading: false}))
   }
 
@@ -183,7 +181,7 @@ class Payments extends React.Component {
                   </Row>
               }
             </CardBody>
-            <Button color="primary" className="mb-4" style={{ width: 200 }} onClick={this.savePayments}>
+            <Button color="primary" className="mb-4" style={{ width: 200 }} onClick={this.savePayments.bind(this)}>
               Save Settings
             </Button>
             
@@ -212,7 +210,6 @@ class Payments extends React.Component {
                     </Col>
                   </Row>
               }
-
               
             </CardBody>
             <Button color="primary" className="mb-4" style={{width: 200}}>Save Settings</Button>

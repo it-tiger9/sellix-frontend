@@ -102,7 +102,7 @@ class ForgotPassword extends React.Component {
                                   <Col>
                                     <FormGroup className="mb-0 text-center mt-3">
                                       <Label className="mr-2">Already have an account? </Label>
-                                      <Link to="/login">
+                                      <Link to="/auth/login">
                                         <Label style={{cursor: 'pointer'}}><b>Log in</b></Label>
                                       </Link>
                                     </FormGroup>

@@ -17,7 +17,7 @@ import {
 } from 'reactstrap'
 import { Formik } from 'formik';
 import * as Yup from "yup";
-import ReCaptcha from "@matt-block/react-recaptcha-v2";
+import ReCAPTCHA from "react-google-recaptcha";
 import config from 'constants/config'
 
 import { AuthActions, CommonActions} from 'services/global'
@@ -28,6 +28,8 @@ const mapDispatchToProps = dispatch => ({
   tostifyAlert: bindActionCreators(CommonActions.tostifyAlert, dispatch),
   authActions: bindActionCreators(AuthActions, dispatch)
 })
+
+const user = window.localStorage.getItem('userId')
 
 class Register extends React.Component {
   
@@ -42,6 +44,8 @@ class Register extends React.Component {
       },
       captchaVerify: null
     }
+
+    this.captcha = {}
   }
 
   handleSubmit = (data) => {
@@ -64,15 +68,18 @@ class Register extends React.Component {
       tostifyAlert('success', 'You are successfully registered, Please login!')
 
       if(res.status === 202) {
-        history.push('/2fa')
+        if(res.data.type == 'email')
+          history.push('/auth/email')
+        else if(res.data.type == 'otp')
+          history.push('/auth/otp')
       }
 
       this.props.authActions.getSelfUser().then(res => {
-        const preUrl = `/dashboard`
-        window.location.href = preUrl
+        window.location.href = (`/dashboard/${res.data.user.username}/home`)
       })
     }).catch(err => {
       tostifyAlert('error', err.error)
+      this.captcha.reset()
     })
   }
 
@@ -110,7 +117,7 @@ class Register extends React.Component {
                       <CardBody className="text-center bg-primary flex align-items-center">
                           <h2 className="mb-3"><b>Welcome back!</b></h2>
                           <p style={{width: '90%'}}>To keep connected with us please login with your personal info.</p>
-                          <Link to="/login">
+                          <Link to="/auth/login">
                             <Button color="primary" active>Sign In</Button>
                           </Link>
                       </CardBody>
@@ -184,13 +191,14 @@ class Register extends React.Component {
                                 </FormGroup>
 
                                 <div className="ml-auto mr-auto recptcah" style={{width: 'fit-content'}}>
-                                  <ReCaptcha
-                                    siteKey={config.CAPTCHA_SITE_KEY}
-                                    theme="light"
-                                    size="normal"
-                                    onSuccess={(captcha) => {this.setState({captchaVerify: captcha})}}
-                                    onExpire={() => {this.setState({captchaVerify: null})}}
-                                    onError={() => {this.setState({captchaVerify: null})}}
+                                  <ReCAPTCHA
+                                    ref={el => { this.captcha = el }}
+                                      sitekey={config.CAPTCHA_SITE_KEY}
+                                      theme="light"
+                                      size="normal"
+                                      onChange={(captcha) => {this.setState({captchaVerify: captcha})}}
+                                      onExpired={() => {this.setState({captchaVerify: null})}}
+                                      onErrored={() => {this.setState({captchaVerify: null})}}
                                   />
                                 </div>
 

@@ -22,15 +22,14 @@ import { Spin, ImageUpload, Loader } from 'components'
 import config from 'constants/config'
 import { Product } from 'screens'
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
-
 import {
   CommonActions
 } from 'services/global'
-
-
 import * as CategoryActions from '../../actions'
-
 import './style.scss'
+
+
+const user = window.localStorage.getItem('userId')
 
 const mapStateToProps = (state) => {
   return ({

@@ -101,7 +101,7 @@ class Invoice extends React.Component {
   }
 
   getPayPalInvoice() {
-    this.props.commonActions.getPayPalInvoice(this.props.invoice.uniqid).then(res => {
+    return this.props.commonActions.getPayPalInvoice(this.state.invoice.uniqid).then(res => {
         if(res && res.data && res.data.invoice) {
             this.setState({
                 invoice: res.data.invoice
@@ -152,7 +152,8 @@ class Invoice extends React.Component {
   startTimer() {
     if (this.timer == 0 && this.state.seconds > 0) {
       this.timer = setInterval(this.countDown, 1000);
-      this.apiTimer = setInterval(this.getInvoice.bind(this), 1000*10)
+      if(this.state.invoice.gateway != 'paypal')
+        this.apiTimer = setInterval(this.getInvoice.bind(this), 1000*10)
     }
   }
 
@@ -219,7 +220,7 @@ class Invoice extends React.Component {
       this.startTimer()
       return (
         <div className="d-flex align-items-center">
-          <div class="sk-spinner sk-spinner-pulse"></div>
+          <div className="sk-spinner sk-spinner-pulse"></div>
           Awaiting for transaction</div>
       )  
     }
@@ -229,7 +230,7 @@ class Invoice extends React.Component {
       return null
     else if(status == 3)
      return <div className="d-flex align-items-center">
-              <div class="sk-spinner sk-spinner-pulse"></div>
+              <div className="sk-spinner sk-spinner-pulse"></div>
               Waiting for Confirmation
             </div>
     else if(status == 4)
@@ -244,6 +245,8 @@ class Invoice extends React.Component {
     if(seconds < 0)
       invoice.status = 2
 
+    // invoice.status = 1
+
     return (
       <div>
         {
@@ -257,32 +260,7 @@ class Invoice extends React.Component {
               <div className="bitcoin-paying-screen">
                 <QRCodeModal openModal={openQRModal} value={invoice.crypto_uri || ''} closeModal={this.closeQrCodeModal.bind(this)}/>
         
-                {invoice.status == 1 && 
-                  <SweetAlert
-                    success
-                    title="Order completed!"
-                    show={showAlert}
-                    showConfirm={false}
-                    onConfirm={this.hideAlert.bind(this)}
-                    onCancel = {this.hideAlert.bind(this)}
-                  >
-                    Your invoice has been paid. <br/>
-                    You will receive the products within minutes, <br/>check your email!
-                  </SweetAlert>
-                }
-        
-                {invoice.status == 2 && 
-                  <SweetAlert
-                    danger
-                    title="Invoice Cancelled"
-                    show={showAlert}
-                    showConfirm={false}
-                    onCancel = {this.hideAlert.bind(this)}
-                    onConfirm={this.hideAlert.bind(this)}
-                  >
-                    The invoice has expired or isn't available.
-                  </SweetAlert>
-                }
+                
         
                 {invoice.status == 4 && 
                   <SweetAlert
@@ -351,13 +329,15 @@ class Invoice extends React.Component {
                             <div className="mt-5">
                               <PayPalButton
                                 createOrder={(data, actions) => {
+                                  console.log('111111111')
                                     return invoice.paypal_tx_id;
                                 }}
                                 onApprove={(data, actions) => {
+                                  
                                     this.getPayPalInvoice()
                                 }}
                                 onError = {() => {
-                                    
+                                    console.log('33333333333')
                                 }}
                                 style={{
                                     layout: 'horizontal',
@@ -374,40 +354,70 @@ class Invoice extends React.Component {
                           }
                         </div>
                         <div className="bottom p-4">
-                          <h4 className="text-primary mb-4">Order Details</h4>
-                          {
-                            this.getInvoiceStatus2(invoice.status) != null && 
-                              <div className="d-flex justify-content-between align-items-center mb-2">
-                                <span className="text-primary">Status</span>
-                                <h5 className="text-primary b-4">{this.getInvoiceStatus2(invoice.status)}</h5>
-                              </div>
+                          {invoice.status == 1 && 
+                            <SweetAlert
+                              success
+                              title="Order completed!"
+                              show={showAlert}
+                              showConfirm={false}
+                              onConfirm={this.hideAlert.bind(this)}
+                              onCancel = {this.hideAlert.bind(this)}
+                            >
+                              Your invoice has been paid. <br/>
+                              You will receive the products within minutes, <br/>check your email!
+                            </SweetAlert>
                           }
-                          
-                          <div className="d-flex justify-content-between align-items-center mb-2">
-                            <span className="text-primary">Seller</span>
-                            <h5 className="text-primary b-4">{invoice.username }</h5>
-                          </div>
-                          <div className="d-flex justify-content-between align-items-center mb-2">
-                            <span className="text-primary">Quantity</span>
-                            <h5 className="text-primary b-4">{invoice.quantity}</h5>
-                          </div>
-                          <div className="d-flex justify-content-between align-items-center mb-2">
-                            <span className="text-primary">Email</span>
-                            <h5 className="text-primary b-4">{invoice.customer_email}</h5>
-                          </div>
-                          <div className="d-flex justify-content-between align-items-center mb-2">
-                            <span className="text-primary">Created</span>
-                            <h5 className="text-primary b-4">{moment(new Date(invoice.created_at*1000)).format('hh:mm:ss, DD/MM/YYYY')}</h5>
-                          </div>
-                          { 
-                              invoice.gateway != 'paypal' && 
-                                <div className="d-flex justify-content-between align-items-center">
-                                  <span className="text-primary">Received</span>
-                                  <h5 className="text-primary b-4 d-flex align-items-center">
-                                    <img src={PAYMENT_ICONS[invoice.gateway]} className="mr-1" width="15" height="15"/>
-                                    {invoice.crypto_received}</h5>
+                  
+                          {invoice.status == 2 && 
+                            <SweetAlert
+                              danger
+                              title="Invoice Cancelled"
+                              show={showAlert}
+                              showConfirm={false}
+                              onCancel = {this.hideAlert.bind(this)}
+                              onConfirm={this.hideAlert.bind(this)}
+                            >
+                              The invoice has expired or isn't available.
+                            </SweetAlert>
+                          }
+                          { invoice.status != 1 && invoice.status != 2 &&
+                          <div>
+                            <h4 className="text-primary mb-4">Order Details</h4>
+                            {
+                              this.getInvoiceStatus2(invoice.status) != null && 
+                                <div className="d-flex justify-content-between align-items-center mb-2">
+                                  <span className="text-primary">Status</span>
+                                  <h5 className="text-primary b-4">{this.getInvoiceStatus2(invoice.status)}</h5>
                                 </div>
-                          }
+                            }
+                            
+                            <div className="d-flex justify-content-between align-items-center mb-2">
+                              <span className="text-primary">Seller</span>
+                              <h5 className="text-primary b-4">{invoice.username }</h5>
+                            </div>
+                            <div className="d-flex justify-content-between align-items-center mb-2">
+                              <span className="text-primary">Quantity</span>
+                              <h5 className="text-primary b-4">{invoice.quantity}</h5>
+                            </div>
+                            <div className="d-flex justify-content-between align-items-center mb-2">
+                              <span className="text-primary">Email</span>
+                              <h5 className="text-primary b-4">{invoice.customer_email}</h5>
+                            </div>
+                            <div className="d-flex justify-content-between align-items-center mb-2">
+                              <span className="text-primary">Created</span>
+                              <h5 className="text-primary b-4">{moment(new Date(invoice.created_at*1000)).format('hh:mm:ss, DD/MM/YYYY')}</h5>
+                            </div>
+                            { 
+                                invoice.gateway != 'paypal' && 
+                                  <div className="d-flex justify-content-between align-items-center">
+                                    <span className="text-primary">Received</span>
+                                    <h5 className="text-primary b-4 d-flex align-items-center">
+                                      <img src={PAYMENT_ICONS[invoice.gateway]} className="mr-1" width="15" height="15"/>
+                                      {invoice.crypto_received}</h5>
+                                  </div>
+                            }
+                          </div>
+                        }
                         </div>
                       </Card>
                     </Col>

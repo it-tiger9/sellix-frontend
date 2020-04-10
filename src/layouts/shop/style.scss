@@ -82,8 +82,14 @@
       }
 
       .nav-link.active {
-        font-family: 'Poppins-SemiBold';
-        font-size: 18px !important;
+        font-family: 'Poppins';
+    }
+
+    .nav-item.active {
+        .nav-link {
+            font-family: 'Poppins-SemiBold';
+            font-size: 18px !important;
+        }
     }
     header {
         box-shadow: none !important;

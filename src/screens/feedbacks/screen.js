@@ -86,7 +86,7 @@ class Feedbacks extends React.Component {
 
   replyToFeedback(e, id) {
     this.props.history.push({
-      pathname: `/dashboard/feedback/reply/${id}`
+      pathname: `/dashboard/${user}/feedback/reply/${id}`
     })
   }
 

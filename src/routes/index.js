@@ -1,15 +1,21 @@
 import mainRoutes from './main'
-import initialRoutes from './initial'
+import authRoutes from './auth'
 import adminRoutes from './admin'
 import shopRoutes from './shop'
 import paymentRoutes from './payment'
 import settingsRoutes from './settings'
+import landingRoutes from './landing'
+import productRoutes from './product'
+import invoiceRoutes from './invoice'
 
 export {
   mainRoutes,
-  initialRoutes,
+  authRoutes,
   adminRoutes,
   shopRoutes,
   paymentRoutes,
-  settingsRoutes
+  settingsRoutes,
+  landingRoutes,
+  invoiceRoutes,
+  productRoutes
 }

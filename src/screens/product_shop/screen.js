@@ -54,10 +54,9 @@ class ShopProducts extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      loading: true,
+      loading: false,
       search_key: null,
-      filter: new URLSearchParams(this.props.location.search).get('filter') || 'all',
-      search: new URLSearchParams(this.props.location.search).get('search') || '',
+      filter: this.props.match.params.id || 'all'
     }
 
     this.initializeData = this.initializeData.bind(this)
@@ -70,45 +69,53 @@ class ShopProducts extends React.Component {
   }
 
   initializeData () {
-    this.props.commonActions.getUserCategories(this.props.match.params.username).then(res => {
-      if (res.status === 200) {
-        this.setState({ loading: false })
-      }
+    this.props.commonActions.getUserCategories(this.props.match.params.username).catch(err => {
+      this.props.commonActions.tostifyAlert('error', err.error)
     })
 
-    this.getAllProducts()
+    const filter = this.props.match.params.id || 'all'
+
+    if(filter == 'all')
+      this.getAllProducts()
+    else this.getCategoryProducts()
   }
 
 
   getAllProducts() {
-    this.props.commonActions.getUserProducts(this.props.match.params.username).then(res => {
-      if (res.status === 200) {
-        this.setState({ loading: false })
-      }
+    this.setState({loading:true})
+    this.props.commonActions.getUserProducts(this.props.match.params.username).catch(err => {
+      this.props.commonActions.tostifyAlert('error', err.error)
+    }).finally(() => {
+      this.setState({loading: false})
     })
   }
 
+  getCategoryProducts() {
+    this.setState({loading: true})
+    this.props.commonActions.getUserProductsByCategory(this.props.match.params.id).catch(err => {
+      this.props.commonActions.tostifyAlert('error', err.error)
+    }).finally(() => {
+      this.setState({loading: false})
+    })
+  }
 
   filterProduct(filter) {
-    this.setState({
-      filter: filter,
-      loading: true
-    })
-
-    if(filter == 'all') 
-      this.getAllProducts()
-    else 
-      this.props.commonActions.getUserProductsByCategory(filter).then(res => {
-        if (res.status === 200) {
-          this.setState({ loading: false })
-        }
+    if(filter == 'all')
+      this.props.history.push(`/u/${this.props.match.params.username}`)
+    else {
+      this.props.history.push(`/u/${this.props.match.params.username}/category/${filter}`)
+      this.setState({filter: filter, loading: true})
+      this.props.commonActions.getUserProductsByCategory(filter).catch(err => {
+        this.props.commonActions.tostifyAlert('error', err.error)
+      }).finally(() => {
+        this.setState({loading: false})
       })
+    }
   }
-
 
   gotoDetail(e, id) {
     this.props.history.push({
-      pathname: `/payment/checkout/${id}`
+      pathname: `/product/${id}`
     })
   }
 
@@ -123,11 +130,11 @@ class ShopProducts extends React.Component {
             <CardHeader>
               <Row>
                 <Col md={12} className="filter-button d-flex flex-wrap">
-                  <Button color={filter == 'all'?'primary':'white'} className="mr-2" 
+                  <Button color={filter == 'all'?'primary':'white'} className="mr-2" disabled={loading}
                     onClick={() => this.filterProduct('all')}>All</Button>
                   {
                     user_categories.map(category => 
-                      <Button color={filter == category.uniqid?'primary':'white'} className="mr-2" 
+                      <Button key={category.uniqid} color={filter == category.uniqid?'primary':'white'} className="mr-2" disabled={loading}
                         onClick={() => this.filterProduct(category.uniqid)}>{category.title}</Button>)
                   }
                 </Col>

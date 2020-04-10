@@ -68,7 +68,7 @@ class Product extends React.Component {
 
   gotoEditPage(e, id){
     this.props.history.push({
-      pathname: `/dashboard/products/all/edit/${id}`
+      pathname: `/dashboard/${user}/products/all/edit/${id}`
     })
   }
 
@@ -204,7 +204,7 @@ class Product extends React.Component {
                         }}
                       />
                     </div>
-                    <Button className="ml-3" color="primary" onClick={() => this.props.history.push(`/dashboard/products/all/new`)}>
+                    <Button className="ml-3" color="primary" onClick={() => this.props.history.push(`/dashboard/${user}/products/all/new`)}>
                       Add Product</Button>
                   </div>
                 </Col>

@@ -17,8 +17,6 @@ import {
 } from 'reactstrap'
 import { Formik } from 'formik';
 import * as Yup from "yup";
-import ReCaptcha from "@matt-block/react-recaptcha-v2";
-import config from 'constants/config'
 
 import { AuthActions, CommonActions } from 'services/global'
 import * as Actions from './actions'
@@ -47,7 +45,7 @@ class OTPLogin extends React.Component {
     this.props.actions.resetOTP(data)
       .then((res) => {
         tostifyAlert('success', res.message)
-        history.push(`/login`)
+        history.push(`/auth/login`)
       })
       .catch(err => {
           tostifyAlert('error', err.error)
@@ -106,7 +104,7 @@ class OTPLogin extends React.Component {
                                 <Row>
                                   <Col>
                                     <FormGroup className="mb-0 text-center mt-3">
-                                      <Link to="/login">
+                                      <Link to="/auth/login">
                                         <Label style={{cursor: 'pointer'}}><b>Login</b></Label>
                                       </Link>
                                     </FormGroup>

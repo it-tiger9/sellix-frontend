@@ -44,6 +44,16 @@
     border-bottom-right-radius: 10px;
     background-color: #E4D6FF;
 
+    > div > div {
+      position:  relative !important;
+      padding: 0 !important;
+      background: transparent !important;
+    }
+
+    div:contains-selector(div.sweet-alert ) { 
+      position: relative;
+    }
+
     h4 {
       font-size: 17px;
     }

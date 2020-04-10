@@ -19,13 +19,7 @@ import {
       path: '/payment/checkout/:id',
       name: 'ShopProductDetail',
       component: ShopProductDetail.screen
-    },
-
-    {
-      path: '/payment',
-      name: 'Checkout'
     }
-    
   ]
   
   export default paymentRoutes

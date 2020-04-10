@@ -9,9 +9,7 @@ import {
   Col,
   Button,
 } from 'reactstrap'
-
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
-
 import {
   BlackListChart
 } from './sections'
@@ -20,7 +18,6 @@ import { getBlacklist, deleteFromBlacklist } from './actions'
 import {
   CommonActions
 } from 'services/global'
-
 import './style.scss'
 
 const user = window.localStorage.getItem('userId')
@@ -55,7 +52,7 @@ class Blacklist extends React.Component {
 
   gotoEditPage(e, id) {
     this.props.history.push({
-      pathname: `/dashboard/blacklist/edit/${id}`,
+      pathname: `/dashboard/${user}/blacklist/edit/${id}`,
     })
   }
 
@@ -138,7 +135,7 @@ class Blacklist extends React.Component {
           <div className='blacklist-header'>
             <div className='blacklist-title'>Blacklist</div>
             <Button className="ml-3" color="primary"
-            onClick={() => this.props.history.push(`/dashboard/blacklist/new`)}>Create blacklist</Button>
+            onClick={() => this.props.history.push(`/dashboard/${user}/blacklist/new`)}>Create blacklist</Button>
           </div>
           <BootstrapTable
             options={this.options}

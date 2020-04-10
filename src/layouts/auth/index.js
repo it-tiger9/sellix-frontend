@@ -3,7 +3,7 @@ import { Route, Switch, Redirect } from 'react-router-dom'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { ToastContainer, toast } from 'react-toastify'
-import { initialRoutes } from 'routes'
+import { authRoutes } from 'routes'
 import {
   AuthActions,
   CommonActions
@@ -74,7 +74,7 @@ class InitialLayout extends React.Component {
         <ToastContainer position="top-right" autoClose={5000} style={containerStyle} hideProgressBar={true}/>
           <Switch>
           {
-            initialRoutes.map((prop, key) => {
+            authRoutes.map((prop, key) => {
               if (prop.redirect)
                 return <Redirect from={prop.path} to={prop.pathTo} key={key} />
               return (

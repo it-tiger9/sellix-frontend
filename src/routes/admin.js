@@ -29,24 +29,24 @@ const user = window.localStorage.getItem('userId')
 
 const adminRoutes = [
   {
-    path: `/dashboard/home`,
+    path: `/dashboard/${user}/home`,
     name: 'Dashboard',
     component: Dashboard.screen
   },
 
   {
-    path: `/dashboard/products/all/new`,
+    path: `/dashboard/${user}/products/all/new`,
     name: 'New',
     component: CreateProduct.screen
   },
   {
-    path: `/dashboard/products/all/edit/:id`,
+    path: `/dashboard/${user}/products/all/edit/:id`,
     name: 'Edit',
     component: EditProduct.screen
   },
 
   {
-    path: `/dashboard/products/sort-products`,
+    path: `/dashboard/${user}/products/sort-products`,
     name: 'Product Sort',
     component: ProductSort.screen
   },
@@ -54,7 +54,7 @@ const adminRoutes = [
 
 
   {
-    path: `/dashboard/products/sort-categories`,
+    path: `/dashboard/${user}/products/sort-categories`,
     name: 'Cateogry Sort',
     exact: true,
     component: CateogrySort.screen
@@ -62,24 +62,24 @@ const adminRoutes = [
 
 
   {
-    path: `/dashboard/products/categories/edit/:id`,
+    path: `/dashboard/${user}/products/categories/edit/:id`,
     name: 'Edit',
     component: EditCategory.screen
   },
   {
-    path: `/dashboard/products/categories/new`,
+    path: `/dashboard/${user}/products/categories/new`,
     name: 'New',
     component: CreateCategories.screen
   },
 
   {
-    path: `/dashboard/products/categories`,
+    path: `/dashboard/${user}/products/categories`,
     name: 'Categories',
     component: Categories.screen
   },
 
   {
-    path: `/dashboard/products/all`,
+    path: `/dashboard/${user}/products`,
     name: 'Products',
     exact: true,
     component: Product.screen
@@ -87,115 +87,115 @@ const adminRoutes = [
  
 
   {
-    path: `/dashboard/orders/detail/:id`,
+    path: `/dashboard/${user}/orders/view/:id`,
     name: 'Detail',
     component: OrderDetail.screen
   },
 
   {
-    path: `/dashboard/orders`,
+    path: `/dashboard/${user}/orders`,
     name: 'Orders',
     component: Order.screen
   },
 
 
   {
-    path: `/dashboard/analytics/reports`,
+    path: `/dashboard/${user}/analytics/reports`,
     name: 'Reports',
     component: Reports.screen
   },
   {
-    path: `/dashboard/analytics/all`,
+    path: `/dashboard/${user}/analytics/stats`,
     name: 'Analytics',
     component: Analytics.screen
   },
 
 
   {
-    path: `/dashboard/coupons/new`,
+    path: `/dashboard/${user}/coupons/new`,
     name: 'New',
     component: CreateCoupon.screen
   },
   {
-    path: `/dashboard/coupons/edit/:id`,
+    path: `/dashboard/${user}/coupons/edit/:id`,
     name: 'EditCoupon',
     component: EditCoupon.screen
   },
   {
-    path: `/dashboard/coupons`,
+    path: `/dashboard/${user}/coupons`,
     name: 'Coupons',
     component: Coupons.screen
   },
 
   {
-    path: `/dashboard/blacklist/new`,
+    path: `/dashboard/${user}/blacklist/new`,
     name: 'New',
     component: CreateBlacklist.screen
   },
   {
-    path: `/dashboard/blacklist/edit/:id`,
+    path: `/dashboard/${user}/blacklist/edit/:id`,
     name: 'EditBlacklist',
     component: EditBlacklist.screen
   },
   {
-    path: `/dashboard/blacklist`,
+    path: `/dashboard/${user}/blacklist`,
     name: 'Blacklist',
     component: BlackList.screen
   },
   
 
   {
-    path: `/dashboard/queries`,
+    path: `/dashboard/${user}/queries`,
     name: 'Queries',
     component: Queries.screen
   },
   {
-    path: `/dashboard/querie/reply/:id`,
+    path: `/dashboard/${user}/querie/view/:id`,
     name: 'Reply to Querie',
     component: ReplyToQuerie
   },
   
 
   {
-    path: `/dashboard/feedback/reply/:id`,
+    path: `/dashboard/${user}/feedback/reply/:id`,
     name: 'Reply to Feedback',
     component: ReplyToFeedback
   },
 
   {
-    path: `/dashboard/feedback`,
+    path: `/dashboard/${user}/feedback`,
     name: 'Feedback',
     component: Feedbacks.screen
   },
 
   {
-    path: `/dashboard/pages/new`,
+    path: `/dashboard/${user}/pages/new`,
     name: 'New',
     component: CreatePage.screen
   },
 
   {
-    path: `/dashboard/pages`,
+    path: `/dashboard/${user}/pages`,
     name: 'Pages',
     component: Pages.screen
   },
 
   {
-    path: `/dashboard/developer/webhooks`,
+    path: `/dashboard/${user}/developer/webhooks`,
     name: 'Weebhooks',
     component: Webhooks.screen
   },
 
   {
-    path: `/dashboard/developer/webhook-logos`,
+    path: `/dashboard/${user}/developer/webhook-logos`,
     name: 'Weebhook Logs',
     component: WebhookLogs.screen
   },
 
   {
     redirect: true,
-    path: `/dashboard`,
-    pathTo: `/dashboard/home`,
+    path: `/dashboard/${user}`,
+    pathTo: `/dashboard/${user}/home`,
   },
 
   

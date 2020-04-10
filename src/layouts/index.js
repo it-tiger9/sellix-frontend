@@ -1,13 +1,19 @@
-import InitialLayout from './initial'
-import AdminLayout from './admin'
+import AuthLayout from './auth'
+import UserLayout from './user'
 import ShopLayout from './shop'
-import DefaultLayout from './default'
+import PaymentLayout from './default'
+import InvoiceLayout from './invoice'
+import ProductLayout from './product'
 import SettingsLayout from './settings'
+import LandingLayout from './landing'
 
 export {
-  InitialLayout,
-  AdminLayout,
+  AuthLayout,
+  UserLayout,
   ShopLayout,
-  DefaultLayout,
-  SettingsLayout 
+  PaymentLayout,
+  SettingsLayout,
+  LandingLayout,
+  InvoiceLayout,
+  ProductLayout
 }

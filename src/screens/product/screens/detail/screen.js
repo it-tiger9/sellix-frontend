@@ -42,7 +42,7 @@ import litecoinIcon from 'assets/images/crypto/ltc.svg'
 import skrillIcon from 'assets/images/crypto/skrill.svg'
 import perfectmoneyIcon from 'assets/images/crypto/perfectmoney.svg'
 
-const userId = window.localStorage.getItem('userId')
+const user = window.localStorage.getItem('userId')
 
 const mapStateToProps = (state) => {
 	return ({
@@ -134,6 +134,7 @@ class EditProduct extends React.Component {
 			selectedTab: 'write',
 			files: [],
 			images: [],
+			serials: '',
 			initialValues: {
 				title: '',
 				price: 0,
@@ -144,7 +145,7 @@ class EditProduct extends React.Component {
 				serials: '',
 				service_text: '',
 				file_stock: -1,
-				stock_delimeter: '',
+				stock_delimeter: DELIMITER_OPTIONIS[0].value,
 				quantity_min: 0,
 				quantity_max: 0,
 				delivery_text: '',
@@ -251,7 +252,7 @@ class EditProduct extends React.Component {
 
 		this.props.actions.editProduct(values).then(res => {
 
-			this.props.history.push(`/dashboard/products/all`)
+			this.props.history.push(`/dashboard/${user}/products/all`)
 			this.props.commonActions.tostifyAlert('success', res.message)
 
 		}).catch(err => {
@@ -272,7 +273,7 @@ class EditProduct extends React.Component {
 	this.setState({duplicating: true})
 	this.props.actions.duplicateProduct({uniqid: this.id}).then(res => {
 		this.props.commonActions.tostifyAlert('success', res.message)
-		this.props.history.push(`/dashboard/products/all`)
+		this.props.history.push(`/dashboard/${user}/products/all`)
 	}).catch(err => {
 		this.props.commonActions.tostifyAlert('error', err.error)
 	}).finally(() => {
@@ -289,7 +290,8 @@ class EditProduct extends React.Component {
         let gateways = {}
         let custom_fields = JSON.parse(product.custom_fields)['custom_fields'] || []
         let type = TYPE_OPTIONS.filter(type => type.value==product.type)
-
+		let delimiter = DELIMITER_OPTIONIS[0]
+		let serials = ''
 
         custom_fields = custom_fields.map(field => { 
           let c_type = CUSTOM_TYPE.filter(type => type.value==field.type)
@@ -298,10 +300,20 @@ class EditProduct extends React.Component {
 
         product.gateways.split(',').map(key => {
           gateways[key] = true
-        })
+		})
+		
+		if(product.stock_delimeter == ',')
+			delimiter = DELIMITER_OPTIONIS[0]
+		else if(product.stock_delimeter == '\n')
+			delimiter = DELIMITER_OPTIONIS[1]
+		else delimiter = DELIMITER_OPTIONIS[2]
+
+		product.serials = product.serials.join(product.stock_delimeter)
         
         this.setState({
-          initialValues: product,
+		  initialValues: product,
+		  delimiter: delimiter,
+		  serials: serials,
           files: product.file_attachment?
             [{preview: config.API_ROOT_URL+'/attachments/image/'+product.file_attachment}]:[],
           images: product.image_attachment?
@@ -327,6 +339,7 @@ class EditProduct extends React.Component {
 			blockTooltipOpen,
 			paypalTooltipOpen,
 			files, 
+			serials,
 			images,
 			selectedTab,
 			showFileStock,
@@ -716,7 +729,14 @@ class EditProduct extends React.Component {
 
 																{type.value === 'serials' && <div><Row>
 																		<Col lg={12} className="mb-3">
-																			<textarea className="form-control" rows={5}></textarea>
+																			<textarea 
+																				className="form-control" rows={5}
+																				id="serials"
+																				name="serials"
+																				value={props.values.serials}
+																				onChange={props.handleChange}
+																			>
+																			</textarea>
 																		</Col>
 																	</Row>
 																	<Row>
@@ -728,12 +748,15 @@ class EditProduct extends React.Component {
 																					options={DELIMITER_OPTIONIS}
 																					searchable={false}
 																					className="mb-3"
+																					id="stock_delimeter"
+																					name="stock_delimeter"
 																					value={this.state.delimiter}
 																					onChange={(option) => {
 																						this.setState({
 																							delimiter: option
 																						})
 																						
+																						console.log(option.value)
 																						if(option.value !== 'custom')
 																							props.handleChange("stock_delimeter")(option.value)
 																						else props.handleChange("stock_delimeter")('')

@@ -17,7 +17,7 @@ import {
 } from 'reactstrap'
 import { Formik } from 'formik';
 import * as Yup from "yup";
-import ReCaptcha from "@matt-block/react-recaptcha-v2";
+import ReCAPTCHA from "react-google-recaptcha";
 import config from 'constants/config'
 
 import { AuthActions, CommonActions } from 'services/global'
@@ -29,6 +29,8 @@ const mapDispatchToProps = dispatch => ({
   authActions: bindActionCreators(AuthActions, dispatch)
 })
 
+const user = window.localStorage.getItem('userId')
+
 class LogIn extends React.Component {
   
   constructor(props) {
@@ -37,6 +39,8 @@ class LogIn extends React.Component {
     this.state = {
       captchaVerify: null
     }
+
+    this.captcha = {}
   }
 
   handleSubmit = (data) => {
@@ -55,14 +59,14 @@ class LogIn extends React.Component {
       .then(res => {
         if(res.status === 202) {
           if(res.data.type == 'email')
-            history.push('/email-2fa')
+            history.push('/auth/email')
           else if(res.data.type == 'otp')
-            history.push('/otp-2fa')
+            history.push('/auth/otp')
         }
 
         if(res.status === 200)
           this.props.authActions.getSelfUser().then(res => {
-            history.push(`/dashboard`)
+            window.location.href = (`/dashboard/${res.data.user.username}/home`)
           })
 
       })
@@ -70,6 +74,7 @@ class LogIn extends React.Component {
           console.log(err)
           let errMsg = 'Invalid Code'
           tostifyAlert('error', errMsg)
+          this.captcha.reset()
       })
   }
 
@@ -114,13 +119,14 @@ class LogIn extends React.Component {
                                   {errors.code && touched.code && <div className="invalid-feedback">{errors.code}</div>}
                                 </FormGroup>
                                 <div className="ml-auto mr-auto recptcah" style={{width: 'fit-content'}}>
-                                  <ReCaptcha
-                                    siteKey={config.CAPTCHA_SITE_KEY}
-                                    theme="light"
-                                    size="normal"
-                                    onSuccess={(captcha) => {this.setState({captchaVerify: captcha})}}
-                                    onExpire={() => {this.setState({captchaVerify: null})}}
-                                    onError={() => {this.setState({captchaVerify: null})}}
+                                  <ReCAPTCHA
+                                    ref={el => { this.captcha = el }}
+                                      sitekey={config.CAPTCHA_SITE_KEY}
+                                      theme="light"
+                                      size="normal"
+                                      onChange={(captcha) => {this.setState({captchaVerify: captcha})}}
+                                      onExpired={() => {this.setState({captchaVerify: null})}}
+                                      onErrored={() => {this.setState({captchaVerify: null})}}
                                   />
                                 </div>
                                 <Row>
@@ -131,7 +137,7 @@ class LogIn extends React.Component {
                                 <Row>
                                   <Col>
                                     <FormGroup className="mb-0 text-center mt-3">
-                                      <Link to="/password/new">
+                                      <Link to="/auth/password/new">
                                         <Label style={{cursor: 'pointer'}}><b>Forgot Password?</b></Label>
                                       </Link>
                                     </FormGroup>

@@ -89,6 +89,8 @@ class ShopLayout extends React.Component {
       zIndex: 1999
     }
 
+    const pathname = this.props.history.location.pathname
+
     const {user} = this.props
     const userId = this.props.match.params.username
 
@@ -121,15 +123,15 @@ class ShopLayout extends React.Component {
                         <span className="text-red ml-2">{user.feedbacks?user.feedbacks.negative:0}</span>
                     </Card>
                     <div>
-                        <Nav className="d-flex flex-row justify-content-center" navbar>
-                            <NavItem className="px-3">
-                                <NavLink to={`/shop/${userId}/products`} className="nav-link" >Products</NavLink>
+                        <Nav className="d-flex flex-row justify-content-center">
+                            <NavItem className="px-3" active={pathname == `/u/${userId}`}>
+                                <NavLink to={`/u/${userId}`} className="nav-link" >Products</NavLink>
                             </NavItem>
-                            <NavItem className="px-3">
-                                <NavLink to={`/shop/${userId}/contact`} className="nav-link">Contact</NavLink>
+                            <NavItem className="px-3" active={pathname == `/u/${userId}/contact`}>
+                                <NavLink to={`/u/${userId}/contact`} className="nav-link">Contact</NavLink>
                             </NavItem>
-                            <NavItem className="px-3">
-                                <NavLink to={`/shop/${userId}/feedback`} className="nav-link">Feedback</NavLink>
+                            <NavItem className="px-3" active={pathname == `/u/${userId}/feedback`}>
+                                <NavLink to={`/u/${userId}/feedback`} className="nav-link">Feedback</NavLink>
                             </NavItem>
                         </Nav>
                     </div>

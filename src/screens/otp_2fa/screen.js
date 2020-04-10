@@ -29,6 +29,8 @@ const mapDispatchToProps = dispatch => ({
   authActions: bindActionCreators(AuthActions, dispatch)
 })
 
+const user = window.localStorage.getItem('userId')
+
 class OTPLogin extends React.Component {
   
   constructor(props) {
@@ -48,7 +50,7 @@ class OTPLogin extends React.Component {
     this.props.authActions.OTPAuthentication(data)
       .then(() => {
         this.props.authActions.getSelfUser().then(res => {
-          history.push(`/dashboard`)
+          window.location.href = (`/dashboard/${res.data.user.username}/home`)
         })
       })
       .catch(err => {
@@ -117,7 +119,7 @@ class OTPLogin extends React.Component {
                                 <Row>
                                   <Col>
                                     <FormGroup className="mb-0 text-center mt-3">
-                                      <Link to="/reset-otp">
+                                      <Link to="/auth/otp/reset">
                                         <Label style={{cursor: 'pointer'}}><b>Reset OTP</b></Label>
                                       </Link>
                                     </FormGroup>

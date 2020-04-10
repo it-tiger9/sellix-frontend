@@ -4,90 +4,90 @@ export let mainNavigation =  {
   items: [
     {
       name: 'Dashboard',
-      url: `/dashboard/home`,
+      url: `/dashboard/${user}/home`,
       icon: 'fas fa-home fa-lg'
     },
     {
       name: 'Products',
-      url: `/dashboard/products`,
+      url: `/dashboard/${user}`,
       icon: 'fas fa-boxes',
       children: [
         {
           name: 'All Products',
-          url: `/dashboard/products/all`
+          url: `/dashboard/${user}/products/all`
         },
         {
           name: 'Categories',
-          url: `/dashboard/products/categories`,
+          url: `/dashboard/${user}/products/categories`,
         },
         // {
         //   name: 'Sort Products',
-        //   url: `/dashboard/products/sort-products`,
+        //   url: `/dashboard/${user}/products/sort-products`,
         // },
         // {
         //   name: 'Sort Categories',
-        //   url: `/dashboard/products/sort-categories`,
+        //   url: `/dashboard/${user}/products/sort-categories`,
         // }
       ]
     },
     {
       name: 'Orders',
-      url: `/dashboard/orders`,
+      url: `/dashboard/${user}/orders`,
       icon: 'fas fa-credit-card',
     },
     {
       name: 'Analytics',
-      url: `/dashboard/analytics`,
+      url: `/dashboard/${user}/analytics`,
       icon: 'fas fa-area-chart',
       children: [
         {
           name: 'All Analytics',
-          url: `/dashboard/analytics/all`,
+          url: `/dashboard/${user}/analytics/stats`,
         },
         {
           name: 'Reports',
-          url: `/dashboard/analytics/reports`,
+          url: `/dashboard/${user}/analytics/reports`,
         },
       ]
     },
     {
       name: 'Coupons',
-      url: `/dashboard/coupons`,
+      url: `/dashboard/${user}/coupons`,
       icon: 'fa fa-tags',
     },
     {
       name: 'Queries',
-      url: `/dashboard/queries`,
+      url: `/dashboard/${user}/queries`,
       icon: 'fas fa-question-circle',
     },
     {
       name: 'Feedback',
-      url: `/dashboard/feedback`,
+      url: `/dashboard/${user}/feedback`,
       icon: "fa fa-commenting",
     },
     {
       name: 'Blacklist',
-      url: `/dashboard/blacklist`,
+      url: `/dashboard/${user}/blacklist`,
       icon: 'fas fa-ban',
     },
     // {
     //   name: 'Developer',
-    //   url: `/dashboard/developer`,
+    //   url: `/dashboard/${user}/developer`,
     //   icon: 'fas fa-code',
     //   children: [
     //     {
     //       name: 'Webhooks',
-    //       url: `/dashboard/developer/webhooks`,
+    //       url: `/dashboard/${user}/developer/webhooks`,
     //     },
     //     {
     //       name: 'Webhook Logs',
-    //       url: `/dashboard/developer/webhook-logos`,
+    //       url: `/dashboard/${user}/developer/webhook-logos`,
     //     }
     //   ]
     // },
     // {
     //   name: 'Pages',
-    //   url: `/dashboard/pages`,
+    //   url: `/dashboard/${user}/pages`,
     //   icon: 'fa fa-file',
     // }
   ]
@@ -116,7 +116,7 @@ export const shopSettingsNavigation =  {
   items: [
     // {
     //   name: 'Members',
-    //   url: `/dashboard/settings/memebers`
+    //   url: `/dashboard/${user}/settings/memebers`
     // },
     {
       name: 'Payments',
@@ -124,11 +124,11 @@ export const shopSettingsNavigation =  {
     },
     // {
     //   name: 'Billing',
-    //   url: `/dashboard/settings/billing`
+    //   url: `/dashboard/${user}/settings/billing`
     // },
     // {
     //   name: 'Customization',
-    //   url: `/dashboard/settings/customization`
+    //   url: `/dashboard/${user}/settings/customization`
     // }
   ]
 }

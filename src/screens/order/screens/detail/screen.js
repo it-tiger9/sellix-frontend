@@ -60,6 +60,7 @@ const mapDispatchToProps = (dispatch) => {
   })
 }
 
+const user = window.localStorage.getItem('userId')
 
 
 const ORDER_STATUS = {
@@ -113,6 +114,9 @@ class OrderDetail extends React.Component {
       if(res.status == 200)
         this.setState({order: res.data.invoice})
       else throw res
+    }).catch((err) => {
+      this.props.commonActions.tostifyAlert('error', err.error)
+      this.props.history.push(`/dashboard/${user}/orders`)
     }).finally(() => {
       this.setState({ loading: false })
     })
@@ -129,6 +133,7 @@ class OrderDetail extends React.Component {
       else throw res
     }).catch(err => {
       this.props.commonActions.tostifyAlert('error', err.error)
+      
     }).finally(() => {
       this.setState({ resending: false })
     })
@@ -157,7 +162,7 @@ class OrderDetail extends React.Component {
 
           <Breadcrumb className="mb-0">
             <BreadcrumbItem active className="mb-0">
-              <a onClick={(e) => this.props.history.push('/dashboard/orders')}><i className="fas fa-chevron-left"/> Orders</a>
+              <a onClick={(e) => this.props.history.push(`/dashboard/${user}/orders`)}><i className="fas fa-chevron-left"/> Orders</a>
             </BreadcrumbItem>
           </Breadcrumb>
           <Card>

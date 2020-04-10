@@ -135,7 +135,7 @@ class CreateProduct extends React.Component {
 				serials: '',
 				service_text: '',
 				file_stock: -1,
-				stock_delimeter: '',
+				stock_delimeter: DELIMITER_OPTIONIS[0].value,
 				quantity_min: 0,
 				quantity_max: 0,
 				delivery_text: '',
@@ -644,7 +644,14 @@ class CreateProduct extends React.Component {
 
 																{type.value === 'serials' && <div><Row>
 																		<Col lg={12} className="mb-3">
-																			<textarea className="form-control" rows={5} />
+																			<textarea 
+																				className="form-control" rows={5}
+																				id="serials"
+																				name="serials"
+																				value={props.values.serials}
+																				onChange={props.handleChange}
+																			>
+																			</textarea>
 																		</Col>
 																	</Row>
 																	<Row>

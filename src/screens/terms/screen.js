@@ -33,49 +33,7 @@ class Terms extends React.Component {
     return (
       <div className="home-screen">
         <div className="animated fadeIn">
-          <header className="pt-2 pb-2 ">
-            <Navbar color="white" light expand="lg">
-              <NavbarBrand href="/">
-                <img className="logo" src={sellix_logo} />
-              </NavbarBrand>
-              <NavbarToggler onClick={this.toggle.bind(this)} />
-              <Collapse className="mr-5" isOpen={this.state.isOpen} navbar>
-                <Nav className="ml-auto" navbar>
-                  <NavItem className="active">
-                    <NavLink href="/">Home</NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink href="/">About Us</NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink href="/">Features</NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink href="/">Get Started</NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink href="/"></NavLink>
-                  </NavItem>
-                  <NavItem className="d-xl-none">
-                    <NavLink href="/login">Sign In</NavLink>
-                  </NavItem>
-                  <NavItem className="d-xl-none">
-                    <NavLink href="/register">Sign Up</NavLink>
-                  </NavItem>
-                </Nav>
-              </Collapse>
-              <div className="d-lg-down-none">
-                <Link to="/login">
-                  <Button className="mr-3" color="secondary">
-                    Sign In
-                  </Button>
-                </Link>
-                <Link to="/register">
-                  <Button color="primary">Sign Up</Button>
-                </Link>
-              </div>
-            </Navbar>
-          </header>
+          
           <div className="termsWrapper">
             <div className="termsTitle">Terms of Service</div>
             <div className="termsSubTitle">Rules and policies of Selly</div>

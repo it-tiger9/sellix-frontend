@@ -229,7 +229,7 @@ class Queries extends React.Component {
 
   replyToQuerie= (e, id) => {
     this.props.history.push({
-      pathname: `/dashboard/querie/reply/${id}`
+      pathname: `/dashboard/${user}/querie/view/${id}`
     })
   }
 

@@ -46,7 +46,7 @@ class Header extends Component {
 
   signOut () {
     this.props.authActions.logOut()
-    this.props.history.push('/login')
+    this.props.history.push('/')
   }
 
   setTheme(){
@@ -147,11 +147,11 @@ class Header extends Component {
             {
               is_authed? 
                 <DropdownMenu right className="mt-2">
-                  <DropdownItem onClick={() => this.props.history.push(`/dashboard`)}>
+                  <DropdownItem onClick={() => this.props.history.push(`/dashboard/${userId}`)}>
                     Dashboard
                   </DropdownItem>
                   {
-                    !isShop && <DropdownItem onClick={() => this.props.history.push(`/shop/${userId}`)}>
+                    !isShop && <DropdownItem onClick={() => this.props.history.push(`/u/${userId}`)}>
                       Your Shop
                     </DropdownItem>
                   }
@@ -169,7 +169,7 @@ class Header extends Component {
                   </DropdownItem>
                 </DropdownMenu>:
                 <DropdownMenu right className="mt-2">
-                  <DropdownItem onClick={() => this.props.history.push(`/login`)}>
+                  <DropdownItem onClick={() => this.props.history.push(`/auth/login`)}>
                     Log In
                   </DropdownItem>
                 </DropdownMenu>

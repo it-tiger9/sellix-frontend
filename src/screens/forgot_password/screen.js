@@ -16,7 +16,7 @@ import {
 } from 'reactstrap'
 import { Formik } from 'formik';
 import * as Yup from "yup";
-import ReCaptcha from "@matt-block/react-recaptcha-v2";
+import ReCAPTCHA from "react-google-recaptcha";
 import config from 'constants/config'
 
 import { AuthActions, CommonActions } from 'services/global'
@@ -38,6 +38,8 @@ class ForgotPassword extends React.Component {
       captchaVerify: null,
       emailSent: false
     }
+
+    this.captcha = {}
   }
 
   handleSubmit = (data) => {
@@ -58,6 +60,7 @@ class ForgotPassword extends React.Component {
             this.setState({ emailSent: true });
         }).catch(err => {
             tostifyAlert('error', err.error)
+            this.captcha.reset()
         })
   }
 
@@ -105,13 +108,14 @@ class ForgotPassword extends React.Component {
                                   </FormGroup>
 
                                   <div className="ml-auto mr-auto recptcah" style={{width: 'fit-content'}}>
-                                    <ReCaptcha
-                                        siteKey={config.CAPTCHA_SITE_KEY}
+                                    <ReCAPTCHA
+                                      ref={el => { this.captcha = el }}
+                                        sitekey={config.CAPTCHA_SITE_KEY}
                                         theme="light"
                                         size="normal"
-                                        onSuccess={(captcha) => {this.setState({captchaVerify: captcha})}}
-                                        onExpire={() => {this.setState({captchaVerify: null})}}
-                                        onError={() => {this.setState({captchaVerify: null})}}
+                                        onChange={(captcha) => {this.setState({captchaVerify: captcha})}}
+                                        onExpired={() => {this.setState({captchaVerify: null})}}
+                                        onErrored={() => {this.setState({captchaVerify: null})}}
                                     />
                                   </div>
 
@@ -127,7 +131,7 @@ class ForgotPassword extends React.Component {
                                     <Col>
                                       <FormGroup className="mb-0 text-center mt-3">
                                         <Label className="mr-2">Already have an account? </Label>
-                                        <Link to="/login">
+                                        <Link to="/auth/login">
                                           <Label style={{cursor: 'pointer'}}><b>Log in</b></Label>
                                         </Link>
                                       </FormGroup>

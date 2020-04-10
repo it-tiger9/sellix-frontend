@@ -40,6 +40,7 @@ export const checkDiscordChannel = (channel) => {
 }
 
 
+
 export const getGeneralUserInfo = (username) => {
   return (dispatch) => {
     let data = {
@@ -136,12 +137,14 @@ export const getInvoice = (id) => {
 
 
 export const getPayPalInvoice = (id) => {
+  console.log(id)
   return (dispatch) => {
     let data = {
       method: 'get',
       url: `/invoices/paypal/${id}`,
     }
     return api(data).then(res => {
+      console.log(res)
       if(res && res.status == 200) {
         return res
       } else throw res
