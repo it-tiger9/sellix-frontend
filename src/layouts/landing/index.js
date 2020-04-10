@@ -25,7 +25,7 @@ import {
     NavLink
   } from 'reactstrap'
 
-import sellix_logo from 'assets/images/Sellix_logo.svg'
+import sellix_logo from 'assets/images/Sellix_logo_beta.svg'
 import './style.scss'
 
 const mapStateToProps = (state) => {
@@ -110,13 +110,10 @@ class LandingLayout extends React.Component {
                                 <NavLink href="/">Home</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink href="/">About Us</NavLink>
-                            </NavItem>
-                            <NavItem>
                                 <NavLink href="/">Features</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink href="/">Get Started</NavLink>
+                                <NavLink href="/auth/register">Get Started</NavLink>
                             </NavItem>
                             <NavItem>
                                 <NavLink href="/"></NavLink>
@@ -136,9 +133,10 @@ class LandingLayout extends React.Component {
                             <Link to="/auth/register">
                             <Button color="primary">Sign Up</Button>
                             </Link>
+                            
                         </div>
-                    </Navbar>
-                </header>
+                        </Navbar>
+                    </header>
 
                 <Router>
                 {
@@ -158,80 +156,72 @@ class LandingLayout extends React.Component {
                 </Router>
 
                 <footer>
-                    <div className="section text-center" style={{paddingBottom: 100, paddingTop: 100}}>
-                        <Container className="home-container p-0" fluid>
-                            <div className="d-flex justify-content-between text-left flex-wrap">
-                                <div className="mb-3">
-                                    <NavbarBrand className="p-0" href="/">
-                                    <img src={sellix_logo} style={{width: 88, height: 25}}/>
-                                    </NavbarBrand>
-                                    <p className="mt-2">Copyright © 2020, Sellix.io.</p>
-                                </div>
-                                <div className="mb-3" style={{maxWidth: 295}}>
-                                    <h5 className="mb-3">About Us</h5>
-                                    <p className="mt-4">Sellix is an online e-commerce payment processing 
-                                    website that lets your create your own store with a couple of clicks.</p>
-                                </div>
-                                <div className="mb-3">
-                                    <h5 className="mb-3">Name</h5>
-                                    <Nav vertical>
-                                    <NavItem>
-                                        <NavLink href="#">Dashboard</NavLink>
-                                    </NavItem>
-                                    <NavItem>
-                                        <NavLink href="#">Register</NavLink>
-                                    </NavItem>
-                                    <NavItem>
-                                        <NavLink href="/terms">Terms</NavLink>
-                                    </NavItem>
-                                    <NavItem>
-                                        <NavLink href="#">Privacy Policy</NavLink>
-                                    </NavItem>
-                                    <NavItem>
-                                        <NavLink href="#">Cookie Policy</NavLink>
-                                    </NavItem>
-                                    <NavItem>
-                                        <NavLink href="#">Refund Policy</NavLink>
-                                    </NavItem>
-                                    </Nav>
-                                </div>
-                                <div className="mb-3">
-                                    <h5 className="mb-3">Products</h5>
-                                    <Nav vertical>
-                                    <NavItem>
-                                        <NavLink href="#">E-commerce</NavLink>
-                                    </NavItem>
-                                    <NavItem>
-                                        <NavLink href="#">Payments</NavLink>
-                                    </NavItem>
-                                    <NavItem>
-                                        <NavLink href="/fees">Fees</NavLink>
-                                    </NavItem>
-                                    </Nav>
-                                </div>
-                                <div className="mb-3">
-                                    <h5 className="mb-3">Help</h5>
-                                    <Nav vertical>
-                                    <NavItem>
-                                        <NavLink href="#">Help Center</NavLink>
-                                    </NavItem>
-                                    <NavItem>
-                                        <NavLink href="#">Contact Us</NavLink>
-                                    </NavItem>
-                                    <NavItem>
-                                        <NavLink href="#">Twitter</NavLink>
-                                    </NavItem>
-                                    <NavItem>
-                                        <NavLink href="#">States</NavLink>
-                                    </NavItem>
-                                    <NavItem>
-                                        <NavLink href="#">Report Abuse</NavLink>
-                                    </NavItem>
-                                    </Nav>
-                                </div>
-                            </div>
-                        </Container>
-                    </div>
+                <div className="section text-center" style={{paddingBottom: 100, paddingTop: 100}}>
+                    <Container className="home-container p-0" fluid>
+                        <div className="d-flex justify-content-between text-left flex-wrap">
+                        <div className="mb-3">
+                            <NavbarBrand className="p-0" href="/">
+                            <img src={sellix_logo} style={{width: 88, height: 25}}/>
+                            </NavbarBrand>
+                            <p className="mt-2">Copyright © 2020, Sellix.io.</p>
+                        </div>
+                        <div className="mb-3" style={{maxWidth: 295}}>
+                            <h5 className="mb-3">About Us</h5>
+                            <p className="mt-4">Sellix is an online e-commerce payment processing 
+                            website that lets your create your own store with a couple of clicks.</p>
+                        </div>
+                        <div className="mb-3">
+                            <h5 className="mb-3">Sellix</h5>
+                            <Nav vertical>
+                            <NavItem>
+                                <NavLink href="/">Dashboard</NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink href="/auth/register">Register</NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink href="/terms">Terms</NavLink>
+                            </NavItem>
+                            </Nav>
+                        </div>
+                        <div className="mb-3">
+                            <h5 className="mb-3">Products</h5>
+                            <Nav vertical>
+                            <NavItem>
+                                <NavLink href="#">API</NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink href="#">Payments</NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink href="/fees">Fees</NavLink>
+                            </NavItem>
+                            </Nav>
+                        </div>
+                        <div className="mb-3">
+                            <h5 className="mb-3">Help</h5>
+                            <Nav vertical>
+                            <NavItem>
+                                <NavLink href="#">Help Center</NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink href="#">Contact Us</NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink href="#">Twitter</NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink href="#">Status</NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink href="#">Report Abuse</NavLink>
+                            </NavItem>
+                            </Nav>
+                        </div>
+                        </div>
+                    
+                    </Container>
+                </div>
                 
                 </footer>
             </div>
