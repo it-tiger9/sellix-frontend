@@ -143,11 +143,29 @@ class Product extends React.Component {
   }
 
   renderFileStock(cell, row) {
-    return (
-      <p>
-        {row.file_stock == -1 ? <span style={{fontSize:  20}}>∞</span>:row.file_stock}
-      </p>
-    ) 
+
+      if(row.type === 'serials'){
+        return <p>
+          {row.stock}
+         </p>
+      }
+      if(row.type === 'service'){
+        return <p>
+          <span style={{fontSize:  20}}>∞</span>
+         </p>
+      }
+      if(row.type === 'file'){
+        if(row.file_stock === -1){
+          return <p>
+            <span style={{fontSize:  20}}>∞</span>
+          </p>
+        }
+        if(row.file_stock != -1){
+          return <p>
+            {row.file_stock}
+          </p>
+        }
+      }
   }
 
   renderOptions(cell, row) {
