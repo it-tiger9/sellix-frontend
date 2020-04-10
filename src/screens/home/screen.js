@@ -59,7 +59,7 @@ class Home extends React.Component {
                   <p className="large pr-3">
                     E-commerce is easy with Sellix. Create your own online store with a couple of clicks.
                   </p>
-                  <Button color="primary">Get Started for Free</Button>
+                  <Button color="primary"><NavLink className="p-0 text-white" href="/auth/register">Get Started for Free</NavLink></Button>
                 </Col>
                 <Col md={6}>
                   <img src={top1} className="digital-img"/>
@@ -147,7 +147,7 @@ class Home extends React.Component {
         <div className="section purple text-center" style={{paddingBottom: 100, paddingTop: 100}}>
           <h1>Ready to start selling?</h1>
           <p className="small">Create an account and get started</p>
-          <Button color="secondary">Get Started for Free</Button>
+          <Button color="secondary"><NavLink className="p-0" href="/auth/register">Get Started for Free</NavLink></Button>
         </div>
       </div>
     )
