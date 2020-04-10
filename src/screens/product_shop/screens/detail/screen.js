@@ -126,7 +126,7 @@ class ShopProductDetail extends React.Component {
     this.props.commonActions.createInvoice(data).then(res => {
       this.props.commonActions.tostifyAlert('success', 'Invoice is created successfully.')
       this.props.history.push({
-        pathname: `/payment/invoice/${res.data.invoice.uniqid}`
+        pathname: `/invoice/${res.data.invoice.uniqid}`
       })
     }).catch(err => {
       this.props.commonActions.tostifyAlert('error', err.error)
