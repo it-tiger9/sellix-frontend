@@ -48,10 +48,15 @@ class Payments extends React.Component {
   savePayments(){
 
     this.setState({ loading: true });
-    this.props.actions.savePayments(this.state)
-        .then(res => this.props.commonActions.tostifyAlert('success', res.message))
-        .catch(res => this.props.commonActions.tostifyAlert('error', res.error))
-        .finally(() => this.setState({loading: false}))
+    this.props.actions.savePayments({
+      email_paypal: this.state.email_paypal || '',
+      wallet_bitcoin: this.state.wallet_bitcoin || '',
+      wallet_litecoin: this.state.wallet_litecoin || '',
+      wallet_ethereum: this.state.wallet_ethereum || '',
+    })
+      .then(res => this.props.commonActions.tostifyAlert('success', res.message))
+      .catch(res => this.props.commonActions.tostifyAlert('error', res.error))
+      .finally(() => this.setState({loading: false}))
   }
 
 
