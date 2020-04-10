@@ -59,3 +59,23 @@ export const resendInvoice = (invoice) => {
     })
   }
 }
+
+export const issueReplacement = (coupon) => {
+  return (dispatch) => {
+    let data = {
+      method: 'POST',
+      url: `/invoices/replacement`,
+      data: formData(coupon)
+    }
+
+    return authApi(data).then(res => {
+      if (res.status === 200) {
+        return res
+      } else {
+        throw res
+      }
+    }).catch(err => {
+      throw err
+    })
+  }
+}
