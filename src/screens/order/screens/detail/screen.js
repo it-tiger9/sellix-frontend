@@ -193,14 +193,14 @@ class OrderDetail extends React.Component {
                           </span>
                         }</Label>
                         { 
-                          order.status && (order.status == '0' || order.status == '1') && <>
+                          order.status && (order.status == '0' || order.status == '1') && <div className='orderHeaderButtons'>
                             <Button color="primary" onClick={this.openResendModal.bind(this)}>
                               Resend Order
                             </Button>
                             <Button color="primary" onClick={this.openIssueReplacementModal.bind(this)}>
                               Issue Replacement
                             </Button>
-                          </>
+                          </div>
                         }
                       </div>
                       
