@@ -24,7 +24,7 @@ import {
   CommonActions
 } from 'services/global'
 
-import { mainNavigation, accountSettingsNavigation, shopSettingsNavigation } from 'constants/navigation'
+import { mainNavigation, adminNavigation, accountSettingsNavigation, shopSettingsNavigation } from 'constants/navigation'
 
 import {
   Aside,
@@ -118,7 +118,14 @@ class AdminLayout extends React.Component {
             <div className="app-body">
               <AppSidebar  className="pt-4 mb-5" fixed display="lg">
                 <Suspense>
-                  <AppSidebarNav navConfig={mainNavigation} location={this.props.location} router={router}/>
+                  <Switch>
+                    <Route path="/admin">
+                      <AppSidebarNav navConfig={adminNavigation} location={this.props.location} router={router}/>
+                    </Route>
+                    <Route>
+                      <AppSidebarNav navConfig={mainNavigation} location={this.props.location} router={router}/>
+                    </Route>
+                  </Switch>
                 </Suspense>
               </AppSidebar>
               <main className="main mb-5">

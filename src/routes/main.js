@@ -12,6 +12,7 @@ const mainRoutes = [
   { path: `/shop/:username`, name: 'ShopLayout', component: ShopLayout },
   { path: '/payment', name: 'PaymentLayout', component: DefaultLayout },
   { path: `/dashboard`, name: 'AdminLayout', component: AdminLayout },
+  { path: `/admin`, name: 'ReallyAdminLayout', component: AdminLayout },
   { path: '/', name: 'InitialLayout', component: InitialLayout },
 ]
 
