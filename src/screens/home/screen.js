@@ -64,13 +64,10 @@ class Home extends React.Component {
                     <NavLink href="/">Home</NavLink>
                   </NavItem>
                   <NavItem>
-                    <NavLink href="/">About Us</NavLink>
-                  </NavItem>
-                  <NavItem>
                     <NavLink href="/">Features</NavLink>
                   </NavItem>
                   <NavItem>
-                    <NavLink href="/">Get Started</NavLink>
+                    <NavLink href="/register">Get Started</NavLink>
                   </NavItem>
                   <NavItem>
                     <NavLink href="/"></NavLink>
@@ -102,7 +99,7 @@ class Home extends React.Component {
                     <p className="large pr-3">
                       E-commerce is easy with Sellix. Create your own online store with a couple of clicks.
                     </p>
-                    <Button color="primary">Get Started for Free</Button>
+                    <Button color="primary" href="/register">Get Started for Free</Button>
                   </Col>
                   <Col md={6}>
                     <img src={top1} className="digital-img"/>
@@ -114,7 +111,7 @@ class Home extends React.Component {
             <Container className="home-container" fluid>
               <h3>E-commerce, Your Way!</h3>
               <p className="large">
-                Put the ability to create a full customizable online storefront right at your fingertips
+                Use the ability to create a full customizable online storefront right at your fingertips
               </p>
               <Row className="service-row">
                 <Col md={4}>
@@ -190,7 +187,7 @@ class Home extends React.Component {
           <div className="section purple text-center" style={{paddingBottom: 100, paddingTop: 100}}>
             <h1>Ready to start selling?</h1>
             <p className="small">Create an account and get started</p>
-            <Button color="secondary">Get Started for Free</Button>
+            <Button color="secondary" href="/register">Get Started for Free</Button>
           </div>
 
           <footer>
@@ -209,25 +206,16 @@ class Home extends React.Component {
                     website that lets your create your own store with a couple of clicks.</p>
                   </div>
                   <div className="mb-3">
-                    <h5 className="mb-3">Name</h5>
+                    <h5 className="mb-3">Sellix</h5>
                     <Nav vertical>
                       <NavItem>
-                        <NavLink href="#">Dashboard</NavLink>
+                        <NavLink href="/dashboard">Dashboard</NavLink>
                       </NavItem>
                       <NavItem>
-                        <NavLink href="#">Register</NavLink>
+                        <NavLink href="/register">Register</NavLink>
                       </NavItem>
                       <NavItem>
                         <NavLink href="/terms">Terms</NavLink>
-                      </NavItem>
-                      <NavItem>
-                        <NavLink href="#">Privacy Policy</NavLink>
-                      </NavItem>
-                      <NavItem>
-                        <NavLink href="#">Cookie Policy</NavLink>
-                      </NavItem>
-                      <NavItem>
-                        <NavLink href="#">Refund Policy</NavLink>
                       </NavItem>
                     </Nav>
                   </div>
@@ -235,7 +223,7 @@ class Home extends React.Component {
                     <h5 className="mb-3">Products</h5>
                     <Nav vertical>
                       <NavItem>
-                        <NavLink href="#">E-commerce</NavLink>
+                        <NavLink href="#">API</NavLink>
                       </NavItem>
                       <NavItem>
                         <NavLink href="#">Payments</NavLink>
@@ -258,7 +246,7 @@ class Home extends React.Component {
                         <NavLink href="#">Twitter</NavLink>
                       </NavItem>
                       <NavItem>
-                        <NavLink href="#">States</NavLink>
+                        <NavLink href="#">Status</NavLink>
                       </NavItem>
                       <NavItem>
                         <NavLink href="#">Report Abuse</NavLink>
