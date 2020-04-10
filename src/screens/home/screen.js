@@ -32,7 +32,7 @@ import service2 from 'assets/images/home/service2.svg'
 import service3 from 'assets/images/home/service3.svg'
 import undraw from 'assets/images/home/undraw.svg'
 import undraw1 from 'assets/images/home/undraw_wallet_aym5.svg'
-import sellix_logo from 'assets/images/Sellix_logo.svg'
+import sellix_logo from 'assets/images/Sellix_logo_beta.svg'
 
 class Home extends React.Component {
   
