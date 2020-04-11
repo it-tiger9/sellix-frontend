@@ -48,14 +48,15 @@ const mapDispatchToProps = (dispatch) => {
 
 
 const converter = new Showdown.Converter({
-	tables: true,
-	simplifiedAutoLink: true,
-	strikethrough: true,
-	tasklists: true
-  });
+    tables: true,
+    simplifiedAutoLink: true,
+    strikethrough: true,
+    tasklists: true,
+    simpleLineBreaks: true
+});
 
 
-  const PAYMENT_ICONS = {
+const PAYMENT_ICONS = {
     paypal: paypalIcon,
     bitcoin: bitcoinIcon,
     litecoin: litecoinIcon,
@@ -64,7 +65,7 @@ const converter = new Showdown.Converter({
     stripe: stripeIcon,
     bitcoincash: bitcoincashIcon,
     skrill: skrillIcon
-  }
+}
   
 
 const CURRENCY_LIST = { 

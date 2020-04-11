@@ -59,8 +59,9 @@ const converter = new Showdown.Converter({
 	tables: true,
 	simplifiedAutoLink: true,
 	strikethrough: true,
-	tasklists: true
-  });
+	tasklists: true,
+	simpleLineBreaks: true
+});
 
 const TYPE_OPTIONS = [
 	{ value: 'file', label: 'File' },
