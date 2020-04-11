@@ -36,7 +36,7 @@ class Terms extends React.Component {
           
           <div className="termsWrapper">
             <div className="termsTitle">Terms of Service</div>
-            <div className="termsSubTitle">Rules and policies of Selly</div>
+            <div className="termsSubTitle">Rules and policies of Sellix</div>
             <div className="termsText">
               <div className="termsTextTitle">
                 By accessing this site, you are agreeing to be bound by these
