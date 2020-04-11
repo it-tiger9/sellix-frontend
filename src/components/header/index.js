@@ -99,6 +99,13 @@ class Header extends Component {
           <UncontrolledDropdown nav direction="down" className="d-sm-down-none mr-3">
             <DropdownToggle className="user-name" nav>
               <i className="fas fa-bell nav-icon"></i>
+              {notifications && notifications.length > 0 &&  
+                <sup><Badge color="danger" style={{
+                  color: 'white',
+                  padding: '6px',
+                  height: '19px'
+                }}>{notifications.length}</Badge></sup>
+              }
             </DropdownToggle>
             
             <DropdownMenu right className="mt-2" style={{width: 300, maxHeight: 300, overflow: 'auto'}}>

@@ -1,7 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyles = createGlobalStyle`
-    h1, h2, h3, h4, h5, p, label, span, a, th, td, input, select, textarea, .Select-placeholder {
+    h1, h2, h3, h4, h5, p, label, span:not(.badge), a, th, td, input, select, textarea, .Select-placeholder {
         color: ${({ theme }) => theme.text} !important;
     }
     .admin-container {
@@ -21,7 +21,7 @@ export const GlobalStyles = createGlobalStyle`
         background: ${({ theme }) => theme.cardBody} !important;
     }
 
-    .admin-container .app-header * {
+    .admin-container .app-header *:not(.badge) {
         color: ${({ theme }) => theme.text} !important;
     }
 
