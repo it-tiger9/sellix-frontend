@@ -28,6 +28,8 @@ import {
 import sellix_logo from 'assets/images/Sellix_logo_beta.svg'
 import './style.scss'
 
+const user = window.localStorage.getItem('userId')
+
 const mapStateToProps = (state) => {
   return ({
     is_authed: state.auth.is_authed
@@ -93,6 +95,8 @@ class LandingLayout extends React.Component {
 
     const { isOpen } = this.state
 
+    var dashboardUrl = user? `/dashboard/${user}/home` : '/'
+
     return (
     <div className="landing-layout">
         <div className="animated fadeIn">
@@ -127,13 +131,20 @@ class LandingLayout extends React.Component {
                             </Nav>
                         </Collapse>
                         <div className="d-lg-down-none">
-                            <Link to="/auth/login">
-                            <Button className="mr-3" color="secondary" >Sign In</Button>
-                            </Link>
-                            <Link to="/auth/register">
-                            <Button color="primary">Sign Up</Button>
-                            </Link>
-                            
+                            { user?
+                                    <Link to={dashboardUrl}>
+                                        <Button className="mr-3" color="primary" >Dashboard</Button>
+                                    </Link>
+                                :
+                                <>
+                                    <Link to="/auth/login">
+                                        <Button className="mr-3" color="secondary" >Sign In</Button>
+                                    </Link>
+                                    <Link to="/auth/register">
+                                        <Button color="primary">Sign Up</Button>
+                                    </Link>
+                                </>
+                            }
                         </div>
                         </Navbar>
                     </header>
@@ -173,7 +184,7 @@ class LandingLayout extends React.Component {
                             <h5 className="mb-3">Sellix</h5>
                             <Nav vertical>
                             <NavItem>
-                                <NavLink href="/">Dashboard</NavLink>
+                                <NavLink href={dashboardUrl}>Dashboard</NavLink>
                             </NavItem>
                             <NavItem>
                                 <NavLink href="/auth/register">Register</NavLink>
