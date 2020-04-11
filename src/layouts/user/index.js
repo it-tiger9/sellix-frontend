@@ -103,7 +103,7 @@ class AdminLayout extends React.Component {
       zIndex: 1999
     }
 
-    const theme = window.localStorage.getItem('theme') || this.state || 'light'
+    const theme = window.localStorage.getItem('theme') || this.state.theme || 'light'
 
     return (
       <ThemeProvider theme={theme === 'light' ? lightTheme:darkTheme}>

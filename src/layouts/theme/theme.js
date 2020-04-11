@@ -1,4 +1,6 @@
 export const lightTheme = {
+    name: 'light',
+
     widgetBorder: '#F5F5F5',
     tdBorder: '#F5F5F5',
     dropdownColor: 'white',
@@ -9,6 +11,8 @@ export const lightTheme = {
 }
   
 export const darkTheme = {
+    name: 'dark',
+
     body: '#221D3E',
     cardBody: '#1D183D',
     header: '#1D183D',

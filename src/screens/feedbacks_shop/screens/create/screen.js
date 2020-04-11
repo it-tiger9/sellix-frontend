@@ -45,7 +45,7 @@ class LeaveFeedback extends React.Component {
 
   handleSubmit(values) {
     this.setState({ loading: true })
-    this.props.createFeedback({ ...values, uniqid: 'testing-uniqid' }).then(res => { // IMPORTANT uniqid should be this.props.match.params.id looks like API acept only mock uniqid now - testing-uniqid
+    this.props.createFeedback({ ...values, uniqid: this.props.match.params.id }).then(res => {
       this.props.commonActions.tostifyAlert('success', res.message)
       // this.props.history.push({
       //   pathname: '/admin/blacklist'
