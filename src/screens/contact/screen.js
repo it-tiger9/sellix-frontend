@@ -45,7 +45,7 @@ class Contact extends React.Component {
 
   handleSubmit(values) {
     this.setState({ loading: true })
-    this.props.createQuery({...values, username: user}).then(res => {
+    this.props.createQuery({...values, username: this.props.match.params.username}).then(res => {
       this.props.commonActions.tostifyAlert('success', res.message)
       this.props.history.push({
         pathname: `/u/${user}/query/${res.data.uniqid}`
