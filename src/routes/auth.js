@@ -35,7 +35,7 @@ const initialRoutes = [
     component: Register.screen
   },
   {
-    path: '/auth/password/new',
+    path: '/auth/password/reset',
     name: 'Forgot Password',
     component: ForgotPassword.screen
   },

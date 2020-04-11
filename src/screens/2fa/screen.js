@@ -137,7 +137,7 @@ class LogIn extends React.Component {
                                 <Row>
                                   <Col>
                                     <FormGroup className="mb-0 text-center mt-3">
-                                      <Link to="/auth/password/new">
+                                      <Link to="/auth/password/reset">
                                         <Label style={{cursor: 'pointer'}}><b>Forgot Password?</b></Label>
                                       </Link>
                                     </FormGroup>
