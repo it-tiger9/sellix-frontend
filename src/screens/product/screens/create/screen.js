@@ -365,7 +365,7 @@ class CreateProduct extends React.Component {
 																			<div className="d-flex">
 																				<div>
 																					<Input
-																						className={"price-select " + props.errors.price && props.touched.price ? "is-invalid" : ""}
+																						className={props.errors.price && props.touched.price ? "is-invalid" : ""}
 																						style={{
 																							paddingRight: "110px",
 																							width: "calc(100% + 89px)"

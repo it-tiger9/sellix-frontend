@@ -137,7 +137,7 @@ class Product extends React.Component {
   renderProductPrice(cell, row) {
     return (
       <p>
-        {config.CURRENCY_LIST[row.currency]}{row.price}
+        {config.CURRENCY_LIST[row.currency]}{row.price_display}
       </p>
     )  
   }
@@ -277,7 +277,7 @@ class Product extends React.Component {
                             Stock
                           </TableHeaderColumn>
                           <TableHeaderColumn
-                            dataField="revenue"
+                            dataField="price_display"
                             dataFormat={this.renderProductPrice}
                             dataSort
                             dataAlign="center"
