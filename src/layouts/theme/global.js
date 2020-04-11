@@ -137,4 +137,26 @@ export const GlobalStyles = createGlobalStyle`
     .modal-dialog .modal-content {
         background-color: ${({ theme }) => theme.cardBody} !important;
     }
+
+    ${({theme}) => theme.name === 'dark' && `
+        .mde-header * {
+            color: ${theme.text} !important;
+        }
+
+        .react-mde, .react-mde *:not(.selected) {
+            border-color: ${theme.payButtonBorder} !important;
+        }
+
+        .mde-header {
+            background: ${theme.cardBody}
+        }
+
+        .react-mde textarea {
+            background: ${theme.body}
+        }
+
+        .react-mde .grip {
+            background: ${theme.cardBody}
+        }
+    `}
 `
