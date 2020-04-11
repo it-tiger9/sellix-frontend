@@ -65,7 +65,7 @@ class Register extends React.Component {
     delete obj['confirm_password'];
 
     register(obj).then(res => {
-      tostifyAlert('success', 'You are successfully registered, Please login!')
+      tostifyAlert('success', 'Registered Successfully.')
 
       if(res.status === 202) {
         if(res.data.type == 'email')

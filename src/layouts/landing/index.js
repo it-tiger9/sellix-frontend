@@ -145,10 +145,9 @@ class LandingLayout extends React.Component {
                         return <Redirect from={prop.path} to={prop.pathTo} key={key} />
                     return (
                         <Route
-                        path={prop.path}
-                        component={prop.component}
-                        exact={true}
-                        key={key}
+                          path={prop.path}
+                          component={prop.component}
+                          key={key}
                         />
                     )
                     })

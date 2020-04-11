@@ -25,10 +25,10 @@ export default class App extends React.Component {
               
               {
                 mainRoutes.map((prop, key) => {
-                  return <Route path={prop.path} key={key} component={prop.component} />
+                  return <Route path={prop.path} key={key} component={prop.component}/>
                 })
               }   
-              
+              <Route component={NotFound} />
             </Switch>
             
           </React.Suspense>

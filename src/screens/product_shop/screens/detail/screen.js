@@ -17,7 +17,7 @@ import {
   CommonActions
 } from 'services/global'
 import { Formik } from 'formik';
-import { Spin } from 'components'
+import { Spin, Loader } from 'components'
 import * as Yup from "yup";
 import * as Showdown from "showdown";
 import shop_brand from 'assets/images/brand/shop_brand.png'
@@ -97,6 +97,7 @@ class ShopProductDetail extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      sending: false,
       loading: false,
       openCoupon: false,
       gateway: null,
@@ -113,6 +114,7 @@ class ShopProductDetail extends React.Component {
 
   handleSubmit(values) {
     const data = Object.assign({}, this.state)
+    delete data['sending']
     delete data['loading']
     delete data['showPaymentOptions']
     delete data["product_info"]
@@ -122,7 +124,7 @@ class ShopProductDetail extends React.Component {
     data['gateway'] = data['gateway'].toLowerCase()
     data['email'] = values.email
 
-    this.setState({loading: true})
+    this.setState({sending: true})
     this.props.commonActions.createInvoice(data).then(res => {
       this.props.commonActions.tostifyAlert('success', 'Invoice is created successfully.')
       this.props.history.push({
@@ -131,7 +133,7 @@ class ShopProductDetail extends React.Component {
     }).catch(err => {
       this.props.commonActions.tostifyAlert('error', err.error)
     }).finally(() => {
-      this.setState({loading: false})
+      this.setState({sending: false})
     })
   }
 
@@ -179,7 +181,7 @@ class ShopProductDetail extends React.Component {
 
   init(){
     this.setState({
-      loading: false,
+      sending: false,
       gateway: null,
       showPaymentOptions: false,
       quantity: 1
@@ -197,11 +199,18 @@ class ShopProductDetail extends React.Component {
   }
 
   componentDidMount() {
+    this.setState({loading: true})
     this.props.commonActions.getUserProductById(this.props.match.params.id).then(res => {
-      this.setState({
-        product_info: res.data.product,
-        paymentoptions: (res.data.product.gateways || '').split(',')
-      })
+      if(res.status == 200)
+        this.setState({
+          product_info: res.data.product,
+          paymentoptions: (res.data.product.gateways || '').split(',')
+        })
+      else throw res
+    }).catch((err) => {
+      this.props.commonActions.tostifyAlert('error', err.error)
+    }).finally(() => {
+      this.setState({loading: false})
     })
 
     
@@ -212,10 +221,12 @@ class ShopProductDetail extends React.Component {
       gateway, 
       showPaymentOptions, 
       quantity, 
-      loading, 
+      sending, 
+      loading,
       product_info,
       openCoupon, 
-      paymentoptions} = this.state
+      paymentoptions
+    } = this.state
 
     
     let custom_fields = []
@@ -226,6 +237,14 @@ class ShopProductDetail extends React.Component {
     return (
       <div className="detail-product-screen">
         <div className="animated fadeIn">
+        {
+          loading ?
+            <Row>
+              <Col lg={12}>
+                <Loader />
+              </Col>
+            </Row>
+          :
           <Row className="p-3">
             <Col lg={9} className="ml-auto mr-auto">
               <Row>
@@ -348,8 +367,8 @@ class ShopProductDetail extends React.Component {
                                     <Button color="primary" 
                                       type="submit" 
                                       className="mr-auto ml-auto mt-2" 
-                                      disabled={loading}>
-                                      {loading ?<Spin/>:'Purchase' }</Button>
+                                      disabled={sending}>
+                                      {sending ?<Spin/>:'Purchase' }</Button>
                                   </div>
                                 </Form> )}
                             </Formik>
@@ -403,7 +422,6 @@ class ShopProductDetail extends React.Component {
                         </div>
                     }
                     
-                
                     <div className="stock-info p-2">
                       <div className="d-flex justify-content-between p-2">
                         <span className="text-primary">Seller</span>
@@ -417,7 +435,7 @@ class ShopProductDetail extends React.Component {
                       </div>
                       <div className="d-flex justify-content-between p-2">
                         <span className="text-primary">Feedback</span>
-                        <span className="text-primary bold">20</span>
+                        <span className="text-primary bold">{product_info.feedback && product_info.feedback.total}</span>
                       </div>
                     </div>
                   </Card>
@@ -433,6 +451,7 @@ class ShopProductDetail extends React.Component {
             </Col>
             
           </Row>
+        }
         </div>
       </div>
     )
