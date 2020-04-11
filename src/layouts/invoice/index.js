@@ -96,7 +96,7 @@ class DefaultLayout extends React.Component {
       zIndex: 1999
     }
 
-    const theme = window.localStorage.getItem('theme') || this.state || 'light'
+    const theme = window.localStorage.getItem('theme') || this.state.theme || 'light'
     let isSettings = this.props.location.pathname.includes('/admin/settings')?true:false
 
     return (

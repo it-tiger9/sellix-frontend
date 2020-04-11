@@ -115,7 +115,7 @@ class SettingsLayout extends React.Component {
     }
     let isSettings = this.props.location.pathname.includes('/admin/settings')?true:false
 
-    const theme = window.localStorage.getItem('theme') || this.state || 'light'
+    const theme = window.localStorage.getItem('theme') || this.state.theme || 'light'
     const {isOpen} = this.state
 
     return (
