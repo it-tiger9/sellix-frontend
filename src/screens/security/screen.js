@@ -325,7 +325,7 @@ class SecurityPage extends React.Component {
                               </FormGroup>
                               <FormGroup row>
                                 <Col className="d-flex align-items-center mt-2">
-                                    <Label className="mb-0 mr-2" style={{width: 160}}>One Time Password: </Label>
+                                    <Label className="mb-0 mr-2" style={{width: 160}}>Two-Factor Authentication: </Label>
                                     {
                                       otp_enabled?
                                         <AppSwitch className="mx-1 file-switch mr-2"
