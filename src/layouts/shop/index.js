@@ -28,6 +28,7 @@ const mapStateToProps = (state) => {
   return ({
     version: state.common.version,
     user: state.common.general_info,
+    profile : state.auth.profile,  
     is_authed: state.auth.is_authed
   })
 }

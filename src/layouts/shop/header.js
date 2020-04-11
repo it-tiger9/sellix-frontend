@@ -54,7 +54,7 @@ class Header extends Component {
   }
 
   render() {
-    const { user, children, theme, is_authed, ...attributes } = this.props
+    const { user, profile, children, theme, is_authed, ...attributes } = this.props
     
     console.log(this.props)
     return (
@@ -68,8 +68,8 @@ class Header extends Component {
           <UncontrolledDropdown nav direction="down">
             <DropdownToggle className="user-name" nav>
               <div>
-                {user && user.profile_attachment?
-                  <img src={user.profile_attachment} width="35" height="35" style={{borderRadius: '50%'}}/>:
+                {profile && profile.profile_attachment?
+                  <img src={profile.profile_attachment} width="35" height="35" style={{borderRadius: '50%'}}/>:
                   <i className="fa fa-user-circle text-primary avatar-icon"/>
                 }
               </div>
