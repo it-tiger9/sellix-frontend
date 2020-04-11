@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
@@ -230,8 +231,10 @@ class OrderDetail extends React.Component {
                           <div className="d-flex">
                             <p className="title">Product</p>
                             <p>
-                              <a href="#">
-                              {order.developer_invoice == '1'?order.developer_title:(order.product && order.product.title || '')}</a></p>
+                              <Link to={`/dashboard/${user}/products/all/edit/${order.product_id}`}>
+                                {order.developer_invoice == '1'?order.developer_title:(order.product && order.product.title || '')}
+                              </Link>
+                            </p>
                           </div>
                           <div className="d-flex">
                             <p className="title">Value</p>
@@ -457,7 +460,11 @@ class OrderDetail extends React.Component {
                                     order.crypto_transactions && order.crypto_transactions.map(trans => 
                                       <div className="d-flex">
                                         <p className="hash">
-                                          {trans.crypto_amount} <img src={PAYMENT_ICONS[order.gateway]} width="15"/> - {trans.hash}</p>
+                                          {trans.crypto_amount} <img src={PAYMENT_ICONS[order.gateway]} width="15"/> - 
+                                          {order.gateway == 'bitcoin' && <a href={`https://www.blockchain.com/btc/tx/${trans.hash}`} target="blank">{trans.hash}</a>}
+                                          {order.gateway == 'litecoin' && <a href={`https://live.blockcypher.com/ltc/tx/${trans.hash}`} target="blank">{trans.hash}</a>}
+                                          {order.gateway == 'ethereum' && <a href={`https://etherscan.io/tx/${trans.hash}`} target="blank">{trans.hash}</a>}
+                                        </p>
                                       </div>
                                     )
                                   }

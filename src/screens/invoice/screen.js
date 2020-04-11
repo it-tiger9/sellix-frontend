@@ -361,7 +361,7 @@ class Invoice extends React.Component {
                               show={showAlert}
                               showConfirm={false}
                               onConfirm={this.hideAlert.bind(this)}
-                              onCancel = {this.hideAlert.bind(this)}
+                           
                             >
                               Your invoice has been paid. <br/>
                               You will receive the products within minutes, <br/>check your email!
@@ -374,7 +374,6 @@ class Invoice extends React.Component {
                               title="Invoice Cancelled"
                               show={showAlert}
                               showConfirm={false}
-                              onCancel = {this.hideAlert.bind(this)}
                               onConfirm={this.hideAlert.bind(this)}
                             >
                               The invoice has expired or isn't available.
