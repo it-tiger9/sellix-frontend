@@ -21,7 +21,7 @@ import 'react-quill/dist/quill.snow.css';
 import ReactMde from "react-mde";
 import * as Showdown from "showdown";
 import { AppSwitch } from '@coreui/react'
-import { Loader, ImageUpload, DataSlider, Spin } from 'components'
+import { Loader, ImageUpload,FileUpload, DataSlider, Spin } from 'components'
 import * as ProductActions from '../../actions'
 import { Formik } from 'formik';
 import * as Yup from "yup";
@@ -317,7 +317,7 @@ class EditProduct extends React.Component {
 		  delimiter: delimiter,
 		  serials: serials,
           files: product.file_attachment?
-            [{preview: config.API_ROOT_URL+'/attachments/image/'+product.file_attachment}]:[],
+            [{name : product.file_attachment_info.original_name}]:[],
           images: product.image_attachment?
             [{preview: config.API_ROOT_URL+'/attachments/image/'+product.image_attachment}]:[],
           gateways: gateways,
@@ -693,7 +693,7 @@ class EditProduct extends React.Component {
 																</Row>
 																{type.value === 'file' && <Row>
 																	<Col lg={12} className="mb-3">
-																		<ImageUpload addFile={(file) => {
+																		<FileUpload addFile={(file) => {
 																			props.handleChange('file')(file[0]); 
 																			this.addFile(file)}} files={files}/>
 																	</Col>

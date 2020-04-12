@@ -22,7 +22,7 @@ import * as Showdown from "showdown";
 import "react-mde/lib/styles/css/react-mde-all.css";
 
 import { AppSwitch } from '@coreui/react'
-import { Loader, ImageUpload, DataSlider, Spin } from 'components'
+import { Loader, ImageUpload, FileUpload, DataSlider, Spin } from 'components'
 import * as ProductActions from '../../actions'
 import { Formik } from 'formik';
 import * as Yup from "yup";
@@ -607,7 +607,7 @@ class CreateProduct extends React.Component {
 																</Row>
 																{type.value === 'file' && <Row>
 																	<Col lg={12} className="mb-3">
-																		<ImageUpload addFile={(file) => {
+																		<FileUpload addFile={(file) => {
 																			props.handleChange('file')(file[0]); 
 																			this.addFile(file)}} files={files}/>
 																	</Col>
