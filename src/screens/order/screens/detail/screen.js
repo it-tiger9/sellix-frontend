@@ -479,6 +479,47 @@ class OrderDetail extends React.Component {
               </div>
             </Col>
             <Col lg={6}>
+              {
+                order.gateway && CRYPTOS.includes(order.gateway)  && 
+                  <Card>
+                    <CardBody className="">
+                      {
+                        loading ?
+                          <Row>
+                            <Col lg={12}>
+                              <Loader />
+                            </Col>
+                          </Row>
+                        :
+                        <Row className="mt-3">
+                          <Col lg={12}>
+                            <FormGroup className="mb-4">
+                              <Label className="title">{PAYMENT_OPTS[order.gateway]} Details</Label>
+                            </FormGroup>
+                          </Col>
+                          <Col lg={12}>
+                            <Row>
+                              <Col lg={12}>
+                                {
+                                  order.crypto_transactions && order.crypto_transactions.map(trans => 
+                                    <div className="d-flex">
+                                      <p className="hash">
+                                        {trans.crypto_amount} <img src={PAYMENT_ICONS[order.gateway]} width="15"/> - 
+                                        {order.gateway == 'bitcoin' && <a href={`https://www.blockchain.com/btc/address/${order.crypto_address}`} target="blank">{order.crypto_address}</a>}
+                                        {order.gateway == 'litecoin' && <a href={`https://live.blockcypher.com/ltc/address/${order.crypto_address}`} target="blank">{order.crypto_address}</a>}
+                                        {order.gateway == 'ethereum' && <a href={`https://etherscan.io/address/${order.crypto_address}`} target="blank">{order.crypto_address}</a>}
+                                      </p>
+                                    </div>
+                                  )
+                                }
+                              </Col>
+                            </Row>
+                          </Col>
+                        </Row>
+                      }
+                    </CardBody>
+                  </Card> 
+              }
               <Card>
                 <CardBody className="">
                   {
