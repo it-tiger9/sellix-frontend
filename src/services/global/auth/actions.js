@@ -235,9 +235,9 @@ export const getUserSettings = () => {
 }
 
 export const logOut = () => {
+  window.localStorage.removeItem('accessToken')
+  window.localStorage.removeItem('userId')
   return (dispatch) => {
-    window.localStorage.removeItem('accessToken')
-    window.localStorage.removeItem('userId')
     dispatch({
       type: AUTH.SIGNED_OUT
     })

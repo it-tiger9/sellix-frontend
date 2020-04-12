@@ -28,8 +28,6 @@ import {
 import sellix_logo from 'assets/images/Sellix_logo_beta.svg'
 import './style.scss'
 
-const user = window.localStorage.getItem('userId')
-
 const mapStateToProps = (state) => {
   return ({
     is_authed: state.auth.is_authed
@@ -58,7 +56,7 @@ class LandingLayout extends React.Component {
 
   componentDidMount () {
     const preUrl = `/${window.localStorage.getItem('userId')}`
-      
+
     if (window.localStorage.getItem('accessToken') && this.props.is_authed) {
       this.props.history.push(preUrl)
     }
@@ -94,6 +92,8 @@ class LandingLayout extends React.Component {
     }
 
     const { isOpen } = this.state
+
+    const user = window.localStorage.getItem('userId')
 
     var dashboardUrl = user? `/dashboard/${user}/home` : '/'
 
