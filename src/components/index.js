@@ -8,6 +8,7 @@ import Footer from './footer'
 import DateRangePicker2 from './datepicker'
 import ConfirmDeleteModal from './confirm_delete_modal'
 import ImageUpload from './upload/imageUploader'
+import FileUpload from './upload/fileUploader'
 import AvatarUploader from './upload/avatarUploader'
 import FaviconUploader from './upload/faviconUploader'
 import DataSlider from './slider'
@@ -25,6 +26,7 @@ export {
   DateRangePicker2,
   ConfirmDeleteModal,
   ImageUpload,
+  FileUpload,
   DataSlider,
   AvatarUploader,
   FaviconUploader,
