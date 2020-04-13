@@ -7,6 +7,7 @@ export const lightTheme = {
     payButton: '#FCFCFE',
     payButtonBorder: '#F5F5F5',
 
+    sortItemBorder: '#f6f6f6',
     stockInfoBg: '#E4D6FF'
 }
   
@@ -26,6 +27,8 @@ export const darkTheme = {
 
     payButton: '#221d3e',
     payButtonBorder: '#221D3E',
+
+    sortItemBorder: '#2e2759',
 
     text: '#B4AEBC',
     toggleBorder: '#6B8096',

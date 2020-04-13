@@ -18,16 +18,16 @@ export const mainNavigation =  {
         },
         {
           name: 'Categories',
-          url: `/dashboard/${user}/products/categories`,
+          url: `/dashboard/${user}/products/categories/all`,
         },
-        // {
-        //   name: 'Sort Products',
-        //   url: `/dashboard/${user}/products/sort-products`,
-        // },
-        // {
-        //   name: 'Sort Categories',
-        //   url: `/dashboard/${user}/products/sort-categories`,
-        // }
+        {
+          name: 'Sort Products',
+          url: `/dashboard/${user}/products/sort`,
+        },
+        {
+          name: 'Sort Categories',
+          url: `/dashboard/${user}/products/categories/sort`,
+        }
       ]
     },
     {

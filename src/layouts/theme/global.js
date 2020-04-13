@@ -138,6 +138,11 @@ export const GlobalStyles = createGlobalStyle`
         background-color: ${({ theme }) => theme.cardBody} !important;
     }
 
+
+    .productsort-screen .item {
+        border-bottom-color:  ${({ theme }) => theme.sortItemBorder} !important;
+    }
+
     ${({theme}) => theme.name === 'dark' && `
         .mde-header * {
             color: ${theme.text} !important;

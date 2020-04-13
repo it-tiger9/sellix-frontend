@@ -53,12 +53,12 @@ const adminRoutes = [
   },
 
   {
-    path: `/dashboard/${user}/products/sort-products`,
+    path: `/dashboard/${user}/products/sort`,
     name: 'Product Sort',
     component: ProductSort.screen
   },
   {
-    path: `/dashboard/${user}/products/sort-categories`,
+    path: `/dashboard/${user}/products/categories/sort`,
     name: 'Cateogry Sort',
     exact: true,
     component: CateogrySort.screen
@@ -66,18 +66,18 @@ const adminRoutes = [
 
 
   {
-    path: `/dashboard/${user}/products/categories/edit/:id`,
+    path: `/dashboard/${user}/products/categories/all/edit/:id`,
     name: 'Edit',
     component: EditCategory.screen
   },
   {
-    path: `/dashboard/${user}/products/categories/new`,
+    path: `/dashboard/${user}/products/categories/all/new`,
     name: 'New',
     component: CreateCategories.screen
   },
 
   {
-    path: `/dashboard/${user}/products/categories`,
+    path: `/dashboard/${user}/products/categories/all`,
     name: 'Categories',
     component: Categories.screen
   },

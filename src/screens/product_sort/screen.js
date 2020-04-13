@@ -10,21 +10,25 @@ import {
   Col,
   Input
 } from 'reactstrap'
-import { Loader } from 'components'
+import { Loader, Spin } from 'components'
 import RLDD from 'react-list-drag-and-drop/lib/RLDD';
+import {
+  CommonActions,
+} from 'services/global'
 
 import * as ProductActions from './actions'
 import './style.scss'
 
 const mapStateToProps = (state) => {
   return ({
-    product_list: state.product.product_list
+    product_list: state.product.all_products
   })
 }
 
 const mapDispatchToProps = (dispatch) => {
   return ({
-    productActions: bindActionCreators(ProductActions, dispatch)
+    actions: bindActionCreators(ProductActions, dispatch),
+    commonActions: bindActionCreators(CommonActions, dispatch)
   })
 }
 
@@ -33,7 +37,8 @@ class Product extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      loading: true,
+      loading: false,
+      saving: false,
       product_list: []
     }
 
@@ -46,16 +51,27 @@ class Product extends React.Component {
   }
 
   async initializeData () {
-    // this.props.productActions.getProductList().then(res => {
-    //   if (res.status === 200) {
-    //     this.setState({ loading: false })
-    //   }
-    // })
-    await this.props.productActions.getProductList()
+    this.setState({ loading: true })
+    this.props.actions.getProductList().then(res => {
+      this.setState({product_list: res.data.products, loading: false})
+    }).catch(err => {
+      this.props.commonActions.tostifyAlert('error', err.error || 'Seomthing went wrong!')
+      this.setState({ loading: false })
+    })
+  }
 
-    this.setState({
-      product_list: this.props.product_list,
-      loading: false
+  saveOrder() {
+    const order = this.state.product_list.map(product => product.uniqid).join()
+
+    this.setState({saving: true})
+    this.props.actions.saveProductOrder({
+      products_ids: order
+    }).then(res => {
+      this.props.commonActions.tostifyAlert('success', res.message)
+      this.setState({ saving: false })
+    }).catch(err => {
+      this.props.commonActions.tostifyAlert('error', err.error || 'Seomthing went wrong!')
+      this.setState({ saving: false })
     })
   }
 
@@ -64,8 +80,12 @@ class Product extends React.Component {
   }
 
   render() {
-    const { loading, product_list } = this.state
+    let { loading, product_list, saving } = this.state
 
+    product_list = product_list.map((product, key) => {
+      return {...product, id: parseInt(product.id)}
+    })
+    
     return (
       <div className="productsort-screen">
         <div className="animated fadeIn">
@@ -77,8 +97,8 @@ class Product extends React.Component {
                 </Col>
                 <Col md={8}>
                   <div className="d-flex justify-content-end">
-                    <Button className="ml-3" color="primary">
-                      Update Product Order</Button>
+                    <Button className="ml-3" color="primary" onClick={this.saveOrder.bind(this)} disabled={saving}>
+                      {saving?<Spin/>:'Update Product Order'}</Button>
                   </div>
                 </Col>
               </Row>
@@ -100,7 +120,7 @@ class Product extends React.Component {
                           items={product_list}
                           itemRenderer={(product) => (
                             <div className="item">
-                              <p className="body mb-0"><i className="fa fa-bars mr-3"></i>{product.info}</p>
+                              <p className="body mb-0"><i className="fa fa-bars mr-3"></i>{product.title}</p>
                             </div>
                           )}
                           onChange={this.handleRLDDChange}

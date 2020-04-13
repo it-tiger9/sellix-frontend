@@ -10,21 +10,26 @@ import {
   Col,
   Input
 } from 'reactstrap'
-import { Loader } from 'components'
+import { Loader, Spin } from 'components'
 import RLDD from 'react-list-drag-and-drop/lib/RLDD';
+import {
+  CommonActions,
+} from 'services/global'
 
-import * as ProductActions from './actions'
+
+import * as CategoryActions from './actions'
 import './style.scss'
 
 const mapStateToProps = (state) => {
   return ({
-    product_list: state.product.product_list
+    category_list: state.category.category_list
   })
 }
 
 const mapDispatchToProps = (dispatch) => {
   return ({
-    productActions: bindActionCreators(ProductActions, dispatch)
+    actions: bindActionCreators(CategoryActions, dispatch),
+    commonActions: bindActionCreators(CommonActions, dispatch)
   })
 }
 
@@ -33,8 +38,9 @@ class CategorySort extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      loading: true,
-      product_list: []
+      loading: false,
+      saving: false,
+      category_list: []
     }
 
     this.initializeData = this.initializeData.bind(this)
@@ -46,25 +52,41 @@ class CategorySort extends React.Component {
   }
 
   async initializeData () {
-    // this.props.productActions.getProductList().then(res => {
-    //   if (res.status === 200) {
-    //     this.setState({ loading: false })
-    //   }
-    // })
-    await this.props.productActions.getProductList()
-
-    this.setState({
-      product_list: this.props.product_list,
-      loading: false
+    this.setState({ loading: true })
+    this.props.actions.getCategoryList().then(res => {
+      this.setState({category_list: res.data.categories, loading: false})
+    }).catch(err => {
+      this.props.commonActions.tostifyAlert('error', err.error || 'Seomthing went wrong!')
+      this.setState({ loading: false })
     })
   }
 
   handleRLDDChange(reorderedItems) {
-    this.setState({ product_list: reorderedItems });
+    this.setState({ category_list: reorderedItems });
+  }
+
+
+  saveOrder() {
+    const order = this.state.category_list.map(category => category.uniqid).join()
+
+    this.setState({saving: true})
+    this.props.actions.saveCategoryOrder({
+      categories_ids: order
+    }).then(res => {
+      this.props.commonActions.tostifyAlert('success', res.message)
+      this.setState({ saving: false })
+    }).catch(err => {
+      this.props.commonActions.tostifyAlert('error', err.error || 'Seomthing went wrong!')
+      this.setState({ saving: false })
+    })
   }
 
   render() {
-    const { loading, product_list } = this.state
+    let { loading, category_list, saving } = this.state
+
+    category_list = category_list.map((category, key) => {
+      return {...category, id: parseInt(category.id)}
+    })
 
     return (
       <div className="categorysort-screen">
@@ -77,8 +99,8 @@ class CategorySort extends React.Component {
                 </Col>
                 <Col md={8}>
                   <div className="d-flex justify-content-end">
-                    <Button className="ml-3" color="primary">
-                      Update Category Order</Button>
+                  <Button className="ml-3" color="primary" onClick={this.saveOrder.bind(this)} disabled={saving}>
+                      {saving?<Spin/>:'Update Category Order'}</Button>
                   </div>
                 </Col>
               </Row>
@@ -95,12 +117,12 @@ class CategorySort extends React.Component {
                   <Row>
                     <Col lg={12}>
                       <div>
-                        <RLDD
+                      <RLDD
                           cssClasses="product-list"
-                          items={product_list}
-                          itemRenderer={(product) => (
+                          items={category_list}
+                          itemRenderer={(category) => (
                             <div className="item">
-                              <p className="body mb-0"><i className="fa fa-bars mr-3"></i>{product.info}</p>
+                              <p className="body mb-0"><i className="fa fa-bars mr-3"></i>{category.title}</p>
                             </div>
                           )}
                           onChange={this.handleRLDDChange}
