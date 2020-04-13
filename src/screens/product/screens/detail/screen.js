@@ -938,7 +938,8 @@ class EditProduct extends React.Component {
 																			<DataSlider 
 																				domain={[0, 100]} 
 																				value={[props.values.max_risk_level]} 
-																				ticks={[1, 50, 100]}
+																				suffix="%"
+																				ticks={[0, 50, 100]}
 																				receiveValue = {(value) => {
 																					props.handleChange('max_risk_level')(value)
 																				}}/>

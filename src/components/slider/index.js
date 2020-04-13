@@ -18,9 +18,9 @@ const railStyle = {
     backgroundColor: '#F1F1F1',
 }
 
-const Handle = ({ handle: { id, value, percent }, getHandleProps }) => (
+const Handle = ({ handle: { id, value, percent }, symbol, getHandleProps }) => (
     <div style={{ left: `${percent}%` }} {...getHandleProps(id)}>
-        <span>{value}<i>%</i></span>
+        <span>{value}<i>{symbol}</i></span>
     </div>
 )
 
@@ -63,6 +63,7 @@ class DataSlider extends React.Component{
                                     <Handle
                                         key={handle.id}
                                         handle={handle}
+                                        symbol={suffix || ''}
                                         getHandleProps={getHandleProps}
                                     />
                                 ))}

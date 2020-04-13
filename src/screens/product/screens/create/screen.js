@@ -842,6 +842,7 @@ class CreateProduct extends React.Component {
 																				receiveValue = {(value) => {
 																					props.handleChange('crypto_confirmations')(value)
 																				}}
+				
 																				className={'CCC'}
 																			/>
 																		</FormGroup>
@@ -851,8 +852,9 @@ class CreateProduct extends React.Component {
 																			<Label htmlFor="product_code">Max Risk Level</Label>
 																			<DataSlider 
 																				domain={[0, 100]} 
+																				suffix="%"
 																				value={[props.values.max_risk_level]} 
-																				ticks={[1, 50, 100]}
+																				ticks={[0, 50, 100]}
 																				receiveValue = {(value) => {
 																					props.handleChange('max_risk_level')(value)
 																				}}
